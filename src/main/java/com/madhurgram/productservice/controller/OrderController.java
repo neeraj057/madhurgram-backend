@@ -1,5 +1,6 @@
 package com.madhurgram.productservice.controller;
-
+import java.util.List;
+import com.madhurgram.productservice.dto.OrderResponseDTO;
 import com.madhurgram.productservice.entity.Order;
 import com.madhurgram.productservice.entity.OrderStatus;
 import com.madhurgram.productservice.service.OrderService;
@@ -46,5 +47,21 @@ public class OrderController {
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
+    }
+
+    // 🔍 GET: Fetch all orders for a specific customer by phone number
+    @GetMapping("/customer/{phone}")
+    public ResponseEntity<List<OrderResponseDTO>> getCustomerOrders(@PathVariable String phone) {
+        if (phone == null || phone.trim().length() < 10) {
+            throw new IllegalArgumentException("Invalid phone number format. Must be at least 10 digits.");
+        }
+        
+        List<OrderResponseDTO> customerOrders = orderService.getOrdersByCustomerPhone(phone.trim());
+        
+        if (customerOrders.isEmpty()) {
+            return ResponseEntity.noContent().build(); // 204 No Content
+        }
+        
+        return ResponseEntity.ok(customerOrders); // 200 OK
     }
 }
