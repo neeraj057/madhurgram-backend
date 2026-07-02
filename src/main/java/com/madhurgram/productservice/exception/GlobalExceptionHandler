@@ -1,0 +1,35 @@
+package com.madhurgram.productservice.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+    // 🛡️ Business Rule / Validation Fails (400 Bad Request)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ApiError> handleIllegalArgumentException(IllegalArgumentException ex) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage());
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    }
+
+    // 🛡️ Resource Not Found (404 Not Found)
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ApiError> handleRuntimeException(RuntimeException ex) {
+        HttpStatus status = ex.getMessage().toLowerCase().contains("not found") 
+                ? HttpStatus.NOT_FOUND 
+                : HttpStatus.INTERNAL_SERVER_ERROR;
+                
+        ApiError apiError = new ApiError(status, ex.getMessage());
+        return new ResponseEntity<>(apiError, status);
+    }
+
+    // 🛡️ Global Fallback (500 Internal Server Error)
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiError> handleGlobalException(Exception ex) {
+        ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected enterprise error occurred.");
+        return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
