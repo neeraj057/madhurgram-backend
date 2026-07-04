@@ -7,6 +7,9 @@ import com.madhurgram.productservice.repository.BroadcastCampaignRepository;
 import com.madhurgram.productservice.repository.OrderRepository;
 import com.madhurgram.productservice.repository.ProductRepository;
 import com.madhurgram.productservice.service.MarketingService;
+import com.madhurgram.productservice.service.SmsSenderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,14 +20,18 @@ import java.util.stream.Collectors;
 @Service
 public class MarketingServiceImpl implements MarketingService {
 
+    private static final Logger logger = LoggerFactory.getLogger(MarketingServiceImpl.class);
+
     private final BroadcastCampaignRepository campaignRepository;
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
+    private final SmsSenderService smsSenderService;
 
-    public MarketingServiceImpl(BroadcastCampaignRepository campaignRepository, OrderRepository orderRepository, ProductRepository productRepository) {
+    public MarketingServiceImpl(BroadcastCampaignRepository campaignRepository, OrderRepository orderRepository, ProductRepository productRepository, SmsSenderService smsSenderService) {
         this.campaignRepository = campaignRepository;
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
+        this.smsSenderService = smsSenderService;
     }
 
     @Override
@@ -59,21 +66,25 @@ public class MarketingServiceImpl implements MarketingService {
 
         BroadcastCampaign saved = campaignRepository.save(campaign);
 
-        // Mock send logic: for now, we only persist the campaign and log recipients.
+        int sentCount = 0;
         if (!recipients.isEmpty()) {
-            System.out.println("[Marketing Broadcast] Sending message to " + recipientsCount + " customers for campaign: " + saved.getTitle());
+            sentCount = smsSenderService.sendBroadcastMessage(recipients, request.message());
+            logger.info("Marketing Broadcast sent to {} of {} recipients for campaign: {}", sentCount, recipientsCount, saved.getTitle());
         }
 
+        saved.setRecipients(sentCount);
+        BroadcastCampaign sentCampaign = campaignRepository.save(saved);
+
         return new BroadcastCampaignDTO(
-                saved.getId(),
-                saved.getTitle(),
-                saved.getMessage(),
-                saved.getTargetSegment(),
-                saved.getProductKeyword(),
-                saved.getProductId(),
-                saved.getRecipients(),
-                saved.getConversions(),
-                saved.getCreatedAt()
+                sentCampaign.getId(),
+                sentCampaign.getTitle(),
+                sentCampaign.getMessage(),
+                sentCampaign.getTargetSegment(),
+                sentCampaign.getProductKeyword(),
+                sentCampaign.getProductId(),
+                sentCampaign.getRecipients(),
+                sentCampaign.getConversions(),
+                sentCampaign.getCreatedAt()
         );
     }
 
