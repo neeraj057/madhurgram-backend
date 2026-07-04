@@ -4,6 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -24,37 +25,53 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(
-             HttpServletRequest request,
-             HttpServletResponse response,
-             FilterChain filterChain
+             @NonNull HttpServletRequest request,
+             @NonNull HttpServletResponse response,
+             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
 
         final String authHeader = request.getHeader("Authorization");
-        final String jwt;
-        final String username;
 
-        // 1. अगर हेडर में टोकन नहीं है, तो बिना कुछ किए आगे जाने दो (SecurityConfig उसे खुद ब्लॉक कर देगा)
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            SecurityContextHolder.clearContext();
             filterChain.doFilter(request, response);
             return;
         }
 
-        // 2. "Bearer " के बाद का असली टोकन निकालो
-        jwt = authHeader.substring(7);
-        username = jwtUtil.extractUsername(jwt);
-
-        // 3. अगर यूजरनेम है और अभी तक ऑथेंटिकेट नहीं हुआ है, तो टोकन वैलिडेट करो
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            if (jwtUtil.isTokenValid(jwt, username)) {
-                // सब सही है, इसे ग्रीन पास दे दो
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        username, null, new ArrayList<>()
-                );
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken);
-            }
+        final String jwt = authHeader.substring(7).trim();
+        if (jwt.isEmpty()) {
+            sendUnauthorizedResponse(response, "Missing JWT token.");
+            return;
         }
-        
+
+        try {
+            final String username = jwtUtil.extractUsername(jwt);
+
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                if (jwtUtil.isTokenValid(jwt, username)) {
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                            username, null, new ArrayList<>()
+                    );
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                } else {
+                    SecurityContextHolder.clearContext();
+                    sendUnauthorizedResponse(response, "Invalid or expired JWT token.");
+                    return;
+                }
+            }
+        } catch (Exception e) {
+            SecurityContextHolder.clearContext();
+            sendUnauthorizedResponse(response, "Unable to validate authentication token.");
+            return;
+        }
+
         filterChain.doFilter(request, response);
+    }
+
+    private void sendUnauthorizedResponse(HttpServletResponse response, String message) throws IOException {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType("application/json");
+        response.getWriter().write("{\"error\": \"Unauthorized\", \"message\": \"" + message + "\"}");
     }
 }

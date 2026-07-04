@@ -1,0 +1,43 @@
+package com.madhurgram.productservice.product.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+import java.math.BigDecimal;
+
+@Entity
+@Table(name = "products")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Product {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 150)
+    private String name;
+
+    @Column(nullable = false)
+    private BigDecimal price;
+
+    @Column(nullable = false, length = 50)
+    private String volume; // e.g., "500ml", "1kg"
+
+    @Column(name = "image_url", length = 500)
+    private String imageUrl; // Cloud/S3 image link mapped here
+
+    @Column(length = 50)
+    private String tag; // e.g., "Bilona Method", "New", "Out of Stock"
+
+    @Column(nullable = false, length = 50)
+    private String category; // e.g., "dairy", "sweeteners", "oils", "pickles"
+
+    @Column(nullable = false)
+    private Integer stock; // Inventory tracking for "Out of Stock" logic
+
+    @Column(name = "is_active")
+    private boolean isActive = true;
+}

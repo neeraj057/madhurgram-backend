@@ -2,6 +2,7 @@ package com.madhurgram.productservice.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -38,9 +39,10 @@ public class SecurityConfig {
             
             // 🚦 3. राउट्स के नियम (असली ताला)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()   // लॉगिन करने का रास्ता सबके लिए खुला है
-                .requestMatchers("/api/admin/**").authenticated() // 🔒 एडमिन का सारा डेटा सिर्फ टोकन वालों को मिलेगा
-                .anyRequest().permitAll() // बाकी स्टोरफ्रंट API (जैसे कस्टमर के लिए प्रोडक्ट देखना) खुले हैं
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/admin/**").authenticated()
+                .anyRequest().permitAll()
             )
             
             // 🧠 4. स्प्रिंग को बताओ कि हम सेशन (Cookies) नहीं, बल्कि टोकन (Stateless) यूज़ करेंगे
