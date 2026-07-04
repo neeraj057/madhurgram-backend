@@ -8,5 +8,9 @@ public record CustomerStatsDTO(
     String phoneNumber,
     int totalOrders,
     BigDecimal totalSpent,
-    LocalDateTime lastOrderDate
+    LocalDateTime lastOrderDate,
+    boolean vip,
+    String segment,
+    String favoriteProduct,
+    int favoriteProductQuantity
 ) {}

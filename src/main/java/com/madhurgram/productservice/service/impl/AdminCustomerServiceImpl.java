@@ -37,7 +37,7 @@ public class AdminCustomerServiceImpl implements AdminCustomerService {
         return orderRepository.findAll().stream()
             .collect(Collectors.groupingBy(Order::getPhoneNumber))
             .entrySet().stream()
-            .map(entry -> customerMapper.toStatsDTO(entry.getKey(), entry.getValue())) // Mapper यूज़ किया
+            .map(entry -> customerMapper.toStatsDTO(entry.getKey(), entry.getValue()))
             .collect(Collectors.toList());
     }
 }
