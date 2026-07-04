@@ -36,6 +36,9 @@ public class Order {
     @Column(nullable = false)
     private String cityState;
 
+    @Column(name = "campaign_id")
+    private Long campaignId;
+
     @Column(nullable = false, name = "total_amount")
     private BigDecimal totalAmount;
 
