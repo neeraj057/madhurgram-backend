@@ -34,4 +34,5 @@ public class ProductServiceImpl implements ProductService {
             throw new RuntimeException("Insufficient inventory or product not found for ID: " + productId);
         }
     }
+
 }

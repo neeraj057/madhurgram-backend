@@ -1,0 +1,74 @@
+name: Local Config
+version: 1.0.0
+schema: v1
+models:
+  - name: Gemini 3.5 Flash
+    provider: gemini
+    model: gemini-3.5-flash
+    apiKey: <YOUR-API-KEY> # https://aistudio.google.com/api-keys
+  - name: Gemini 3.1 Pro Preview
+    provider: gemini
+    model: gemini-3.1-pro-preview
+    apiKey: <YOUR-API-KEY>
+  - name: Gemini 3.1 Pro (Custom Tools)
+    provider: gemini
+    model: gemini-3.1-pro-preview-customtools
+    apiKey: <YOUR-API-KEY>
+  - name: Gemini 3.1 Flash Lite
+    provider: gemini
+    model: gemini-3.1-flash-lite
+    apiKey: <YOUR-API-KEY>
+    # roles:
+    #   - autocomplete
+  - name: Gemini 3 Pro Preview
+    provider: gemini
+    model: gemini-3-pro-preview
+    apiKey: <YOUR-API-KEY>
+  - name: Gemini 3 Flash Preview
+    provider: gemini
+    model: gemini-3-flash-preview
+    apiKey: <YOUR-API-KEY>
+  - name: Gemini 2.5 Pro
+    provider: gemini
+    model: gemini-2.5-pro
+    apiKey: <YOUR-API-KEY>
+  - name: Gemini 2.5 Flash
+    provider: gemini
+    model: gemini-2.5-flash
+    apiKey: <YOUR-API-KEY>
+  - name: Gemini 2.5 Flash Lite
+    provider: gemini
+    model: gemini-2.5-flash-lite
+    apiKey: <YOUR-API-KEY>
+  - name: Gemini 2.0 Flash
+    provider: gemini
+    model: gemini-2.0-flash
+    apiKey: <YOUR-API-KEY>
+  - name: Gemini 2.0 Flash Lite
+    provider: gemini
+    model: gemini-2.0-flash-lite
+    apiKey: <YOUR-API-KEY>
+  - name: Gemma 4 31B
+    provider: gemini
+    model: gemma-4-31b-it
+    apiKey: <YOUR-API-KEY>
+  - name: Gemma 4 26B
+    provider: gemini
+    model: gemma-4-26b-a4b-it
+    apiKey: <YOUR-API-KEY>
+  - name: Deep Research Max (Apr 2026)
+    provider: gemini
+    model: deep-research-max-preview-04-2026
+    apiKey: <YOUR-API-KEY>
+  - name: Deep Research (Apr 2026)
+    provider: gemini
+    model: deep-research-preview-04-2026
+    apiKey: <YOUR-API-KEY>
+  - name: Deep Research Pro (Dec 2025)
+    provider: gemini
+    model: deep-research-pro-preview-12-2025
+    apiKey: <YOUR-API-KEY>
+  - name: Antigravity Agent Preview
+    provider: gemini
+    model: antigravity-preview-05-2026
+    apiKey: <YOUR-API-KEY>

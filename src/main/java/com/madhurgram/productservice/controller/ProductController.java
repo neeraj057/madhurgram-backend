@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
-@CrossOrigin(origins = {"http://localhost:3000", "http://192.168.31.211:3000"})
+@CrossOrigin(origins = { "http://localhost:3000", "http://192.168.31.211:3000" })
 public class ProductController {
 
     private final ProductService productService;
@@ -20,14 +20,15 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<Product>> getProducts(
             @RequestParam(value = "category", required = false, defaultValue = "shop-all") String category) {
-        
+
         List<Product> products;
         if ("shop-all".equalsIgnoreCase(category)) {
             products = productService.getAllActiveProducts();
         } else {
             products = productService.getProductsByCategory(category);
         }
-        
+
         return ResponseEntity.ok(products);
     }
+
 }
