@@ -6,6 +6,7 @@ import com.madhurgram.productservice.entity.Address;
 import com.madhurgram.productservice.entity.Customer;
 import com.madhurgram.productservice.repository.CustomerRepository;
 import com.madhurgram.productservice.service.CustomerService;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +29,8 @@ public class CustomerServiceImpl implements CustomerService {
 
         String cleanPhone = phoneNumber.trim();
 
-        // 🔄 On-the-fly Registration: Agar customer database me nahi hai, to naya profile create karke save kar do
+        // 🔄 On-the-fly Registration: Agar customer database me nahi hai, to naya
+        // profile create karke save kar do
         Customer customer = customerRepository.findByPhoneNumberWithAddresses(cleanPhone)
                 .orElseGet(() -> customerRepository.save(Customer.builder()
                         .phoneNumber(cleanPhone)
@@ -53,7 +55,8 @@ public class CustomerServiceImpl implements CustomerService {
                 .isDefault(addressDTO.getIsDefault() != null && addressDTO.getIsDefault())
                 .build();
 
-        // 🛡️ Business Rule: Agar ye naya address DEFAULT mark hua hai, to baaki sabko false karo
+        // 🛡️ Business Rule: Agar ye naya address DEFAULT mark hua hai, to baaki sabko
+        // false karo
         if (Boolean.TRUE.equals(newAddress.getIsDefault())) {
             customer.getAddresses().forEach(addr -> addr.setIsDefault(false));
         }
@@ -83,4 +86,5 @@ public class CustomerServiceImpl implements CustomerService {
                         .build()).toList())
                 .build();
     }
+
 }

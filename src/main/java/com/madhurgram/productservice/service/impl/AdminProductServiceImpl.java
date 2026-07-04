@@ -72,6 +72,15 @@ public class AdminProductServiceImpl implements AdminProductService {
         return mapToDTO(updatedProduct);
     }
 
+    @Override
+    @Transactional
+    public void deleteProduct(Long id) {
+        if (!productRepository.existsById(id)) {
+            throw new RuntimeException("Product not found with ID: " + id);
+        }
+        productRepository.deleteById(id);
+    }
+
     // Mapper helper
     private ProductDTO mapToDTO(Product product) {
         return ProductDTO.builder()

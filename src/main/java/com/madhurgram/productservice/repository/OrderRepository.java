@@ -24,4 +24,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     // ⏳ कितने ऑर्डर्स अभी PENDING स्टेट में बैठे हैं
     @Query("SELECT COUNT(o) FROM Order o WHERE o.orderStatus = 'PENDING'")
     Long getPendingOrderCount();
+
+    List<Order> findByPhoneNumber(String phoneNumber);
 }

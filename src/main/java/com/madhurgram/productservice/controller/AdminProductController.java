@@ -39,4 +39,10 @@ public class AdminProductController {
         ProductDTO updatedProduct = adminProductService.updateProduct(id, productDTO);
         return ResponseEntity.ok(updatedProduct);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        adminProductService.deleteProduct(id);
+        return ResponseEntity.noContent().build();
+    }
 }
