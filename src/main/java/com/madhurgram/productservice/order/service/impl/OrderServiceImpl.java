@@ -8,7 +8,6 @@ import com.madhurgram.productservice.order.repository.OrderRepository;
 import com.madhurgram.productservice.order.service.OrderService;
 import com.madhurgram.productservice.product.service.ProductService;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -22,10 +21,12 @@ public class OrderServiceImpl implements OrderService {
     private static final Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
     private final OrderRepository orderRepository;
     private final ProductService productService;
+    private final com.madhurgram.productservice.cart.service.AbandonedCartService abandonedCartService;
 
-    public OrderServiceImpl(OrderRepository orderRepository, ProductService productService) {
+    public OrderServiceImpl(OrderRepository orderRepository, ProductService productService, com.madhurgram.productservice.cart.service.AbandonedCartService abandonedCartService) {
         this.orderRepository = orderRepository;
         this.productService = productService;
+        this.abandonedCartService = abandonedCartService;
     }
 
     @Override
@@ -44,7 +45,8 @@ public class OrderServiceImpl implements OrderService {
                 log.info("Deducting stock for Product ID: {}, Quantity: {}", item.getProductId(), item.getQuantity());
                 productService.deductProductStock(item.getProductId(), item.getQuantity());
             } catch (RuntimeException e) {
-                log.warn("Stock deduction failed for Product ID: {}, Name: {}. Error: {}", item.getProductId(), item.getProductName(), e.getMessage());
+                log.warn("Stock deduction failed for Product ID: {}, Name: {}. Error: {}", item.getProductId(),
+                        item.getProductName(), e.getMessage());
                 throw new RuntimeException(
                         "Product '" + item.getProductName() + "' is Out of Stock or insufficient inventory.");
             }
@@ -55,6 +57,14 @@ public class OrderServiceImpl implements OrderService {
 
         Order saved = orderRepository.save(order);
         log.info("Order saved in database with ID: {}", saved.getId());
+
+        try {
+            log.info("Triggering cart recovery finalization for phone: {}", order.getPhoneNumber());
+            abandonedCartService.markAsRecovered(order.getPhoneNumber());
+        } catch (Exception e) {
+            log.error("Failed to finalize cart recovery for phone {}: {}", order.getPhoneNumber(), e.getMessage());
+        }
+
         return saved;
     }
 
@@ -77,11 +87,13 @@ public class OrderServiceImpl implements OrderService {
 
         if (!currentStatus.isValidTransition(nextStatus)) {
             log.warn("Invalid transition: Cannot move order ID: {} from {} to {}", orderId, currentStatus, nextStatus);
-            throw new IllegalArgumentException("Cannot change status of order from " + currentStatus + " to " + nextStatus);
+            throw new IllegalArgumentException(
+                    "Cannot change status of order from " + currentStatus + " to " + nextStatus);
         }
 
         // 🔄 2. Restore Stock if order is Cancelled
-        if (nextStatus == OrderStatus.CANCELLED && (currentStatus == OrderStatus.PENDING || currentStatus == OrderStatus.CONFIRMED)) {
+        if (nextStatus == OrderStatus.CANCELLED
+                && (currentStatus == OrderStatus.PENDING || currentStatus == OrderStatus.CONFIRMED)) {
             log.info("Order ID: {} is being cancelled. Restoring stock for all items...", orderId);
             for (OrderItem item : order.getOrderItems()) {
                 log.info("Restoring stock for product ID: {} (Quantity: {})", item.getProductId(), item.getQuantity());
@@ -95,7 +107,6 @@ public class OrderServiceImpl implements OrderService {
         log.info("Order ID: {} status updated successfully from {} to {}", orderId, currentStatus, nextStatus);
         return saved;
     }
-
 
     @Override
     @org.springframework.transaction.annotation.Transactional(readOnly = true)
@@ -125,5 +136,4 @@ public class OrderServiceImpl implements OrderService {
                 .build()).toList();
     }
 
-    
 }
