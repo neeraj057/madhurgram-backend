@@ -16,4 +16,6 @@ public interface AbandonedCartRepository extends JpaRepository<AbandonedCart, Lo
     List<AbandonedCart> findByIsRecoveredFalseAndLastUpdatedBeforeOrderByLastUpdatedDesc(LocalDateTime cutoffTime);
 
     List<AbandonedCart> findByIsRecoveredFalseAndReminderSentFalseAndLastUpdatedBeforeOrderByLastUpdatedDesc(LocalDateTime cutoffTime);
+
+    long countByIsRecoveredTrue();
 }

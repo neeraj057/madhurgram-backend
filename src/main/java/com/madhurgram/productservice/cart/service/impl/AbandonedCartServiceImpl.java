@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.cache.annotation.CacheEvict;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -37,6 +38,7 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
 
     @Override
     @Transactional
+    @CacheEvict(value = "analytics", allEntries = true)
     public AbandonedCart updateCart(CartUpdateRequest request) {
         log.info("Updating cart state for phone number: {}", request.getPhoneNumber());
         if (request.getPhoneNumber() == null || request.getPhoneNumber().trim().isEmpty()) {
@@ -92,6 +94,7 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
 
     @Override
     @Transactional
+    @CacheEvict(value = "analytics", allEntries = true)
     public void markAsRecovered(String phoneNumber) {
         log.info("Attempting to mark cart as recovered for phone number: {}", phoneNumber);
         if (phoneNumber == null || phoneNumber.trim().isEmpty()) {

@@ -6,7 +6,9 @@ import com.madhurgram.productservice.order.entity.OrderItem;
 import com.madhurgram.productservice.order.entity.OrderStatus;
 import com.madhurgram.productservice.order.repository.OrderRepository;
 import com.madhurgram.productservice.order.service.OrderService;
+import com.madhurgram.productservice.order.service.OrderNotificationService;
 import com.madhurgram.productservice.product.service.ProductService;
+import org.springframework.cache.annotation.CacheEvict;
 
 import java.util.List;
 
@@ -22,16 +24,22 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final ProductService productService;
     private final com.madhurgram.productservice.cart.service.AbandonedCartService abandonedCartService;
+    private final OrderNotificationService orderNotificationService;
 
-    public OrderServiceImpl(OrderRepository orderRepository, ProductService productService, com.madhurgram.productservice.cart.service.AbandonedCartService abandonedCartService) {
+    public OrderServiceImpl(
+            OrderRepository orderRepository, 
+            ProductService productService, 
+            com.madhurgram.productservice.cart.service.AbandonedCartService abandonedCartService,
+            OrderNotificationService orderNotificationService) {
         this.orderRepository = orderRepository;
         this.productService = productService;
         this.abandonedCartService = abandonedCartService;
+        this.orderNotificationService = orderNotificationService;
     }
 
     @Override
-    @Transactional // 🛡️ अगर एक भी आइटम का स्टॉक कम नहीं हुआ, तो पूरा आर्डर डेटाबेस से रोलबैक हो
-                   // जाएगा!
+    @Transactional // 🛡️ अगर एक भी आइटम का स्टॉक कम नहीं हुआ, तो पूरा आर्डर डेटाबेस से रोलबैक हो जाएगा!
+    @CacheEvict(value = "analytics", allEntries = true)
     public Order placeOrder(Order order) {
         log.info("Processing order placement for customer: {}", order.getCustomerName());
         if (order.getOrderItems() == null || order.getOrderItems().isEmpty()) {
@@ -77,6 +85,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
+    @CacheEvict(value = "analytics", allEntries = true)
     public Order updateOrderStatus(Long orderId, OrderStatus nextStatus) {
         log.info("Updating status for order ID: {} to {}", orderId, nextStatus);
         Order order = orderRepository.findById(orderId)
@@ -93,7 +102,10 @@ public class OrderServiceImpl implements OrderService {
 
         // 🔄 2. Restore Stock if order is Cancelled
         if (nextStatus == OrderStatus.CANCELLED
-                && (currentStatus == OrderStatus.PENDING || currentStatus == OrderStatus.CONFIRMED)) {
+                && (currentStatus == OrderStatus.PENDING 
+                    || currentStatus == OrderStatus.CONFIRMED 
+                    || currentStatus == OrderStatus.SHIPPED 
+                    || currentStatus == OrderStatus.OUT_FOR_DELIVERY)) {
             log.info("Order ID: {} is being cancelled. Restoring stock for all items...", orderId);
             for (OrderItem item : order.getOrderItems()) {
                 log.info("Restoring stock for product ID: {} (Quantity: {})", item.getProductId(), item.getQuantity());
@@ -105,6 +117,14 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderStatus(nextStatus);
         Order saved = orderRepository.save(order);
         log.info("Order ID: {} status updated successfully from {} to {}", orderId, currentStatus, nextStatus);
+        
+        // 🔄 4. Trigger Notification Bridge
+        try {
+            orderNotificationService.sendOrderStatusNotification(saved, nextStatus);
+        } catch (Exception e) {
+            log.error("Failed to trigger order notification for order ID: {}. Error: {}", orderId, e.getMessage());
+        }
+        
         return saved;
     }
 

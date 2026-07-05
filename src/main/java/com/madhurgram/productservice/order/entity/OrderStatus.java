@@ -4,6 +4,7 @@ public enum OrderStatus {
     PENDING,
     CONFIRMED,
     SHIPPED,
+    OUT_FOR_DELIVERY,
     DELIVERED,
     CANCELLED;
 
@@ -14,8 +15,9 @@ public enum OrderStatus {
     public boolean isValidTransition(OrderStatus nextStatus) {
         return switch (this) {
             case PENDING -> nextStatus == CONFIRMED || nextStatus == CANCELLED;
-            case CONFIRMED -> nextStatus == SHIPPED || nextStatus == PENDING || nextStatus == CANCELLED;
-            case SHIPPED -> nextStatus == DELIVERED;
+            case CONFIRMED -> nextStatus == SHIPPED || nextStatus == CANCELLED;
+            case SHIPPED -> nextStatus == OUT_FOR_DELIVERY || nextStatus == CANCELLED;
+            case OUT_FOR_DELIVERY -> nextStatus == DELIVERED || nextStatus == CANCELLED;
             case DELIVERED, CANCELLED -> false;
         };
     }

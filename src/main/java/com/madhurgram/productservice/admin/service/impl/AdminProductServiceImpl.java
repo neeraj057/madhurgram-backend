@@ -4,6 +4,10 @@ import com.madhurgram.productservice.product.dto.ProductDTO;
 import com.madhurgram.productservice.product.entity.Product;
 import com.madhurgram.productservice.product.repository.ProductRepository;
 import com.madhurgram.productservice.admin.service.AdminProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +17,7 @@ import java.util.stream.Collectors;
 @Service
 public class AdminProductServiceImpl implements AdminProductService {
 
+    private static final Logger log = LoggerFactory.getLogger(AdminProductServiceImpl.class);
     private final ProductRepository productRepository;
 
     public AdminProductServiceImpl(ProductRepository productRepository) {
@@ -21,15 +26,16 @@ public class AdminProductServiceImpl implements AdminProductService {
 
     @Override
     public List<ProductDTO> getAllProductsForAdmin() {
-        // एडमिन को सारे प्रोडक्ट्स दिखेंगे (चाहे वो Out of Stock हों या Inactive)
+        // Direct DB read for admin console (bypassing cache to ensure live inventory sync)
         return productRepository.findAll().stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
+    @Cacheable(value = "products", key = "'public_active'")
     public List<ProductDTO> getAllActiveProductsForPublic() {
-        // पब्लिक को सिर्फ एक्टिव प्रोडक्ट्स दिखेंगे
+        log.info("[CACHE MISS] Fetching all active products for public catalog...");
         return productRepository.findByIsActiveTrue().stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
@@ -37,7 +43,9 @@ public class AdminProductServiceImpl implements AdminProductService {
 
     @Override
     @Transactional
+    @CacheEvict(value = {"products", "analytics"}, allEntries = true)
     public ProductDTO addProduct(ProductDTO dto) {
+        log.info("Adding new product: {}. Invalidating caches.", dto.getName());
         if (dto.getCategory() == null || dto.getCategory().trim().isEmpty()) {
             throw new IllegalArgumentException("Product category cannot be null or empty.");
         }
@@ -57,7 +65,9 @@ public class AdminProductServiceImpl implements AdminProductService {
 
     @Override
     @Transactional
+    @CacheEvict(value = {"products", "analytics"}, allEntries = true)
     public ProductDTO updateProduct(Long id, ProductDTO dto) {
+        log.info("Updating product ID: {}. Invalidating caches.", id);
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found with ID: " + id));
 
@@ -82,14 +92,15 @@ public class AdminProductServiceImpl implements AdminProductService {
 
     @Override
     @Transactional
+    @CacheEvict(value = {"products", "analytics"}, allEntries = true)
     public void deleteProduct(Long id) {
+        log.info("Deleting product ID: {}. Invalidating caches.", id);
         if (!productRepository.existsById(id)) {
             throw new RuntimeException("Product not found with ID: " + id);
         }
         productRepository.deleteById(id);
     }
 
-    // Mapper helper
     private ProductDTO mapToDTO(Product product) {
         return ProductDTO.builder()
                 .id(product.getId())
