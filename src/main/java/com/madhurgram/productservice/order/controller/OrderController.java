@@ -81,4 +81,17 @@ public class OrderController {
         
         return ResponseEntity.ok(customerOrders); // 200 OK
     }
+
+    // 🔍 GET: Fetch order details by ID for tracking
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getOrderDetails(@PathVariable Long id) {
+        log.info("Received request to fetch order details for ID: {}", id);
+        try {
+            OrderResponseDTO dto = orderService.getOrderDetails(id);
+            return ResponseEntity.ok(dto);
+        } catch (RuntimeException e) {
+            log.warn("Order not found with ID: {}", id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }

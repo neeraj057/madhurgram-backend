@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    app: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: neeraj057/madhurgram-backend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+          env:
+            # Map database to the local Kubernetes ClusterIP service name
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://mysql-service:3306/madhurgram_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+            - name: SPRING_DATASOURCE_USERNAME
+              value: root
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: root-password
+                  
+            # Map Redis cache host to the K8s ClusterIP service
+            - name: REDIS_HOST
+              value: redis-service
+            - name: REDIS_PORT
+              value: "6379"
+              
+            # System settings credentials & Twilio tokens
+            - name: JWT_SECRET
+              value: defaultdevsecretkeymustbe32characterslongforhs256
+            - name: ADMIN_USERNAME
+              value: admin
+            - name: ADMIN_PASSWORD
+              value: MadhurGram@2026
+            - name: TWILIO_ACCOUNT_SID
+              value: ACmockaccountsdicdummyvalues12345
+            - name: TWILIO_AUTH_TOKEN
+              value: mockauthtokendummyvalues12345678
+            - name: TWILIO_FROM_NUMBER
+              value: "+1234567890"
+              
+          # Health Probes to monitor container health and control traffic routing
+          livenessProbe:
+            httpGet:
+              path: /api/public/products
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /api/public/products
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1024Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+spec:
+  selector:
+    app: backend
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer

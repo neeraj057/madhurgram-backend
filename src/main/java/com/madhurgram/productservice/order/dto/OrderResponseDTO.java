@@ -20,6 +20,10 @@ public class OrderResponseDTO {
     private BigDecimal totalAmount;
     private OrderStatus orderStatus;
     private LocalDateTime orderDate;
+    private String trackingNumber;
+    private String courierName;
+    private String paymentStatus;
+    private String paymentTransactionId;
     private List<ItemDTO> orderItems;
 
     @Data

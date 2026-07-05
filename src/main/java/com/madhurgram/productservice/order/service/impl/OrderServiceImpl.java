@@ -8,6 +8,7 @@ import com.madhurgram.productservice.order.repository.OrderRepository;
 import com.madhurgram.productservice.order.service.OrderService;
 import com.madhurgram.productservice.order.service.OrderNotificationService;
 import com.madhurgram.productservice.product.service.ProductService;
+import com.madhurgram.productservice.logistics.service.LogisticsService;
 import org.springframework.cache.annotation.CacheEvict;
 
 import java.util.List;
@@ -25,16 +26,19 @@ public class OrderServiceImpl implements OrderService {
     private final ProductService productService;
     private final com.madhurgram.productservice.cart.service.AbandonedCartService abandonedCartService;
     private final OrderNotificationService orderNotificationService;
+    private final LogisticsService logisticsService;
 
     public OrderServiceImpl(
             OrderRepository orderRepository, 
             ProductService productService, 
             com.madhurgram.productservice.cart.service.AbandonedCartService abandonedCartService,
-            OrderNotificationService orderNotificationService) {
+            OrderNotificationService orderNotificationService,
+            LogisticsService logisticsService) {
         this.orderRepository = orderRepository;
         this.productService = productService;
         this.abandonedCartService = abandonedCartService;
         this.orderNotificationService = orderNotificationService;
+        this.logisticsService = logisticsService;
     }
 
     @Override
@@ -42,6 +46,15 @@ public class OrderServiceImpl implements OrderService {
     @CacheEvict(value = "analytics", allEntries = true)
     public Order placeOrder(Order order) {
         log.info("Processing order placement for customer: {}", order.getCustomerName());
+        
+        // 🛡️ Resolve Lombok builder-default gotcha: initialize null fields
+        if (order.getPaymentStatus() == null) {
+            order.setPaymentStatus("PENDING");
+        }
+        if (order.getOrderStatus() == null) {
+            order.setOrderStatus(OrderStatus.PENDING);
+        }
+
         if (order.getOrderItems() == null || order.getOrderItems().isEmpty()) {
             log.warn("Order placement failed: Cart is empty.");
             throw new IllegalArgumentException("Cart cannot be empty.");
@@ -124,6 +137,15 @@ public class OrderServiceImpl implements OrderService {
         } catch (Exception e) {
             log.error("Failed to trigger order notification for order ID: {}. Error: {}", orderId, e.getMessage());
         }
+
+        // 🔄 5. Auto-schedule logistics pickup if status is CONFIRMED
+        if (nextStatus == OrderStatus.CONFIRMED) {
+            try {
+                logisticsService.scheduleOrderPickup(saved);
+            } catch (Exception e) {
+                log.error("Failed to auto-schedule logistics pickup: {}", e.getMessage());
+            }
+        }
         
         return saved;
     }
@@ -147,6 +169,10 @@ public class OrderServiceImpl implements OrderService {
                 .totalAmount(order.getTotalAmount())
                 .orderStatus(order.getOrderStatus())
                 .orderDate(order.getOrderDate())
+                .trackingNumber(order.getTrackingNumber())
+                .courierName(order.getCourierName())
+                .paymentStatus(order.getPaymentStatus())
+                .paymentTransactionId(order.getPaymentTransactionId())
                 .orderItems(order.getOrderItems().stream().map(item -> OrderResponseDTO.ItemDTO.builder()
                         .id(item.getId())
                         .productName(item.getProductName())
@@ -154,6 +180,35 @@ public class OrderServiceImpl implements OrderService {
                         .price(item.getPrice())
                         .build()).toList())
                 .build()).toList();
+    }
+
+    @Override
+    @org.springframework.transaction.annotation.Transactional(readOnly = true)
+    public OrderResponseDTO getOrderDetails(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found with ID: " + orderId));
+
+        return OrderResponseDTO.builder()
+                .id(order.getId())
+                .customerName(order.getCustomerName())
+                .phoneNumber(order.getPhoneNumber())
+                .address(order.getAddress())
+                .pincode(order.getPincode())
+                .cityState(order.getCityState())
+                .totalAmount(order.getTotalAmount())
+                .orderStatus(order.getOrderStatus())
+                .orderDate(order.getOrderDate())
+                .trackingNumber(order.getTrackingNumber())
+                .courierName(order.getCourierName())
+                .paymentStatus(order.getPaymentStatus())
+                .paymentTransactionId(order.getPaymentTransactionId())
+                .orderItems(order.getOrderItems().stream().map(item -> OrderResponseDTO.ItemDTO.builder()
+                        .id(item.getId())
+                        .productName(item.getProductName())
+                        .quantity(item.getQuantity())
+                        .price(item.getPrice())
+                        .build()).toList())
+                .build();
     }
 
 }

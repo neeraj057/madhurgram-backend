@@ -14,4 +14,5 @@ public interface OrderService {
 
     List<OrderResponseDTO> getOrdersByCustomerPhone(String phoneNumber);
 
+    OrderResponseDTO getOrderDetails(Long orderId);
 }

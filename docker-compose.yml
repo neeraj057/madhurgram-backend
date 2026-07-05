@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  # 🗄️ Database Layer: MySQL Container
+  mysql-db:
+    image: mysql:8.0
+    container_name: madhurgram-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: madhurgram_db
+      MYSQL_ROOT_PASSWORD: Neeraj@057
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - madhurgram-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pNeeraj@057"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # 🧠 Caching Layer: Redis Container
+  redis-cache:
+    image: redis:7-alpine
+    container_name: madhurgram-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - madhurgram-net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+
+  # ⚙️ Application Layer: Spring Boot Backend
+  product-service:
+    build: .
+    container_name: madhurgram-backend-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+      redis-cache:
+        condition: service_healthy
+    environment:
+      # Inject containerized DB configurations
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/madhurgram_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Neeraj@057
+      
+      # Inject containerized Redis configurations
+      REDIS_HOST: redis-cache
+      REDIS_PORT: 6379
+      
+      # Inject credentials & service keys
+      JWT_SECRET: defaultdevsecretkeymustbe32characterslongforhs256
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: MadhurGram@2026
+      TWILIO_ACCOUNT_SID: ACmockaccountsdicdummyvalues12345
+      TWILIO_AUTH_TOKEN: mockauthtokendummyvalues12345678
+      TWILIO_FROM_NUMBER: +1234567890
+    networks:
+      - madhurgram-net
+
+volumes:
+  mysql-data:
+
+networks:
+  madhurgram-net:
+    driver: bridge

@@ -54,6 +54,19 @@ public class Order {
     @Column(name = "order_date")
     private LocalDateTime orderDate;
 
+    @Column(name = "tracking_number", length = 50)
+    private String trackingNumber;
+
+    @Column(name = "courier_name", length = 100)
+    private String courierName;
+
+    @Column(name = "payment_status", length = 30, nullable = false)
+    @Builder.Default
+    private String paymentStatus = "PENDING";
+
+    @Column(name = "payment_transaction_id", length = 100)
+    private String paymentTransactionId;
+
     // 🔗 @OneToMany Relationship mapping with OrderItem
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference // Parent-Child JSON handling के लिए भाई
