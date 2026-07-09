@@ -815,3 +815,923 @@ This generated password is for development use only. Your security configuration
 2026-07-09 16:47:01 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
 2026-07-09 16:47:02 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
 2026-07-09 16:47:02 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T16:47:02.338303600 (Retention: 48 hours)
+2026-07-09 16:52:14 [main] INFO  c.m.p.ProductServiceApplication - Starting ProductServiceApplication using Java 21.0.2 with PID 33576 (D:\MadhurGram\product-service\target\classes started by victus in D:\MadhurGram\product-service)
+2026-07-09 16:52:14 [main] INFO  c.m.p.ProductServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-07-09 16:52:14 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.1.0.Final
+2026-07-09 16:52:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-09 16:52:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-09 16:52:16 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 383 ms. Found 7 JPA repository interfaces.
+2026-07-09 16:52:16 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-09 16:52:16 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-07-09 16:52:16 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.audit.repository.AuditLogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 16:52:16 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.cart.repository.AbandonedCartRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 16:52:16 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.common.repository.SystemSettingRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 16:52:16 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.customer.repository.CustomerRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 16:52:16 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.marketing.repository.BroadcastCampaignRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 16:52:16 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.order.repository.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 16:52:16 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.product.repository.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 16:52:16 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 43 ms. Found 0 Redis repository interfaces.
+2026-07-09 16:52:17 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-09 16:52:17 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-07-09 16:52:17 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-09 16:52:17 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-09 16:52:17 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 3130 ms
+2026-07-09 16:52:17 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-09 16:52:18 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-07-09 16:52:18 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-09 16:52:18 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-07-09 16:52:18 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@63ad5fe7
+2026-07-09 16:52:18 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-07-09 16:52:19 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-09 16:52:19 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/madhurgram_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.36
+	Default catalog/schema: madhurgram_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-09 16:52:20 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-09 16:52:21 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-09 16:52:21 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-09 16:52:24 [main] INFO  c.m.p.config.CacheConfig - Initializing RedisCacheManager with JSON Serialization...
+2026-07-09 16:52:24 [main] WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-09 16:52:24 [main] WARN  o.s.b.s.a.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 74bd8b03-e764-4c9e-9b46-24670c1d5922
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-09 16:52:24 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-07-09 16:52:25 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-07-09 16:52:25 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-07-09 16:52:25 [main] INFO  c.m.p.ProductServiceApplication - Started ProductServiceApplication in 12.632 seconds (process running for 13.353)
+2026-07-09 16:52:25 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 16:52:26 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 16:52:26 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T16:52:26.133658100 (Retention: 48 hours)
+2026-07-09 16:52:56 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-09 16:52:56 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-09 16:52:56 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+2026-07-09 16:52:56 [http-nio-8080-exec-3] INFO  c.m.p.c.c.AdminSettingsController - Received request to fetch Auto-Pilot Recovery status
+2026-07-09 16:52:56 [http-nio-8080-exec-4] INFO  c.m.p.c.c.AdminAbandonedCartController - Received request to fetch admin abandoned carts older than 30 minutes
+2026-07-09 16:52:56 [http-nio-8080-exec-4] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Fetching unrecovered carts inactive since before: 2026-07-09T16:22:56.897757200
+2026-07-09 16:52:59 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [CACHE MISS] Computing dynamic dashboard metrics for admin console...
+2026-07-09 16:52:59 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - Dashboard stats: Conversion Rate = 100.0%, Graph Data Points = 7
+2026-07-09 16:53:03 [http-nio-8080-exec-1] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 16:53:03 [http-nio-8080-exec-1] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 16:53:03 [http-nio-8080-exec-1] INFO  c.m.p.o.controller.OrderController - Successfully fetched 21 orders
+2026-07-09 16:53:03 [http-nio-8080-exec-2] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 16:53:03 [http-nio-8080-exec-2] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 16:53:03 [http-nio-8080-exec-2] INFO  c.m.p.o.controller.OrderController - Successfully fetched 21 orders
+2026-07-09 16:53:24 [http-nio-8080-exec-8] INFO  c.m.p.a.s.i.AdminProductServiceImpl - Updating product ID: 6. Invalidating caches.
+2026-07-09 16:53:24 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AuditLogServiceImpl - Audit log written: [UPDATE_PRODUCT] by user: admin on entity: 6
+2026-07-09 16:57:25 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 16:57:26 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 16:57:26 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T16:57:26.351016200 (Retention: 48 hours)
+2026-07-09 17:02:25 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 17:02:25 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 17:02:25 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T17:02:25.833918800 (Retention: 48 hours)
+2026-07-09 17:05:02 [http-nio-8080-exec-3] INFO  c.m.p.o.controller.OrderController - Received request to fetch order details for ID: 21
+2026-07-09 17:05:04 [http-nio-8080-exec-4] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-09 17:05:04 [http-nio-8080-exec-4] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-09 17:05:04 [http-nio-8080-exec-4] INFO  c.m.p.p.controller.ProductController - Successfully fetched 6 products for category: shop-all
+2026-07-09 17:05:39 [http-nio-8080-exec-8] INFO  c.m.p.cart.controller.CartController - Received request to sync/update cart for phone: 8770242812
+2026-07-09 17:05:39 [http-nio-8080-exec-8] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8770242812
+2026-07-09 17:05:39 [http-nio-8080-exec-8] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - No active cart session found. Creating a new tracking manifest.
+2026-07-09 17:05:40 [http-nio-8080-exec-8] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Saved cart tracking manifest with ID: 7
+2026-07-09 17:05:45 [http-nio-8080-exec-9] INFO  c.m.p.cart.controller.CartController - Received request to sync/update cart for phone: 8770242812
+2026-07-09 17:05:45 [http-nio-8080-exec-9] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8770242812
+2026-07-09 17:05:45 [http-nio-8080-exec-9] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Existing unrecovered cart found (ID: 7). Updating items and total.
+2026-07-09 17:05:45 [http-nio-8080-exec-9] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Saved cart tracking manifest with ID: 7
+2026-07-09 17:05:56 [http-nio-8080-exec-2] INFO  c.m.p.o.controller.OrderController - Received request to place order for customer: wwe (Phone: 8770242812)
+2026-07-09 17:05:56 [http-nio-8080-exec-2] INFO  c.m.p.o.s.impl.OrderServiceImpl - Processing order placement for customer: wwe
+2026-07-09 17:05:56 [http-nio-8080-exec-2] INFO  c.m.p.o.s.impl.OrderServiceImpl - Deducting stock for Product ID: 3, Quantity: 1
+2026-07-09 17:05:56 [http-nio-8080-exec-2] INFO  c.m.p.p.s.impl.ProductServiceImpl - Attempting to deduct stock for product ID: 3 (Quantity: 1)
+2026-07-09 17:05:56 [http-nio-8080-exec-2] INFO  c.m.p.p.s.impl.ProductServiceImpl - Successfully deducted stock for product ID: 3 (Quantity: 1). Invalidating caches.
+2026-07-09 17:05:56 [http-nio-8080-exec-2] INFO  c.m.p.o.s.impl.OrderServiceImpl - Order saved in database with ID: 22
+2026-07-09 17:05:56 [http-nio-8080-exec-2] INFO  c.m.p.o.s.impl.OrderServiceImpl - Triggering cart recovery finalization for phone: 8770242812
+2026-07-09 17:05:56 [http-nio-8080-exec-2] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Attempting to mark cart as recovered for phone number: 8770242812
+2026-07-09 17:05:56 [http-nio-8080-exec-2] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully marked cart ID: 7 as recovered for phone: 8770242812
+2026-07-09 17:05:56 [http-nio-8080-exec-2] INFO  c.m.p.o.controller.OrderController - Order placed successfully with ID: 22
+2026-07-09 17:05:59 [http-nio-8080-exec-3] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-09 17:05:59 [http-nio-8080-exec-3] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-09 17:05:59 [http-nio-8080-exec-3] INFO  c.m.p.p.controller.ProductController - Successfully fetched 6 products for category: shop-all
+2026-07-09 17:07:25 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 17:07:26 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 17:07:26 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T17:07:26.364544500 (Retention: 48 hours)
+2026-07-09 17:08:04 [http-nio-8080-exec-7] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:08:04 [http-nio-8080-exec-7] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:08:05 [http-nio-8080-exec-7] INFO  c.m.p.o.controller.OrderController - Successfully fetched 22 orders
+2026-07-09 17:08:05 [http-nio-8080-exec-8] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:08:05 [http-nio-8080-exec-8] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:08:05 [http-nio-8080-exec-8] INFO  c.m.p.o.controller.OrderController - Successfully fetched 22 orders
+2026-07-09 17:08:10 [http-nio-8080-exec-9] INFO  c.m.p.o.controller.OrderController - Received request to update order ID: 10 to status: CONFIRMED
+2026-07-09 17:08:10 [http-nio-8080-exec-9] INFO  c.m.p.o.s.impl.OrderServiceImpl - Updating status for order ID: 10 to CONFIRMED
+2026-07-09 17:08:10 [http-nio-8080-exec-9] INFO  c.m.p.o.s.impl.OrderServiceImpl - Order ID: 10 current status is: PENDING
+2026-07-09 17:08:10 [http-nio-8080-exec-9] INFO  c.m.p.o.s.impl.OrderServiceImpl - Order ID: 10 status updated successfully from PENDING to CONFIRMED
+2026-07-09 17:08:10 [http-nio-8080-exec-9] INFO  c.m.p.a.s.impl.AuditLogServiceImpl - Audit log written: [UPDATE_ORDER_STATUS] by user: admin on entity: 10
+2026-07-09 17:08:10 [http-nio-8080-exec-9] INFO  c.m.p.o.s.OrderNotificationService - Dispatching WhatsApp status notification (CONFIRMED) to phone: 1234567891
+2026-07-09 17:08:10 [http-nio-8080-exec-9] INFO  c.m.p.cart.service.TwilioService - [MOCK TWILIO WHATSAPP DISPATCH] Successfully triggered in DEV mode.
+2026-07-09 17:08:10 [http-nio-8080-exec-9] INFO  c.m.p.cart.service.TwilioService - From: whatsapp:+1234567890
+2026-07-09 17:08:10 [http-nio-8080-exec-9] INFO  c.m.p.cart.service.TwilioService - To: whatsapp:+911234567891
+2026-07-09 17:08:10 [http-nio-8080-exec-9] INFO  c.m.p.cart.service.TwilioService - Message Body:
+नमस्ते gghh! आपका MadhurGram ऑर्डर (ID: MG-00010) कन्फर्म हो गया है। हम इसे जल्द ही पैक करके शिप करेंगे। धन्यवाद, टीम MadhurGram 💛
+2026-07-09 17:08:10 [http-nio-8080-exec-9] INFO  c.m.p.o.s.impl.OrderServiceImpl - Publishing OrderConfirmedEvent for Order ID: 10
+2026-07-09 17:08:10 [http-nio-8080-exec-9] INFO  c.m.p.o.controller.OrderController - Order ID: 10 status updated successfully to: CONFIRMED
+2026-07-09 17:08:10 [task-1] INFO  c.m.p.o.l.OrderConfirmedListener - OrderConfirmedEvent received for Order ID: 10 - dispatching asynchronous logistics pickup request
+2026-07-09 17:08:10 [task-1] INFO  c.m.p.l.s.impl.LogisticsServiceImpl - Resolving logistics provider for: DELHIVERY
+2026-07-09 17:08:10 [task-1] INFO  c.m.p.l.p.i.DelhiveryLogisticsProvider - [DELHIVERY] Sending pickup request for Order ID: 10 (Customer: gghh)
+2026-07-09 17:08:10 [task-1] INFO  c.m.p.l.s.impl.LogisticsServiceImpl - Pickup scheduled successfully via Delhivery Express. Waybill: AWB-DELHIVERY-6267669845
+2026-07-09 17:08:11 [task-1] INFO  c.m.p.l.s.impl.LogisticsServiceImpl - Order ID: 10 status updated to SHIPPED in database
+2026-07-09 17:08:11 [task-1] INFO  c.m.p.o.s.OrderNotificationService - Dispatching WhatsApp status notification (SHIPPED) to phone: 1234567891
+2026-07-09 17:08:11 [task-1] INFO  c.m.p.cart.service.TwilioService - [MOCK TWILIO WHATSAPP DISPATCH] Successfully triggered in DEV mode.
+2026-07-09 17:08:11 [task-1] INFO  c.m.p.cart.service.TwilioService - From: whatsapp:+1234567890
+2026-07-09 17:08:11 [task-1] INFO  c.m.p.cart.service.TwilioService - To: whatsapp:+911234567891
+2026-07-09 17:08:11 [task-1] INFO  c.m.p.cart.service.TwilioService - Message Body:
+नमस्ते gghh! आपका MadhurGram ऑर्डर (ID: MG-00010) शिप हो गया है। आपका ट्रैकिंग लिंक: http://localhost:3000/orders/track/10 है। धन्यवाद, टीम MadhurGram 💛
+2026-07-09 17:08:35 [http-nio-8080-exec-2] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:08:35 [http-nio-8080-exec-2] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:08:35 [http-nio-8080-exec-2] INFO  c.m.p.o.controller.OrderController - Successfully fetched 22 orders
+2026-07-09 17:09:05 [http-nio-8080-exec-4] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:09:05 [http-nio-8080-exec-4] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:09:05 [http-nio-8080-exec-4] INFO  c.m.p.o.controller.OrderController - Successfully fetched 22 orders
+2026-07-09 17:09:35 [http-nio-8080-exec-7] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:09:35 [http-nio-8080-exec-7] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:09:35 [http-nio-8080-exec-7] INFO  c.m.p.o.controller.OrderController - Successfully fetched 22 orders
+2026-07-09 17:10:05 [http-nio-8080-exec-10] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:10:05 [http-nio-8080-exec-10] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:10:05 [http-nio-8080-exec-10] INFO  c.m.p.o.controller.OrderController - Successfully fetched 22 orders
+2026-07-09 17:10:35 [http-nio-8080-exec-1] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:10:35 [http-nio-8080-exec-1] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:10:35 [http-nio-8080-exec-1] INFO  c.m.p.o.controller.OrderController - Successfully fetched 22 orders
+2026-07-09 17:10:53 [http-nio-8080-exec-2] INFO  c.m.p.o.controller.OrderController - Received request to fetch order details for ID: 10
+2026-07-09 17:11:05 [http-nio-8080-exec-4] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:11:05 [http-nio-8080-exec-4] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:11:05 [http-nio-8080-exec-4] INFO  c.m.p.o.controller.OrderController - Successfully fetched 22 orders
+2026-07-09 17:12:00 [http-nio-8080-exec-7] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:12:00 [http-nio-8080-exec-7] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:12:00 [http-nio-8080-exec-7] INFO  c.m.p.o.controller.OrderController - Successfully fetched 22 orders
+2026-07-09 17:12:25 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 17:12:25 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 17:12:25 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T17:12:25.906834700 (Retention: 48 hours)
+2026-07-09 17:13:00 [http-nio-8080-exec-10] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:13:00 [http-nio-8080-exec-10] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:13:00 [http-nio-8080-exec-10] INFO  c.m.p.o.controller.OrderController - Successfully fetched 22 orders
+2026-07-09 17:14:53 [http-nio-8080-exec-2] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:14:53 [http-nio-8080-exec-2] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:14:53 [http-nio-8080-exec-2] INFO  c.m.p.o.controller.OrderController - Successfully fetched 22 orders
+2026-07-09 17:15:02 [http-nio-8080-exec-4] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:15:02 [http-nio-8080-exec-4] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:15:02 [http-nio-8080-exec-4] INFO  c.m.p.o.controller.OrderController - Successfully fetched 22 orders
+2026-07-09 17:15:04 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:15:04 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:15:04 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Successfully fetched 22 orders
+2026-07-09 17:15:08 [http-nio-8080-exec-7] INFO  c.m.p.o.controller.OrderController - Received request to update order ID: 7 to status: DELIVERED
+2026-07-09 17:15:08 [http-nio-8080-exec-7] INFO  c.m.p.o.s.impl.OrderServiceImpl - Updating status for order ID: 7 to DELIVERED
+2026-07-09 17:15:08 [http-nio-8080-exec-7] INFO  c.m.p.o.s.impl.OrderServiceImpl - Order ID: 7 current status is: OUT_FOR_DELIVERY
+2026-07-09 17:15:08 [http-nio-8080-exec-7] INFO  c.m.p.o.s.impl.OrderServiceImpl - Order ID: 7 status updated successfully from OUT_FOR_DELIVERY to DELIVERED
+2026-07-09 17:15:08 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AuditLogServiceImpl - Audit log written: [UPDATE_ORDER_STATUS] by user: anonymousUser on entity: 7
+2026-07-09 17:15:08 [http-nio-8080-exec-7] INFO  c.m.p.o.s.OrderNotificationService - Dispatching WhatsApp status notification (DELIVERED) to phone: 6754336777
+2026-07-09 17:15:08 [http-nio-8080-exec-7] INFO  c.m.p.cart.service.TwilioService - [MOCK TWILIO WHATSAPP DISPATCH] Successfully triggered in DEV mode.
+2026-07-09 17:15:08 [http-nio-8080-exec-7] INFO  c.m.p.cart.service.TwilioService - From: whatsapp:+1234567890
+2026-07-09 17:15:08 [http-nio-8080-exec-7] INFO  c.m.p.cart.service.TwilioService - To: whatsapp:+916754336777
+2026-07-09 17:15:08 [http-nio-8080-exec-7] INFO  c.m.p.cart.service.TwilioService - Message Body:
+नमस्ते achree! आपका MadhurGram ऑर्डर (ID: MG-0007) सफलतापूर्वक डिलीवर हो गया है। हमें आशा है कि आपको हमारे शुद्ध उत्पाद पसंद आएंगे। कृपया अपना फीडबैक यहाँ दें: http://localhost:3000/feedback। धन्यवाद, टीम MadhurGram 💛
+2026-07-09 17:15:08 [http-nio-8080-exec-7] INFO  c.m.p.o.controller.OrderController - Order ID: 7 status updated successfully to: DELIVERED
+2026-07-09 17:15:35 [http-nio-8080-exec-10] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:15:35 [http-nio-8080-exec-10] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:15:35 [http-nio-8080-exec-10] INFO  c.m.p.o.controller.OrderController - Successfully fetched 22 orders
+2026-07-09 17:16:05 [http-nio-8080-exec-1] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:16:05 [http-nio-8080-exec-1] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:16:05 [http-nio-8080-exec-1] INFO  c.m.p.o.controller.OrderController - Successfully fetched 22 orders
+2026-07-09 17:17:00 [http-nio-8080-exec-3] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:17:00 [http-nio-8080-exec-3] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:17:00 [http-nio-8080-exec-3] INFO  c.m.p.o.controller.OrderController - Successfully fetched 22 orders
+2026-07-09 17:17:25 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 17:17:25 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 17:17:25 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T17:17:25.906673400 (Retention: 48 hours)
+2026-07-09 17:18:00 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:18:00 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:18:00 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Successfully fetched 22 orders
+2026-07-09 17:19:01 [main] INFO  c.m.p.ProductServiceApplication - Starting ProductServiceApplication using Java 21.0.2 with PID 16792 (D:\MadhurGram\product-service\target\classes started by victus in D:\MadhurGram\product-service)
+2026-07-09 17:19:01 [main] INFO  c.m.p.ProductServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-07-09 17:19:01 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.1.0.Final
+2026-07-09 17:19:02 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-09 17:19:02 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-09 17:19:02 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 234 ms. Found 7 JPA repository interfaces.
+2026-07-09 17:19:02 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-09 17:19:02 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-07-09 17:19:02 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.audit.repository.AuditLogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 17:19:02 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.cart.repository.AbandonedCartRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 17:19:02 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.common.repository.SystemSettingRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 17:19:02 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.customer.repository.CustomerRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 17:19:02 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.marketing.repository.BroadcastCampaignRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 17:19:02 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.order.repository.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 17:19:02 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.product.repository.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 17:19:02 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 34 ms. Found 0 Redis repository interfaces.
+2026-07-09 17:19:03 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-09 17:19:03 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-07-09 17:19:03 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-09 17:19:03 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-09 17:19:03 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 2657 ms
+2026-07-09 17:19:04 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-09 17:19:04 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-07-09 17:19:04 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-09 17:19:05 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-07-09 17:19:05 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@259aec72
+2026-07-09 17:19:05 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-07-09 17:19:05 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-09 17:19:05 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/madhurgram_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.36
+	Default catalog/schema: madhurgram_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-09 17:19:06 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-09 17:19:06 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-09 17:19:07 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-09 17:19:09 [main] INFO  c.m.p.config.CacheConfig - Initializing RedisCacheManager with JSON Serialization...
+2026-07-09 17:19:09 [main] WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-09 17:19:09 [main] WARN  o.s.b.s.a.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 65c89f8f-624f-46e5-8968-8d67d7ead144
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-09 17:19:09 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-07-09 17:19:10 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-07-09 17:19:10 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-07-09 17:19:10 [main] INFO  c.m.p.ProductServiceApplication - Started ProductServiceApplication in 10.502 seconds (process running for 11.388)
+2026-07-09 17:19:10 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 17:19:10 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 17:19:10 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T17:19:10.864807100 (Retention: 48 hours)
+2026-07-09 17:21:03 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-09 17:21:03 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-09 17:21:04 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 145 ms
+2026-07-09 17:21:05 [http-nio-8080-exec-2] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:21:05 [http-nio-8080-exec-2] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:21:05 [http-nio-8080-exec-2] INFO  c.m.p.o.controller.OrderController - Successfully fetched 22 orders
+2026-07-09 17:21:05 [http-nio-8080-exec-3] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-09 17:21:06 [http-nio-8080-exec-4] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:21:06 [http-nio-8080-exec-4] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:21:06 [http-nio-8080-exec-4] INFO  c.m.p.o.controller.OrderController - Successfully fetched 22 orders
+2026-07-09 17:21:06 [http-nio-8080-exec-3] INFO  c.m.p.p.controller.ProductController - Successfully fetched 6 products for category: shop-all
+2026-07-09 17:21:34 [http-nio-8080-exec-8] INFO  c.m.p.cart.controller.CartController - Received request to sync/update cart for phone: 8542047373
+2026-07-09 17:21:34 [http-nio-8080-exec-8] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8542047373
+2026-07-09 17:21:34 [http-nio-8080-exec-8] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - No active cart session found. Creating a new tracking manifest.
+2026-07-09 17:21:34 [http-nio-8080-exec-8] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Saved cart tracking manifest with ID: 8
+2026-07-09 17:21:35 [http-nio-8080-exec-10] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:21:35 [http-nio-8080-exec-10] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:21:35 [http-nio-8080-exec-10] INFO  c.m.p.o.controller.OrderController - Successfully fetched 22 orders
+2026-07-09 17:21:42 [http-nio-8080-exec-2] INFO  c.m.p.cart.controller.CartController - Received request to sync/update cart for phone: 8542047373
+2026-07-09 17:21:42 [http-nio-8080-exec-2] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8542047373
+2026-07-09 17:21:42 [http-nio-8080-exec-2] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Existing unrecovered cart found (ID: 8). Updating items and total.
+2026-07-09 17:21:42 [http-nio-8080-exec-2] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Saved cart tracking manifest with ID: 8
+2026-07-09 17:21:44 [http-nio-8080-exec-3] INFO  c.m.p.o.controller.OrderController - Received request to place order for customer: fhhhh (Phone: 8542047373)
+2026-07-09 17:21:44 [http-nio-8080-exec-3] INFO  c.m.p.o.s.impl.OrderServiceImpl - Processing order placement for customer: fhhhh
+2026-07-09 17:21:44 [http-nio-8080-exec-3] INFO  c.m.p.o.s.impl.OrderServiceImpl - Deducting stock for Product ID: 3, Quantity: 1
+2026-07-09 17:21:44 [http-nio-8080-exec-3] INFO  c.m.p.p.s.impl.ProductServiceImpl - Attempting to deduct stock for product ID: 3 (Quantity: 1)
+2026-07-09 17:21:44 [http-nio-8080-exec-3] INFO  c.m.p.p.s.impl.ProductServiceImpl - Successfully deducted stock for product ID: 3 (Quantity: 1). Invalidating caches.
+2026-07-09 17:21:44 [http-nio-8080-exec-3] INFO  c.m.p.o.s.impl.OrderServiceImpl - Order saved in database with ID: 23
+2026-07-09 17:21:44 [http-nio-8080-exec-3] INFO  c.m.p.o.s.impl.OrderServiceImpl - Triggering cart recovery finalization for phone: 8542047373
+2026-07-09 17:21:44 [http-nio-8080-exec-3] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Attempting to mark cart as recovered for phone number: 8542047373
+2026-07-09 17:21:44 [http-nio-8080-exec-3] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully marked cart ID: 8 as recovered for phone: 8542047373
+2026-07-09 17:21:44 [http-nio-8080-exec-3] INFO  c.m.p.o.controller.OrderController - Order placed successfully with ID: 23
+2026-07-09 17:21:54 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-09 17:21:54 [http-nio-8080-exec-5] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-09 17:21:55 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Successfully fetched 6 products for category: shop-all
+2026-07-09 17:23:00 [http-nio-8080-exec-10] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:23:00 [http-nio-8080-exec-10] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:23:00 [http-nio-8080-exec-10] INFO  c.m.p.o.controller.OrderController - Successfully fetched 23 orders
+2026-07-09 17:24:00 [http-nio-8080-exec-2] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 17:24:00 [http-nio-8080-exec-2] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 17:24:00 [http-nio-8080-exec-2] INFO  c.m.p.o.controller.OrderController - Successfully fetched 23 orders
+2026-07-09 17:24:10 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 17:24:10 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 17:24:10 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T17:24:10.812328500 (Retention: 48 hours)
+2026-07-09 17:28:40 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m35s236ms666µs).
+2026-07-09 17:32:31 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 17:32:31 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 17:32:32 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T17:32:32.013217500 (Retention: 48 hours)
+2026-07-09 17:34:10 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 17:34:10 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 17:34:10 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T17:34:10.765595400 (Retention: 48 hours)
+2026-07-09 17:39:10 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 17:39:10 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 17:39:10 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T17:39:10.998749200 (Retention: 48 hours)
+2026-07-09 17:41:49 [main] INFO  c.m.p.ProductServiceApplication - Starting ProductServiceApplication using Java 21.0.2 with PID 13412 (D:\MadhurGram\product-service\target\classes started by victus in D:\MadhurGram\product-service)
+2026-07-09 17:41:49 [main] INFO  c.m.p.ProductServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-07-09 17:41:49 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.1.0.Final
+2026-07-09 17:41:50 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-09 17:41:50 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-09 17:41:51 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 303 ms. Found 7 JPA repository interfaces.
+2026-07-09 17:41:51 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-09 17:41:51 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-07-09 17:41:51 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.audit.repository.AuditLogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 17:41:51 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.cart.repository.AbandonedCartRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 17:41:51 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.common.repository.SystemSettingRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 17:41:51 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.customer.repository.CustomerRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 17:41:51 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.marketing.repository.BroadcastCampaignRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 17:41:51 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.order.repository.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 17:41:51 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.product.repository.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 17:41:51 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 41 ms. Found 0 Redis repository interfaces.
+2026-07-09 17:41:52 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-09 17:41:52 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-07-09 17:41:52 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-09 17:41:52 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-09 17:41:52 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 2640 ms
+2026-07-09 17:41:52 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-09 17:41:52 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-07-09 17:41:53 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-09 17:41:53 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-07-09 17:41:53 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@259aec72
+2026-07-09 17:41:53 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-07-09 17:41:53 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-09 17:41:53 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/madhurgram_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.36
+	Default catalog/schema: madhurgram_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-09 17:41:55 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-09 17:41:55 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-09 17:41:55 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-09 17:41:57 [main] INFO  c.m.p.config.CacheConfig - Initializing RedisCacheManager with JSON Serialization...
+2026-07-09 17:41:57 [main] WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-09 17:41:58 [main] WARN  o.s.b.s.a.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 4d6d0bac-0778-459a-8007-a5b346971f5e
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-09 17:41:58 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-07-09 17:41:58 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-07-09 17:41:58 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-07-09 17:41:58 [main] INFO  c.m.p.ProductServiceApplication - Started ProductServiceApplication in 10.201 seconds (process running for 11.036)
+2026-07-09 17:41:58 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 17:41:58 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 17:41:59 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T17:41:59.027208100 (Retention: 48 hours)
+2026-07-09 17:42:30 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-09 17:42:30 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-09 17:42:30 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+2026-07-09 17:42:30 [http-nio-8080-exec-4] INFO  c.m.p.cart.controller.CartController - Received request to sync/update cart for phone: 8770242812
+2026-07-09 17:42:30 [http-nio-8080-exec-4] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8770242812
+2026-07-09 17:42:30 [http-nio-8080-exec-4] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - No active cart session found. Creating a new tracking manifest.
+2026-07-09 17:42:30 [http-nio-8080-exec-4] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Saved cart tracking manifest with ID: 9
+2026-07-09 17:42:33 [http-nio-8080-exec-5] INFO  c.m.p.cart.controller.CartController - Received request to sync/update cart for phone: 8770242812
+2026-07-09 17:42:33 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8770242812
+2026-07-09 17:42:33 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Existing unrecovered cart found (ID: 9). Updating items and total.
+2026-07-09 17:42:33 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Saved cart tracking manifest with ID: 9
+2026-07-09 17:42:34 [http-nio-8080-exec-6] INFO  c.m.p.cart.controller.CartController - Received request to sync/update cart for phone: 8770242812
+2026-07-09 17:42:34 [http-nio-8080-exec-6] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8770242812
+2026-07-09 17:42:34 [http-nio-8080-exec-6] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Existing unrecovered cart found (ID: 9). Updating items and total.
+2026-07-09 17:42:34 [http-nio-8080-exec-6] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Saved cart tracking manifest with ID: 9
+2026-07-09 17:43:01 [http-nio-8080-exec-8] INFO  c.m.p.o.controller.OrderController - Received request to place order for customer: kkr (Phone: 8770242812)
+2026-07-09 17:43:01 [http-nio-8080-exec-8] INFO  c.m.p.o.s.impl.OrderServiceImpl - Processing order placement for customer: kkr
+2026-07-09 17:43:01 [http-nio-8080-exec-8] INFO  c.m.p.o.s.impl.OrderServiceImpl - Deducting stock for Product ID: 5, Quantity: 1
+2026-07-09 17:43:01 [http-nio-8080-exec-8] INFO  c.m.p.p.s.impl.ProductServiceImpl - Attempting to deduct stock for product ID: 5 (Quantity: 1)
+2026-07-09 17:43:01 [http-nio-8080-exec-8] INFO  c.m.p.p.s.impl.ProductServiceImpl - Successfully deducted stock for product ID: 5 (Quantity: 1). Invalidating caches.
+2026-07-09 17:43:01 [http-nio-8080-exec-8] INFO  c.m.p.o.s.impl.OrderServiceImpl - Order saved in database with ID: 24
+2026-07-09 17:43:01 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AuditLogServiceImpl - Audit log written: [PLACE_ORDER_COD] by user: anonymousUser on entity: 24
+2026-07-09 17:43:01 [http-nio-8080-exec-8] INFO  c.m.p.o.s.OrderNotificationService - Dispatching WhatsApp status notification (CONFIRMED) to phone: 8770242812
+2026-07-09 17:43:01 [http-nio-8080-exec-8] INFO  c.m.p.cart.service.TwilioService - [MOCK TWILIO WHATSAPP DISPATCH] Successfully triggered in DEV mode.
+2026-07-09 17:43:01 [http-nio-8080-exec-8] INFO  c.m.p.cart.service.TwilioService - From: whatsapp:+1234567890
+2026-07-09 17:43:01 [http-nio-8080-exec-8] INFO  c.m.p.cart.service.TwilioService - To: whatsapp:+918770242812
+2026-07-09 17:43:01 [http-nio-8080-exec-8] INFO  c.m.p.cart.service.TwilioService - Message Body:
+नमस्ते kkr! आपका MadhurGram ऑर्डर (ID: MG-00024) कन्फर्म हो गया है। हम इसे जल्द ही पैक करके शिप करेंगे। धन्यवाद, टीम MadhurGram 💛
+2026-07-09 17:43:01 [http-nio-8080-exec-8] INFO  c.m.p.o.s.impl.OrderServiceImpl - Publishing OrderConfirmedEvent for COD Order ID: 24
+2026-07-09 17:43:01 [http-nio-8080-exec-8] INFO  c.m.p.o.s.impl.OrderServiceImpl - Triggering cart recovery finalization for phone: 8770242812
+2026-07-09 17:43:01 [http-nio-8080-exec-8] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Attempting to mark cart as recovered for phone number: 8770242812
+2026-07-09 17:43:01 [http-nio-8080-exec-8] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully marked cart ID: 9 as recovered for phone: 8770242812
+2026-07-09 17:43:01 [task-1] INFO  c.m.p.o.l.OrderConfirmedListener - OrderConfirmedEvent received for Order ID: 24 - dispatching asynchronous logistics pickup request
+2026-07-09 17:43:01 [http-nio-8080-exec-8] INFO  c.m.p.o.controller.OrderController - Order placed successfully with ID: 24
+2026-07-09 17:43:01 [task-1] INFO  c.m.p.l.s.impl.LogisticsServiceImpl - Resolving logistics provider for: DELHIVERY
+2026-07-09 17:43:01 [task-1] INFO  c.m.p.l.p.i.DelhiveryLogisticsProvider - [DELHIVERY] Sending pickup request for Order ID: 24 (Customer: kkr)
+2026-07-09 17:43:01 [task-1] INFO  c.m.p.l.s.impl.LogisticsServiceImpl - Pickup scheduled successfully via Delhivery Express. Waybill: AWB-DELHIVERY-4048598553
+2026-07-09 17:43:01 [task-1] INFO  c.m.p.l.s.impl.LogisticsServiceImpl - Order ID: 24 status updated to SHIPPED in database
+2026-07-09 17:43:01 [task-1] INFO  c.m.p.o.s.OrderNotificationService - Dispatching WhatsApp status notification (SHIPPED) to phone: 8770242812
+2026-07-09 17:43:01 [task-1] INFO  c.m.p.cart.service.TwilioService - [MOCK TWILIO WHATSAPP DISPATCH] Successfully triggered in DEV mode.
+2026-07-09 17:43:01 [task-1] INFO  c.m.p.cart.service.TwilioService - From: whatsapp:+1234567890
+2026-07-09 17:43:01 [task-1] INFO  c.m.p.cart.service.TwilioService - To: whatsapp:+918770242812
+2026-07-09 17:43:01 [task-1] INFO  c.m.p.cart.service.TwilioService - Message Body:
+नमस्ते kkr! आपका MadhurGram ऑर्डर (ID: MG-00024) शिप हो गया है। आपका ट्रैकिंग लिंक: http://localhost:3000/orders/track/24 है। धन्यवाद, टीम MadhurGram 💛
+2026-07-09 17:45:05 [http-nio-8080-exec-1] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-09 17:45:07 [http-nio-8080-exec-1] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-09 17:45:07 [http-nio-8080-exec-1] INFO  c.m.p.p.controller.ProductController - Successfully fetched 6 products for category: shop-all
+2026-07-09 17:45:23 [http-nio-8080-exec-5] INFO  c.m.p.cart.controller.CartController - Received request to sync/update cart for phone: 8542047373
+2026-07-09 17:45:23 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8542047373
+2026-07-09 17:45:23 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - No active cart session found. Creating a new tracking manifest.
+2026-07-09 17:45:23 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Saved cart tracking manifest with ID: 10
+2026-07-09 17:45:36 [http-nio-8080-exec-7] INFO  c.m.p.cart.controller.CartController - Received request to sync/update cart for phone: 8542047373
+2026-07-09 17:45:36 [http-nio-8080-exec-7] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8542047373
+2026-07-09 17:45:36 [http-nio-8080-exec-7] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Existing unrecovered cart found (ID: 10). Updating items and total.
+2026-07-09 17:45:36 [http-nio-8080-exec-7] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Saved cart tracking manifest with ID: 10
+2026-07-09 17:45:45 [http-nio-8080-exec-9] INFO  c.m.p.o.controller.OrderController - Received request to place order for customer: dfffff (Phone: 8542047373)
+2026-07-09 17:45:45 [http-nio-8080-exec-9] INFO  c.m.p.o.s.impl.OrderServiceImpl - Processing order placement for customer: dfffff
+2026-07-09 17:45:45 [http-nio-8080-exec-9] INFO  c.m.p.o.s.impl.OrderServiceImpl - Deducting stock for Product ID: 5, Quantity: 1
+2026-07-09 17:45:45 [http-nio-8080-exec-9] INFO  c.m.p.p.s.impl.ProductServiceImpl - Attempting to deduct stock for product ID: 5 (Quantity: 1)
+2026-07-09 17:45:45 [http-nio-8080-exec-9] INFO  c.m.p.p.s.impl.ProductServiceImpl - Successfully deducted stock for product ID: 5 (Quantity: 1). Invalidating caches.
+2026-07-09 17:45:45 [http-nio-8080-exec-9] INFO  c.m.p.o.s.impl.OrderServiceImpl - Order saved in database with ID: 25
+2026-07-09 17:45:45 [http-nio-8080-exec-9] INFO  c.m.p.a.s.impl.AuditLogServiceImpl - Audit log written: [PLACE_ORDER_COD] by user: anonymousUser on entity: 25
+2026-07-09 17:45:45 [http-nio-8080-exec-9] INFO  c.m.p.o.s.OrderNotificationService - Dispatching WhatsApp status notification (CONFIRMED) to phone: 8542047373
+2026-07-09 17:45:45 [http-nio-8080-exec-9] INFO  c.m.p.cart.service.TwilioService - [MOCK TWILIO WHATSAPP DISPATCH] Successfully triggered in DEV mode.
+2026-07-09 17:45:45 [http-nio-8080-exec-9] INFO  c.m.p.cart.service.TwilioService - From: whatsapp:+1234567890
+2026-07-09 17:45:45 [http-nio-8080-exec-9] INFO  c.m.p.cart.service.TwilioService - To: whatsapp:+918542047373
+2026-07-09 17:45:45 [http-nio-8080-exec-9] INFO  c.m.p.cart.service.TwilioService - Message Body:
+नमस्ते dfffff! आपका MadhurGram ऑर्डर (ID: MG-00025) कन्फर्म हो गया है। हम इसे जल्द ही पैक करके शिप करेंगे। धन्यवाद, टीम MadhurGram 💛
+2026-07-09 17:45:45 [http-nio-8080-exec-9] INFO  c.m.p.o.s.impl.OrderServiceImpl - Publishing OrderConfirmedEvent for COD Order ID: 25
+2026-07-09 17:45:45 [http-nio-8080-exec-9] INFO  c.m.p.o.s.impl.OrderServiceImpl - Triggering cart recovery finalization for phone: 8542047373
+2026-07-09 17:45:45 [http-nio-8080-exec-9] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Attempting to mark cart as recovered for phone number: 8542047373
+2026-07-09 17:45:45 [http-nio-8080-exec-9] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully marked cart ID: 10 as recovered for phone: 8542047373
+2026-07-09 17:45:45 [http-nio-8080-exec-9] INFO  c.m.p.o.controller.OrderController - Order placed successfully with ID: 25
+2026-07-09 17:45:45 [task-2] INFO  c.m.p.o.l.OrderConfirmedListener - OrderConfirmedEvent received for Order ID: 25 - dispatching asynchronous logistics pickup request
+2026-07-09 17:45:45 [task-2] INFO  c.m.p.l.s.impl.LogisticsServiceImpl - Resolving logistics provider for: DELHIVERY
+2026-07-09 17:45:45 [task-2] INFO  c.m.p.l.p.i.DelhiveryLogisticsProvider - [DELHIVERY] Sending pickup request for Order ID: 25 (Customer: dfffff)
+2026-07-09 17:45:45 [task-2] INFO  c.m.p.l.s.impl.LogisticsServiceImpl - Pickup scheduled successfully via Delhivery Express. Waybill: AWB-DELHIVERY-9891585465
+2026-07-09 17:45:45 [task-2] INFO  c.m.p.l.s.impl.LogisticsServiceImpl - Order ID: 25 status updated to SHIPPED in database
+2026-07-09 17:45:45 [task-2] INFO  c.m.p.o.s.OrderNotificationService - Dispatching WhatsApp status notification (SHIPPED) to phone: 8542047373
+2026-07-09 17:45:45 [task-2] INFO  c.m.p.cart.service.TwilioService - [MOCK TWILIO WHATSAPP DISPATCH] Successfully triggered in DEV mode.
+2026-07-09 17:45:45 [task-2] INFO  c.m.p.cart.service.TwilioService - From: whatsapp:+1234567890
+2026-07-09 17:45:45 [task-2] INFO  c.m.p.cart.service.TwilioService - To: whatsapp:+918542047373
+2026-07-09 17:45:45 [task-2] INFO  c.m.p.cart.service.TwilioService - Message Body:
+नमस्ते dfffff! आपका MadhurGram ऑर्डर (ID: MG-00025) शिप हो गया है। आपका ट्रैकिंग लिंक: http://localhost:3000/orders/track/25 है। धन्यवाद, टीम MadhurGram 💛
+2026-07-09 17:45:48 [http-nio-8080-exec-10] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-09 17:45:48 [http-nio-8080-exec-10] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-09 17:45:48 [http-nio-8080-exec-10] INFO  c.m.p.p.controller.ProductController - Successfully fetched 6 products for category: shop-all
+2026-07-09 17:46:58 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 17:46:58 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 17:46:58 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T17:46:58.893231600 (Retention: 48 hours)
+2026-07-09 17:51:58 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 17:51:58 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 17:51:58 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T17:51:58.935045700 (Retention: 48 hours)
+2026-07-09 17:55:21 [http-nio-8080-exec-5] INFO  c.m.p.cart.controller.CartController - Received request to sync/update cart for phone: 1234586935
+2026-07-09 17:55:21 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 1234586935
+2026-07-09 17:55:21 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - No active cart session found. Creating a new tracking manifest.
+2026-07-09 17:55:21 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Saved cart tracking manifest with ID: 11
+2026-07-09 17:55:26 [http-nio-8080-exec-7] INFO  c.m.p.cart.controller.CartController - Received request to sync/update cart for phone: 1234586935
+2026-07-09 17:55:26 [http-nio-8080-exec-7] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 1234586935
+2026-07-09 17:55:26 [http-nio-8080-exec-7] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Existing unrecovered cart found (ID: 11). Updating items and total.
+2026-07-09 17:55:26 [http-nio-8080-exec-7] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Saved cart tracking manifest with ID: 11
+2026-07-09 17:56:34 [http-nio-8080-exec-1] INFO  c.m.p.o.controller.OrderController - Received request to place order for customer: ssfdff (Phone: 1234586935)
+2026-07-09 17:56:34 [http-nio-8080-exec-1] INFO  c.m.p.o.s.impl.OrderServiceImpl - Processing order placement for customer: ssfdff
+2026-07-09 17:56:34 [http-nio-8080-exec-1] INFO  c.m.p.o.s.impl.OrderServiceImpl - Deducting stock for Product ID: 6, Quantity: 1
+2026-07-09 17:56:34 [http-nio-8080-exec-1] INFO  c.m.p.p.s.impl.ProductServiceImpl - Attempting to deduct stock for product ID: 6 (Quantity: 1)
+2026-07-09 17:56:35 [http-nio-8080-exec-1] INFO  c.m.p.p.s.impl.ProductServiceImpl - Successfully deducted stock for product ID: 6 (Quantity: 1). Invalidating caches.
+2026-07-09 17:56:35 [http-nio-8080-exec-1] INFO  c.m.p.o.s.impl.OrderServiceImpl - Order saved in database with ID: 26
+2026-07-09 17:56:35 [http-nio-8080-exec-1] INFO  c.m.p.a.s.impl.AuditLogServiceImpl - Audit log written: [PLACE_ORDER_COD] by user: anonymousUser on entity: 26
+2026-07-09 17:56:35 [http-nio-8080-exec-1] INFO  c.m.p.o.s.OrderNotificationService - Dispatching WhatsApp status notification (CONFIRMED) to phone: 1234586935
+2026-07-09 17:56:35 [http-nio-8080-exec-1] INFO  c.m.p.cart.service.TwilioService - [MOCK TWILIO WHATSAPP DISPATCH] Successfully triggered in DEV mode.
+2026-07-09 17:56:35 [http-nio-8080-exec-1] INFO  c.m.p.cart.service.TwilioService - From: whatsapp:+1234567890
+2026-07-09 17:56:35 [http-nio-8080-exec-1] INFO  c.m.p.cart.service.TwilioService - To: whatsapp:+911234586935
+2026-07-09 17:56:35 [http-nio-8080-exec-1] INFO  c.m.p.cart.service.TwilioService - Message Body:
+नमस्ते ssfdff! आपका MadhurGram ऑर्डर (ID: MG-00026) कन्फर्म हो गया है। हम इसे जल्द ही पैक करके शिप करेंगे। धन्यवाद, टीम MadhurGram 💛
+2026-07-09 17:56:35 [http-nio-8080-exec-1] INFO  c.m.p.o.s.impl.OrderServiceImpl - Publishing OrderConfirmedEvent for COD Order ID: 26
+2026-07-09 17:56:35 [http-nio-8080-exec-1] INFO  c.m.p.o.s.impl.OrderServiceImpl - Triggering cart recovery finalization for phone: 1234586935
+2026-07-09 17:56:35 [http-nio-8080-exec-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Attempting to mark cart as recovered for phone number: 1234586935
+2026-07-09 17:56:35 [http-nio-8080-exec-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully marked cart ID: 11 as recovered for phone: 1234586935
+2026-07-09 17:56:35 [http-nio-8080-exec-1] INFO  c.m.p.o.controller.OrderController - Order placed successfully with ID: 26
+2026-07-09 17:56:35 [task-3] INFO  c.m.p.o.l.OrderConfirmedListener - OrderConfirmedEvent received for Order ID: 26 - dispatching asynchronous logistics pickup request
+2026-07-09 17:56:35 [task-3] INFO  c.m.p.l.s.impl.LogisticsServiceImpl - Resolving logistics provider for: DELHIVERY
+2026-07-09 17:56:35 [task-3] INFO  c.m.p.l.p.i.DelhiveryLogisticsProvider - [DELHIVERY] Sending pickup request for Order ID: 26 (Customer: ssfdff)
+2026-07-09 17:56:35 [task-3] INFO  c.m.p.l.s.impl.LogisticsServiceImpl - Pickup scheduled successfully via Delhivery Express. Waybill: AWB-DELHIVERY-6717608608
+2026-07-09 17:56:35 [task-3] INFO  c.m.p.l.s.impl.LogisticsServiceImpl - Order ID: 26 status updated to SHIPPED in database
+2026-07-09 17:56:35 [task-3] INFO  c.m.p.o.s.OrderNotificationService - Dispatching WhatsApp status notification (SHIPPED) to phone: 1234586935
+2026-07-09 17:56:35 [task-3] INFO  c.m.p.cart.service.TwilioService - [MOCK TWILIO WHATSAPP DISPATCH] Successfully triggered in DEV mode.
+2026-07-09 17:56:35 [task-3] INFO  c.m.p.cart.service.TwilioService - From: whatsapp:+1234567890
+2026-07-09 17:56:35 [task-3] INFO  c.m.p.cart.service.TwilioService - To: whatsapp:+911234586935
+2026-07-09 17:56:35 [task-3] INFO  c.m.p.cart.service.TwilioService - Message Body:
+नमस्ते ssfdff! आपका MadhurGram ऑर्डर (ID: MG-00026) शिप हो गया है। आपका ट्रैकिंग लिंक: http://localhost:3000/orders/track/26 है। धन्यवाद, टीम MadhurGram 💛
+2026-07-09 17:56:38 [http-nio-8080-exec-3] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-09 17:56:38 [http-nio-8080-exec-3] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-09 17:56:38 [http-nio-8080-exec-3] INFO  c.m.p.p.controller.ProductController - Successfully fetched 6 products for category: shop-all
+2026-07-09 17:56:58 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 17:56:58 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 17:56:58 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T17:56:58.881868100 (Retention: 48 hours)
+2026-07-09 18:00:21 [http-nio-8080-exec-4] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-09 18:00:23 [http-nio-8080-exec-4] INFO  c.m.p.p.controller.ProductController - Successfully fetched 6 products for category: shop-all
+2026-07-09 18:00:32 [http-nio-8080-exec-8] INFO  c.m.p.cart.controller.CartController - Received request to sync/update cart for phone: 5545888885
+2026-07-09 18:00:32 [http-nio-8080-exec-8] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 5545888885
+2026-07-09 18:00:32 [http-nio-8080-exec-8] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - No active cart session found. Creating a new tracking manifest.
+2026-07-09 18:00:32 [http-nio-8080-exec-8] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Saved cart tracking manifest with ID: 12
+2026-07-09 18:00:37 [http-nio-8080-exec-9] INFO  c.m.p.cart.controller.CartController - Received request to sync/update cart for phone: 5545888885
+2026-07-09 18:00:37 [http-nio-8080-exec-9] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 5545888885
+2026-07-09 18:00:37 [http-nio-8080-exec-9] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Existing unrecovered cart found (ID: 12). Updating items and total.
+2026-07-09 18:00:37 [http-nio-8080-exec-9] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Saved cart tracking manifest with ID: 12
+2026-07-09 18:00:39 [http-nio-8080-exec-1] INFO  c.m.p.cart.controller.CartController - Received request to sync/update cart for phone: 5545888885
+2026-07-09 18:00:39 [http-nio-8080-exec-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 5545888885
+2026-07-09 18:00:39 [http-nio-8080-exec-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Existing unrecovered cart found (ID: 12). Updating items and total.
+2026-07-09 18:00:39 [http-nio-8080-exec-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Saved cart tracking manifest with ID: 12
+2026-07-09 18:01:42 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Received request to place order for customer: llkkkkjjkkkkk (Phone: 5545888885)
+2026-07-09 18:01:42 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Processing order placement for customer: llkkkkjjkkkkk
+2026-07-09 18:01:42 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Deducting stock for Product ID: 3, Quantity: 1
+2026-07-09 18:01:42 [http-nio-8080-exec-5] INFO  c.m.p.p.s.impl.ProductServiceImpl - Attempting to deduct stock for product ID: 3 (Quantity: 1)
+2026-07-09 18:01:42 [http-nio-8080-exec-5] INFO  c.m.p.p.s.impl.ProductServiceImpl - Successfully deducted stock for product ID: 3 (Quantity: 1). Invalidating caches.
+2026-07-09 18:01:42 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Order saved in database with ID: 27
+2026-07-09 18:01:42 [http-nio-8080-exec-5] INFO  c.m.p.a.s.impl.AuditLogServiceImpl - Audit log written: [PLACE_ORDER_COD] by user: anonymousUser on entity: 27
+2026-07-09 18:01:42 [http-nio-8080-exec-5] INFO  c.m.p.o.s.OrderNotificationService - Dispatching WhatsApp status notification (CONFIRMED) to phone: 5545888885
+2026-07-09 18:01:42 [http-nio-8080-exec-5] INFO  c.m.p.cart.service.TwilioService - [MOCK TWILIO WHATSAPP DISPATCH] Successfully triggered in DEV mode.
+2026-07-09 18:01:42 [http-nio-8080-exec-5] INFO  c.m.p.cart.service.TwilioService - From: whatsapp:+1234567890
+2026-07-09 18:01:42 [http-nio-8080-exec-5] INFO  c.m.p.cart.service.TwilioService - To: whatsapp:+915545888885
+2026-07-09 18:01:42 [http-nio-8080-exec-5] INFO  c.m.p.cart.service.TwilioService - Message Body:
+नमस्ते llkkkkjjkkkkk! आपका MadhurGram ऑर्डर (ID: MG-00027) कन्फर्म हो गया है। हम इसे जल्द ही पैक करके शिप करेंगे। धन्यवाद, टीम MadhurGram 💛
+2026-07-09 18:01:42 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Publishing OrderConfirmedEvent for COD Order ID: 27
+2026-07-09 18:01:42 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Triggering cart recovery finalization for phone: 5545888885
+2026-07-09 18:01:42 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Attempting to mark cart as recovered for phone number: 5545888885
+2026-07-09 18:01:42 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully marked cart ID: 12 as recovered for phone: 5545888885
+2026-07-09 18:01:42 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Order placed successfully with ID: 27
+2026-07-09 18:01:42 [task-4] INFO  c.m.p.o.l.OrderConfirmedListener - OrderConfirmedEvent received for Order ID: 27 - dispatching asynchronous logistics pickup request
+2026-07-09 18:01:42 [task-4] INFO  c.m.p.l.s.impl.LogisticsServiceImpl - Resolving logistics provider for: DELHIVERY
+2026-07-09 18:01:42 [task-4] INFO  c.m.p.l.p.i.DelhiveryLogisticsProvider - [DELHIVERY] Sending pickup request for Order ID: 27 (Customer: llkkkkjjkkkkk)
+2026-07-09 18:01:42 [task-4] INFO  c.m.p.l.s.impl.LogisticsServiceImpl - Pickup scheduled successfully via Delhivery Express. Waybill: AWB-DELHIVERY-9565223171
+2026-07-09 18:01:42 [task-4] INFO  c.m.p.l.s.impl.LogisticsServiceImpl - Order ID: 27 status updated to SHIPPED in database
+2026-07-09 18:01:42 [task-4] INFO  c.m.p.o.s.OrderNotificationService - Dispatching WhatsApp status notification (SHIPPED) to phone: 5545888885
+2026-07-09 18:01:42 [task-4] INFO  c.m.p.cart.service.TwilioService - [MOCK TWILIO WHATSAPP DISPATCH] Successfully triggered in DEV mode.
+2026-07-09 18:01:42 [task-4] INFO  c.m.p.cart.service.TwilioService - From: whatsapp:+1234567890
+2026-07-09 18:01:42 [task-4] INFO  c.m.p.cart.service.TwilioService - To: whatsapp:+915545888885
+2026-07-09 18:01:42 [task-4] INFO  c.m.p.cart.service.TwilioService - Message Body:
+नमस्ते llkkkkjjkkkkk! आपका MadhurGram ऑर्डर (ID: MG-00027) शिप हो गया है। आपका ट्रैकिंग लिंक: http://localhost:3000/orders/track/27 है। धन्यवाद, टीम MadhurGram 💛
+2026-07-09 18:01:44 [http-nio-8080-exec-6] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-09 18:01:44 [http-nio-8080-exec-6] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-09 18:01:44 [http-nio-8080-exec-6] INFO  c.m.p.p.controller.ProductController - Successfully fetched 6 products for category: shop-all
+2026-07-09 18:01:58 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 18:01:58 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 18:01:58 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T18:01:58.894754300 (Retention: 48 hours)
+2026-07-09 18:06:58 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 18:06:58 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 18:06:58 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T18:06:58.957367600 (Retention: 48 hours)
+2026-07-09 18:11:41 [main] INFO  c.m.p.ProductServiceApplication - Starting ProductServiceApplication using Java 21.0.2 with PID 17184 (D:\MadhurGram\product-service\target\classes started by victus in D:\MadhurGram\product-service)
+2026-07-09 18:11:41 [main] INFO  c.m.p.ProductServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-07-09 18:11:41 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.1.0.Final
+2026-07-09 18:11:42 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-09 18:11:42 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-09 18:11:42 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 248 ms. Found 7 JPA repository interfaces.
+2026-07-09 18:11:43 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-09 18:11:43 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-07-09 18:11:43 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.audit.repository.AuditLogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 18:11:43 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.cart.repository.AbandonedCartRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 18:11:43 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.common.repository.SystemSettingRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 18:11:43 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.customer.repository.CustomerRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 18:11:43 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.marketing.repository.BroadcastCampaignRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 18:11:43 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.order.repository.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 18:11:43 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.product.repository.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 18:11:43 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 32 ms. Found 0 Redis repository interfaces.
+2026-07-09 18:11:43 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-09 18:11:43 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-07-09 18:11:43 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-09 18:11:43 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-09 18:11:44 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 2365 ms
+2026-07-09 18:11:44 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-09 18:11:44 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-07-09 18:11:44 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-09 18:11:44 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-07-09 18:11:45 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@259aec72
+2026-07-09 18:11:45 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-07-09 18:11:45 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-09 18:11:45 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/madhurgram_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.36
+	Default catalog/schema: madhurgram_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-09 18:11:46 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-09 18:11:46 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-09 18:11:47 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-09 18:11:50 [main] INFO  c.m.p.config.CacheConfig - Initializing RedisCacheManager with JSON Serialization...
+2026-07-09 18:11:50 [main] WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-09 18:11:50 [main] WARN  o.s.b.s.a.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 55a5a475-468b-4c0e-9626-0a9e4a939388
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-09 18:11:50 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-07-09 18:11:52 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-07-09 18:11:52 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-07-09 18:11:52 [main] INFO  c.m.p.ProductServiceApplication - Started ProductServiceApplication in 11.66 seconds (process running for 12.403)
+2026-07-09 18:11:52 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 18:11:52 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 18:11:52 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T18:11:52.584210 (Retention: 48 hours)
+2026-07-09 18:12:33 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-09 18:12:33 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-09 18:12:33 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 6 ms
+2026-07-09 18:12:33 [http-nio-8080-exec-2] INFO  c.m.p.auth.controller.AuthController - Received login attempt for username: admin
+2026-07-09 18:12:33 [http-nio-8080-exec-2] INFO  c.m.p.auth.controller.AuthController - Login successful for username: admin
+2026-07-09 18:12:40 [http-nio-8080-exec-9] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [CACHE MISS] Computing dynamic dashboard metrics for admin console...
+2026-07-09 18:12:40 [http-nio-8080-exec-9] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - Dashboard stats: Conversion Rate = 100.0%, Graph Data Points = 7
+2026-07-09 18:15:36 [main] INFO  c.m.p.ProductServiceApplication - Starting ProductServiceApplication using Java 21.0.2 with PID 31832 (D:\MadhurGram\product-service\target\classes started by victus in D:\MadhurGram\product-service)
+2026-07-09 18:15:36 [main] INFO  c.m.p.ProductServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-07-09 18:15:37 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.1.0.Final
+2026-07-09 18:15:38 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-09 18:15:38 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-09 18:15:38 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 257 ms. Found 7 JPA repository interfaces.
+2026-07-09 18:15:38 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-09 18:15:38 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-07-09 18:15:38 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.audit.repository.AuditLogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 18:15:38 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.cart.repository.AbandonedCartRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 18:15:38 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.common.repository.SystemSettingRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 18:15:38 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.customer.repository.CustomerRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 18:15:38 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.marketing.repository.BroadcastCampaignRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 18:15:38 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.order.repository.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 18:15:38 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.product.repository.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 18:15:38 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 28 ms. Found 0 Redis repository interfaces.
+2026-07-09 18:15:39 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-09 18:15:39 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-07-09 18:15:39 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-09 18:15:39 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-09 18:15:39 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 2657 ms
+2026-07-09 18:15:39 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-09 18:15:39 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-07-09 18:15:40 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-09 18:15:40 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-07-09 18:15:40 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@281963c
+2026-07-09 18:15:40 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-07-09 18:15:40 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-09 18:15:40 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/madhurgram_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.36
+	Default catalog/schema: madhurgram_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-09 18:15:42 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-09 18:15:42 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-09 18:15:42 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-09 18:15:44 [main] INFO  c.m.p.config.CacheConfig - Initializing RedisCacheManager with JSON Serialization...
+2026-07-09 18:15:44 [main] WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-09 18:15:45 [main] WARN  o.s.b.s.a.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 2f2cc8de-cd8b-49f4-bf30-2d146a84a211
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-09 18:15:45 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-07-09 18:15:45 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoints beneath base path '/actuator'
+2026-07-09 18:15:45 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-07-09 18:15:46 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-07-09 18:15:46 [main] INFO  c.m.p.ProductServiceApplication - Started ProductServiceApplication in 10.089 seconds (process running for 10.808)
+2026-07-09 18:15:46 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 18:15:46 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 18:15:46 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T18:15:46.129308300 (Retention: 48 hours)
+2026-07-09 18:15:54 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-09 18:15:54 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-09 18:15:54 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-07-09 18:16:40 [http-nio-8080-exec-4] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [CACHE MISS] Computing dynamic dashboard metrics for admin console...
+2026-07-09 18:16:40 [http-nio-8080-exec-4] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - Dashboard stats: Conversion Rate = 100.0%, Graph Data Points = 7
+2026-07-09 18:20:46 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 18:20:46 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 18:20:46 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T18:20:46.064924600 (Retention: 48 hours)
+2026-07-09 18:21:00 [http-nio-8080-exec-5] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [CACHE MISS] Computing dynamic dashboard metrics for admin console...
+2026-07-09 18:21:00 [http-nio-8080-exec-5] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - Dashboard stats: Conversion Rate = 100.0%, Graph Data Points = 7
+2026-07-09 18:40:04 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m53s623ms694µs200ns).
+2026-07-09 19:26:17 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=46m12s540ms678µs400ns).
+2026-07-09 20:03:40 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=37m23s646ms966µs300ns).
+2026-07-09 20:06:43 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:06:43 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:06:43 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:06:43.948203800 (Retention: 48 hours)
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:06:44.148286400 (Retention: 48 hours)
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:06:44.176795800 (Retention: 48 hours)
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:06:44.206883400 (Retention: 48 hours)
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:06:44.238439800 (Retention: 48 hours)
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:06:44.260478800 (Retention: 48 hours)
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:06:44.287272500 (Retention: 48 hours)
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:06:44.373449800 (Retention: 48 hours)
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:06:44.395654100 (Retention: 48 hours)
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:06:44.414537500 (Retention: 48 hours)
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:06:44.436214200 (Retention: 48 hours)
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:06:44.461878500 (Retention: 48 hours)
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:06:44.500858600 (Retention: 48 hours)
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:06:44.523317400 (Retention: 48 hours)
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:06:44.545649600 (Retention: 48 hours)
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:06:44.561902300 (Retention: 48 hours)
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:06:44.578425 (Retention: 48 hours)
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:06:44.597492400 (Retention: 48 hours)
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:06:44.616889500 (Retention: 48 hours)
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:06:44.639007500 (Retention: 48 hours)
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:06:44 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:06:44.657005700 (Retention: 48 hours)
+2026-07-09 20:10:38 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:10:38 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:10:38 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:10:38.758309 (Retention: 48 hours)
+2026-07-09 20:15:38 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:15:38 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:15:38 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:15:38.703676600 (Retention: 48 hours)
+2026-07-09 20:20:38 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:20:38 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:20:38 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:20:38.689169 (Retention: 48 hours)
+2026-07-09 20:25:38 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:25:38 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:25:38 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:25:38.783603900 (Retention: 48 hours)
+2026-07-09 20:30:38 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:30:38 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:30:38 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:30:38.679949 (Retention: 48 hours)
+2026-07-09 20:31:23 [main] INFO  c.m.p.ProductServiceApplication - Starting ProductServiceApplication using Java 21.0.2 with PID 20868 (D:\MadhurGram\product-service\target\classes started by victus in D:\MadhurGram\product-service)
+2026-07-09 20:31:23 [main] INFO  c.m.p.ProductServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-07-09 20:31:23 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.1.0.Final
+2026-07-09 20:31:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-09 20:31:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-09 20:31:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 221 ms. Found 7 JPA repository interfaces.
+2026-07-09 20:31:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-09 20:31:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-07-09 20:31:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.audit.repository.AuditLogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 20:31:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.cart.repository.AbandonedCartRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 20:31:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.common.repository.SystemSettingRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 20:31:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.customer.repository.CustomerRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 20:31:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.marketing.repository.BroadcastCampaignRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 20:31:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.order.repository.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 20:31:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.madhurgram.productservice.product.repository.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-09 20:31:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 24 ms. Found 0 Redis repository interfaces.
+2026-07-09 20:31:25 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-09 20:31:25 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-07-09 20:31:25 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-09 20:31:25 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-09 20:31:26 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 2670 ms
+2026-07-09 20:31:26 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-09 20:31:26 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-07-09 20:31:27 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-09 20:31:27 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-07-09 20:31:27 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@281963c
+2026-07-09 20:31:27 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-07-09 20:31:27 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-09 20:31:27 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/madhurgram_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.36
+	Default catalog/schema: madhurgram_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-09 20:31:28 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-09 20:31:28 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-09 20:31:29 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-09 20:31:31 [main] INFO  c.m.p.config.CacheConfig - Initializing RedisCacheManager with JSON Serialization...
+2026-07-09 20:31:31 [main] WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-09 20:31:31 [main] WARN  o.s.b.s.a.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 5e377b3d-0848-449c-9676-fe864794f156
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-09 20:31:31 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-07-09 20:31:32 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoints beneath base path '/actuator'
+2026-07-09 20:31:32 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-07-09 20:31:32 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-07-09 20:31:32 [main] INFO  c.m.p.ProductServiceApplication - Started ProductServiceApplication in 9.582 seconds (process running for 10.129)
+2026-07-09 20:31:32 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:31:32 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:31:32 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:31:32.408716200 (Retention: 48 hours)
+2026-07-09 20:33:42 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-09 20:33:42 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-09 20:33:42 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 116 ms
+2026-07-09 20:33:42 [http-nio-8080-exec-3] INFO  c.m.p.o.controller.OrderController - Received request to fetch order details for ID: 21
+2026-07-09 20:33:42 [http-nio-8080-exec-1] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-09 20:33:43 [http-nio-8080-exec-4] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 20:33:43 [http-nio-8080-exec-4] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 20:33:43 [http-nio-8080-exec-1] INFO  c.m.p.p.controller.ProductController - Successfully fetched 6 products for category: shop-all
+2026-07-09 20:33:43 [http-nio-8080-exec-4] INFO  c.m.p.o.controller.OrderController - Successfully fetched 27 orders
+2026-07-09 20:33:44 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 20:33:44 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 20:33:44 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Successfully fetched 27 orders
+2026-07-09 20:33:47 [http-nio-8080-exec-6] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 20:33:47 [http-nio-8080-exec-6] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 20:33:47 [http-nio-8080-exec-6] INFO  c.m.p.o.controller.OrderController - Successfully fetched 27 orders
+2026-07-09 20:33:48 [http-nio-8080-exec-9] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 20:33:48 [http-nio-8080-exec-9] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 20:33:48 [http-nio-8080-exec-9] INFO  c.m.p.o.controller.OrderController - Successfully fetched 27 orders
+2026-07-09 20:34:21 [http-nio-8080-exec-4] INFO  c.m.p.auth.controller.AuthController - Received login attempt for username: admin
+2026-07-09 20:34:21 [http-nio-8080-exec-4] INFO  c.m.p.auth.controller.AuthController - Login successful for username: admin
+2026-07-09 20:34:24 [http-nio-8080-exec-5] INFO  c.m.p.auth.controller.AuthController - Received login attempt for username: admin
+2026-07-09 20:34:24 [http-nio-8080-exec-5] INFO  c.m.p.auth.controller.AuthController - Login successful for username: admin
+2026-07-09 20:34:32 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [CACHE MISS] Computing dynamic dashboard metrics for admin console...
+2026-07-09 20:34:32 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - Dashboard stats: Conversion Rate = 100.0%, Graph Data Points = 7
+2026-07-09 20:34:41 [http-nio-8080-exec-4] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 20:34:41 [http-nio-8080-exec-4] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 20:34:41 [http-nio-8080-exec-4] INFO  c.m.p.o.controller.OrderController - Successfully fetched 27 orders
+2026-07-09 20:34:41 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-09 20:34:41 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-09 20:34:41 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Successfully fetched 27 orders
+2026-07-09 20:35:08 [http-nio-8080-exec-10] INFO  c.m.p.c.c.AdminSettingsController - Received request to fetch Auto-Pilot Recovery status
+2026-07-09 20:35:08 [http-nio-8080-exec-1] INFO  c.m.p.c.c.AdminAbandonedCartController - Received request to fetch admin abandoned carts older than 30 minutes
+2026-07-09 20:35:08 [http-nio-8080-exec-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Fetching unrecovered carts inactive since before: 2026-07-09T20:05:08.447110700
+2026-07-09 20:35:08 [http-nio-8080-exec-2] INFO  c.m.p.c.c.AdminSettingsController - Received request to fetch Auto-Pilot Recovery status
+2026-07-09 20:35:08 [http-nio-8080-exec-3] INFO  c.m.p.c.c.AdminAbandonedCartController - Received request to fetch admin abandoned carts older than 30 minutes
+2026-07-09 20:35:08 [http-nio-8080-exec-3] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Fetching unrecovered carts inactive since before: 2026-07-09T20:05:08.506963700
+2026-07-09 20:35:15 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-09 20:35:15 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Successfully fetched 6 products for category: shop-all
+2026-07-09 20:35:28 [http-nio-8080-exec-1] INFO  c.m.p.cart.controller.CartController - Received request to sync/update cart for phone: 8770242812
+2026-07-09 20:35:28 [http-nio-8080-exec-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8770242812
+2026-07-09 20:35:28 [http-nio-8080-exec-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - No active cart session found. Creating a new tracking manifest.
+2026-07-09 20:35:28 [http-nio-8080-exec-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Saved cart tracking manifest with ID: 13
+2026-07-09 20:36:12 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [CACHE MISS] Computing dynamic dashboard metrics for admin console...
+2026-07-09 20:36:12 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - Dashboard stats: Conversion Rate = 90.9090909090909%, Graph Data Points = 7
+2026-07-09 20:36:31 [http-nio-8080-exec-2] INFO  c.m.p.cart.controller.CartController - Received request to sync/update cart for phone: 8770242812
+2026-07-09 20:36:31 [http-nio-8080-exec-2] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8770242812
+2026-07-09 20:36:31 [http-nio-8080-exec-2] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Existing unrecovered cart found (ID: 13). Updating items and total.
+2026-07-09 20:36:32 [http-nio-8080-exec-2] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Saved cart tracking manifest with ID: 13
+2026-07-09 20:36:32 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-09 20:36:32 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.
+2026-07-09 20:36:32 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-07T20:36:32.298228300 (Retention: 48 hours)
+2026-07-09 20:37:02 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Received request to place order for customer: RRR (Phone: 8770242812)
+2026-07-09 20:37:02 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Processing order placement for customer: RRR
+2026-07-09 20:37:02 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Validating delivery address coordinates: Lat: 25.424304, Lng: 82.4883923
+2026-07-09 20:37:02 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Deducting stock for Product ID: 3, Quantity: 1
+2026-07-09 20:37:02 [http-nio-8080-exec-5] INFO  c.m.p.p.s.impl.ProductServiceImpl - Attempting to deduct stock for product ID: 3 (Quantity: 1)
+2026-07-09 20:37:02 [http-nio-8080-exec-5] INFO  c.m.p.p.s.impl.ProductServiceImpl - Successfully deducted stock for product ID: 3 (Quantity: 1). Invalidating caches.
+2026-07-09 20:37:02 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Order saved in database with ID: 28
+2026-07-09 20:37:02 [http-nio-8080-exec-5] INFO  c.m.p.a.s.impl.AuditLogServiceImpl - Audit log written: [PLACE_ORDER_COD] by user: anonymousUser on entity: 28
+2026-07-09 20:37:02 [http-nio-8080-exec-5] INFO  c.m.p.o.s.OrderNotificationService - Dispatching WhatsApp status notification (CONFIRMED) to phone: 8770242812
+2026-07-09 20:37:02 [http-nio-8080-exec-5] INFO  c.m.p.cart.service.TwilioService - [MOCK TWILIO WHATSAPP DISPATCH] Successfully triggered in DEV mode.
+2026-07-09 20:37:02 [http-nio-8080-exec-5] INFO  c.m.p.cart.service.TwilioService - From: whatsapp:+1234567890
+2026-07-09 20:37:02 [http-nio-8080-exec-5] INFO  c.m.p.cart.service.TwilioService - To: whatsapp:+918770242812
+2026-07-09 20:37:02 [http-nio-8080-exec-5] INFO  c.m.p.cart.service.TwilioService - Message Body:
+नमस्ते RRR! आपका MadhurGram ऑर्डर (ID: MG-00028) कन्फर्म हो गया है। हम इसे जल्द ही पैक करके शिप करेंगे। धन्यवाद, टीम MadhurGram 💛
+2026-07-09 20:37:02 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Publishing OrderConfirmedEvent for COD Order ID: 28
+2026-07-09 20:37:02 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Triggering cart recovery finalization for phone: 8770242812
+2026-07-09 20:37:02 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Attempting to mark cart as recovered for phone number: 8770242812
+2026-07-09 20:37:02 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully marked cart ID: 13 as recovered for phone: 8770242812
+2026-07-09 20:37:02 [task-1] INFO  c.m.p.o.l.OrderConfirmedListener - OrderConfirmedEvent received for Order ID: 28 - dispatching asynchronous logistics pickup request
+2026-07-09 20:37:02 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Order placed successfully with ID: 28
+2026-07-09 20:37:02 [task-1] INFO  c.m.p.l.s.impl.LogisticsServiceImpl - Resolving logistics provider for: DELHIVERY
+2026-07-09 20:37:02 [task-1] INFO  c.m.p.l.p.i.DelhiveryLogisticsProvider - [DELHIVERY] Sending pickup request for Order ID: 28 (Customer: RRR)
+2026-07-09 20:37:03 [task-1] INFO  c.m.p.l.s.impl.LogisticsServiceImpl - Pickup scheduled successfully via Delhivery Express. Waybill: AWB-DELHIVERY-5891482131
+2026-07-09 20:37:03 [task-1] INFO  c.m.p.l.s.impl.LogisticsServiceImpl - Order ID: 28 status updated to SHIPPED in database
+2026-07-09 20:37:03 [task-1] INFO  c.m.p.o.s.OrderNotificationService - Dispatching WhatsApp status notification (SHIPPED) to phone: 8770242812
+2026-07-09 20:37:03 [task-1] INFO  c.m.p.cart.service.TwilioService - [MOCK TWILIO WHATSAPP DISPATCH] Successfully triggered in DEV mode.
+2026-07-09 20:37:03 [task-1] INFO  c.m.p.cart.service.TwilioService - From: whatsapp:+1234567890
+2026-07-09 20:37:03 [task-1] INFO  c.m.p.cart.service.TwilioService - To: whatsapp:+918770242812
+2026-07-09 20:37:03 [task-1] INFO  c.m.p.cart.service.TwilioService - Message Body:
+नमस्ते RRR! आपका MadhurGram ऑर्डर (ID: MG-00028) शिप हो गया है। आपका ट्रैकिंग लिंक: http://localhost:3000/orders/track/28 है। धन्यवाद, टीम MadhurGram 💛
+2026-07-09 20:37:04 [http-nio-8080-exec-7] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-09 20:37:04 [http-nio-8080-exec-7] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-09 20:37:04 [http-nio-8080-exec-7] INFO  c.m.p.p.controller.ProductController - Successfully fetched 6 products for category: shop-all
+2026-07-09 20:37:12 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [CACHE MISS] Computing dynamic dashboard metrics for admin console...
+2026-07-09 20:37:12 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - Dashboard stats: Conversion Rate = 100.0%, Graph Data Points = 7

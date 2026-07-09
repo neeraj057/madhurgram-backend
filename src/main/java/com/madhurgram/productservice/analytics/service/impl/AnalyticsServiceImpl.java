@@ -8,6 +8,8 @@ import com.madhurgram.productservice.order.entity.Order;
 import com.madhurgram.productservice.order.entity.OrderStatus;
 import com.madhurgram.productservice.order.repository.OrderRepository;
 import com.madhurgram.productservice.product.repository.ProductRepository;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import com.madhurgram.productservice.analytics.dto.LowStockProductDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
@@ -31,21 +33,24 @@ public class AnalyticsServiceImpl implements AnalyticsService {
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final AbandonedCartRepository abandonedCartRepository;
+    private final StringRedisTemplate redisTemplate;
 
     public AnalyticsServiceImpl(
             OrderRepository orderRepository,
             ProductRepository productRepository,
-            AbandonedCartRepository abandonedCartRepository) {
+            AbandonedCartRepository abandonedCartRepository,
+            StringRedisTemplate redisTemplate) {
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
         this.abandonedCartRepository = abandonedCartRepository;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(value = "analytics", key = "'daily'")
-    public AdminAnalyticsDTO getDailyDashboardMetrics() {
-        log.info("[CACHE MISS] Computing dynamic dashboard metrics for admin console...");
+    @Cacheable(value = "analytics", key = "#days")
+    public AdminAnalyticsDTO getDailyDashboardMetrics(int days) {
+        log.info("[CACHE MISS] Computing dynamic dashboard metrics for admin console for last {} days...", days);
 
         LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
         LocalDateTime endOfDay = LocalDate.now().atTime(LocalTime.MAX);
@@ -57,21 +62,46 @@ public class AnalyticsServiceImpl implements AnalyticsService {
                 ? ((double) recoveredCheckouts / totalCheckoutSessions) * 100.0
                 : 0.0;
 
-        // 2. Fetch orders from last 7 days (including today)
-        LocalDateTime since = LocalDate.now().minusDays(6).atStartOfDay();
-        List<Order> recentOrders = orderRepository.findByOrderDateAfter(since);
+        // 2. Fetch orders from current period and previous period to calculate sales growth
+        LocalDateTime since = LocalDate.now().minusDays(days - 1).atStartOfDay();
+        LocalDateTime prevSince = LocalDate.now().minusDays((days * 2) - 1).atStartOfDay();
+        
+        List<Order> orders = orderRepository.findByOrderDateAfter(prevSince);
+
+        // Group active orders in current period
+        List<Order> currentPeriodOrders = orders.stream()
+                .filter(o -> !o.getOrderDate().isBefore(since) && o.getOrderStatus() != OrderStatus.CANCELLED)
+                .toList();
+
+        List<Order> previousPeriodOrders = orders.stream()
+                .filter(o -> o.getOrderDate().isBefore(since) && o.getOrderStatus() != OrderStatus.CANCELLED)
+                .toList();
+
+        BigDecimal currentRevenue = currentPeriodOrders.stream()
+                .map(Order::getTotalAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal previousRevenue = previousPeriodOrders.stream()
+                .map(Order::getTotalAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        double salesGrowthPercent = 0.0;
+        if (previousRevenue.compareTo(BigDecimal.ZERO) > 0) {
+            salesGrowthPercent = ((currentRevenue.subtract(previousRevenue)).doubleValue() / previousRevenue.doubleValue()) * 100.0;
+        } else if (currentRevenue.compareTo(BigDecimal.ZERO) > 0) {
+            salesGrowthPercent = 100.0; // 100% growth if there were no previous sales
+        }
 
         // Group by LocalDate in memory and sum amounts
-        Map<LocalDate, BigDecimal> revenueMap = recentOrders.stream()
-                .filter(o -> o.getOrderStatus() != OrderStatus.CANCELLED)
+        Map<LocalDate, BigDecimal> revenueMap = currentPeriodOrders.stream()
                 .collect(Collectors.groupingBy(
                         o -> o.getOrderDate().toLocalDate(),
                         Collectors.mapping(Order::getTotalAmount, Collectors.reducing(BigDecimal.ZERO, BigDecimal::add))
                 ));
 
-        // Create sequential 7-day data points (backwards from i=6 days ago to i=0 today)
+        // Create sequential daily data points
         List<DailyRevenueDTO> revenueGraph = new ArrayList<>();
-        for (int i = 6; i >= 0; i--) {
+        for (int i = days - 1; i >= 0; i--) {
             LocalDate date = LocalDate.now().minusDays(i);
             BigDecimal dailyRevenue = revenueMap.getOrDefault(date, BigDecimal.ZERO);
             revenueGraph.add(DailyRevenueDTO.builder()
@@ -80,15 +110,38 @@ public class AnalyticsServiceImpl implements AnalyticsService {
                     .build());
         }
 
-        log.info("Dashboard stats: Conversion Rate = {}%, Graph Data Points = {}", conversionRate, revenueGraph.size());
+        // 3. Fetch detailed low stock products
+        List<LowStockProductDTO> lowStockProducts = productRepository.getLowStockProducts().stream()
+                .map(p -> LowStockProductDTO.builder()
+                        .id(p.getId())
+                        .name(p.getName())
+                        .stock(p.getStock())
+                        .price(p.getPrice())
+                        .build())
+                .toList();
+
+        // 4. Retrieve live active user count from Redis (default to 1)
+        int activeUserCount = 1;
+        try {
+            java.util.Set<String> keys = redisTemplate.keys("active_user_session:*");
+            activeUserCount = keys != null ? Math.max(keys.size(), 1) : 1;
+        } catch (Exception e) {
+            log.error("Failed to query live user sessions in Redis: {}", e.getMessage());
+        }
+
+        log.info("Dashboard stats computed. Growth: {}%, Low stock count: {}, Live users: {}", 
+                salesGrowthPercent, lowStockProducts.size(), activeUserCount);
 
         return AdminAnalyticsDTO.builder()
                 .todayRevenue(orderRepository.getTodayRevenue(startOfDay, endOfDay))
                 .todayOrderCount(orderRepository.getTodayOrderCount(startOfDay, endOfDay))
                 .pendingOrderCount(orderRepository.getPendingOrderCount())
-                .lowStockProductCount(productRepository.getLowStockCount())
+                .lowStockProductCount((long) lowStockProducts.size())
                 .conversionRate(conversionRate)
+                .activeUserCount(activeUserCount)
+                .salesGrowthPercent(salesGrowthPercent)
                 .revenueGraph(revenueGraph)
+                .lowStockProducts(lowStockProducts)
                 .build();
     }
 }

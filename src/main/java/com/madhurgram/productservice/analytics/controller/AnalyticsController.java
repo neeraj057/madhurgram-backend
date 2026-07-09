@@ -17,8 +17,8 @@ public class AnalyticsController {
     }
 
     @GetMapping("/daily")
-    public ResponseEntity<AdminAnalyticsDTO> getDailyReport() {
-        AdminAnalyticsDTO metrics = analyticsService.getDailyDashboardMetrics();
+    public ResponseEntity<AdminAnalyticsDTO> getDailyReport(@RequestParam(defaultValue = "7") int days) {
+        AdminAnalyticsDTO metrics = analyticsService.getDailyDashboardMetrics(days);
         return ResponseEntity.ok(metrics);
     }
 }

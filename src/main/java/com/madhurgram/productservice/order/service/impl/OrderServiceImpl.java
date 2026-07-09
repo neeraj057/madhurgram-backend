@@ -55,13 +55,27 @@ public class OrderServiceImpl implements OrderService {
         if (order.getPaymentStatus() == null) {
             order.setPaymentStatus("PENDING");
         }
-        if (order.getOrderStatus() == null) {
+        
+        if ("COD".equalsIgnoreCase(order.getPaymentStatus())) {
+            order.setOrderStatus(OrderStatus.CONFIRMED);
+        } else if (order.getOrderStatus() == null) {
             order.setOrderStatus(OrderStatus.PENDING);
         }
 
         if (order.getOrderItems() == null || order.getOrderItems().isEmpty()) {
             log.warn("Order placement failed: Cart is empty.");
             throw new IllegalArgumentException("Cart cannot be empty.");
+        }
+
+        // 🌍 Geospatial Boundary Validation for India
+        if (order.getLatitude() != null && order.getLongitude() != null) {
+            double lat = order.getLatitude();
+            double lng = order.getLongitude();
+            log.info("Validating delivery address coordinates: Lat: {}, Lng: {}", lat, lng);
+            if (lat < 6.0 || lat > 38.0 || lng < 68.0 || lng > 98.0) {
+                log.warn("Order placement rejected: Coordinates ({}, {}) are outside India's boundaries.", lat, lng);
+                throw new IllegalArgumentException("Delivery address coordinates are outside India's serviceable region.");
+            }
         }
 
         // लूप चलाकर ProductService से स्टॉक कम करवा रहे हैं भाई
@@ -82,6 +96,20 @@ public class OrderServiceImpl implements OrderService {
 
         Order saved = orderRepository.save(order);
         log.info("Order saved in database with ID: {}", saved.getId());
+
+        // Dynamic Post-Save Actions for COD (Auto-Confirm)
+        if (OrderStatus.CONFIRMED.equals(saved.getOrderStatus())) {
+            auditLogService.log("PLACE_ORDER_COD", String.valueOf(saved.getId()), "Order placed via Cash on Delivery");
+
+            try {
+                orderNotificationService.sendOrderStatusNotification(saved, OrderStatus.CONFIRMED);
+            } catch (Exception e) {
+                log.error("Failed to send COD order confirmation notification for order ID: {}. Error: {}", saved.getId(), e.getMessage());
+            }
+
+            log.info("Publishing OrderConfirmedEvent for COD Order ID: {}", saved.getId());
+            eventPublisher.publishEvent(new com.madhurgram.productservice.order.event.OrderConfirmedEvent(this, saved));
+        }
 
         try {
             log.info("Triggering cart recovery finalization for phone: {}", order.getPhoneNumber());
@@ -177,6 +205,8 @@ public class OrderServiceImpl implements OrderService {
                 .courierName(order.getCourierName())
                 .paymentStatus(order.getPaymentStatus())
                 .paymentTransactionId(order.getPaymentTransactionId())
+                .latitude(order.getLatitude())
+                .longitude(order.getLongitude())
                 .orderItems(order.getOrderItems().stream().map(item -> OrderResponseDTO.ItemDTO.builder()
                         .id(item.getId())
                         .productName(item.getProductName())
@@ -206,6 +236,8 @@ public class OrderServiceImpl implements OrderService {
                 .courierName(order.getCourierName())
                 .paymentStatus(order.getPaymentStatus())
                 .paymentTransactionId(order.getPaymentTransactionId())
+                .latitude(order.getLatitude())
+                .longitude(order.getLongitude())
                 .orderItems(order.getOrderItems().stream().map(item -> OrderResponseDTO.ItemDTO.builder()
                         .id(item.getId())
                         .productName(item.getProductName())

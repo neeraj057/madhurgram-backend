@@ -53,6 +53,8 @@ public class CustomerServiceImpl implements CustomerService {
                 .state(addressDTO.getState())
                 .pincode(addressDTO.getPincode())
                 .isDefault(addressDTO.getIsDefault() != null && addressDTO.getIsDefault())
+                .latitude(addressDTO.getLatitude())
+                .longitude(addressDTO.getLongitude())
                 .build();
 
         // 🛡️ Business Rule: Agar ye naya address DEFAULT mark hua hai, to baaki sabko
@@ -83,6 +85,8 @@ public class CustomerServiceImpl implements CustomerService {
                         .state(addr.getState())
                         .pincode(addr.getPincode())
                         .isDefault(addr.getIsDefault())
+                        .latitude(addr.getLatitude())
+                        .longitude(addr.getLongitude())
                         .build()).toList())
                 .build();
     }

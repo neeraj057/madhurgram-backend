@@ -29,4 +29,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT COUNT(p) FROM Product p WHERE p.stock <= 5 AND p.isActive = true")
     Long getLowStockCount();
+
+    @Query("SELECT p FROM Product p WHERE p.stock <= 5 AND p.isActive = true")
+    List<Product> getLowStockProducts();
 }

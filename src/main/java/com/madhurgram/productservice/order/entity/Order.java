@@ -67,6 +67,12 @@ public class Order {
     @Column(name = "payment_transaction_id", length = 100)
     private String paymentTransactionId;
 
+    @Column(name = "latitude")
+    private Double latitude;
+
+    @Column(name = "longitude")
+    private Double longitude;
+
     // 🔗 @OneToMany Relationship mapping with OrderItem
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference // Parent-Child JSON handling के लिए भाई

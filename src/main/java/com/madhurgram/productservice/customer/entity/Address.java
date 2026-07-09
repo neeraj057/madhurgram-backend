@@ -35,6 +35,12 @@ public class Address {
     @Column(nullable = false)
     private Boolean isDefault = false; // बाय डिफ़ॉल्ट कौन सा एड्रेस सिलेक्टेड रहेगा
 
+    @Column(name = "latitude")
+    private Double latitude;
+
+    @Column(name = "longitude")
+    private Double longitude;
+
     // 🔗 Many-to-One Mapping: यह एड्रेस किस कस्टमर का है?
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", nullable = false)

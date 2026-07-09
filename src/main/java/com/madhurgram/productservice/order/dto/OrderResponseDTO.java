@@ -24,6 +24,8 @@ public class OrderResponseDTO {
     private String courierName;
     private String paymentStatus;
     private String paymentTransactionId;
+    private Double latitude;
+    private Double longitude;
     private List<ItemDTO> orderItems;
 
     @Data

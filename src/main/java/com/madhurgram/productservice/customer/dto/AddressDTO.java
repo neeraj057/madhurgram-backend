@@ -15,4 +15,6 @@ public class AddressDTO {
     private String state;
     private String pincode;
     private Boolean isDefault;
+    private Double latitude;
+    private Double longitude;
 }

@@ -13,5 +13,8 @@ public class AdminAnalyticsDTO {
     private Long pendingOrderCount;        // कुल पेंडिंग ऑर्डर्स (जो अभी प्रोसेस होने हैं)
     private Long lowStockProductCount;     // कितने प्रोडक्ट्स का स्टॉक खत्म होने वाला है (< 5)
     private double conversionRate;         // लाइव आर्डर कन्वर्जन रेट (%)
-    private java.util.List<DailyRevenueDTO> revenueGraph; // पिछले 7 दिन का रेवेन्यू चार्ट डेटा
+    private int activeUserCount;           // लाइव यूजर काउंट
+    private double salesGrowthPercent;     // बिक्री में हुई वृद्धि या कमी (%)
+    private java.util.List<DailyRevenueDTO> revenueGraph; // पिछले n दिन का रेवेन्यू चार्ट डेटा
+    private java.util.List<LowStockProductDTO> lowStockProducts; // कम स्टॉक वाले प्रोडक्ट्स की लिस्ट
 }
