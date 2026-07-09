@@ -15,9 +15,11 @@ public class AdminSettingsController {
 
     private static final Logger log = LoggerFactory.getLogger(AdminSettingsController.class);
     private final AbandonedCartService service;
+    private final com.madhurgram.productservice.audit.service.AuditLogService auditLogService;
 
-    public AdminSettingsController(AbandonedCartService service) {
+    public AdminSettingsController(AbandonedCartService service, com.madhurgram.productservice.audit.service.AuditLogService auditLogService) {
         this.service = service;
+        this.auditLogService = auditLogService;
     }
 
     @GetMapping
@@ -31,6 +33,7 @@ public class AdminSettingsController {
     public ResponseEntity<Map<String, Boolean>> setAutoRecoveryStatus(@RequestParam boolean enabled) {
         log.info("Received request to update Auto-Pilot Recovery status to: {}", enabled);
         service.setAutoRecoveryEnabled(enabled);
+        auditLogService.log("TOGGLE_AUTO_RECOVERY", null, "Auto-Pilot recovery status changed to: " + enabled);
         return ResponseEntity.ok(Map.of("enabled", enabled));
     }
 }

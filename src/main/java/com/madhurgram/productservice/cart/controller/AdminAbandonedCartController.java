@@ -17,9 +17,11 @@ public class AdminAbandonedCartController {
 
     private static final Logger log = LoggerFactory.getLogger(AdminAbandonedCartController.class);
     private final AbandonedCartService service;
+    private final com.madhurgram.productservice.audit.service.AuditLogService auditLogService;
 
-    public AdminAbandonedCartController(AbandonedCartService service) {
+    public AdminAbandonedCartController(AbandonedCartService service, com.madhurgram.productservice.audit.service.AuditLogService auditLogService) {
         this.service = service;
+        this.auditLogService = auditLogService;
     }
 
     @GetMapping
@@ -42,5 +44,14 @@ public class AdminAbandonedCartController {
                 .toList();
                 
         return ResponseEntity.ok(responses);
+    }
+
+    @DeleteMapping("/{id}")
+    @org.springframework.cache.annotation.CacheEvict(value = "analytics", allEntries = true)
+    public ResponseEntity<?> deleteAbandonedCart(@PathVariable Long id) {
+        log.info("Received admin request to manually delete abandoned cart ID: {}", id);
+        service.deleteAbandonedCart(id);
+        auditLogService.log("DELETE_ABANDONED_CART", String.valueOf(id), "Admin manually deleted abandoned cart session");
+        return ResponseEntity.ok(java.util.Map.of("message", "Abandoned cart deleted successfully."));
     }
 }

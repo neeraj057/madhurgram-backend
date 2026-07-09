@@ -29,6 +29,7 @@ public class AuthController {
     }
 
     @PostMapping("/admin/login")
+    @com.madhurgram.productservice.common.annotation.RateLimit(limit = 5, windowSeconds = 60)
     public ResponseEntity<?> loginAdmin(@RequestBody LoginRequest request) {
         log.info("Received login attempt for username: {}", request.getUsername());
         if (adminUsername.equals(request.getUsername()) && adminPassword.equals(request.getPassword())) {

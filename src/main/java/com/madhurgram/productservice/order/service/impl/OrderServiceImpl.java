@@ -8,7 +8,8 @@ import com.madhurgram.productservice.order.repository.OrderRepository;
 import com.madhurgram.productservice.order.service.OrderService;
 import com.madhurgram.productservice.order.service.OrderNotificationService;
 import com.madhurgram.productservice.product.service.ProductService;
-import com.madhurgram.productservice.logistics.service.LogisticsService;
+import org.springframework.context.ApplicationEventPublisher;
+import com.madhurgram.productservice.order.event.OrderConfirmedEvent;
 import org.springframework.cache.annotation.CacheEvict;
 
 import java.util.List;
@@ -26,19 +27,22 @@ public class OrderServiceImpl implements OrderService {
     private final ProductService productService;
     private final com.madhurgram.productservice.cart.service.AbandonedCartService abandonedCartService;
     private final OrderNotificationService orderNotificationService;
-    private final LogisticsService logisticsService;
+    private final ApplicationEventPublisher eventPublisher;
+    private final com.madhurgram.productservice.audit.service.AuditLogService auditLogService;
 
     public OrderServiceImpl(
             OrderRepository orderRepository, 
             ProductService productService, 
             com.madhurgram.productservice.cart.service.AbandonedCartService abandonedCartService,
             OrderNotificationService orderNotificationService,
-            LogisticsService logisticsService) {
+            ApplicationEventPublisher eventPublisher,
+            com.madhurgram.productservice.audit.service.AuditLogService auditLogService) {
         this.orderRepository = orderRepository;
         this.productService = productService;
         this.abandonedCartService = abandonedCartService;
         this.orderNotificationService = orderNotificationService;
-        this.logisticsService = logisticsService;
+        this.eventPublisher = eventPublisher;
+        this.auditLogService = auditLogService;
     }
 
     @Override
@@ -131,6 +135,9 @@ public class OrderServiceImpl implements OrderService {
         Order saved = orderRepository.save(order);
         log.info("Order ID: {} status updated successfully from {} to {}", orderId, currentStatus, nextStatus);
         
+        auditLogService.log("UPDATE_ORDER_STATUS", String.valueOf(orderId), 
+                "Status transitioned from " + currentStatus + " to " + nextStatus);
+        
         // 🔄 4. Trigger Notification Bridge
         try {
             orderNotificationService.sendOrderStatusNotification(saved, nextStatus);
@@ -138,13 +145,10 @@ public class OrderServiceImpl implements OrderService {
             log.error("Failed to trigger order notification for order ID: {}. Error: {}", orderId, e.getMessage());
         }
 
-        // 🔄 5. Auto-schedule logistics pickup if status is CONFIRMED
+        // 🔄 5. Publish Event to trigger decoupled components (such as logistics pickup)
         if (nextStatus == OrderStatus.CONFIRMED) {
-            try {
-                logisticsService.scheduleOrderPickup(saved);
-            } catch (Exception e) {
-                log.error("Failed to auto-schedule logistics pickup: {}", e.getMessage());
-            }
+            log.info("Publishing OrderConfirmedEvent for Order ID: {}", orderId);
+            eventPublisher.publishEvent(new OrderConfirmedEvent(this, saved));
         }
         
         return saved;

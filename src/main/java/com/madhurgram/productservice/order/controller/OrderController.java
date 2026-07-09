@@ -24,6 +24,7 @@ public class OrderController {
     }
 
     @PostMapping("/place")
+    @com.madhurgram.productservice.common.annotation.RateLimit(limit = 5, windowSeconds = 60)
     public ResponseEntity<?> placeOrder(@RequestBody Order order) {
         log.info("Received request to place order for customer: {} (Phone: {})", order.getCustomerName(), order.getPhoneNumber());
         try {

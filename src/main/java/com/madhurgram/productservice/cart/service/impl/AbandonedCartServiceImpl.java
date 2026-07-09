@@ -27,6 +27,9 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
     private final SystemSettingRepository systemSettingRepository;
     private final TwilioService twilioService;
 
+    @org.springframework.beans.factory.annotation.Value("${madhurgram.cart.retention-hours:48}")
+    private int retentionHours;
+
     public AbandonedCartServiceImpl(
             AbandonedCartRepository repository,
             SystemSettingRepository systemSettingRepository,
@@ -172,6 +175,38 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
                 log.error("Failed to dispatch automated reminder for cart ID: {}, phone: {}. Error: {}", 
                         cart.getId(), cart.getPhoneNumber(), e.getMessage());
             }
+        }
+    }
+
+    @Override
+    @Transactional
+    @CacheEvict(value = "analytics", allEntries = true)
+    public void purgeExpiredCarts() {
+        LocalDateTime cutoff = LocalDateTime.now().minusHours(retentionHours);
+        log.info("Starting purge execution for abandoned carts inactive since before: {} (Retention: {} hours)", 
+                cutoff, retentionHours);
+        try {
+            int deletedCount = repository.deleteExpiredCarts(cutoff);
+            if (deletedCount > 0) {
+                log.info("Purged {} expired unrecovered abandoned carts from database.", deletedCount);
+            } else {
+                log.debug("No expired abandoned carts found to purge.");
+            }
+        } catch (Exception e) {
+            log.error("Failed to execute purge query for expired abandoned carts: {}", e.getMessage(), e);
+        }
+    }
+
+    @Override
+    @Transactional
+    @CacheEvict(value = "analytics", allEntries = true)
+    public void deleteAbandonedCart(Long id) {
+        log.info("Executing delete command for abandoned cart ID: {}", id);
+        try {
+            repository.deleteById(id);
+            log.info("Successfully deleted abandoned cart ID: {}", id);
+        } catch (Exception e) {
+            log.error("Failed to delete abandoned cart ID: {}. Error: {}", id, e.getMessage(), e);
         }
     }
 }

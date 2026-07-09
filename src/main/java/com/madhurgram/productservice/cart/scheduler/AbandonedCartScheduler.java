@@ -25,5 +25,11 @@ public class AbandonedCartScheduler {
         } catch (Exception e) {
             log.error("Error occurred during scheduled abandoned cart recovery: {}", e.getMessage(), e);
         }
+        
+        try {
+            service.purgeExpiredCarts();
+        } catch (Exception e) {
+            log.error("Error occurred during scheduled expired cart purging: {}", e.getMessage(), e);
+        }
     }
 }

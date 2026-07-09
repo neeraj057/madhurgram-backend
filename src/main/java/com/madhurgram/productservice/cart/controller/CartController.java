@@ -21,6 +21,7 @@ public class CartController {
     }
 
     @PostMapping("/update")
+    @com.madhurgram.productservice.common.annotation.RateLimit(limit = 10, windowSeconds = 60)
     public ResponseEntity<?> updateCart(@RequestBody CartUpdateRequest request) {
         log.info("Received request to sync/update cart for phone: {}", request.getPhoneNumber());
         try {
@@ -36,6 +37,7 @@ public class CartController {
     }
 
     @GetMapping("/recover")
+    @com.madhurgram.productservice.common.annotation.RateLimit(limit = 10, windowSeconds = 60)
     public ResponseEntity<?> recoverCart(@RequestParam String phone) {
         log.info("Received request to recover cart for phone: {}", phone);
         if (phone == null || phone.trim().isEmpty()) {

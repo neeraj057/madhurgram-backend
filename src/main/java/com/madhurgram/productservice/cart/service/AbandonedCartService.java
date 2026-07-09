@@ -21,4 +21,14 @@ public interface AbandonedCartService {
     void setAutoRecoveryEnabled(boolean enabled);
 
     void sendAutomatedReminders();
+
+    /**
+     * Purges expired unrecovered abandoned carts from database.
+     */
+    void purgeExpiredCarts();
+
+    /**
+     * Manually deletes an abandoned cart by its ID.
+     */
+    void deleteAbandonedCart(Long id);
 }

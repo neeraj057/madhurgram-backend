@@ -4,8 +4,11 @@ import com.madhurgram.productservice.order.entity.Order;
 import com.madhurgram.productservice.order.entity.OrderStatus;
 import com.madhurgram.productservice.order.repository.OrderRepository;
 import com.madhurgram.productservice.order.service.OrderService;
+import com.madhurgram.productservice.payment.factory.PaymentStrategyFactory;
+import com.madhurgram.productservice.payment.service.PaymentProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
@@ -18,17 +21,35 @@ public class PaymentController {
     private static final Logger log = LoggerFactory.getLogger(PaymentController.class);
     private final OrderRepository orderRepository;
     private final OrderService orderService;
+    private final PaymentStrategyFactory paymentStrategyFactory;
 
-    public PaymentController(OrderRepository orderRepository, OrderService orderService) {
+    @Value("${madhurgram.payment.provider:STRIPE}")
+    private String activeProvider;
+
+    public PaymentController(
+            OrderRepository orderRepository, 
+            OrderService orderService, 
+            PaymentStrategyFactory paymentStrategyFactory) {
         this.orderRepository = orderRepository;
         this.orderService = orderService;
+        this.paymentStrategyFactory = paymentStrategyFactory;
     }
 
     @PostMapping("/webhook")
     @org.springframework.cache.annotation.CacheEvict(value = "analytics", allEntries = true)
+    @com.madhurgram.productservice.common.annotation.RateLimit(limit = 20, windowSeconds = 60)
     public ResponseEntity<?> handlePaymentWebhook(@RequestBody Map<String, Object> payload) {
-        log.info("Received payment gateway webhook event: {}", payload);
+        log.info("Received payment gateway webhook event: {} via active provider: {}", payload, activeProvider);
         try {
+            // 1. Resolve strategy dynamically using Strategy Factory (SOLID - Open/Closed)
+            PaymentProcessor processor = paymentStrategyFactory.getProcessor(activeProvider);
+            
+            // 2. Delegate webhook parsing and security checksum validation to specific provider
+            boolean verified = processor.processWebhook(payload);
+            if (!verified) {
+                return ResponseEntity.badRequest().body(Map.of("error", "Invalid webhook signature or payload verification failed."));
+            }
+
             String eventType = (String) payload.get("type");
             @SuppressWarnings("unchecked")
             Map<String, Object> data = (Map<String, Object>) payload.get("data");

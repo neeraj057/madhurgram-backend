@@ -178,4 +178,25 @@ The master switch controls the automated background marketing dispatch and manag
   When the background scheduler updated only the status flags (`reminderSent = true` or `isRecovered = true`), Hibernate triggered the `@PreUpdate` listener. This inadvertently bumped `lastUpdated` to `now()`, making the record appear brand new (0 minutes inactive). As a result, the admin dashboard (which filters for inactive carts older than 30 minutes) filtered it out.
 - **Resolution**: Removed database lifecycle annotations from the entity class. Timestamps are now managed strictly at the service layer during actual user-driven cart content updates (`updateCart`), preventing status-only backend updates from falsifying client inactivity timers.
 
+---
+
+## 9. Abandoned Cart Retention & Auto-Purge Policy (Database Expiry)
+
+To prevent database bloat and ensure that dead cart sessions (e.g. invalid phone numbers, wrong customer details, or users who ignore WhatsApp reminders) do not accumulate indefinitely, the system implements an automated **Retention and Purge Policy**.
+
+### A. How it Works:
+1. **Configurable Expiry Window**: The system defines a retention period (default **48 hours**) in `application.properties`:
+   ```properties
+   # Retention time in hours for unrecovered carts
+   madhurgram.cart.retention-hours=48
+   ```
+2. **Scheduled Execution**: Every 5 minutes, inside `AbandonedCartScheduler`, the system calls `purgeExpiredCarts()`.
+3. **Bulk Cleanup**: A native JPA delete query runs:
+   ```sql
+   DELETE FROM abandoned_carts WHERE is_recovered = false AND last_updated < :cutoffTime
+   ```
+   This deletes any unrecovered cart session that has been inactive/untouched for more than 48 hours.
+4. **Cache Eviction**: Immediately after purging, the system evicts the `analytics` cache so that the Admin Console metrics (like Abandoned Carts Count, Unclaimed Value) are updated and reflect the actual database state in real-time.
+
+
 
