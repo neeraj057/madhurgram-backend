@@ -37,11 +37,28 @@ public class SecurityConfig {
             // 🛡️ 2. CSRF को डिसेबल करना (क्योंकि हम Stateless JWT यूज़ कर रहे हैं)
             .csrf(csrf -> csrf.disable())
             
+            // 🛡️ 3. HTTP Security Headers (XSS, MIME sniffing, Clickjacking protection)
+            .headers(headers -> headers
+                .httpStrictTransportSecurity(hsts -> hsts
+                    .includeSubDomains(true)
+                    .maxAgeInSeconds(31536000)
+                )
+                .frameOptions(frame -> frame.deny())
+                .contentTypeOptions(org.springframework.security.config.Customizer.withDefaults())
+                .xssProtection(xss -> xss.headerValue(org.springframework.security.web.header.writers.XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK))
+            )
+            
             // 🚦 3. राउट्स के नियम (असली ताला)
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/admin/**").authenticated()
+                .requestMatchers("/api/public/feedback/**").permitAll()
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/admin/products/**").hasRole("SUPER_ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/admin/products/**").hasRole("SUPER_ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/admin/products/**").hasRole("SUPER_ADMIN")
+                .requestMatchers("/api/admin/settings/**").hasRole("SUPER_ADMIN")
+                .requestMatchers("/api/admin/**").hasAnyRole("SUPER_ADMIN", "SUPPORT_STAFF")
                 .anyRequest().permitAll()
             )
             

@@ -37,7 +37,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleGenericException(Exception ex) {
+        logger.error("Unhandled Exception caught by GlobalExceptionHandler:", ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error occurred."));
+                .body(new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage()));
     }
 }

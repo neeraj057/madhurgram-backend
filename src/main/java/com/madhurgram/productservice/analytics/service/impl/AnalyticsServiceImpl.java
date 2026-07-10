@@ -48,25 +48,28 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(value = "analytics", key = "#days")
     public AdminAnalyticsDTO getDailyDashboardMetrics(int days) {
-        log.info("[CACHE MISS] Computing dynamic dashboard metrics for admin console for last {} days...", days);
+        log.info("[ANALYTICS] Starting dashboard computation for last {} days...", days);
 
         LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
         LocalDateTime endOfDay = LocalDate.now().atTime(LocalTime.MAX);
 
         // 1. Calculate live conversion rate
+        log.info("[ANALYTICS] Step 1: Querying abandoned cart repository counts...");
         long totalCheckoutSessions = abandonedCartRepository.count();
         long recoveredCheckouts = abandonedCartRepository.countByIsRecoveredTrue();
         double conversionRate = totalCheckoutSessions > 0
                 ? ((double) recoveredCheckouts / totalCheckoutSessions) * 100.0
                 : 0.0;
+        log.info("[ANALYTICS] Step 1 complete. Conversion rate: {}", conversionRate);
 
         // 2. Fetch orders from current period and previous period to calculate sales growth
         LocalDateTime since = LocalDate.now().minusDays(days - 1).atStartOfDay();
         LocalDateTime prevSince = LocalDate.now().minusDays((days * 2) - 1).atStartOfDay();
         
+        log.info("[ANALYTICS] Step 2: Querying orders since: {}", prevSince);
         List<Order> orders = orderRepository.findByOrderDateAfter(prevSince);
+        log.info("[ANALYTICS] Step 2: Orders queried: {}. Processing growth in memory...", orders.size());
 
         // Group active orders in current period
         List<Order> currentPeriodOrders = orders.stream()
@@ -89,8 +92,9 @@ public class AnalyticsServiceImpl implements AnalyticsService {
         if (previousRevenue.compareTo(BigDecimal.ZERO) > 0) {
             salesGrowthPercent = ((currentRevenue.subtract(previousRevenue)).doubleValue() / previousRevenue.doubleValue()) * 100.0;
         } else if (currentRevenue.compareTo(BigDecimal.ZERO) > 0) {
-            salesGrowthPercent = 100.0; // 100% growth if there were no previous sales
+            salesGrowthPercent = 100.0;
         }
+        log.info("[ANALYTICS] Step 2 complete. Sales Growth: {}", salesGrowthPercent);
 
         // Group by LocalDate in memory and sum amounts
         Map<LocalDate, BigDecimal> revenueMap = currentPeriodOrders.stream()
@@ -111,6 +115,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
         }
 
         // 3. Fetch detailed low stock products
+        log.info("[ANALYTICS] Step 3: Fetching low stock products from database...");
         List<LowStockProductDTO> lowStockProducts = productRepository.getLowStockProducts().stream()
                 .map(p -> LowStockProductDTO.builder()
                         .id(p.getId())
@@ -119,19 +124,22 @@ public class AnalyticsServiceImpl implements AnalyticsService {
                         .price(p.getPrice())
                         .build())
                 .toList();
+        log.info("[ANALYTICS] Step 3 complete. Low stock count: {}", lowStockProducts.size());
 
         // 4. Retrieve live active user count from Redis (default to 1)
+        log.info("[ANALYTICS] Step 4: Querying active user count from Redis Sorted Set...");
         int activeUserCount = 1;
         try {
-            java.util.Set<String> keys = redisTemplate.keys("active_user_session:*");
-            activeUserCount = keys != null ? Math.max(keys.size(), 1) : 1;
+            long cutoff = System.currentTimeMillis() - 30000;
+            redisTemplate.opsForZSet().removeRangeByScore("active_users_zset", 0, cutoff);
+            Long count = redisTemplate.opsForZSet().zCard("active_users_zset");
+            activeUserCount = count != null ? Math.max(count.intValue(), 1) : 1;
         } catch (Exception e) {
-            log.error("Failed to query live user sessions in Redis: {}", e.getMessage());
+            log.error("[ANALYTICS] Failed to query live user sessions in Redis: {}", e.getMessage());
         }
+        log.info("[ANALYTICS] Step 4 complete. Active users: {}", activeUserCount);
 
-        log.info("Dashboard stats computed. Growth: {}%, Low stock count: {}, Live users: {}", 
-                salesGrowthPercent, lowStockProducts.size(), activeUserCount);
-
+        log.info("[ANALYTICS] Completing dashboard stats builder...");
         return AdminAnalyticsDTO.builder()
                 .todayRevenue(orderRepository.getTodayRevenue(startOfDay, endOfDay))
                 .todayOrderCount(orderRepository.getTodayOrderCount(startOfDay, endOfDay))

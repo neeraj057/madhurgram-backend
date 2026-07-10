@@ -10,6 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.EntityManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import com.madhurgram.productservice.common.util.DataMaskingUtil;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -18,6 +23,9 @@ public class OrderController {
 
     private static final Logger log = LoggerFactory.getLogger(OrderController.class);
     private final OrderService orderService; // 🧼 क्लीन एंड आर्किटेक्चरल
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
@@ -44,11 +52,23 @@ public class OrderController {
     public ResponseEntity<java.util.List<Order>> getAllOrders() {
         log.info("Received request to fetch all orders");
         List<Order> orders = orderService.getAllOrders();
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isSuperAdmin = auth != null && auth.getAuthorities().stream()
+                .anyMatch(a -> "ROLE_SUPER_ADMIN".equals(a.getAuthority()));
+
+        if (!isSuperAdmin) {
+            for (Order order : orders) {
+                entityManager.detach(order);
+                order.setPhoneNumber(DataMaskingUtil.maskPhoneNumber(order.getPhoneNumber()));
+            }
+        }
+
         log.info("Successfully fetched {} orders", orders.size());
         return ResponseEntity.ok(orders);
     }
 
-   @PatchMapping("/{id}/status")
+    @PatchMapping("/{id}/status")
     public ResponseEntity<?> updateStatus(@PathVariable Long id, @RequestParam OrderStatus status) {
         log.info("Received request to update order ID: {} to status: {}", id, status);
         try {
@@ -74,6 +94,17 @@ public class OrderController {
         }
         
         List<OrderResponseDTO> customerOrders = orderService.getOrdersByCustomerPhone(phone.trim());
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isSuperAdmin = auth != null && auth.getAuthorities().stream()
+                .anyMatch(a -> "ROLE_SUPER_ADMIN".equals(a.getAuthority()));
+
+        if (!isSuperAdmin) {
+            for (OrderResponseDTO dto : customerOrders) {
+                dto.setPhoneNumber(DataMaskingUtil.maskPhoneNumber(dto.getPhoneNumber()));
+            }
+        }
+        
         log.info("Fetched {} orders for customer phone: {}", customerOrders.size(), phone);
         
         if (customerOrders.isEmpty()) {
@@ -89,6 +120,15 @@ public class OrderController {
         log.info("Received request to fetch order details for ID: {}", id);
         try {
             OrderResponseDTO dto = orderService.getOrderDetails(id);
+            
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            boolean isSuperAdmin = auth != null && auth.getAuthorities().stream()
+                    .anyMatch(a -> "ROLE_SUPER_ADMIN".equals(a.getAuthority()));
+
+            if (!isSuperAdmin) {
+                dto.setPhoneNumber(DataMaskingUtil.maskPhoneNumber(dto.getPhoneNumber()));
+            }
+            
             return ResponseEntity.ok(dto);
         } catch (RuntimeException e) {
             log.warn("Order not found with ID: {}", id);

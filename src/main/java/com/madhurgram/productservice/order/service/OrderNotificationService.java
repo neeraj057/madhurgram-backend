@@ -43,7 +43,7 @@ public class OrderNotificationService {
                 break;
             case DELIVERED:
                 message = "नमस्ते " + customer + "! आपका MadhurGram ऑर्डर (ID: " + orderIdStr + 
-                          ") सफलतापूर्वक डिलीवर हो गया है। हमें आशा है कि आपको हमारे शुद्ध उत्पाद पसंद आएंगे। कृपया अपना फीडबैक यहाँ दें: http://localhost:3000/feedback। धन्यवाद, टीम MadhurGram 💛";
+                          ") सफलतापूर्वक डिलीवर हो गया है। हमें आशा है कि आपको हमारे शुद्ध उत्पाद पसंद आएंगे। कृपया अपना फीडबैक यहाँ दें: http://localhost:3000/feedback?orderId=" + order.getId() + "। धन्यवाद, टीम MadhurGram 💛";
                 break;
             case CANCELLED:
                 message = "नमस्ते " + customer + "! आपका MadhurGram ऑर्डर (ID: " + orderIdStr + 

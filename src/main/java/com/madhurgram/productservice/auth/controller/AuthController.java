@@ -33,8 +33,12 @@ public class AuthController {
     public ResponseEntity<?> loginAdmin(@RequestBody LoginRequest request) {
         log.info("Received login attempt for username: {}", request.getUsername());
         if (adminUsername.equals(request.getUsername()) && adminPassword.equals(request.getPassword())) {
-            String token = jwtUtil.generateToken(request.getUsername());
-            log.info("Login successful for username: {}", request.getUsername());
+            String token = jwtUtil.generateToken(request.getUsername(), "ROLE_SUPER_ADMIN");
+            log.info("Login successful for Super Admin: {}", request.getUsername());
+            return ResponseEntity.ok(new AuthResponse(token, "Login Successful"));
+        } else if ("support".equals(request.getUsername()) && "Support@MadhurGram2026".equals(request.getPassword())) {
+            String token = jwtUtil.generateToken(request.getUsername(), "ROLE_SUPPORT_STAFF");
+            log.info("Login successful for Support Staff: {}", request.getUsername());
             return ResponseEntity.ok(new AuthResponse(token, "Login Successful"));
         } else {
             log.warn("Login failed: Invalid credentials for username: {}", request.getUsername());

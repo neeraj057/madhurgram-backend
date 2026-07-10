@@ -19,4 +19,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(rateLimitInterceptor)
                 .addPathPatterns("/api/**");
     }
+
+    @Override
+    public void addResourceHandlers(org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/uploads/**")
+                .addResourceLocations("file:uploads/");
+    }
 }

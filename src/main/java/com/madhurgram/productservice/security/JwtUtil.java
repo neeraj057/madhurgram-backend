@@ -35,12 +35,25 @@ public class JwtUtil {
     }
 
     public String generateToken(String username) {
+        return generateToken(username, "ROLE_SUPER_ADMIN");
+    }
+
+    public String generateToken(String username, String role) {
         return Jwts.builder()
                 .setSubject(username)
+                .claim("role", role)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    public String extractRole(String token) {
+        try {
+            return extractClaim(token, claims -> claims.get("role", String.class));
+        } catch (JwtException e) {
+            return null;
+        }
     }
 
     public String extractUsername(String token) {

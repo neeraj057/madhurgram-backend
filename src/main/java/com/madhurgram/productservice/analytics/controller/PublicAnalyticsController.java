@@ -21,14 +21,8 @@ public class PublicAnalyticsController {
     public ResponseEntity<?> registerHeartbeat(
             @RequestParam String clientId,
             HttpServletRequest request) {
-        String clientIp = request.getHeader("X-Forwarded-For");
-        if (clientIp == null || clientIp.isEmpty()) {
-            clientIp = request.getRemoteAddr();
-        }
-        
-        // Track the active user session in Redis with 30s expiration
-        String key = "active_user_session:" + clientId;
-        redisTemplate.opsForValue().set(key, clientIp, 30, TimeUnit.SECONDS);
+        double score = (double) System.currentTimeMillis();
+        redisTemplate.opsForZSet().add("active_users_zset", clientId, score);
         return ResponseEntity.ok().build();
     }
 }
