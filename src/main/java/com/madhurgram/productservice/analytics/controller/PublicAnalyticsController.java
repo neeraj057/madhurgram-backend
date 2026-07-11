@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/api/public/analytics")
-@CrossOrigin(origins = "*")
 public class PublicAnalyticsController {
 
     private final StringRedisTemplate redisTemplate;

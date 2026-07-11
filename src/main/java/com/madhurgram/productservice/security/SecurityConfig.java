@@ -37,9 +37,15 @@ public class SecurityConfig {
             // 🌐 1. Next.js के लिए CORS एनेबल करना
             .cors(cors -> cors.configurationSource(request -> {
                 CorsConfiguration config = new CorsConfiguration();
-                config.setAllowedOrigins(List.of("*")); // प्रोडक्शन में इसे अपने Next.js डोमेन से रिप्लेस करना
+                config.setAllowedOrigins(List.of(
+                    "http://localhost:3000",
+                    "http://localhost:5173",
+                    "http://127.0.0.1:3000",
+                    "http://192.168.31.211:3000"
+                ));
                 config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
                 config.setAllowedHeaders(List.of("*"));
+                config.setAllowCredentials(true);
                 return config;
             }))
             

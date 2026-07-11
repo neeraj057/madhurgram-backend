@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/admin/analytics")
-@CrossOrigin(origins = "*") // CORS guard sync
 public class AnalyticsController {
 
     private final AnalyticsService analyticsService;

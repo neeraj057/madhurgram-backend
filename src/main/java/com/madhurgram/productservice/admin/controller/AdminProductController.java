@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin/products")
-@CrossOrigin(origins = "*") // CORS for Next.js
 public class AdminProductController {
 
     private final AdminProductService adminProductService;

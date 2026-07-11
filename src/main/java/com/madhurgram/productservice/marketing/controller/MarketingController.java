@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin/marketing")
-@CrossOrigin(origins = "*")
 public class MarketingController {
 
     private final MarketingService marketingService;

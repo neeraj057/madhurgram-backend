@@ -18,7 +18,6 @@ import com.madhurgram.productservice.common.util.DataMaskingUtil;
 
 @RestController
 @RequestMapping("/api/orders")
-@CrossOrigin(origins = { "http://localhost:3000", "http://192.168.31.211:3000" })
 public class OrderController {
 
     private static final Logger log = LoggerFactory.getLogger(OrderController.class);

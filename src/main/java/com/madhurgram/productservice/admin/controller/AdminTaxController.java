@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin/tax-slabs")
-@CrossOrigin(origins = "*")
 public class AdminTaxController {
 
     private final HsnTaxMasterRepository hsnTaxMasterRepository;

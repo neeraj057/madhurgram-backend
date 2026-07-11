@@ -16,7 +16,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "*")
 public class CustomerFeedbackController {
 
     private static final Logger log = LoggerFactory.getLogger(CustomerFeedbackController.class);

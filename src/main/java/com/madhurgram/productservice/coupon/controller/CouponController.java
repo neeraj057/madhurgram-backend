@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = { "http://localhost:3000", "http://192.168.31.211:3000" })
 public class CouponController {
 
     private static final Logger log = LoggerFactory.getLogger(CouponController.class);

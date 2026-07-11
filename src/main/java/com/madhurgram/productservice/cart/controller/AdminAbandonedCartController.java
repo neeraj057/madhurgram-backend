@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin/abandoned-carts")
-@CrossOrigin(origins = "*")
 public class AdminAbandonedCartController {
 
     private static final Logger log = LoggerFactory.getLogger(AdminAbandonedCartController.class);

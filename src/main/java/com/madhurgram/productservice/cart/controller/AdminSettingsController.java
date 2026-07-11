@@ -10,7 +10,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin/settings/auto-recovery")
-@CrossOrigin(origins = "*")
 public class AdminSettingsController {
 
     private static final Logger log = LoggerFactory.getLogger(AdminSettingsController.class);
