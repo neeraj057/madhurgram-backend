@@ -46,6 +46,9 @@ services:
       redis-cache:
         condition: service_healthy
     environment:
+      # Restrict JVM memory parameters for constrained host environments
+      JAVA_TOOL_OPTIONS: "-Xmx512m -XX:MaxMetaspaceSize=256m -XX:ParallelGCThreads=2 -XX:CICompilerCount=2"
+
       # Inject containerized DB configurations
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/madhurgram_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: root
