@@ -62,6 +62,7 @@ public class AdminProductServiceImpl implements AdminProductService {
         Product product = Product.builder()
                 .name(dto.getName())
                 .price(dto.getPrice())
+                .originalPrice(dto.getOriginalPrice())
                 .volume(dto.getVolume())
                 .imageUrl(dto.getImageUrl())
                 .stock(dto.getStock())
@@ -93,6 +94,7 @@ public class AdminProductServiceImpl implements AdminProductService {
 
         product.setName(dto.getName());
         product.setPrice(dto.getPrice());
+        product.setOriginalPrice(dto.getOriginalPrice());
         product.setVolume(dto.getVolume());
         product.setImageUrl(dto.getImageUrl());
         product.setStock(dto.getStock());
@@ -123,6 +125,7 @@ public class AdminProductServiceImpl implements AdminProductService {
                 .id(product.getId())
                 .name(product.getName())
                 .price(product.getPrice())
+                .originalPrice(product.getOriginalPrice() != null ? product.getOriginalPrice() : product.getPrice())
                 .volume(product.getVolume())
                 .imageUrl(product.getImageUrl())
                 .stock(product.getStock())

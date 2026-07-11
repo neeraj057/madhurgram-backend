@@ -38,6 +38,7 @@ public class OrderServiceImpl implements OrderService {
     private final ApplicationEventPublisher eventPublisher;
     private final com.madhurgram.productservice.audit.service.AuditLogService auditLogService;
     private final com.madhurgram.productservice.marketing.repository.ReviewRequestRepository reviewRequestRepository;
+    private final com.madhurgram.productservice.coupon.service.CouponService couponService;
 
     public OrderServiceImpl(
             OrderRepository orderRepository, 
@@ -48,7 +49,8 @@ public class OrderServiceImpl implements OrderService {
             OrderNotificationService orderNotificationService,
             ApplicationEventPublisher eventPublisher,
             com.madhurgram.productservice.audit.service.AuditLogService auditLogService,
-            @org.springframework.context.annotation.Lazy com.madhurgram.productservice.marketing.repository.ReviewRequestRepository reviewRequestRepository) {
+            @org.springframework.context.annotation.Lazy com.madhurgram.productservice.marketing.repository.ReviewRequestRepository reviewRequestRepository,
+            com.madhurgram.productservice.coupon.service.CouponService couponService) {
         this.orderRepository = orderRepository;
         this.productService = productService;
         this.productRepository = productRepository;
@@ -58,6 +60,7 @@ public class OrderServiceImpl implements OrderService {
         this.eventPublisher = eventPublisher;
         this.auditLogService = auditLogService;
         this.reviewRequestRepository = reviewRequestRepository;
+        this.couponService = couponService;
     }
 
     @Override
@@ -103,6 +106,28 @@ public class OrderServiceImpl implements OrderService {
         }
         log.info("Place of Supply resolved. Is Intra-State (UP): {}", isIntraState);
 
+        // Sum total item prices to get original cart total
+        BigDecimal totalItemsAmount = BigDecimal.ZERO;
+        for (var item : order.getOrderItems()) {
+            totalItemsAmount = totalItemsAmount.add(item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity())));
+        }
+
+        BigDecimal discountVal = BigDecimal.ZERO;
+        if (order.getCouponCode() != null && !order.getCouponCode().trim().isEmpty()) {
+            com.madhurgram.productservice.coupon.entity.Coupon coupon = couponService.validateCoupon(
+                    order.getCouponCode(), order.getPhoneNumber(), totalItemsAmount);
+            BigDecimal discountPercent = coupon.getDiscountPercentage();
+            discountVal = totalItemsAmount.multiply(discountPercent).divide(BigDecimal.valueOf(100.0), 2, java.math.RoundingMode.HALF_UP);
+            order.setCouponCode(coupon.getCode());
+            order.setDiscountAmount(discountVal);
+        } else {
+            order.setCouponCode(null);
+            order.setDiscountAmount(BigDecimal.ZERO);
+        }
+
+        BigDecimal finalTotal = totalItemsAmount.subtract(discountVal);
+        order.setTotalAmount(finalTotal);
+
         BigDecimal taxableTotal = BigDecimal.ZERO;
         BigDecimal cgstTotal = BigDecimal.ZERO;
         BigDecimal sgstTotal = BigDecimal.ZERO;
@@ -141,15 +166,15 @@ public class OrderServiceImpl implements OrderService {
             BigDecimal totalItemPrice = item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity()));
 
             // Taxable Value = totalItemPrice / (1 + (gstRate / 100))
-            BigDecimal divisor = BigDecimal.ONE.add(gstRate.divide(BigDecimal.valueOf(100.0), 4, RoundingMode.HALF_UP));
-            BigDecimal taxableValue = totalItemPrice.divide(divisor, 2, RoundingMode.HALF_UP);
+            BigDecimal divisor = BigDecimal.ONE.add(gstRate.divide(BigDecimal.valueOf(100.0), 4, java.math.RoundingMode.HALF_UP));
+            BigDecimal taxableValue = totalItemPrice.divide(divisor, 2, java.math.RoundingMode.HALF_UP);
             BigDecimal totalTax = totalItemPrice.subtract(taxableValue);
 
             item.setTaxableAmount(taxableValue);
             taxableTotal = taxableTotal.add(taxableValue);
 
             if (isIntraState) {
-                BigDecimal halfTax = totalTax.divide(BigDecimal.valueOf(2.0), 2, RoundingMode.HALF_UP);
+                BigDecimal halfTax = totalTax.divide(BigDecimal.valueOf(2.0), 2, java.math.RoundingMode.HALF_UP);
                 item.setCgstAmount(halfTax);
                 item.setSgstAmount(halfTax);
                 item.setIgstAmount(BigDecimal.ZERO);
@@ -165,6 +190,15 @@ public class OrderServiceImpl implements OrderService {
             }
         }
 
+        // Adjust totals proportionally if a coupon discount was applied
+        if (discountVal.compareTo(BigDecimal.ZERO) > 0 && totalItemsAmount.compareTo(BigDecimal.ZERO) > 0) {
+            BigDecimal taxRatio = finalTotal.divide(totalItemsAmount, 6, java.math.RoundingMode.HALF_UP);
+            taxableTotal = taxableTotal.multiply(taxRatio).setScale(2, java.math.RoundingMode.HALF_UP);
+            cgstTotal = cgstTotal.multiply(taxRatio).setScale(2, java.math.RoundingMode.HALF_UP);
+            sgstTotal = sgstTotal.multiply(taxRatio).setScale(2, java.math.RoundingMode.HALF_UP);
+            igstTotal = igstTotal.multiply(taxRatio).setScale(2, java.math.RoundingMode.HALF_UP);
+        }
+
         order.setTaxableAmount(taxableTotal);
         order.setCgstTotal(cgstTotal);
         order.setSgstTotal(sgstTotal);
@@ -172,6 +206,15 @@ public class OrderServiceImpl implements OrderService {
 
         Order saved = orderRepository.save(order);
         log.info("Order saved in database with ID: {}", saved.getId());
+
+        // Log coupon usage in coupon_usages
+        if (saved.getCouponCode() != null) {
+            try {
+                couponService.recordCouponUsage(saved.getCouponCode(), saved.getPhoneNumber(), saved.getId());
+            } catch (Exception e) {
+                log.error("Failed to record coupon usage for order ID {}: {}", saved.getId(), e.getMessage());
+            }
+        }
 
         // Dynamic Post-Save Actions for COD (Auto-Confirm)
         if (OrderStatus.CONFIRMED.equals(saved.getOrderStatus())) {

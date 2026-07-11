@@ -23,6 +23,9 @@ public class Product {
     @Column(nullable = false)
     private BigDecimal price;
 
+    @Column(name = "original_price", nullable = true)
+    private BigDecimal originalPrice;
+
     @Column(nullable = false, length = 50)
     private String volume; // e.g., "500ml", "1kg"
 

@@ -85,6 +85,12 @@ public class Order {
     @Column(name = "igst_total", precision = 12, scale = 2)
     private BigDecimal igstTotal;
 
+    @Column(name = "coupon_code", length = 50)
+    private String couponCode;
+
+    @Column(name = "discount_amount", precision = 12, scale = 2)
+    private BigDecimal discountAmount;
+
     // 🔗 @OneToMany Relationship mapping with OrderItem
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference // Parent-Child JSON handling के लिए भाई
