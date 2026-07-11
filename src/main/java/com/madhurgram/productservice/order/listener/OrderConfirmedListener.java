@@ -22,13 +22,8 @@ public class OrderConfirmedListener {
     @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void handleOrderConfirmedEvent(OrderConfirmedEvent event) {
-        log.info("OrderConfirmedEvent received for Order ID: {} - dispatching asynchronous logistics pickup request", 
+        log.info("OrderConfirmedEvent received for Order ID: {} - Auto-logistics booking disabled to wait for manual dispatch by Admin.", 
                 event.getOrder().getId());
-        try {
-            logisticsService.scheduleOrderPickup(event.getOrder());
-        } catch (Exception e) {
-            log.error("Failed to execute asynchronous logistics pickup for Order ID: {}. Error: {}", 
-                    event.getOrder().getId(), e.getMessage(), e);
-        }
+        // Automatic logistics dispatch is disabled to support standard warehouse packing confirmation.
     }
 }

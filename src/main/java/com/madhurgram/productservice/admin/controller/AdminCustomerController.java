@@ -28,7 +28,7 @@ public class AdminCustomerController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         boolean isSuperAdmin = auth != null && auth.getAuthorities().stream()
-                .anyMatch(a -> "ROLE_SUPER_ADMIN".equals(a.getAuthority()));
+                .anyMatch(a -> "ROLE_SUPER_ADMIN".equals(a.getAuthority()) || "SUPER_ADMIN".equals(a.getAuthority()));
 
         List<CustomerStatsDTO> processed = customers;
         if (!isSuperAdmin) {
@@ -67,7 +67,7 @@ public class AdminCustomerController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         boolean isSuperAdmin = auth != null && auth.getAuthorities().stream()
-                .anyMatch(a -> "ROLE_SUPER_ADMIN".equals(a.getAuthority()));
+                .anyMatch(a -> "ROLE_SUPER_ADMIN".equals(a.getAuthority()) || "SUPER_ADMIN".equals(a.getAuthority()));
 
         if (!isSuperAdmin) {
             return new CustomerHistoryDTO(

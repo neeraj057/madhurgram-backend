@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.madhurgram.productservice.product.repository.ProductRepository;
 import com.madhurgram.productservice.product.entity.Product;
+import com.madhurgram.productservice.logistics.service.LogisticsService;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -31,6 +32,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final ProductService productService;
     private final ProductRepository productRepository;
+    private final LogisticsService logisticsService;
     private final com.madhurgram.productservice.cart.service.AbandonedCartService abandonedCartService;
     private final OrderNotificationService orderNotificationService;
     private final ApplicationEventPublisher eventPublisher;
@@ -41,6 +43,7 @@ public class OrderServiceImpl implements OrderService {
             OrderRepository orderRepository, 
             ProductService productService, 
             ProductRepository productRepository,
+            LogisticsService logisticsService,
             com.madhurgram.productservice.cart.service.AbandonedCartService abandonedCartService,
             OrderNotificationService orderNotificationService,
             ApplicationEventPublisher eventPublisher,
@@ -49,6 +52,7 @@ public class OrderServiceImpl implements OrderService {
         this.orderRepository = orderRepository;
         this.productService = productService;
         this.productRepository = productRepository;
+        this.logisticsService = logisticsService;
         this.abandonedCartService = abandonedCartService;
         this.orderNotificationService = orderNotificationService;
         this.eventPublisher = eventPublisher;
@@ -230,7 +234,17 @@ public class OrderServiceImpl implements OrderService {
             }
         }
 
-        // 🔄 3. Apply Status Change & Persist Order
+        // 🔄 3. Trigger Delhivery Logistics booking when status is updated to SHIPPED
+        if (nextStatus == OrderStatus.SHIPPED) {
+            log.info("Order ID: {} status updating to SHIPPED. Initiating logistics scheduling...", orderId);
+            try {
+                logisticsService.scheduleOrderPickup(order);
+            } catch (Exception e) {
+                log.error("Failed to execute logistics booking for Order ID: {}. Error: {}", orderId, e.getMessage(), e);
+            }
+        }
+
+        // 🔄 4. Apply Status Change & Persist Order
         order.setOrderStatus(nextStatus);
         Order saved = orderRepository.save(order);
         log.info("Order ID: {} status updated successfully from {} to {}", orderId, currentStatus, nextStatus);
@@ -269,6 +283,11 @@ public class OrderServiceImpl implements OrderService {
         if (nextStatus == OrderStatus.CONFIRMED) {
             log.info("Publishing OrderConfirmedEvent for Order ID: {}", orderId);
             eventPublisher.publishEvent(new OrderConfirmedEvent(this, saved));
+        }
+        
+        // Force initialization of lazy-loaded collections to prevent LazyInitializationException during JSON serialization when Hibernate Session is closed
+        if (saved.getOrderItems() != null) {
+            saved.getOrderItems().size();
         }
         
         return saved;

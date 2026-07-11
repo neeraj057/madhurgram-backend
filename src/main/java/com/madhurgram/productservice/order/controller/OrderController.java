@@ -55,7 +55,7 @@ public class OrderController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         boolean isSuperAdmin = auth != null && auth.getAuthorities().stream()
-                .anyMatch(a -> "ROLE_SUPER_ADMIN".equals(a.getAuthority()));
+                .anyMatch(a -> "ROLE_SUPER_ADMIN".equals(a.getAuthority()) || "SUPER_ADMIN".equals(a.getAuthority()));
 
         if (!isSuperAdmin) {
             for (Order order : orders) {
@@ -97,7 +97,7 @@ public class OrderController {
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         boolean isSuperAdmin = auth != null && auth.getAuthorities().stream()
-                .anyMatch(a -> "ROLE_SUPER_ADMIN".equals(a.getAuthority()));
+                .anyMatch(a -> "ROLE_SUPER_ADMIN".equals(a.getAuthority()) || "SUPER_ADMIN".equals(a.getAuthority()));
 
         if (!isSuperAdmin) {
             for (OrderResponseDTO dto : customerOrders) {
@@ -123,7 +123,7 @@ public class OrderController {
             
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             boolean isSuperAdmin = auth != null && auth.getAuthorities().stream()
-                    .anyMatch(a -> "ROLE_SUPER_ADMIN".equals(a.getAuthority()));
+                    .anyMatch(a -> "ROLE_SUPER_ADMIN".equals(a.getAuthority()) || "SUPER_ADMIN".equals(a.getAuthority()));
 
             if (!isSuperAdmin) {
                 dto.setPhoneNumber(DataMaskingUtil.maskPhoneNumber(dto.getPhoneNumber()));
