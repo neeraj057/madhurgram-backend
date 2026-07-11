@@ -3,4 +3,13 @@ INSERT INTO madhurgram_db.products (name, price, volume, image_url, tag, categor
 ('MadhurGram Premium Bhais Ghee', 599.00, '500ml', '/images/bhais_ghee.png', 'Pure Traditional', 'dairy', 35, 1),
 ('MadhurGram Ayurvedic Jaggery (Gur)', 349.00, '1kg', '/images/jaggery.png', 'New', 'sweeteners', 100, 1),
 ('Wood-Pressed Mustard Oil (Kachchi Ghani)', 299.00, '1L', '/images/mustard_oil.png', 'Out of Stock', 'oils', 0, 1),
-('MadhurGram Artisnal Mango Pickle', 449.00, '500g', '/images/mango_pickle.png', 'Kachchi Ghani', 'pickles', 20, 1);
+('MadhurGram Artisnal Mango Pickle', 449.00, '500g', '/images/mango_pickle.png', 'Kachchi Ghani', 'pickles', 20, 1),
+('MadhurGram Pure Shuddh Cow Dahi (A2)', 200.00, '500ml / 1L Dahi', '/images/cow_dahi.png', 'Bilona Method', 'dairy', 50, 1),
+('MadhurGram Jaggery Powder', 349.00, '500g', '/images/jaggery_powder.png', 'Organic Powders', 'sweeteners', 100, 1),
+('MadhurGram Elaichi Gur', 399.00, '500g', '/images/elaichi_jaggery.png', 'Cardamom Infused', 'sweeteners', 100, 1),
+('MadhurGram Til Gur', 399.00, '500g', '/images/til_jaggery.png', 'Sesame Covered', 'sweeteners', 100, 1),
+('MadhurGram Badam Gur', 449.00, '500g', '/images/badam_jaggery.png', 'Almond Embedded', 'sweeteners', 100, 1),
+('MadhurGram Ayurvedic Jaggery Jar', 399.00, '500g', '/images/jaggery_jar.png', 'Reusable Jar', 'sweeteners', 100, 1),
+('MadhurGram Traditional Mixed Pickle', 449.00, '500g', '/images/mixed_pickle.png', 'Kachchi Ghani', 'pickles', 100, 1),
+('MadhurGram Garlic Pickle', 449.00, '500g', '/images/garlic_pickle.png', 'Sun-Cured Barni', 'pickles', 100, 1),
+('MadhurGram Green Chilli Pickle', 399.00, '400g', '/images/green_chilli_pickle.png', 'Spicy & Tangy', 'pickles', 100, 1);
