@@ -123,14 +123,22 @@ erDiagram
 ## 5. How to Maintain Tax Slabs (Future Rates Change)
 If the government updates a tax slab or you add a new category, **no code needs to be modified**:
 
-### Option A: Via the Admin Dashboard Console UI
+### Option A: Mapping Products to HSN Codes (Admin Catalog UI)
 1. Go to the Admin dashboard: `/admin/products`.
 2. Click **Edit Product** on an existing item or click **Add Product**.
 3. Under the category field, locate the **HSN / GST Code dropdown** selector.
 4. Select the matching HSN code (e.g. `0405 - Ghee (12% GST)`) and click **Save Product**.
 5. The frontend table and catalog immediately reflect the updated HSN linkage, and the backend automatically invalidates product/analytics cache keys so customers see the updated tax parameters instantly.
 
-### Option B: Via Direct SQL Updates
+### Option B: Modifying GST Rates themselves (Tax Settings UI)
+If the government changes a tax rate (e.g. Ghee tax slab changes from 12% to 18%):
+1. Go to the Admin dashboard and navigate to the **Tax Settings** sidebar link (`/admin/tax-settings`).
+2. Locate the HSN code (e.g., `0405`).
+3. Click the **Edit** action icon on that slab row.
+4. Change the **GST Percentage (%)** input field value to `18.0` and click **Save Slab**.
+5. The database is updated, cache is evicted, and all products mapped to HSN `0405` instantly compute GST using the new 18% rate during checkout.
+
+### Option C: Via Direct SQL Updates
 1. Open your database administration client.
 2. Execute a simple `UPDATE` query on the `hsn_tax_master` table.
    * *Example:* Changing Ghee GST to 18%:
@@ -149,3 +157,16 @@ This script contains the precise queries for:
 * Creating the schema tables (`hsn_tax_master`).
 * Modifying existing tables (`products`, `orders`, `order_items`) to add compliant columns.
 * Seeding real tax rates and category mappings for all default inventory items.
+
+---
+
+## 7. How to Find Indian HSN Codes in the Future
+If you launch a new category of products (e.g., Organic Honey, Spices, Herbal Tea), you can easily lookup their standard HSN tax classification codes using these official resources:
+1. **Official GST Search Tool:**
+   * Visit: [Government GST Portal HSN Search](https://services.gst.gov.in/services/searchhsn)
+   * Enter the product name (e.g. "Honey" or "Turmeric") to get the 4-digit or 6-digit HSN code.
+2. **Online Tax Databases:**
+   * Visit [ClearTax GST HSN Finder](https://cleartax.in/s/hsn-code-finder) or Taxmann to search HSN rates and search by keywords.
+3. **Public Search Engines:**
+   * Search google for `"Product name" HSN code GST rate India` (e.g., `"Honey HSN code GST rate India"` resolves to HSN `0409` and 5% GST).
+4. Once you obtain the code, add it to the `/admin/tax-settings` screen, then map it to the corresponding product in the Catalog form!
