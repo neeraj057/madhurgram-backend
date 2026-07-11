@@ -16,9 +16,14 @@ public class ProductServiceImpl implements ProductService {
 
     private static final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
     private final ProductRepository productRepository;
+    private final com.madhurgram.productservice.procurement.service.ProcurementService procurementService;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(
+            ProductRepository productRepository,
+            @org.springframework.context.annotation.Lazy com.madhurgram.productservice.procurement.service.ProcurementService procurementService
+    ) {
         this.productRepository = productRepository;
+        this.procurementService = procurementService;
     }
 
     @Override
@@ -46,6 +51,17 @@ public class ProductServiceImpl implements ProductService {
             throw new RuntimeException("Insufficient inventory or product not found for ID: " + productId);
         }
         log.info("Successfully deducted stock for product ID: {} (Quantity: {}). Invalidating caches.", productId, quantity);
+
+        // Check if stock is low (<= 5)
+        Product product = productRepository.findById(productId).orElse(null);
+        if (product != null && product.getStock() <= 5) {
+            log.warn("Low stock detected for product: {} (Stock: {}). Auto-drafting Purchase Order.", product.getName(), product.getStock());
+            try {
+                procurementService.draftPurchaseOrder(productId, 50);
+            } catch (Exception e) {
+                log.error("Error auto-drafting Purchase Order for product ID: {}", productId, e);
+            }
+        }
     }
 
     @Override

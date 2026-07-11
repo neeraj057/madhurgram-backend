@@ -13,6 +13,7 @@ import com.madhurgram.productservice.order.event.OrderConfirmedEvent;
 import org.springframework.cache.annotation.CacheEvict;
 
 import java.util.List;
+import java.time.LocalDateTime;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderNotificationService orderNotificationService;
     private final ApplicationEventPublisher eventPublisher;
     private final com.madhurgram.productservice.audit.service.AuditLogService auditLogService;
+    private final com.madhurgram.productservice.marketing.repository.ReviewRequestRepository reviewRequestRepository;
 
     public OrderServiceImpl(
             OrderRepository orderRepository, 
@@ -36,13 +38,15 @@ public class OrderServiceImpl implements OrderService {
             com.madhurgram.productservice.cart.service.AbandonedCartService abandonedCartService,
             OrderNotificationService orderNotificationService,
             ApplicationEventPublisher eventPublisher,
-            com.madhurgram.productservice.audit.service.AuditLogService auditLogService) {
+            com.madhurgram.productservice.audit.service.AuditLogService auditLogService,
+            @org.springframework.context.annotation.Lazy com.madhurgram.productservice.marketing.repository.ReviewRequestRepository reviewRequestRepository) {
         this.orderRepository = orderRepository;
         this.productService = productService;
         this.abandonedCartService = abandonedCartService;
         this.orderNotificationService = orderNotificationService;
         this.eventPublisher = eventPublisher;
         this.auditLogService = auditLogService;
+        this.reviewRequestRepository = reviewRequestRepository;
     }
 
     @Override
@@ -173,7 +177,27 @@ public class OrderServiceImpl implements OrderService {
             log.error("Failed to trigger order notification for order ID: {}. Error: {}", orderId, e.getMessage());
         }
 
-        // 🔄 5. Publish Event to trigger decoupled components (such as logistics pickup)
+        // 🔄 5. Schedule Google Review invite if status is DELIVERED
+        if (nextStatus == OrderStatus.DELIVERED) {
+            log.info("Order ID: {} has been DELIVERED. Scheduling Google Review request...", orderId);
+            try {
+                if (reviewRequestRepository.findByOrderId(orderId).isEmpty()) {
+                    com.madhurgram.productservice.marketing.entity.ReviewRequest reviewRequest = com.madhurgram.productservice.marketing.entity.ReviewRequest.builder()
+                            .orderId(orderId)
+                            .customerName(saved.getCustomerName())
+                            .customerPhone(saved.getPhoneNumber())
+                            .status("PENDING")
+                            .scheduledAt(LocalDateTime.now().plusDays(1)) // Schedule 24 hours later
+                            .build();
+                    reviewRequestRepository.save(reviewRequest);
+                    log.info("Successfully scheduled Google Review request for Order ID: {}", orderId);
+                }
+            } catch (Exception e) {
+                log.error("Failed to schedule Google Review request for Order ID: {}", orderId, e);
+            }
+        }
+
+        // 🔄 6. Publish Event to trigger decoupled components (such as logistics pickup)
         if (nextStatus == OrderStatus.CONFIRMED) {
             log.info("Publishing OrderConfirmedEvent for Order ID: {}", orderId);
             eventPublisher.publishEvent(new OrderConfirmedEvent(this, saved));
