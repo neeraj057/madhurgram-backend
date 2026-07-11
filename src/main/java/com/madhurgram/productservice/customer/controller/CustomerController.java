@@ -3,61 +3,88 @@ package com.madhurgram.productservice.customer.controller;
 import com.madhurgram.productservice.customer.dto.AddressDTO;
 import com.madhurgram.productservice.customer.dto.CustomerDTO;
 import com.madhurgram.productservice.customer.service.CustomerService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.constraints.Pattern;
+
+/**
+ * Controller for customer accounts and delivery addresses management.
+ * 
+ * <p>Handles auto-registration of new customers when querying profile endpoints.
+ */
+@Slf4j
+@Validated
 @RestController
 @RequestMapping("/api/customers")
+@Tag(name = "Customer", description = "Endpoints for managing buyer profiles and delivery addresses")
 public class CustomerController {
 
     private final CustomerService customerService;
 
-    // SOLID - Dependency Injection via Constructor
+    /**
+     * Constructor injection for CustomerController.
+     *
+     * @param customerService customer service management
+     */
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
 
     /**
-     * 🔍 GET: कस्टमर की प्रोफाइल और उसके सारे सेव्ड एड्रेस फेच करने के लिए।
-     * अगर कस्टमर पहली बार आ रहा है, तो सर्विस लेयर उसे ऑटो-रजिस्टर कर लेगी।
+     * Retrieves the profile, including active delivery addresses, for a customer.
+     * Registers a new customer implicitly if they do not exist yet.
+     *
+     * @param phone validated buyer phone number
+     * @return the profile DTO
      */
     @GetMapping("/{phone}")
-    public ResponseEntity<CustomerDTO> getCustomerProfile(@PathVariable String phone) {
-        // Guard Clause
-        if (phone == null || phone.trim().length() < 10) {
-            throw new IllegalArgumentException("Invalid phone number format. Must be at least 10 digits.");
-        }
+    @Operation(summary = "Get or register customer profile", description = "Fetches details of a customer profile. Auto-registers the customer if not found.")
+    public ResponseEntity<CustomerDTO> getCustomerProfile(
+            @PathVariable
+            @Pattern(regexp = "^(?:\\+91|91)?[6-9]\\d{9}$", message = "Invalid phone number format. Must be a valid 10-digit Indian mobile number optionally prefixed with +91 or 91.")
+            String phone) {
+        log.info("Request: get customer profile for phone='{}'", phone);
         
         CustomerDTO profile = customerService.getCustomerProfile(phone.trim());
-        return ResponseEntity.ok(profile); // 200 OK
+        log.info("Returning profile for phone='{}' (name='{}')", phone, profile.getFullName());
+        return ResponseEntity.ok(profile);
     }
 
     /**
-     * ➕ POST: कस्टमर की प्रोफाइल में एक नया डिलीवरी एड्रेस जोड़ने के लिए।
+     * Appends a new delivery address to a customer's profile.
+     *
+     * @param phone      validated buyer phone number
+     * @param addressDTO delivery address fields payload
+     * @return the updated customer profile containing the new address
      */
     @PostMapping("/{phone}/addresses")
+    @Operation(summary = "Add address to profile", description = "Adds a delivery location/address under a customer's phone identification.")
     public ResponseEntity<CustomerDTO> addAddressToProfile(
-            @PathVariable String phone,
+            @PathVariable
+            @Pattern(regexp = "^(?:\\+91|91)?[6-9]\\d{9}$", message = "Invalid phone number format. Must be a valid 10-digit Indian mobile number optionally prefixed with +91 or 91.")
+            String phone,
             @RequestBody AddressDTO addressDTO) {
+        log.info("Request: add address type {} to profile phone='{}'", addressDTO.getAddressType(), phone);
 
-        // Phone Validation Guard
-        if (phone == null || phone.trim().length() < 10) {
-            throw new IllegalArgumentException("Invalid phone number format.");
-        }
-        
-        // Payload Validation Guard
         if (addressDTO.getFullAddress() == null || addressDTO.getPincode() == null) {
+            log.warn("Add address failed: missing fullAddress or pincode");
             throw new IllegalArgumentException("Full address and Pincode are mandatory for delivery.");
         }
         if (addressDTO.getAddressType() == null) {
+            log.warn("Add address failed: missing addressType");
             throw new IllegalArgumentException("Address Type (HOME, OFFICE, OTHER) must be specified.");
         }
 
-        // सर्विस कॉल
         CustomerDTO updatedProfile = customerService.addAddressToProfile(phone.trim(), addressDTO);
-        
-        // 201 CREATED स्टेटस के साथ अपडेटेड प्रोफाइल रिटर्न करो
+        log.info("Address successfully added to profile phone='{}'", phone);
         return ResponseEntity.status(HttpStatus.CREATED).body(updatedProfile);
     }
 }

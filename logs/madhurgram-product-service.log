@@ -5523,3 +5523,126 @@ Complete your order here: http://localhost:3000/?recoverCart=5666655555
 2026-07-11 22:48:15 [http-nio-8080-exec-1] INFO  c.m.p.p.controller.ProductController - Successfully fetched 14 products for category: shop-all
 2026-07-11 22:50:29 [http-nio-8080-exec-4] INFO  c.m.p.c.controller.CouponController - Admin request: fetch all coupons
 2026-07-11 22:50:29 [http-nio-8080-exec-10] INFO  c.m.p.c.controller.CouponController - Admin request: fetch all coupons
+2026-07-11 23:21:18 [main] INFO  c.m.p.ProductServiceApplication - Starting ProductServiceApplication using Java 21.0.2 with PID 15380 (D:\MadhurGram\product-service\target\classes started by victus in D:\MadhurGram\product-service)
+2026-07-11 23:21:18 [main] INFO  c.m.p.ProductServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-07-11 23:21:19 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.1.0.Final
+2026-07-11 23:21:20 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-11 23:21:20 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-11 23:21:20 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 264 ms. Found 14 JPA repository interfaces.
+2026-07-11 23:21:21 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-11 23:21:21 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-07-11 23:21:21 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-11 23:21:21 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-11 23:21:21 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 2854 ms
+2026-07-11 23:21:22 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-11 23:21:22 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-07-11 23:21:22 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-11 23:21:22 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-07-11 23:21:22 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1921b43c
+2026-07-11 23:21:22 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-07-11 23:21:23 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/madhurgram_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.36
+	Default catalog/schema: madhurgram_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-11 23:21:24 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-11 23:21:24 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-11 23:21:24 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-11 23:21:27 [main] INFO  c.m.p.config.CacheConfig - Initializing RedisCacheManager with JSON Serialization...
+2026-07-11 23:21:27 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
+2026-07-11 23:21:28 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoints beneath base path '/actuator'
+2026-07-11 23:21:28 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-07-11 23:21:28 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-07-11 23:21:28 [main] INFO  c.m.p.ProductServiceApplication - Started ProductServiceApplication in 11.014 seconds (process running for 11.616)
+2026-07-11 23:21:28 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 23:21:29 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 23:21:29 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 23:21:29 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T23:21:29.191057300 (Retention: 48 hours)
+2026-07-11 23:21:35 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-11 23:21:35 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-11 23:21:35 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 7 ms
+2026-07-11 23:21:58 [http-nio-8080-exec-9] INFO  c.m.p.auth.controller.AuthController - Received login attempt for username: admin
+2026-07-11 23:21:58 [http-nio-8080-exec-9] INFO  c.m.p.auth.controller.AuthController - Login successful for Super Admin: admin
+2026-07-11 23:22:08 [http-nio-8080-exec-8] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-11 23:22:08 [http-nio-8080-exec-8] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-11 23:22:08 [http-nio-8080-exec-8] INFO  c.m.p.o.controller.OrderController - Successfully fetched 42 orders
+2026-07-11 23:22:08 [http-nio-8080-exec-9] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-11 23:22:08 [http-nio-8080-exec-9] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-11 23:22:08 [http-nio-8080-exec-9] INFO  c.m.p.o.controller.OrderController - Successfully fetched 42 orders
+2026-07-11 23:22:10 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Starting dashboard computation for last 7 days...
+2026-07-11 23:22:10 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1: Querying abandoned cart repository counts...
+2026-07-11 23:22:10 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1 complete. Conversion rate: 80.64516129032258
+2026-07-11 23:22:10 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Querying orders since: 2026-06-28T00:00
+2026-07-11 23:22:10 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Orders queried: 42. Processing growth in memory...
+2026-07-11 23:22:10 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2 complete. Sales Growth: 166.25925925925927
+2026-07-11 23:22:10 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3: Fetching low stock products from database...
+2026-07-11 23:22:10 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3 complete. Low stock count: 1
+2026-07-11 23:22:10 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4: Querying active user count from Redis Sorted Set...
+2026-07-11 23:22:10 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4 complete. Active users: 1
+2026-07-11 23:22:10 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Completing dashboard stats builder...
+2026-07-11 23:22:10 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Starting dashboard computation for last 7 days...
+2026-07-11 23:22:10 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1: Querying abandoned cart repository counts...
+2026-07-11 23:22:10 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1 complete. Conversion rate: 80.64516129032258
+2026-07-11 23:22:10 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Querying orders since: 2026-06-28T00:00
+2026-07-11 23:22:10 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Orders queried: 42. Processing growth in memory...
+2026-07-11 23:22:10 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2 complete. Sales Growth: 166.25925925925927
+2026-07-11 23:22:10 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3: Fetching low stock products from database...
+2026-07-11 23:22:10 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3 complete. Low stock count: 1
+2026-07-11 23:22:10 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4: Querying active user count from Redis Sorted Set...
+2026-07-11 23:22:10 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4 complete. Active users: 1
+2026-07-11 23:22:10 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Completing dashboard stats builder...
+2026-07-11 23:22:18 [http-nio-8080-exec-1] INFO  c.m.p.c.controller.CouponController - Admin request: fetch all coupons
+2026-07-11 23:22:18 [http-nio-8080-exec-10] INFO  c.m.p.c.controller.CouponController - Admin request: fetch all coupons
+2026-07-11 23:22:22 [http-nio-8080-exec-6] INFO  c.m.p.a.c.AdminCustomerController - Admin request: list customers, search='null'
+2026-07-11 23:22:23 [http-nio-8080-exec-6] INFO  c.m.p.a.c.AdminCustomerController - Returning 24 customer(s) [superAdmin=true]
+2026-07-11 23:22:23 [http-nio-8080-exec-7] INFO  c.m.p.a.c.AdminCustomerController - Admin request: list customers, search='null'
+2026-07-11 23:22:23 [http-nio-8080-exec-7] INFO  c.m.p.a.c.AdminCustomerController - Returning 24 customer(s) [superAdmin=true]
+2026-07-11 23:22:30 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching all customer feedbacks for administrative dashboard
+2026-07-11 23:22:30 [http-nio-8080-exec-10] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching all customer feedbacks for administrative dashboard
+2026-07-11 23:23:32 [http-nio-8080-exec-5] INFO  c.m.p.c.c.AdminAbandonedCartController - Received request to fetch admin abandoned carts older than 30 minutes
+2026-07-11 23:23:32 [http-nio-8080-exec-3] INFO  c.m.p.c.c.AdminSettingsController - Received request to fetch Auto-Pilot Recovery status
+2026-07-11 23:23:32 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Fetching unrecovered carts inactive since before: 2026-07-11T22:53:32.621589600
+2026-07-11 23:23:32 [http-nio-8080-exec-10] INFO  c.m.p.c.c.AdminSettingsController - Received request to fetch Auto-Pilot Recovery status
+2026-07-11 23:23:32 [http-nio-8080-exec-4] INFO  c.m.p.c.c.AdminAbandonedCartController - Received request to fetch admin abandoned carts older than 30 minutes
+2026-07-11 23:23:32 [http-nio-8080-exec-4] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Fetching unrecovered carts inactive since before: 2026-07-11T22:53:32.835432300
+2026-07-11 23:24:10 [http-nio-8080-exec-7] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 23:24:10 [http-nio-8080-exec-5] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 23:24:10 [http-nio-8080-exec-10] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-11 23:24:10 [http-nio-8080-exec-4] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 23:24:11 [http-nio-8080-exec-10] INFO  c.m.p.p.controller.ProductController - Successfully fetched 14 products for category: shop-all
+2026-07-11 23:24:11 [http-nio-8080-exec-2] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-11 23:24:11 [http-nio-8080-exec-2] INFO  c.m.p.p.controller.ProductController - Successfully fetched 14 products for category: shop-all
+2026-07-11 23:25:03 [http-nio-8080-exec-4] INFO  c.m.p.a.c.AdminCustomerController - Admin request: list customers, search='null'
+2026-07-11 23:25:04 [http-nio-8080-exec-4] INFO  c.m.p.a.c.AdminCustomerController - Returning 24 customer(s) [superAdmin=true]
+2026-07-11 23:25:04 [http-nio-8080-exec-10] INFO  c.m.p.a.c.AdminCustomerController - Admin request: list customers, search='null'
+2026-07-11 23:25:04 [http-nio-8080-exec-10] INFO  c.m.p.a.c.AdminCustomerController - Returning 24 customer(s) [superAdmin=true]
+2026-07-11 23:25:31 [http-nio-8080-exec-4] INFO  c.m.p.a.c.AdminCustomerController - Admin request: customer history for phone='8770242812'
+2026-07-11 23:25:31 [http-nio-8080-exec-4] INFO  c.m.p.a.c.AdminCustomerController - Returning history for phone='8770242812' [superAdmin=true]
+2026-07-11 23:25:55 [http-nio-8080-exec-5] INFO  c.m.p.a.c.AdminCustomerController - Admin request: list customers, search='ANCHAL'
+2026-07-11 23:25:56 [http-nio-8080-exec-5] INFO  c.m.p.a.c.AdminCustomerController - Returning 1 customer(s) [superAdmin=true]
+2026-07-11 23:26:02 [http-nio-8080-exec-9] INFO  c.m.p.a.c.AdminCustomerController - Admin request: list customers, search='null'
+2026-07-11 23:26:02 [http-nio-8080-exec-9] INFO  c.m.p.a.c.AdminCustomerController - Returning 24 customer(s) [superAdmin=true]
+2026-07-11 23:26:28 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 23:26:28 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 23:26:28 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 23:26:28 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T23:26:28.998378600 (Retention: 48 hours)
+2026-07-11 23:31:28 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 23:31:28 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 23:31:29 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 23:31:29 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T23:31:29.007734200 (Retention: 48 hours)
+2026-07-11 23:36:28 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 23:36:28 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 23:36:28 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 23:36:28 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T23:36:28.998938100 (Retention: 48 hours)
+2026-07-11 23:46:04 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m11s495ms975µs800ns).
+2026-07-11 23:46:10 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 23:46:10 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 23:46:10 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 23:46:10 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T23:46:10.592331800 (Retention: 48 hours)

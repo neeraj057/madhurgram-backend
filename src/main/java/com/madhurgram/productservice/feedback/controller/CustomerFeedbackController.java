@@ -5,24 +5,39 @@ import com.madhurgram.productservice.feedback.repository.CustomerFeedbackReposit
 import com.madhurgram.productservice.order.entity.Order;
 import com.madhurgram.productservice.order.entity.OrderItem;
 import com.madhurgram.productservice.order.repository.OrderRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.util.*;
 
+/**
+ * Controller for managing buyer testimonials, ratings, and feedback uploads.
+ */
+@Slf4j
 @RestController
 @RequestMapping("/api")
+@Tag(name = "Customer Feedback", description = "Endpoints for submitting and retrieving reviews, testimonials, and feedback images")
 public class CustomerFeedbackController {
-
-    private static final Logger log = LoggerFactory.getLogger(CustomerFeedbackController.class);
 
     private final CustomerFeedbackRepository feedbackRepository;
     private final OrderRepository orderRepository;
 
+    /**
+     * Constructor injection for CustomerFeedbackController.
+     *
+     * @param feedbackRepository feedback repository
+     * @param orderRepository    order repository
+     */
     public CustomerFeedbackController(
             CustomerFeedbackRepository feedbackRepository,
             OrderRepository orderRepository) {
@@ -30,16 +45,31 @@ public class CustomerFeedbackController {
         this.orderRepository = orderRepository;
     }
 
+    /**
+     * Submits customer feedback.
+     *
+     * @param feedback feedback details payload
+     * @return the saved feedback
+     */
     @PostMapping("/public/feedback")
+    @Operation(summary = "Submit new feedback", description = "Allows a customer to submit their rating, comments, and order references.")
     public ResponseEntity<CustomerFeedback> submitFeedback(@RequestBody CustomerFeedback feedback) {
-        log.info("[FEEDBACK] Submitting new feedback. Rating: {}, Customer: {}, Order ID: {}", 
-                feedback.getRating(), feedback.getCustomerName(), feedback.getOrderId());
+        log.info("Feedback submission request: Rating={}, Order ID={}", feedback.getRating(), feedback.getOrderId());
         CustomerFeedback saved = feedbackRepository.save(feedback);
+        log.info("Feedback successfully saved with ID: {}", saved.getId());
         return ResponseEntity.ok(saved);
     }
 
+    /**
+     * Generates a list of suggested feedback comments based on the items in a given order.
+     *
+     * @param orderId optional order ID to analyze
+     * @return suggested feedback statements
+     */
     @GetMapping("/public/feedback/suggestions")
+    @Operation(summary = "Get suggested feedback statements", description = "Analyzes items in an order and suggests context-specific review comments.")
     public ResponseEntity<List<String>> getFeedbackSuggestions(@RequestParam(required = false) Long orderId) {
+        log.info("Request suggestions for order ID: {}", orderId);
         List<String> suggestions = new ArrayList<>();
 
         if (orderId != null) {
@@ -90,10 +120,18 @@ public class CustomerFeedbackController {
         return ResponseEntity.ok(suggestions);
     }
 
+    /**
+     * Uploads a customer feedback picture and saves it locally.
+     *
+     * @param file the multipart image file to upload
+     * @return map with image file URL
+     */
     @PostMapping("/public/feedback/upload")
-    public ResponseEntity<java.util.Map<String, String>> uploadFeedbackImage(@RequestParam("file") org.springframework.web.multipart.MultipartFile file) {
+    @Operation(summary = "Upload review image", description = "Uploads a photo submitted by a customer for their review.")
+    public ResponseEntity<Map<String, String>> uploadFeedbackImage(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
-            return ResponseEntity.badRequest().body(java.util.Map.of("error", "File is empty"));
+            log.warn("Feedback image upload failed: file is empty");
+            return ResponseEntity.badRequest().body(Map.of("error", "File is empty"));
         }
         try {
             String originalFileName = file.getOriginalFilename();
@@ -101,39 +139,55 @@ public class CustomerFeedbackController {
             if (originalFileName != null && originalFileName.contains(".")) {
                 extension = originalFileName.substring(originalFileName.lastIndexOf("."));
             }
-            String fileName = java.util.UUID.randomUUID().toString() + extension;
+            String fileName = UUID.randomUUID().toString() + extension;
 
-            java.io.File uploadDir = new java.io.File("uploads/feedback");
+            File uploadDir = new File("uploads/feedback");
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs();
             }
 
-            java.io.File destination = new java.io.File(uploadDir.getAbsolutePath(), fileName);
-            java.nio.file.Files.copy(
+            File destination = new File(uploadDir.getAbsolutePath(), fileName);
+            Files.copy(
                 file.getInputStream(), 
                 destination.toPath(), 
-                java.nio.file.StandardCopyOption.REPLACE_EXISTING
+                StandardCopyOption.REPLACE_EXISTING
             );
 
+            // TODO [PRODUCTION]: Replace localhost URL with production static asset CDN
             String fileUrl = "http://localhost:8080/uploads/feedback/" + fileName;
-            return ResponseEntity.ok(java.util.Map.of("url", fileUrl));
+            log.info("Feedback image successfully uploaded: '{}'", fileUrl);
+            return ResponseEntity.ok(Map.of("url", fileUrl));
         } catch (Exception e) {
-            log.error("[FEEDBACK] Failed to upload feedback image", e);
-            return ResponseEntity.status(500).body(java.util.Map.of("error", "Failed to upload file"));
+            log.error("Failed to upload feedback image", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Failed to upload file"));
         }
     }
 
+    /**
+     * Retrieves positive testimonials to showcase on public homepages.
+     *
+     * @return top positive feedbacks (rating >= 4)
+     */
     @GetMapping("/public/feedback/testimonials")
+    @Operation(summary = "Get storefront testimonials", description = "Retrieves the top 8 recent customer feedbacks with 4+ star ratings.")
     public ResponseEntity<List<CustomerFeedback>> getTestimonials() {
-        log.info("[FEEDBACK] Fetching public positive testimonials");
+        log.info("Request: fetch public testimonials");
         List<CustomerFeedback> testimonials = feedbackRepository.findTop8ByRatingGreaterThanEqualOrderByCreatedAtDesc(4);
+        log.info("Returning {} testimonials", testimonials.size());
         return ResponseEntity.ok(testimonials);
     }
 
+    /**
+     * Retrieves all customer feedback submissions for the admin dashboard.
+     *
+     * @return list of feedbacks
+     */
     @GetMapping("/admin/feedback")
+    @Operation(summary = "List all feedbacks (Admin)", description = "Retrieves all feedback submissions sorted by creation date descending.")
     public ResponseEntity<List<CustomerFeedback>> getFeedbacks() {
-        log.info("[FEEDBACK] Fetching all customer feedbacks for administrative dashboard");
+        log.info("Admin request: list all feedbacks");
         List<CustomerFeedback> feedbacks = feedbackRepository.findAllByOrderByCreatedAtDesc();
+        log.info("Returning {} feedbacks to admin", feedbacks.size());
         return ResponseEntity.ok(feedbacks);
     }
 }
