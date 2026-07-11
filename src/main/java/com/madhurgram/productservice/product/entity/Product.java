@@ -40,4 +40,8 @@ public class Product {
 
     @Column(name = "is_active")
     private boolean isActive = true;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "hsn_code", referencedColumnName = "hsn_code", nullable = true)
+    private HsnTaxMaster hsnTaxMaster;
 }

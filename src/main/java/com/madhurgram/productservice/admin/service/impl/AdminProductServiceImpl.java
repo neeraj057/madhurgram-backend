@@ -2,7 +2,9 @@ package com.madhurgram.productservice.admin.service.impl;
 
 import com.madhurgram.productservice.product.dto.ProductDTO;
 import com.madhurgram.productservice.product.entity.Product;
+import com.madhurgram.productservice.product.entity.HsnTaxMaster;
 import com.madhurgram.productservice.product.repository.ProductRepository;
+import com.madhurgram.productservice.product.repository.HsnTaxMasterRepository;
 import com.madhurgram.productservice.admin.service.AdminProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +21,11 @@ public class AdminProductServiceImpl implements AdminProductService {
 
     private static final Logger log = LoggerFactory.getLogger(AdminProductServiceImpl.class);
     private final ProductRepository productRepository;
+    private final HsnTaxMasterRepository hsnTaxMasterRepository;
 
-    public AdminProductServiceImpl(ProductRepository productRepository) {
+    public AdminProductServiceImpl(ProductRepository productRepository, HsnTaxMasterRepository hsnTaxMasterRepository) {
         this.productRepository = productRepository;
+        this.hsnTaxMasterRepository = hsnTaxMasterRepository;
     }
 
     @Override
@@ -49,6 +53,12 @@ public class AdminProductServiceImpl implements AdminProductService {
         if (dto.getCategory() == null || dto.getCategory().trim().isEmpty()) {
             throw new IllegalArgumentException("Product category cannot be null or empty.");
         }
+
+        HsnTaxMaster hsn = null;
+        if (dto.getHsnCode() != null && !dto.getHsnCode().trim().isEmpty()) {
+            hsn = hsnTaxMasterRepository.findById(dto.getHsnCode().trim()).orElse(null);
+        }
+
         Product product = Product.builder()
                 .name(dto.getName())
                 .price(dto.getPrice())
@@ -57,6 +67,7 @@ public class AdminProductServiceImpl implements AdminProductService {
                 .stock(dto.getStock())
                 .category(dto.getCategory().trim())
                 .isActive(dto.getIsActive() != null ? dto.getIsActive() : true)
+                .hsnTaxMaster(hsn)
                 .build();
         
         Product savedProduct = productRepository.save(product);
@@ -75,12 +86,18 @@ public class AdminProductServiceImpl implements AdminProductService {
             throw new IllegalArgumentException("Product category cannot be null or empty.");
         }
 
+        HsnTaxMaster hsn = null;
+        if (dto.getHsnCode() != null && !dto.getHsnCode().trim().isEmpty()) {
+            hsn = hsnTaxMasterRepository.findById(dto.getHsnCode().trim()).orElse(null);
+        }
+
         product.setName(dto.getName());
         product.setPrice(dto.getPrice());
         product.setVolume(dto.getVolume());
         product.setImageUrl(dto.getImageUrl());
         product.setStock(dto.getStock());
         product.setCategory(dto.getCategory().trim());
+        product.setHsnTaxMaster(hsn);
         
         if (dto.getIsActive() != null) {
             product.setActive(dto.getIsActive());
@@ -111,6 +128,7 @@ public class AdminProductServiceImpl implements AdminProductService {
                 .stock(product.getStock())
                 .isActive(product.isActive())
                 .category(product.getCategory())
+                .hsnCode(product.getHsnTaxMaster() != null ? product.getHsnTaxMaster().getHsnCode() : null)
                 .build();
     }
 }

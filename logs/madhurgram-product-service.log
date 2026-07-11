@@ -3394,3 +3394,379 @@ java.lang.IllegalArgumentException: Cannot change status of order from DELIVERED
 2026-07-11 14:39:52 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
 2026-07-11 14:39:52 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
 2026-07-11 14:39:52 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Successfully fetched 35 orders
+2026-07-11 14:42:51 [main] INFO  c.m.p.ProductServiceApplication - Starting ProductServiceApplication using Java 21.0.2 with PID 14520 (D:\MadhurGram\product-service\target\classes started by victus in D:\MadhurGram\product-service)
+2026-07-11 14:42:51 [main] INFO  c.m.p.ProductServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-07-11 14:42:51 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.1.0.Final
+2026-07-11 14:42:52 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-11 14:42:52 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-11 14:42:52 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 238 ms. Found 11 JPA repository interfaces.
+2026-07-11 14:42:53 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-11 14:42:53 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-07-11 14:42:53 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-11 14:42:53 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-11 14:42:54 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 2618 ms
+2026-07-11 14:42:54 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-11 14:42:54 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-07-11 14:42:55 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-11 14:42:55 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-07-11 14:42:55 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@10466c55
+2026-07-11 14:42:55 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-07-11 14:42:55 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/madhurgram_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.36
+	Default catalog/schema: madhurgram_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-11 14:42:56 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-11 14:42:56 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-11 14:42:57 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-11 14:42:59 [main] INFO  c.m.p.config.CacheConfig - Initializing RedisCacheManager with JSON Serialization...
+2026-07-11 14:42:59 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
+2026-07-11 14:43:00 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoints beneath base path '/actuator'
+2026-07-11 14:43:00 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-07-11 14:43:00 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-07-11 14:43:00 [main] INFO  c.m.p.ProductServiceApplication - Started ProductServiceApplication in 10.064 seconds (process running for 10.611)
+2026-07-11 14:43:00 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 14:43:00 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 14:43:01 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 14:43:01 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T14:43:01.020575900 (Retention: 48 hours)
+2026-07-11 14:43:16 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-11 14:43:16 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-11 14:43:16 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2026-07-11 14:43:16 [http-nio-8080-exec-2] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 14:43:16 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 14:43:16 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-11 14:43:16 [http-nio-8080-exec-4] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 14:43:16 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Successfully fetched 14 products for category: shop-all
+2026-07-11 14:43:16 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-11 14:43:16 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Successfully fetched 14 products for category: shop-all
+2026-07-11 14:43:52 [http-nio-8080-exec-6] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-11 14:43:52 [http-nio-8080-exec-6] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-11 14:43:52 [http-nio-8080-exec-6] INFO  c.m.p.o.controller.OrderController - Successfully fetched 35 orders
+2026-07-11 14:43:55 [http-nio-8080-exec-7] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 14:43:55 [http-nio-8080-exec-9] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 14:43:55 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-11 14:43:55 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Successfully fetched 14 products for category: shop-all
+2026-07-11 14:43:55 [http-nio-8080-exec-10] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 14:43:55 [http-nio-8080-exec-1] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-11 14:43:55 [http-nio-8080-exec-1] INFO  c.m.p.p.controller.ProductController - Successfully fetched 14 products for category: shop-all
+2026-07-11 14:44:52 [http-nio-8080-exec-10] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-11 14:44:52 [http-nio-8080-exec-10] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-11 14:44:52 [http-nio-8080-exec-10] INFO  c.m.p.o.controller.OrderController - Successfully fetched 35 orders
+2026-07-11 14:45:52 [http-nio-8080-exec-4] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-11 14:45:52 [http-nio-8080-exec-4] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-11 14:45:52 [http-nio-8080-exec-4] INFO  c.m.p.o.controller.OrderController - Successfully fetched 35 orders
+2026-07-11 14:46:52 [http-nio-8080-exec-3] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-11 14:46:52 [http-nio-8080-exec-3] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-11 14:46:52 [http-nio-8080-exec-3] INFO  c.m.p.o.controller.OrderController - Successfully fetched 35 orders
+2026-07-11 14:46:59 [http-nio-8080-exec-4] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 14:47:00 [http-nio-8080-exec-9] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 14:47:00 [http-nio-8080-exec-7] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-11 14:47:00 [http-nio-8080-exec-7] INFO  c.m.p.p.controller.ProductController - Successfully fetched 14 products for category: shop-all
+2026-07-11 14:47:00 [http-nio-8080-exec-8] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 14:47:00 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-11 14:47:00 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Successfully fetched 14 products for category: shop-all
+2026-07-11 14:47:52 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-11 14:47:52 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-11 14:47:52 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Successfully fetched 35 orders
+2026-07-11 14:48:00 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 14:48:00 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 14:48:00 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 14:48:00 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T14:48:00.860825200 (Retention: 48 hours)
+2026-07-11 14:48:09 [http-nio-8080-exec-4] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 14:48:09 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-11 14:48:09 [http-nio-8080-exec-8] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 14:48:09 [http-nio-8080-exec-5] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-11 14:48:09 [http-nio-8080-exec-10] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 14:48:09 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Successfully fetched 14 products for category: shop-all
+2026-07-11 14:48:09 [http-nio-8080-exec-2] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-11 14:48:09 [http-nio-8080-exec-2] INFO  c.m.p.p.controller.ProductController - Successfully fetched 14 products for category: shop-all
+2026-07-11 14:48:52 [http-nio-8080-exec-1] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-11 14:48:52 [http-nio-8080-exec-1] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-11 14:48:52 [http-nio-8080-exec-1] INFO  c.m.p.o.controller.OrderController - Successfully fetched 35 orders
+2026-07-11 14:49:52 [http-nio-8080-exec-6] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-11 14:49:52 [http-nio-8080-exec-6] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-11 14:49:52 [http-nio-8080-exec-6] INFO  c.m.p.o.controller.OrderController - Successfully fetched 35 orders
+2026-07-11 14:50:52 [http-nio-8080-exec-6] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-11 14:50:52 [http-nio-8080-exec-6] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-11 14:50:52 [http-nio-8080-exec-6] INFO  c.m.p.o.controller.OrderController - Successfully fetched 35 orders
+2026-07-11 14:51:33 [http-nio-8080-exec-10] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 14:51:33 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 14:51:33 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-11 14:51:33 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Successfully fetched 14 products for category: shop-all
+2026-07-11 14:51:33 [http-nio-8080-exec-2] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 14:51:33 [http-nio-8080-exec-6] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-11 14:51:33 [http-nio-8080-exec-6] INFO  c.m.p.p.controller.ProductController - Successfully fetched 14 products for category: shop-all
+2026-07-11 14:51:52 [http-nio-8080-exec-9] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-11 14:51:52 [http-nio-8080-exec-9] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-11 14:51:52 [http-nio-8080-exec-9] INFO  c.m.p.o.controller.OrderController - Successfully fetched 35 orders
+2026-07-11 14:52:52 [http-nio-8080-exec-2] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-11 14:52:52 [http-nio-8080-exec-2] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-11 14:52:52 [http-nio-8080-exec-2] INFO  c.m.p.o.controller.OrderController - Successfully fetched 35 orders
+2026-07-11 14:53:00 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 14:53:00 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 14:53:00 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 14:53:00 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T14:53:00.835703100 (Retention: 48 hours)
+2026-07-11 14:53:52 [http-nio-8080-exec-2] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-11 14:53:52 [http-nio-8080-exec-2] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-11 14:53:52 [http-nio-8080-exec-2] INFO  c.m.p.o.controller.OrderController - Successfully fetched 35 orders
+2026-07-11 14:54:52 [http-nio-8080-exec-1] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-11 14:54:52 [http-nio-8080-exec-1] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-11 14:54:52 [http-nio-8080-exec-1] INFO  c.m.p.o.controller.OrderController - Successfully fetched 35 orders
+2026-07-11 14:55:52 [http-nio-8080-exec-9] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-11 14:55:52 [http-nio-8080-exec-9] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-11 14:55:52 [http-nio-8080-exec-9] INFO  c.m.p.o.controller.OrderController - Successfully fetched 35 orders
+2026-07-11 15:47:46 [http-nio-8080-exec-8] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-11 15:47:46 [http-nio-8080-exec-8] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-11 15:47:46 [http-nio-8080-exec-8] INFO  c.m.p.o.controller.OrderController - Successfully fetched 35 orders
+2026-07-11 16:16:31 [http-nio-8080-exec-4] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-11 16:16:31 [http-nio-8080-exec-4] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-11 16:16:31 [http-nio-8080-exec-4] INFO  c.m.p.o.controller.OrderController - Successfully fetched 35 orders
+2026-07-11 16:16:35 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h20m39s708ms390µs200ns).
+2026-07-11 17:27:11 [http-nio-8080-exec-3] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-11 17:27:11 [http-nio-8080-exec-3] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-11 17:27:11 [http-nio-8080-exec-3] INFO  c.m.p.o.controller.OrderController - Successfully fetched 35 orders
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.527578800 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.557206300 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.574180800 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.590064400 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.605224500 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.622874100 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.641055 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.655729700 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.668021200 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.684240400 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.700250300 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.715580900 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.730731700 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.745922600 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.758582 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.772635 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.789632600 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.814163500 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.840162100 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.860159500 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.877356400 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.891796300 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.913828 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.928420600 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.944573700 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.956428 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.968795700 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.985932700 (Retention: 48 hours)
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:19 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:19.998509400 (Retention: 48 hours)
+2026-07-11 17:27:20 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:27:20 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:27:20 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:27:20 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:27:20.013832400 (Retention: 48 hours)
+2026-07-11 17:27:27 [http-nio-8080-exec-8] INFO  c.m.p.o.controller.OrderController - Received request to fetch all orders
+2026-07-11 17:27:27 [http-nio-8080-exec-8] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-11 17:27:27 [http-nio-8080-exec-8] INFO  c.m.p.o.controller.OrderController - Successfully fetched 35 orders
+2026-07-11 17:27:40 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h11m4s656ms321µs500ns).
+2026-07-11 17:28:00 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:28:00 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:28:00 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:28:00 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:28:00.854888200 (Retention: 48 hours)
+2026-07-11 17:33:00 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 17:33:00 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 17:33:00 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 17:33:00 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T17:33:00.900805 (Retention: 48 hours)
+2026-07-11 18:01:01 [main] INFO  c.m.p.ProductServiceApplication - Starting ProductServiceApplication using Java 21.0.2 with PID 13808 (D:\MadhurGram\product-service\target\classes started by victus in D:\MadhurGram\product-service)
+2026-07-11 18:01:01 [main] INFO  c.m.p.ProductServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-07-11 18:01:01 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.1.0.Final
+2026-07-11 18:01:02 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-11 18:01:02 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-11 18:01:02 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 249 ms. Found 11 JPA repository interfaces.
+2026-07-11 18:01:03 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-11 18:01:03 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-07-11 18:01:03 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-11 18:01:03 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-11 18:01:03 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 2518 ms
+2026-07-11 18:01:04 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-11 18:01:04 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-07-11 18:01:04 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-11 18:01:04 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-07-11 18:01:04 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3ff3275b
+2026-07-11 18:01:04 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-07-11 18:01:05 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/madhurgram_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.36
+	Default catalog/schema: madhurgram_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-11 18:01:06 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-11 18:01:06 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-11 18:01:06 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-11 18:01:08 [main] INFO  c.m.p.config.CacheConfig - Initializing RedisCacheManager with JSON Serialization...
+2026-07-11 18:01:09 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
+2026-07-11 18:01:09 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoints beneath base path '/actuator'
+2026-07-11 18:01:10 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-07-11 18:01:10 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-07-11 18:01:10 [main] INFO  c.m.p.ProductServiceApplication - Started ProductServiceApplication in 9.65 seconds (process running for 10.211)
+2026-07-11 18:01:10 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 18:01:10 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 18:01:10 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 18:01:10 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T18:01:10.387697900 (Retention: 48 hours)
+2026-07-11 18:01:57 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-11 18:01:57 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-11 18:01:57 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2026-07-11 18:01:57 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 18:01:58 [http-nio-8080-exec-5] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 18:01:58 [http-nio-8080-exec-4] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-11 18:01:58 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 18:01:58 [http-nio-8080-exec-4] INFO  c.m.p.p.controller.ProductController - Successfully fetched 14 products for category: shop-all
+2026-07-11 18:01:58 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-11 18:01:58 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Successfully fetched 14 products for category: shop-all
+2026-07-11 18:02:46 [http-nio-8080-exec-7] INFO  c.m.p.cart.controller.CartController - Received request to sync/update cart for phone: 9795192876
+2026-07-11 18:02:46 [http-nio-8080-exec-7] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 9795192876
+2026-07-11 18:02:46 [http-nio-8080-exec-7] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - No active cart session found. Creating a new tracking manifest.
+2026-07-11 18:02:46 [http-nio-8080-exec-7] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Saved cart tracking manifest with ID: 24
+2026-07-11 18:02:50 [http-nio-8080-exec-4] INFO  c.m.p.cart.controller.CartController - Received request to sync/update cart for phone: 9795192876
+2026-07-11 18:02:50 [http-nio-8080-exec-4] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 9795192876
+2026-07-11 18:02:50 [http-nio-8080-exec-4] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Existing unrecovered cart found (ID: 24). Updating items and total.
+2026-07-11 18:02:50 [http-nio-8080-exec-4] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Saved cart tracking manifest with ID: 24
+2026-07-11 18:03:13 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Received request to place order for customer: OP (Phone: 9795192876)
+2026-07-11 18:03:13 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Processing order placement for customer: OP
+2026-07-11 18:03:13 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Place of Supply resolved. Is Intra-State (UP): false
+2026-07-11 18:03:13 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Deducting stock for Product ID: 5, Quantity: 1
+2026-07-11 18:03:13 [http-nio-8080-exec-5] INFO  c.m.p.p.s.impl.ProductServiceImpl - Attempting to deduct stock for product ID: 5 (Quantity: 1)
+2026-07-11 18:03:13 [http-nio-8080-exec-5] INFO  c.m.p.p.s.impl.ProductServiceImpl - Successfully deducted stock for product ID: 5 (Quantity: 1). Invalidating caches.
+2026-07-11 18:03:13 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Order saved in database with ID: 36
+2026-07-11 18:03:13 [http-nio-8080-exec-5] INFO  c.m.p.a.s.impl.AuditLogServiceImpl - Audit log written: [PLACE_ORDER_COD] by user: anonymousUser on entity: 36
+2026-07-11 18:03:13 [http-nio-8080-exec-5] INFO  c.m.p.o.s.OrderNotificationService - Dispatching WhatsApp status notification (CONFIRMED) to phone: 9795192876
+2026-07-11 18:03:13 [http-nio-8080-exec-5] INFO  c.m.p.cart.service.TwilioService - [MOCK TWILIO WHATSAPP DISPATCH] Successfully triggered in DEV mode.
+2026-07-11 18:03:13 [http-nio-8080-exec-5] INFO  c.m.p.cart.service.TwilioService - From: whatsapp:+1234567890
+2026-07-11 18:03:13 [http-nio-8080-exec-5] INFO  c.m.p.cart.service.TwilioService - To: whatsapp:+919795192876
+2026-07-11 18:03:13 [http-nio-8080-exec-5] INFO  c.m.p.cart.service.TwilioService - Message Body:
+नमस्ते OP! आपका MadhurGram ऑर्डर (ID: MG-00036) कन्फर्म हो गया है। हम इसे जल्द ही पैक करके शिप करेंगे। धन्यवाद, टीम MadhurGram 💛
+2026-07-11 18:03:13 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Publishing OrderConfirmedEvent for COD Order ID: 36
+2026-07-11 18:03:13 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Triggering cart recovery finalization for phone: 9795192876
+2026-07-11 18:03:13 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Attempting to mark cart as recovered for phone number: 9795192876
+2026-07-11 18:03:13 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully marked cart ID: 24 as recovered for phone: 9795192876
+2026-07-11 18:03:13 [task-1] INFO  c.m.p.o.l.OrderConfirmedListener - OrderConfirmedEvent received for Order ID: 36 - dispatching asynchronous logistics pickup request
+2026-07-11 18:03:13 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Order placed successfully with ID: 36
+2026-07-11 18:03:13 [task-1] INFO  c.m.p.l.s.impl.LogisticsServiceImpl - Resolving logistics provider for: DELHIVERY
+2026-07-11 18:03:13 [task-1] INFO  c.m.p.l.p.i.DelhiveryLogisticsProvider - [DELHIVERY] Sending pickup request for Order ID: 36 (Customer: OP)
+2026-07-11 18:03:13 [task-1] INFO  c.m.p.l.s.impl.LogisticsServiceImpl - Pickup scheduled successfully via Delhivery Express. Waybill: AWB-DELHIVERY-5484442885
+2026-07-11 18:03:13 [task-1] INFO  c.m.p.l.s.impl.LogisticsServiceImpl - Order ID: 36 status updated to SHIPPED in database
+2026-07-11 18:03:13 [task-1] INFO  c.m.p.o.s.OrderNotificationService - Dispatching WhatsApp status notification (SHIPPED) to phone: 9795192876
+2026-07-11 18:03:13 [task-1] INFO  c.m.p.cart.service.TwilioService - [MOCK TWILIO WHATSAPP DISPATCH] Successfully triggered in DEV mode.
+2026-07-11 18:03:13 [task-1] INFO  c.m.p.cart.service.TwilioService - From: whatsapp:+1234567890
+2026-07-11 18:03:13 [task-1] INFO  c.m.p.cart.service.TwilioService - To: whatsapp:+919795192876
+2026-07-11 18:03:13 [task-1] INFO  c.m.p.cart.service.TwilioService - Message Body:
+नमस्ते OP! आपका MadhurGram ऑर्डर (ID: MG-00036) शिप हो गया है। आपका ट्रैकिंग लिंक: http://localhost:3000/orders/track/36 है। धन्यवाद, टीम MadhurGram 💛
+2026-07-11 18:03:15 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 18:03:15 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-11 18:03:15 [http-nio-8080-exec-9] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 18:03:15 [http-nio-8080-exec-8] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-11 18:03:15 [http-nio-8080-exec-2] INFO  c.m.p.f.c.CustomerFeedbackController - [FEEDBACK] Fetching public positive testimonials
+2026-07-11 18:03:15 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Successfully fetched 14 products for category: shop-all
+2026-07-11 18:03:15 [http-nio-8080-exec-3] INFO  c.m.p.p.controller.ProductController - Received request to fetch products for category: shop-all
+2026-07-11 18:03:15 [http-nio-8080-exec-3] INFO  c.m.p.p.controller.ProductController - Successfully fetched 14 products for category: shop-all
+2026-07-11 18:03:40 [http-nio-8080-exec-8] INFO  c.m.p.auth.controller.AuthController - Received login attempt for username: admin
+2026-07-11 18:03:40 [http-nio-8080-exec-8] INFO  c.m.p.auth.controller.AuthController - Login successful for Super Admin: admin
+2026-07-11 18:05:35 [http-nio-8080-exec-1] INFO  c.m.p.a.s.i.AdminProductServiceImpl - Updating product ID: 16. Invalidating caches.
+2026-07-11 18:05:35 [http-nio-8080-exec-1] INFO  c.m.p.a.s.impl.AuditLogServiceImpl - Audit log written: [UPDATE_PRODUCT] by user: admin on entity: 16
+2026-07-11 18:06:10 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-11 18:06:10 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-11 18:06:10 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-11 18:06:10 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-09T18:06:10.149704600 (Retention: 48 hours)

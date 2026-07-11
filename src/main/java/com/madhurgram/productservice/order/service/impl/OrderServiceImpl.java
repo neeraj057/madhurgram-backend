@@ -14,11 +14,15 @@ import org.springframework.cache.annotation.CacheEvict;
 
 import java.util.List;
 import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.madhurgram.productservice.product.repository.ProductRepository;
+import com.madhurgram.productservice.product.entity.Product;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -26,6 +30,7 @@ public class OrderServiceImpl implements OrderService {
     private static final Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
     private final OrderRepository orderRepository;
     private final ProductService productService;
+    private final ProductRepository productRepository;
     private final com.madhurgram.productservice.cart.service.AbandonedCartService abandonedCartService;
     private final OrderNotificationService orderNotificationService;
     private final ApplicationEventPublisher eventPublisher;
@@ -35,6 +40,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderServiceImpl(
             OrderRepository orderRepository, 
             ProductService productService, 
+            ProductRepository productRepository,
             com.madhurgram.productservice.cart.service.AbandonedCartService abandonedCartService,
             OrderNotificationService orderNotificationService,
             ApplicationEventPublisher eventPublisher,
@@ -42,6 +48,7 @@ public class OrderServiceImpl implements OrderService {
             @org.springframework.context.annotation.Lazy com.madhurgram.productservice.marketing.repository.ReviewRequestRepository reviewRequestRepository) {
         this.orderRepository = orderRepository;
         this.productService = productService;
+        this.productRepository = productRepository;
         this.abandonedCartService = abandonedCartService;
         this.orderNotificationService = orderNotificationService;
         this.eventPublisher = eventPublisher;
@@ -82,6 +89,21 @@ public class OrderServiceImpl implements OrderService {
             }
         }
 
+        // 🌍 India GST Place of Supply Resolver
+        boolean isIntraState = false;
+        if (order.getCityState() != null) {
+            String stateStr = order.getCityState().toLowerCase();
+            if (stateStr.contains("uttar pradesh") || stateStr.contains("up") || stateStr.contains("u.p.")) {
+                isIntraState = true;
+            }
+        }
+        log.info("Place of Supply resolved. Is Intra-State (UP): {}", isIntraState);
+
+        BigDecimal taxableTotal = BigDecimal.ZERO;
+        BigDecimal cgstTotal = BigDecimal.ZERO;
+        BigDecimal sgstTotal = BigDecimal.ZERO;
+        BigDecimal igstTotal = BigDecimal.ZERO;
+
         // लूप चलाकर ProductService से स्टॉक कम करवा रहे हैं भाई
         for (var item : order.getOrderItems()) {
             try {
@@ -96,7 +118,53 @@ public class OrderServiceImpl implements OrderService {
 
             // Parent-Child रिलेशनशिप सिंक
             item.setOrder(order);
+
+            // Fetch Product and HsnTaxMaster details to compute taxes
+            Product product = productRepository.findById(item.getProductId()).orElse(null);
+            String hsnCode = "0000";
+            BigDecimal gstRate = BigDecimal.valueOf(5.00); // 5% default fallback
+
+            if (product != null && product.getHsnTaxMaster() != null) {
+                hsnCode = product.getHsnTaxMaster().getHsnCode();
+                gstRate = product.getHsnTaxMaster().getGstRate();
+            }
+
+            item.setHsnCode(hsnCode);
+            item.setGstRate(gstRate);
+
+            // Price in OrderItem is tax-inclusive (e.g. ₹525)
+            // Total Item Price = price * quantity
+            BigDecimal totalItemPrice = item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity()));
+
+            // Taxable Value = totalItemPrice / (1 + (gstRate / 100))
+            BigDecimal divisor = BigDecimal.ONE.add(gstRate.divide(BigDecimal.valueOf(100.0), 4, RoundingMode.HALF_UP));
+            BigDecimal taxableValue = totalItemPrice.divide(divisor, 2, RoundingMode.HALF_UP);
+            BigDecimal totalTax = totalItemPrice.subtract(taxableValue);
+
+            item.setTaxableAmount(taxableValue);
+            taxableTotal = taxableTotal.add(taxableValue);
+
+            if (isIntraState) {
+                BigDecimal halfTax = totalTax.divide(BigDecimal.valueOf(2.0), 2, RoundingMode.HALF_UP);
+                item.setCgstAmount(halfTax);
+                item.setSgstAmount(halfTax);
+                item.setIgstAmount(BigDecimal.ZERO);
+
+                cgstTotal = cgstTotal.add(halfTax);
+                sgstTotal = sgstTotal.add(halfTax);
+            } else {
+                item.setCgstAmount(BigDecimal.ZERO);
+                item.setSgstAmount(BigDecimal.ZERO);
+                item.setIgstAmount(totalTax);
+
+                igstTotal = igstTotal.add(totalTax);
+            }
         }
+
+        order.setTaxableAmount(taxableTotal);
+        order.setCgstTotal(cgstTotal);
+        order.setSgstTotal(sgstTotal);
+        order.setIgstTotal(igstTotal);
 
         Order saved = orderRepository.save(order);
         log.info("Order saved in database with ID: {}", saved.getId());
@@ -231,11 +299,21 @@ public class OrderServiceImpl implements OrderService {
                 .paymentTransactionId(order.getPaymentTransactionId())
                 .latitude(order.getLatitude())
                 .longitude(order.getLongitude())
+                .taxableAmount(order.getTaxableAmount())
+                .cgstTotal(order.getCgstTotal())
+                .sgstTotal(order.getSgstTotal())
+                .igstTotal(order.getIgstTotal())
                 .orderItems(order.getOrderItems().stream().map(item -> OrderResponseDTO.ItemDTO.builder()
                         .id(item.getId())
                         .productName(item.getProductName())
                         .quantity(item.getQuantity())
                         .price(item.getPrice())
+                        .hsnCode(item.getHsnCode())
+                        .gstRate(item.getGstRate())
+                        .taxableAmount(item.getTaxableAmount())
+                        .cgstAmount(item.getCgstAmount())
+                        .sgstAmount(item.getSgstAmount())
+                        .igstAmount(item.getIgstAmount())
                         .build()).toList())
                 .build()).toList();
     }
@@ -262,11 +340,21 @@ public class OrderServiceImpl implements OrderService {
                 .paymentTransactionId(order.getPaymentTransactionId())
                 .latitude(order.getLatitude())
                 .longitude(order.getLongitude())
+                .taxableAmount(order.getTaxableAmount())
+                .cgstTotal(order.getCgstTotal())
+                .sgstTotal(order.getSgstTotal())
+                .igstTotal(order.getIgstTotal())
                 .orderItems(order.getOrderItems().stream().map(item -> OrderResponseDTO.ItemDTO.builder()
                         .id(item.getId())
                         .productName(item.getProductName())
                         .quantity(item.getQuantity())
                         .price(item.getPrice())
+                        .hsnCode(item.getHsnCode())
+                        .gstRate(item.getGstRate())
+                        .taxableAmount(item.getTaxableAmount())
+                        .cgstAmount(item.getCgstAmount())
+                        .sgstAmount(item.getSgstAmount())
+                        .igstAmount(item.getIgstAmount())
                         .build()).toList())
                 .build();
     }

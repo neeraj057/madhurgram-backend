@@ -26,6 +26,10 @@ public class OrderResponseDTO {
     private String paymentTransactionId;
     private Double latitude;
     private Double longitude;
+    private BigDecimal taxableAmount;
+    private BigDecimal cgstTotal;
+    private BigDecimal sgstTotal;
+    private BigDecimal igstTotal;
     private List<ItemDTO> orderItems;
 
     @Data
@@ -37,5 +41,11 @@ public class OrderResponseDTO {
         private String productName;
         private Integer quantity;
         private BigDecimal price;
+        private String hsnCode;
+        private BigDecimal gstRate;
+        private BigDecimal taxableAmount;
+        private BigDecimal cgstAmount;
+        private BigDecimal sgstAmount;
+        private BigDecimal igstAmount;
     }
 }

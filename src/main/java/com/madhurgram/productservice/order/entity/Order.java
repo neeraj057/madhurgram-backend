@@ -73,6 +73,18 @@ public class Order {
     @Column(name = "longitude")
     private Double longitude;
 
+    @Column(name = "taxable_amount", precision = 12, scale = 2)
+    private BigDecimal taxableAmount;
+
+    @Column(name = "cgst_total", precision = 12, scale = 2)
+    private BigDecimal cgstTotal;
+
+    @Column(name = "sgst_total", precision = 12, scale = 2)
+    private BigDecimal sgstTotal;
+
+    @Column(name = "igst_total", precision = 12, scale = 2)
+    private BigDecimal igstTotal;
+
     // 🔗 @OneToMany Relationship mapping with OrderItem
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference // Parent-Child JSON handling के लिए भाई
