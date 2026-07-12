@@ -51,3 +51,17 @@
 * **JWT_SECRET:** `MadhurGramStagingSecureKey2026!#`
 * **ADMIN_USERNAME:** `admin`
 * **ADMIN_PASSWORD:** `StagingAdmin@2026`
+
+---
+
+## 🛢️ 5. Database Schema & Seeding (डेटाबेस टेबल्स और डेटा डालना)
+* [ ] **टेबल्स बनाना (Spring Boot Auto):** 
+  * आपको कुछ नहीं करना है! जब बैकएंड सर्वर पहली बार चालू होगा, तो वह अपने आप सारी खाली टेबल्स बना देगा।
+* [ ] **तस्वीरें और सेटिंग्स इन्सर्ट करना (Manual Run):**
+  * DBeaver या TablePlus डाउनलोड करके इंस्टॉल करें।
+  * Render MySQL डेटाबेस से कनेक्ट करें (External Connection String का उपयोग करके)।
+  * नीचे दी गई तीन फ़ाइलों से SQL कोड कॉपी करें, DBeaver के SQL Editor में रन करें:
+    1. [insert.sql](file:///d:/MadhurGram/product-service/src/main/resources/insert.sql) (उत्पादों की सूची)
+    2. [schema_and_seed_tax.sql](file:///d:/MadhurGram/product-service/src/main/resources/schema_and_seed_tax.sql) (टैक्स दरें)
+    3. [seed_system_settings.sql](file:///d:/MadhurGram/product-service/src/main/resources/seed_system_settings.sql) (एडमिन सेटिंग्स)
+
