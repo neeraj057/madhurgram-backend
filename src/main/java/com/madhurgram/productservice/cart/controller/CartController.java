@@ -1,7 +1,7 @@
 package com.madhurgram.productservice.cart.controller;
 
+import com.madhurgram.productservice.cart.dto.AbandonedCartResponse;
 import com.madhurgram.productservice.cart.dto.CartUpdateRequest;
-import com.madhurgram.productservice.cart.entity.AbandonedCart;
 import com.madhurgram.productservice.cart.service.AbandonedCartService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,7 +50,7 @@ public class CartController {
     public ResponseEntity<?> updateCart(@RequestBody CartUpdateRequest request) {
         log.info("Request: sync cart state for phone: '{}'", request.getPhoneNumber());
         try {
-            AbandonedCart updated = service.updateCart(request);
+            AbandonedCartResponse updated = service.updateCart(request);
             log.info("Cart state successfully updated for phone: '{}'", request.getPhoneNumber());
             return ResponseEntity.ok(updated);
         } catch (IllegalArgumentException e) {

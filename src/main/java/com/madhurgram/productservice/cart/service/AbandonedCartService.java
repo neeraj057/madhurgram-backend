@@ -1,18 +1,18 @@
 package com.madhurgram.productservice.cart.service;
 
+import com.madhurgram.productservice.cart.dto.AbandonedCartResponse;
 import com.madhurgram.productservice.cart.dto.CartUpdateRequest;
-import com.madhurgram.productservice.cart.entity.AbandonedCart;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface AbandonedCartService {
 
-    AbandonedCart updateCart(CartUpdateRequest request);
+    AbandonedCartResponse updateCart(CartUpdateRequest request);
 
-    Optional<AbandonedCart> getCartToRecover(String phoneNumber);
+    Optional<AbandonedCartResponse> getCartToRecover(String phoneNumber);
 
-    List<AbandonedCart> getAbandonedCarts(int minutesAgo);
+    List<AbandonedCartResponse> getAbandonedCarts(int minutesAgo);
 
     void markAsRecovered(String phoneNumber);
 
@@ -22,13 +22,7 @@ public interface AbandonedCartService {
 
     void sendAutomatedReminders();
 
-    /**
-     * Purges expired unrecovered abandoned carts from database.
-     */
     void purgeExpiredCarts();
 
-    /**
-     * Manually deletes an abandoned cart by its ID.
-     */
     void deleteAbandonedCart(Long id);
 }

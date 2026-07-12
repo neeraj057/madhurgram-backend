@@ -17,5 +17,7 @@ public class ProductDTO {
     private Integer stock;
     private Boolean isActive;
     private String category;
+    private String tag;
     private String hsnCode;
+    private HsnTaxMasterDTO hsnTaxMaster;
 }

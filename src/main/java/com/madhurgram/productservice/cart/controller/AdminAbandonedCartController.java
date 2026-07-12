@@ -1,7 +1,6 @@
 package com.madhurgram.productservice.cart.controller;
 
 import com.madhurgram.productservice.cart.dto.AbandonedCartResponse;
-import com.madhurgram.productservice.cart.entity.AbandonedCart;
 import com.madhurgram.productservice.cart.service.AbandonedCartService;
 import com.madhurgram.productservice.audit.service.AuditLogService;
 
@@ -50,21 +49,7 @@ public class AdminAbandonedCartController {
     public ResponseEntity<List<AbandonedCartResponse>> getAbandonedCarts(
             @RequestParam(defaultValue = "30") int minutesAgo) {
         log.info("Admin request: fetch abandoned carts older than {} minutes", minutesAgo);
-        
-        List<AbandonedCart> carts = service.getAbandonedCarts(minutesAgo);
-        
-        List<AbandonedCartResponse> responses = carts.stream()
-                .map(c -> AbandonedCartResponse.builder()
-                        .id(c.getId())
-                        .phoneNumber(c.getPhoneNumber())
-                        .customerName(c.getCustomerName())
-                        .cartItemsJson(c.getCartItemsJson())
-                        .totalAmount(c.getTotalAmount())
-                        .lastUpdated(c.getLastUpdated())
-                        .isRecovered(c.isRecovered())
-                        .build())
-                .toList();
-                
+        List<AbandonedCartResponse> responses = service.getAbandonedCarts(minutesAgo);
         log.info("Returning {} abandoned cart(s) to admin", responses.size());
         return ResponseEntity.ok(responses);
     }

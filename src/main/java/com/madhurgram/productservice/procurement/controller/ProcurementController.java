@@ -1,6 +1,6 @@
 package com.madhurgram.productservice.procurement.controller;
 
-import com.madhurgram.productservice.procurement.entity.PurchaseOrder;
+import com.madhurgram.productservice.procurement.dto.PurchaseOrderDTO;
 import com.madhurgram.productservice.procurement.service.ProcurementService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,11 +39,11 @@ public class ProcurementController {
      */
     @GetMapping("/pos")
     @Operation(summary = "List purchase orders", description = "Retrieves all purchase orders created for restocking inventory.")
-    public ResponseEntity<List<PurchaseOrder>> getAllPOs() {
+    public ResponseEntity<List<PurchaseOrderDTO>> getAllPOs() {
         log.info("Admin request: list all purchase orders");
-        List<PurchaseOrder> pos = procurementService.getAllPurchaseOrders();
-        log.info("Returning {} purchase order(s)", pos.size());
-        return ResponseEntity.ok(pos);
+        List<PurchaseOrderDTO> dtos = procurementService.getAllPurchaseOrders();
+        log.info("Returning {} purchase order(s)", dtos.size());
+        return ResponseEntity.ok(dtos);
     }
 
     /**
@@ -57,14 +57,14 @@ public class ProcurementController {
      */
     @PutMapping("/pos/{id}")
     @Operation(summary = "Update purchase order", description = "Modifies active purchase order variables before manager approval.")
-    public ResponseEntity<PurchaseOrder> updatePO(
+    public ResponseEntity<PurchaseOrderDTO> updatePO(
             @PathVariable Long id,
             @RequestParam(required = false) Integer quantity,
             @RequestParam(required = false) String supplierName,
             @RequestParam(required = false) String supplierEmail
     ) {
         log.info("Admin request: update purchase order ID: {} (qty={}, supplier='{}')", id, quantity, supplierName);
-        PurchaseOrder updated = procurementService.updatePurchaseOrder(id, quantity, supplierName, supplierEmail);
+        PurchaseOrderDTO updated = procurementService.updatePurchaseOrder(id, quantity, supplierName, supplierEmail);
         log.info("Purchase order ID: {} successfully updated", id);
         return ResponseEntity.ok(updated);
     }
@@ -77,9 +77,9 @@ public class ProcurementController {
      */
     @PostMapping("/pos/{id}/approve")
     @Operation(summary = "Approve purchase order", description = "Approves a pending purchase order by ID to execute restocking.")
-    public ResponseEntity<PurchaseOrder> approvePO(@PathVariable Long id) {
+    public ResponseEntity<PurchaseOrderDTO> approvePO(@PathVariable Long id) {
         log.info("Admin request: approve purchase order ID: {}", id);
-        PurchaseOrder approved = procurementService.approvePurchaseOrder(id);
+        PurchaseOrderDTO approved = procurementService.approvePurchaseOrder(id);
         log.info("Purchase order ID: {} successfully approved", id);
         return ResponseEntity.ok(approved);
     }

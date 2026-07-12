@@ -1,6 +1,6 @@
 package com.madhurgram.productservice.coupon.controller;
 
-import com.madhurgram.productservice.coupon.entity.Coupon;
+import com.madhurgram.productservice.coupon.dto.CouponDTO;
 import com.madhurgram.productservice.coupon.service.CouponService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -55,7 +55,7 @@ public class CouponController {
             @RequestParam("amount") BigDecimal amount) {
         log.info("Validate coupon: code='{}', phone='{}', amount={}", code, phone, amount);
         try {
-            Coupon coupon = couponService.validateCoupon(code, phone, amount);
+            CouponDTO coupon = couponService.validateCoupon(code, phone, amount);
             log.info("Coupon '{}' is valid for checkout", code);
             return ResponseEntity.ok(coupon);
         } catch (IllegalArgumentException e) {
@@ -71,9 +71,9 @@ public class CouponController {
      */
     @GetMapping("/api/admin/coupons")
     @Operation(summary = "List all coupons (Admin)", description = "Retrieves all coupon configurations for administration catalog views.")
-    public ResponseEntity<List<Coupon>> getAllCoupons() {
+    public ResponseEntity<List<CouponDTO>> getAllCoupons() {
         log.info("Admin request: list all coupons");
-        List<Coupon> coupons = couponService.getAllCoupons();
+        List<CouponDTO> coupons = couponService.getAllCoupons();
         log.info("Returning {} coupon(s) to admin", coupons.size());
         return ResponseEntity.ok(coupons);
     }
@@ -81,15 +81,15 @@ public class CouponController {
     /**
      * Creates a new coupon configuration.
      *
-     * @param coupon the coupon payload to create
+     * @param dto the coupon payload to create
      * @return the created coupon
      */
     @PostMapping("/api/admin/coupons")
     @Operation(summary = "Create coupon (Admin)", description = "Creates a new discount coupon configuration ruleset.")
-    public ResponseEntity<?> createCoupon(@RequestBody Coupon coupon) {
-        log.info("Admin request: create coupon code='{}'", coupon.getCode());
+    public ResponseEntity<?> createCoupon(@RequestBody CouponDTO dto) {
+        log.info("Admin request: create coupon code='{}'", dto.getCode());
         try {
-            Coupon created = couponService.createCoupon(coupon);
+            CouponDTO created = couponService.createCoupon(dto);
             log.info("Coupon '{}' successfully created with ID: {}", created.getCode(), created.getId());
             return ResponseEntity.ok(created);
         } catch (IllegalArgumentException e) {
@@ -101,16 +101,16 @@ public class CouponController {
     /**
      * Updates an existing coupon configuration.
      *
-     * @param id     ID of the coupon to update
-     * @param coupon coupon details payload to apply
+     * @param id  ID of the coupon to update
+     * @param dto coupon details payload to apply
      * @return the updated coupon details
      */
     @PutMapping("/api/admin/coupons/{id}")
     @Operation(summary = "Update coupon (Admin)", description = "Updates details/rulesets of an existing discount coupon by ID.")
-    public ResponseEntity<?> updateCoupon(@PathVariable("id") Long id, @RequestBody Coupon coupon) {
+    public ResponseEntity<?> updateCoupon(@PathVariable("id") Long id, @RequestBody CouponDTO dto) {
         log.info("Admin request: update coupon ID: {}", id);
         try {
-            Coupon updated = couponService.updateCoupon(id, coupon);
+            CouponDTO updated = couponService.updateCoupon(id, dto);
             log.info("Coupon ID: {} successfully updated", id);
             return ResponseEntity.ok(updated);
         } catch (IllegalArgumentException e) {

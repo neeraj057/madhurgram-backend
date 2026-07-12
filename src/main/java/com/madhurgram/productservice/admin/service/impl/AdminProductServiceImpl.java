@@ -3,6 +3,7 @@ package com.madhurgram.productservice.admin.service.impl;
 import com.madhurgram.productservice.product.dto.ProductDTO;
 import com.madhurgram.productservice.product.entity.Product;
 import com.madhurgram.productservice.product.entity.HsnTaxMaster;
+import com.madhurgram.productservice.product.mapper.ProductMapper;
 import com.madhurgram.productservice.product.repository.ProductRepository;
 import com.madhurgram.productservice.product.repository.HsnTaxMasterRepository;
 import com.madhurgram.productservice.admin.service.AdminProductService;
@@ -22,17 +23,20 @@ public class AdminProductServiceImpl implements AdminProductService {
     private static final Logger log = LoggerFactory.getLogger(AdminProductServiceImpl.class);
     private final ProductRepository productRepository;
     private final HsnTaxMasterRepository hsnTaxMasterRepository;
+    private final ProductMapper productMapper;
 
-    public AdminProductServiceImpl(ProductRepository productRepository, HsnTaxMasterRepository hsnTaxMasterRepository) {
+    public AdminProductServiceImpl(ProductRepository productRepository, 
+                                   HsnTaxMasterRepository hsnTaxMasterRepository,
+                                   ProductMapper productMapper) {
         this.productRepository = productRepository;
         this.hsnTaxMasterRepository = hsnTaxMasterRepository;
+        this.productMapper = productMapper;
     }
 
     @Override
     public List<ProductDTO> getAllProductsForAdmin() {
-        // Direct DB read for admin console (bypassing cache to ensure live inventory sync)
         return productRepository.findAll().stream()
-                .map(this::mapToDTO)
+                .map(productMapper::toProductDTO)
                 .collect(Collectors.toList());
     }
 
@@ -41,7 +45,7 @@ public class AdminProductServiceImpl implements AdminProductService {
     public List<ProductDTO> getAllActiveProductsForPublic() {
         log.info("[CACHE MISS] Fetching all active products for public catalog...");
         return productRepository.findByIsActiveTrue().stream()
-                .map(this::mapToDTO)
+                .map(productMapper::toProductDTO)
                 .collect(Collectors.toList());
     }
 
@@ -68,11 +72,12 @@ public class AdminProductServiceImpl implements AdminProductService {
                 .stock(dto.getStock())
                 .category(dto.getCategory().trim())
                 .isActive(dto.getIsActive() != null ? dto.getIsActive() : true)
+                .tag(dto.getTag())
                 .hsnTaxMaster(hsn)
                 .build();
         
         Product savedProduct = productRepository.save(product);
-        return mapToDTO(savedProduct);
+        return productMapper.toProductDTO(savedProduct);
     }
 
     @Override
@@ -100,13 +105,14 @@ public class AdminProductServiceImpl implements AdminProductService {
         product.setStock(dto.getStock());
         product.setCategory(dto.getCategory().trim());
         product.setHsnTaxMaster(hsn);
+        product.setTag(dto.getTag());
         
         if (dto.getIsActive() != null) {
             product.setActive(dto.getIsActive());
         }
 
         Product updatedProduct = productRepository.save(product);
-        return mapToDTO(updatedProduct);
+        return productMapper.toProductDTO(updatedProduct);
     }
 
     @Override
@@ -118,20 +124,5 @@ public class AdminProductServiceImpl implements AdminProductService {
             throw new RuntimeException("Product not found with ID: " + id);
         }
         productRepository.deleteById(id);
-    }
-
-    private ProductDTO mapToDTO(Product product) {
-        return ProductDTO.builder()
-                .id(product.getId())
-                .name(product.getName())
-                .price(product.getPrice())
-                .originalPrice(product.getOriginalPrice() != null ? product.getOriginalPrice() : product.getPrice())
-                .volume(product.getVolume())
-                .imageUrl(product.getImageUrl())
-                .stock(product.getStock())
-                .isActive(product.isActive())
-                .category(product.getCategory())
-                .hsnCode(product.getHsnTaxMaster() != null ? product.getHsnTaxMaster().getHsnCode() : null)
-                .build();
     }
 }

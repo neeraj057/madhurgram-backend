@@ -4,6 +4,7 @@ import com.madhurgram.productservice.order.dto.OrderResponseDTO;
 import com.madhurgram.productservice.order.entity.Order;
 import com.madhurgram.productservice.order.entity.OrderItem;
 import com.madhurgram.productservice.order.entity.OrderStatus;
+import com.madhurgram.productservice.order.mapper.OrderMapper;
 import com.madhurgram.productservice.order.repository.OrderRepository;
 import com.madhurgram.productservice.order.service.OrderService;
 import com.madhurgram.productservice.order.service.OrderNotificationService;
@@ -15,7 +16,6 @@ import org.springframework.cache.annotation.CacheEvict;
 import java.util.List;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +39,7 @@ public class OrderServiceImpl implements OrderService {
     private final com.madhurgram.productservice.audit.service.AuditLogService auditLogService;
     private final com.madhurgram.productservice.marketing.repository.ReviewRequestRepository reviewRequestRepository;
     private final com.madhurgram.productservice.coupon.service.CouponService couponService;
+    private final OrderMapper orderMapper;
 
     public OrderServiceImpl(
             OrderRepository orderRepository, 
@@ -50,7 +51,8 @@ public class OrderServiceImpl implements OrderService {
             ApplicationEventPublisher eventPublisher,
             com.madhurgram.productservice.audit.service.AuditLogService auditLogService,
             @org.springframework.context.annotation.Lazy com.madhurgram.productservice.marketing.repository.ReviewRequestRepository reviewRequestRepository,
-            com.madhurgram.productservice.coupon.service.CouponService couponService) {
+            com.madhurgram.productservice.coupon.service.CouponService couponService,
+            OrderMapper orderMapper) {
         this.orderRepository = orderRepository;
         this.productService = productService;
         this.productRepository = productRepository;
@@ -61,15 +63,15 @@ public class OrderServiceImpl implements OrderService {
         this.auditLogService = auditLogService;
         this.reviewRequestRepository = reviewRequestRepository;
         this.couponService = couponService;
+        this.orderMapper = orderMapper;
     }
 
     @Override
-    @Transactional // 🛡️ अगर एक भी आइटम का स्टॉक कम नहीं हुआ, तो पूरा आर्डर डेटाबेस से रोलबैक हो जाएगा!
+    @Transactional
     @CacheEvict(value = "analytics", allEntries = true)
-    public Order placeOrder(Order order) {
+    public OrderResponseDTO placeOrder(Order order) {
         log.info("Processing order placement for customer: {}", order.getCustomerName());
         
-        // 🛡️ Resolve Lombok builder-default gotcha: initialize null fields
         if (order.getPaymentStatus() == null) {
             order.setPaymentStatus("PENDING");
         }
@@ -85,7 +87,6 @@ public class OrderServiceImpl implements OrderService {
             throw new IllegalArgumentException("Cart cannot be empty.");
         }
 
-        // 🌍 Geospatial Boundary Validation for India
         if (order.getLatitude() != null && order.getLongitude() != null) {
             double lat = order.getLatitude();
             double lng = order.getLongitude();
@@ -96,7 +97,6 @@ public class OrderServiceImpl implements OrderService {
             }
         }
 
-        // 🌍 India GST Place of Supply Resolver
         boolean isIntraState = false;
         if (order.getCityState() != null) {
             String stateStr = order.getCityState().toLowerCase();
@@ -106,7 +106,6 @@ public class OrderServiceImpl implements OrderService {
         }
         log.info("Place of Supply resolved. Is Intra-State (UP): {}", isIntraState);
 
-        // Sum total item prices to get original cart total
         BigDecimal totalItemsAmount = BigDecimal.ZERO;
         for (var item : order.getOrderItems()) {
             totalItemsAmount = totalItemsAmount.add(item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity())));
@@ -114,7 +113,7 @@ public class OrderServiceImpl implements OrderService {
 
         BigDecimal discountVal = BigDecimal.ZERO;
         if (order.getCouponCode() != null && !order.getCouponCode().trim().isEmpty()) {
-            com.madhurgram.productservice.coupon.entity.Coupon coupon = couponService.validateCoupon(
+            com.madhurgram.productservice.coupon.dto.CouponDTO coupon = couponService.validateCoupon(
                     order.getCouponCode(), order.getPhoneNumber(), totalItemsAmount);
             BigDecimal discountPercent = coupon.getDiscountPercentage();
             discountVal = totalItemsAmount.multiply(discountPercent).divide(BigDecimal.valueOf(100.0), 2, java.math.RoundingMode.HALF_UP);
@@ -133,7 +132,6 @@ public class OrderServiceImpl implements OrderService {
         BigDecimal sgstTotal = BigDecimal.ZERO;
         BigDecimal igstTotal = BigDecimal.ZERO;
 
-        // लूप चलाकर ProductService से स्टॉक कम करवा रहे हैं भाई
         for (var item : order.getOrderItems()) {
             try {
                 log.info("Deducting stock for Product ID: {}, Quantity: {}", item.getProductId(), item.getQuantity());
@@ -145,13 +143,11 @@ public class OrderServiceImpl implements OrderService {
                         "Product '" + item.getProductName() + "' is Out of Stock or insufficient inventory.");
             }
 
-            // Parent-Child रिलेशनशिप सिंक
             item.setOrder(order);
 
-            // Fetch Product and HsnTaxMaster details to compute taxes
             Product product = productRepository.findById(item.getProductId()).orElse(null);
             String hsnCode = "0000";
-            BigDecimal gstRate = BigDecimal.valueOf(5.00); // 5% default fallback
+            BigDecimal gstRate = BigDecimal.valueOf(5.00);
 
             if (product != null && product.getHsnTaxMaster() != null) {
                 hsnCode = product.getHsnTaxMaster().getHsnCode();
@@ -161,11 +157,8 @@ public class OrderServiceImpl implements OrderService {
             item.setHsnCode(hsnCode);
             item.setGstRate(gstRate);
 
-            // Price in OrderItem is tax-inclusive (e.g. ₹525)
-            // Total Item Price = price * quantity
             BigDecimal totalItemPrice = item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity()));
 
-            // Taxable Value = totalItemPrice / (1 + (gstRate / 100))
             BigDecimal divisor = BigDecimal.ONE.add(gstRate.divide(BigDecimal.valueOf(100.0), 4, java.math.RoundingMode.HALF_UP));
             BigDecimal taxableValue = totalItemPrice.divide(divisor, 2, java.math.RoundingMode.HALF_UP);
             BigDecimal totalTax = totalItemPrice.subtract(taxableValue);
@@ -190,7 +183,6 @@ public class OrderServiceImpl implements OrderService {
             }
         }
 
-        // Adjust totals proportionally if a coupon discount was applied
         if (discountVal.compareTo(BigDecimal.ZERO) > 0 && totalItemsAmount.compareTo(BigDecimal.ZERO) > 0) {
             BigDecimal taxRatio = finalTotal.divide(totalItemsAmount, 6, java.math.RoundingMode.HALF_UP);
             taxableTotal = taxableTotal.multiply(taxRatio).setScale(2, java.math.RoundingMode.HALF_UP);
@@ -207,7 +199,6 @@ public class OrderServiceImpl implements OrderService {
         Order saved = orderRepository.save(order);
         log.info("Order saved in database with ID: {}", saved.getId());
 
-        // Log coupon usage in coupon_usages
         if (saved.getCouponCode() != null) {
             try {
                 couponService.recordCouponUsage(saved.getCouponCode(), saved.getPhoneNumber(), saved.getId());
@@ -216,7 +207,6 @@ public class OrderServiceImpl implements OrderService {
             }
         }
 
-        // Dynamic Post-Save Actions for COD (Auto-Confirm)
         if (OrderStatus.CONFIRMED.equals(saved.getOrderStatus())) {
             auditLogService.log("PLACE_ORDER_COD", String.valueOf(saved.getId()), "Order placed via Cash on Delivery");
 
@@ -237,20 +227,23 @@ public class OrderServiceImpl implements OrderService {
             log.error("Failed to finalize cart recovery for phone {}: {}", order.getPhoneNumber(), e.getMessage());
         }
 
-        return saved;
+        return orderMapper.toResponseDTO(saved);
     }
 
     @Override
     @org.springframework.transaction.annotation.Transactional(readOnly = true)
-    public java.util.List<Order> getAllOrders() {
+    public List<OrderResponseDTO> getAllOrders() {
         log.info("Fetching all orders with their items in a single query.");
-        return orderRepository.findAllWithItems(); // Single query join fetch optimization
+        List<Order> orders = orderRepository.findAllWithItems();
+        return orders.stream()
+                .map(orderMapper::toResponseDTO)
+                .toList();
     }
 
     @Override
     @Transactional
     @CacheEvict(value = "analytics", allEntries = true)
-    public Order updateOrderStatus(Long orderId, OrderStatus nextStatus) {
+    public OrderResponseDTO updateOrderStatus(Long orderId, OrderStatus nextStatus) {
         log.info("Updating status for order ID: {} to {}", orderId, nextStatus);
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found with ID: " + orderId));
@@ -264,7 +257,6 @@ public class OrderServiceImpl implements OrderService {
                     "Cannot change status of order from " + currentStatus + " to " + nextStatus);
         }
 
-        // 🔄 2. Restore Stock if order is Cancelled
         if (nextStatus == OrderStatus.CANCELLED
                 && (currentStatus == OrderStatus.PENDING 
                     || currentStatus == OrderStatus.CONFIRMED 
@@ -277,7 +269,6 @@ public class OrderServiceImpl implements OrderService {
             }
         }
 
-        // 🔄 3. Trigger Delhivery Logistics booking when status is updated to SHIPPED
         if (nextStatus == OrderStatus.SHIPPED) {
             log.info("Order ID: {} status updating to SHIPPED. Initiating logistics scheduling...", orderId);
             try {
@@ -287,7 +278,6 @@ public class OrderServiceImpl implements OrderService {
             }
         }
 
-        // 🔄 4. Apply Status Change & Persist Order
         order.setOrderStatus(nextStatus);
         Order saved = orderRepository.save(order);
         log.info("Order ID: {} status updated successfully from {} to {}", orderId, currentStatus, nextStatus);
@@ -295,14 +285,12 @@ public class OrderServiceImpl implements OrderService {
         auditLogService.log("UPDATE_ORDER_STATUS", String.valueOf(orderId), 
                 "Status transitioned from " + currentStatus + " to " + nextStatus);
         
-        // 🔄 4. Trigger Notification Bridge
         try {
             orderNotificationService.sendOrderStatusNotification(saved, nextStatus);
         } catch (Exception e) {
             log.error("Failed to trigger order notification for order ID: {}. Error: {}", orderId, e.getMessage());
         }
 
-        // 🔄 5. Schedule Google Review invite if status is DELIVERED
         if (nextStatus == OrderStatus.DELIVERED) {
             log.info("Order ID: {} has been DELIVERED. Scheduling Google Review request...", orderId);
             try {
@@ -312,7 +300,7 @@ public class OrderServiceImpl implements OrderService {
                             .customerName(saved.getCustomerName())
                             .customerPhone(saved.getPhoneNumber())
                             .status("PENDING")
-                            .scheduledAt(LocalDateTime.now().plusDays(1)) // Schedule 24 hours later
+                            .scheduledAt(LocalDateTime.now().plusDays(1))
                             .build();
                     reviewRequestRepository.save(reviewRequest);
                     log.info("Successfully scheduled Google Review request for Order ID: {}", orderId);
@@ -322,18 +310,16 @@ public class OrderServiceImpl implements OrderService {
             }
         }
 
-        // 🔄 6. Publish Event to trigger decoupled components (such as logistics pickup)
         if (nextStatus == OrderStatus.CONFIRMED) {
             log.info("Publishing OrderConfirmedEvent for Order ID: {}", orderId);
             eventPublisher.publishEvent(new OrderConfirmedEvent(this, saved));
         }
         
-        // Force initialization of lazy-loaded collections to prevent LazyInitializationException during JSON serialization when Hibernate Session is closed
         if (saved.getOrderItems() != null) {
             saved.getOrderItems().size();
         }
         
-        return saved;
+        return orderMapper.toResponseDTO(saved);
     }
 
     @Override
@@ -344,40 +330,9 @@ public class OrderServiceImpl implements OrderService {
         }
 
         List<Order> orders = orderRepository.findByPhoneNumberOrderByOrderDateDesc(phoneNumber.trim());
-
-        return orders.stream().map(order -> OrderResponseDTO.builder()
-                .id(order.getId())
-                .customerName(order.getCustomerName())
-                .phoneNumber(order.getPhoneNumber())
-                .address(order.getAddress())
-                .pincode(order.getPincode())
-                .cityState(order.getCityState())
-                .totalAmount(order.getTotalAmount())
-                .orderStatus(order.getOrderStatus())
-                .orderDate(order.getOrderDate())
-                .trackingNumber(order.getTrackingNumber())
-                .courierName(order.getCourierName())
-                .paymentStatus(order.getPaymentStatus())
-                .paymentTransactionId(order.getPaymentTransactionId())
-                .latitude(order.getLatitude())
-                .longitude(order.getLongitude())
-                .taxableAmount(order.getTaxableAmount())
-                .cgstTotal(order.getCgstTotal())
-                .sgstTotal(order.getSgstTotal())
-                .igstTotal(order.getIgstTotal())
-                .orderItems(order.getOrderItems().stream().map(item -> OrderResponseDTO.ItemDTO.builder()
-                        .id(item.getId())
-                        .productName(item.getProductName())
-                        .quantity(item.getQuantity())
-                        .price(item.getPrice())
-                        .hsnCode(item.getHsnCode())
-                        .gstRate(item.getGstRate())
-                        .taxableAmount(item.getTaxableAmount())
-                        .cgstAmount(item.getCgstAmount())
-                        .sgstAmount(item.getSgstAmount())
-                        .igstAmount(item.getIgstAmount())
-                        .build()).toList())
-                .build()).toList();
+        return orders.stream()
+                .map(orderMapper::toResponseDTO)
+                .toList();
     }
 
     @Override
@@ -385,40 +340,6 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponseDTO getOrderDetails(Long orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found with ID: " + orderId));
-
-        return OrderResponseDTO.builder()
-                .id(order.getId())
-                .customerName(order.getCustomerName())
-                .phoneNumber(order.getPhoneNumber())
-                .address(order.getAddress())
-                .pincode(order.getPincode())
-                .cityState(order.getCityState())
-                .totalAmount(order.getTotalAmount())
-                .orderStatus(order.getOrderStatus())
-                .orderDate(order.getOrderDate())
-                .trackingNumber(order.getTrackingNumber())
-                .courierName(order.getCourierName())
-                .paymentStatus(order.getPaymentStatus())
-                .paymentTransactionId(order.getPaymentTransactionId())
-                .latitude(order.getLatitude())
-                .longitude(order.getLongitude())
-                .taxableAmount(order.getTaxableAmount())
-                .cgstTotal(order.getCgstTotal())
-                .sgstTotal(order.getSgstTotal())
-                .igstTotal(order.getIgstTotal())
-                .orderItems(order.getOrderItems().stream().map(item -> OrderResponseDTO.ItemDTO.builder()
-                        .id(item.getId())
-                        .productName(item.getProductName())
-                        .quantity(item.getQuantity())
-                        .price(item.getPrice())
-                        .hsnCode(item.getHsnCode())
-                        .gstRate(item.getGstRate())
-                        .taxableAmount(item.getTaxableAmount())
-                        .cgstAmount(item.getCgstAmount())
-                        .sgstAmount(item.getSgstAmount())
-                        .igstAmount(item.getIgstAmount())
-                        .build()).toList())
-                .build();
+        return orderMapper.toResponseDTO(order);
     }
-
 }

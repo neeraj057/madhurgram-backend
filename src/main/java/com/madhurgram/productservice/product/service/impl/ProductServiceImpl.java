@@ -1,6 +1,8 @@
 package com.madhurgram.productservice.product.service.impl;
 
+import com.madhurgram.productservice.product.dto.ProductDTO;
 import com.madhurgram.productservice.product.entity.Product;
+import com.madhurgram.productservice.product.mapper.ProductMapper;
 import com.madhurgram.productservice.product.repository.ProductRepository;
 import com.madhurgram.productservice.product.service.ProductService;
 import org.slf4j.Logger;
@@ -17,27 +19,36 @@ public class ProductServiceImpl implements ProductService {
     private static final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
     private final ProductRepository productRepository;
     private final com.madhurgram.productservice.procurement.service.ProcurementService procurementService;
+    private final ProductMapper productMapper;
 
     public ProductServiceImpl(
             ProductRepository productRepository,
-            @org.springframework.context.annotation.Lazy com.madhurgram.productservice.procurement.service.ProcurementService procurementService
+            @org.springframework.context.annotation.Lazy com.madhurgram.productservice.procurement.service.ProcurementService procurementService,
+            ProductMapper productMapper
     ) {
         this.productRepository = productRepository;
         this.procurementService = procurementService;
+        this.productMapper = productMapper;
     }
 
     @Override
     @Cacheable(value = "products", key = "'active'")
-    public List<Product> getAllActiveProducts() {
+    public List<ProductDTO> getAllActiveProducts() {
         log.info("[CACHE MISS] Fetching all active products from database...");
-        return productRepository.findByIsActiveTrue();
+        List<Product> products = productRepository.findByIsActiveTrue();
+        return products.stream()
+                .map(productMapper::toProductDTO)
+                .toList();
     }
 
     @Override
     @Cacheable(value = "products", key = "#category.toLowerCase().trim()")
-    public List<Product> getProductsByCategory(String category) {
+    public List<ProductDTO> getProductsByCategory(String category) {
         log.info("[CACHE MISS] Fetching products by category '{}' from database...", category);
-        return productRepository.findByCategoryAndIsActiveTrue(category.toLowerCase().trim());
+        List<Product> products = productRepository.findByCategoryAndIsActiveTrue(category.toLowerCase().trim());
+        return products.stream()
+                .map(productMapper::toProductDTO)
+                .toList();
     }
 
     @Override
@@ -76,5 +87,4 @@ public class ProductServiceImpl implements ProductService {
         }
         log.info("Successfully restored stock for product ID: {} (Quantity: {}). Invalidating caches.", productId, quantity);
     }
-
 }

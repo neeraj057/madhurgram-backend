@@ -1,14 +1,14 @@
 package com.madhurgram.productservice.coupon.service;
 
-import com.madhurgram.productservice.coupon.entity.Coupon;
+import com.madhurgram.productservice.coupon.dto.CouponDTO;
 import java.math.BigDecimal;
 import java.util.List;
 
 public interface CouponService {
-    Coupon validateCoupon(String code, String phone, BigDecimal cartAmount);
+    CouponDTO validateCoupon(String code, String phone, BigDecimal cartAmount);
     void recordCouponUsage(String code, String phone, Long orderId);
-    List<Coupon> getAllCoupons();
-    Coupon createCoupon(Coupon coupon);
-    Coupon updateCoupon(Long id, Coupon coupon);
+    List<CouponDTO> getAllCoupons();
+    CouponDTO createCoupon(CouponDTO coupon);
+    CouponDTO updateCoupon(Long id, CouponDTO coupon);
     void deleteCoupon(Long id);
 }

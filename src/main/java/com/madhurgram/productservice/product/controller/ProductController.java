@@ -1,6 +1,6 @@
 package com.madhurgram.productservice.product.controller;
 
-import com.madhurgram.productservice.product.entity.Product;
+import com.madhurgram.productservice.product.dto.ProductDTO;
 import com.madhurgram.productservice.product.service.ProductService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,11 +46,11 @@ public class ProductController {
      */
     @GetMapping
     @Operation(summary = "Get products by category", description = "Fetches list of active products. Returns all active products if category is empty or 'shop-all'.")
-    public ResponseEntity<List<Product>> getProducts(
+    public ResponseEntity<List<ProductDTO>> getProducts(
             @RequestParam(value = "category", required = false, defaultValue = DEFAULT_CATEGORY) String category) {
         log.info("Request received to fetch products for category: {}", category);
 
-        List<Product> products;
+        List<ProductDTO> products;
         if (DEFAULT_CATEGORY.equalsIgnoreCase(category)) {
             products = productService.getAllActiveProducts();
         } else {

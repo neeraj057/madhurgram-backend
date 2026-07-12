@@ -30,6 +30,8 @@ public class OrderResponseDTO {
     private BigDecimal cgstTotal;
     private BigDecimal sgstTotal;
     private BigDecimal igstTotal;
+    private String couponCode;
+    private BigDecimal discountAmount;
     private List<ItemDTO> orderItems;
 
     @Data

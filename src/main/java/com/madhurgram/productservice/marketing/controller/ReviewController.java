@@ -1,21 +1,19 @@
 package com.madhurgram.productservice.marketing.controller;
 
-import com.madhurgram.productservice.marketing.entity.ReviewRequest;
-import com.madhurgram.productservice.marketing.repository.ReviewRequestRepository;
+import com.madhurgram.productservice.marketing.dto.ReviewRequestDTO;
 import com.madhurgram.productservice.marketing.scheduler.ReviewAutomationScheduler;
+import com.madhurgram.productservice.marketing.service.ReviewService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.constraints.Pattern;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -29,20 +27,17 @@ import java.util.Map;
 @Tag(name = "Admin — Reviews Automation", description = "Endpoints for managing auto-scheduler review requests and outbound links")
 public class ReviewController {
 
-    private final ReviewRequestRepository reviewRequestRepository;
+    private final ReviewService reviewService;
     private final ReviewAutomationScheduler scheduler;
 
     /**
      * Constructor injection for ReviewController.
      *
-     * @param reviewRequestRepository review requests database access
-     * @param scheduler               automated task scheduler
+     * @param reviewService review requests management service
+     * @param scheduler     automated task scheduler
      */
-    public ReviewController(
-            ReviewRequestRepository reviewRequestRepository,
-            ReviewAutomationScheduler scheduler
-    ) {
-        this.reviewRequestRepository = reviewRequestRepository;
+    public ReviewController(ReviewService reviewService, ReviewAutomationScheduler scheduler) {
+        this.reviewService = reviewService;
         this.scheduler = scheduler;
     }
 
@@ -53,11 +48,11 @@ public class ReviewController {
      */
     @GetMapping
     @Operation(summary = "Get review invite queue", description = "Retrieves a list of all automated review requests in chronological order.")
-    public ResponseEntity<List<ReviewRequest>> getReviewQueue() {
+    public ResponseEntity<List<ReviewRequestDTO>> getReviewQueue() {
         log.info("Admin request: fetch review invite queue");
-        List<ReviewRequest> queue = reviewRequestRepository.findAll(Sort.by(Sort.Direction.DESC, "scheduledAt"));
-        log.info("Returning {} queue entry/entries", queue.size());
-        return ResponseEntity.ok(queue);
+        List<ReviewRequestDTO> dtos = reviewService.getReviewQueue();
+        log.info("Returning {} queue entry/entries", dtos.size());
+        return ResponseEntity.ok(dtos);
     }
 
     /**
@@ -102,22 +97,13 @@ public class ReviewController {
     @Operation(summary = "Trigger review invite immediately", description = "Manually fires a WhatsApp/SMS review request immediately and skips schedule delays.")
     public ResponseEntity<?> sendNow(@PathVariable Long id) {
         log.info("Admin request: trigger review invite ID: {} immediately", id);
-        
-        ReviewRequest request = reviewRequestRepository.findById(id).orElse(null);
-        if (request == null) {
-            log.warn("Review trigger failed: request ID: {} not found", id);
-            return ResponseEntity.notFound().build();
-        }
-
-        if ("SENT".equals(request.getStatus())) {
-            log.warn("Review trigger rejected: request ID: {} has already been dispatched", id);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Review invitation has already been sent.");
-        }
-
         try {
-            scheduler.sendReviewInvite(request);
+            ReviewRequestDTO sent = reviewService.sendNow(id);
             log.info("Review invite ID: {} successfully sent immediately", id);
-            return ResponseEntity.ok(request);
+            return ResponseEntity.ok(sent);
+        } catch (IllegalArgumentException e) {
+            log.warn("Review trigger rejected: request ID: {} error: {}", id, e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             log.error("Failed to send review invite ID: {} immediately", id, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -140,25 +126,13 @@ public class ReviewController {
             String phone
     ) {
         log.info("Admin request: send test review invite to name='{}', phone='{}'", name, phone);
-
-        if (name == null || name.isBlank()) {
-            log.warn("Test invite aborted: customer name is mandatory");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Name is required.");
-        }
-
-        ReviewRequest request = ReviewRequest.builder()
-                .orderId(0L) // Mock Order ID
-                .customerName(name.trim())
-                .customerPhone(phone.trim())
-                .status("PENDING")
-                .scheduledAt(LocalDateTime.now())
-                .build();
-
-        ReviewRequest saved = reviewRequestRepository.save(request);
         try {
-            scheduler.sendReviewInvite(saved);
+            ReviewRequestDTO saved = reviewService.sendTest(name, phone);
             log.info("Test review invite successfully dispatched to '{}'", phone);
             return ResponseEntity.ok(saved);
+        } catch (IllegalArgumentException e) {
+            log.warn("Test invite aborted: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             log.error("Failed to send test review invite to '{}'", phone, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());

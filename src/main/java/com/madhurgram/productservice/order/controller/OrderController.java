@@ -18,8 +18,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.EntityManager;
 import jakarta.validation.constraints.Pattern;
 
 /**
@@ -39,9 +37,6 @@ public class OrderController {
     private static final String SUPER_ADMIN = "SUPER_ADMIN";
 
     private final OrderService orderService;
-
-    @PersistenceContext
-    private EntityManager entityManager;
 
     /**
      * Constructor injection for OrderController.
@@ -65,7 +60,7 @@ public class OrderController {
     public ResponseEntity<?> placeOrder(@RequestBody Order order) {
         log.info("Request: place order for customer '{}'", order.getCustomerName());
         try {
-            Order savedOrder = orderService.placeOrder(order);
+            OrderResponseDTO savedOrder = orderService.placeOrder(order);
             log.info("Order successfully placed with ID: {}", savedOrder.getId());
             return ResponseEntity.ok(savedOrder);
         } catch (IllegalArgumentException e) {
@@ -84,20 +79,19 @@ public class OrderController {
      */
     @GetMapping
     @Operation(summary = "List all orders", description = "Retrieves all orders. Phone numbers are masked for non-super-admins.")
-    public ResponseEntity<List<Order>> getAllOrders() {
+    public ResponseEntity<List<OrderResponseDTO>> getAllOrders() {
         log.info("Request: list all orders");
-        List<Order> orders = orderService.getAllOrders();
+        List<OrderResponseDTO> dtos = orderService.getAllOrders();
 
         boolean isSuperAdmin = isSuperAdmin();
         if (!isSuperAdmin) {
-            for (Order order : orders) {
-                entityManager.detach(order);
-                order.setPhoneNumber(DataMaskingUtil.maskPhoneNumber(order.getPhoneNumber()));
+            for (OrderResponseDTO dto : dtos) {
+                dto.setPhoneNumber(DataMaskingUtil.maskPhoneNumber(dto.getPhoneNumber()));
             }
         }
 
-        log.info("Returning {} order(s) [superAdmin={}]", orders.size(), isSuperAdmin);
-        return ResponseEntity.ok(orders);
+        log.info("Returning {} order(s) [superAdmin={}]", dtos.size(), isSuperAdmin);
+        return ResponseEntity.ok(dtos);
     }
 
     /**
@@ -112,7 +106,7 @@ public class OrderController {
     public ResponseEntity<?> updateStatus(@PathVariable Long id, @RequestParam OrderStatus status) {
         log.info("Request: update order ID: {} to status: {}", id, status);
         try {
-            Order updatedOrder = orderService.updateOrderStatus(id, status);
+            OrderResponseDTO updatedOrder = orderService.updateOrderStatus(id, status);
             log.info("Order ID: {} status updated successfully to: {}", id, status);
             return ResponseEntity.ok(updatedOrder);
         } catch (IllegalArgumentException e) {

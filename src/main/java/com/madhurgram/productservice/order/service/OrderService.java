@@ -1,16 +1,16 @@
 package com.madhurgram.productservice.order.service;
 
 import java.util.List;
-
 import com.madhurgram.productservice.order.dto.OrderResponseDTO;
 import com.madhurgram.productservice.order.entity.Order;
+import com.madhurgram.productservice.order.entity.OrderStatus;
 
 public interface OrderService {
-    Order placeOrder(Order order);
+    OrderResponseDTO placeOrder(Order order);
 
-    java.util.List<Order> getAllOrders();
+    List<OrderResponseDTO> getAllOrders();
 
-    Order updateOrderStatus(Long orderId, com.madhurgram.productservice.order.entity.OrderStatus status);
+    OrderResponseDTO updateOrderStatus(Long orderId, OrderStatus status);
 
     List<OrderResponseDTO> getOrdersByCustomerPhone(String phoneNumber);
 

@@ -1,7 +1,9 @@
 package com.madhurgram.productservice.cart.service.impl;
 
+import com.madhurgram.productservice.cart.dto.AbandonedCartResponse;
 import com.madhurgram.productservice.cart.dto.CartUpdateRequest;
 import com.madhurgram.productservice.cart.entity.AbandonedCart;
+import com.madhurgram.productservice.cart.mapper.CartMapper;
 import com.madhurgram.productservice.cart.repository.AbandonedCartRepository;
 import com.madhurgram.productservice.cart.service.AbandonedCartService;
 import com.madhurgram.productservice.cart.service.TwilioService;
@@ -26,6 +28,7 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
     private final AbandonedCartRepository repository;
     private final SystemSettingRepository systemSettingRepository;
     private final TwilioService twilioService;
+    private final CartMapper cartMapper;
 
     @org.springframework.beans.factory.annotation.Value("${madhurgram.cart.retention-hours:48}")
     private int retentionHours;
@@ -33,16 +36,18 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
     public AbandonedCartServiceImpl(
             AbandonedCartRepository repository,
             SystemSettingRepository systemSettingRepository,
-            TwilioService twilioService) {
+            TwilioService twilioService,
+            CartMapper cartMapper) {
         this.repository = repository;
         this.systemSettingRepository = systemSettingRepository;
         this.twilioService = twilioService;
+        this.cartMapper = cartMapper;
     }
 
     @Override
     @Transactional
     @CacheEvict(value = "analytics", allEntries = true)
-    public AbandonedCart updateCart(CartUpdateRequest request) {
+    public AbandonedCartResponse updateCart(CartUpdateRequest request) {
         log.info("Updating cart state for phone number: {}", request.getPhoneNumber());
         if (request.getPhoneNumber() == null || request.getPhoneNumber().trim().isEmpty()) {
             throw new IllegalArgumentException("Phone number cannot be empty.");
@@ -74,25 +79,29 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
 
         AbandonedCart saved = repository.save(cart);
         log.info("Saved cart tracking manifest with ID: {}", saved.getId());
-        return saved;
+        return cartMapper.toResponse(saved);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<AbandonedCart> getCartToRecover(String phoneNumber) {
+    public Optional<AbandonedCartResponse> getCartToRecover(String phoneNumber) {
         log.info("Retrieving cart for recovery with phone number: {}", phoneNumber);
         if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
             return Optional.empty();
         }
-        return repository.findByPhoneNumberAndIsRecoveredFalse(phoneNumber.trim());
+        return repository.findByPhoneNumberAndIsRecoveredFalse(phoneNumber.trim())
+                .map(cartMapper::toResponse);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<AbandonedCart> getAbandonedCarts(int minutesAgo) {
+    public List<AbandonedCartResponse> getAbandonedCarts(int minutesAgo) {
         LocalDateTime cutoff = LocalDateTime.now().minusMinutes(minutesAgo);
         log.info("Fetching unrecovered carts inactive since before: {}", cutoff);
-        return repository.findByIsRecoveredFalseAndLastUpdatedBeforeOrderByLastUpdatedDesc(cutoff);
+        List<AbandonedCart> carts = repository.findByIsRecoveredFalseAndLastUpdatedBeforeOrderByLastUpdatedDesc(cutoff);
+        return carts.stream()
+                .map(cartMapper::toResponse)
+                .toList();
     }
 
     @Override

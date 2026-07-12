@@ -2,7 +2,7 @@ package com.madhurgram.productservice.returns.controller;
 
 import com.madhurgram.productservice.order.entity.Order;
 import com.madhurgram.productservice.order.repository.OrderRepository;
-import com.madhurgram.productservice.returns.entity.ReturnRequest;
+import com.madhurgram.productservice.returns.dto.ReturnRequestDTO;
 import com.madhurgram.productservice.returns.service.ReturnService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -63,7 +63,7 @@ public class ReturnController {
     ) {
         log.info("Request return: orderId={}, phone='{}', reason='{}'", orderId, phone, reason);
         try {
-            ReturnRequest request = returnService.createReturnRequest(orderId, phone, reason);
+            ReturnRequestDTO request = returnService.createReturnRequest(orderId, phone, reason);
             log.info("Return request successfully submitted with ID: {}", request.getId());
             return ResponseEntity.ok(request);
         } catch (IllegalArgumentException | IllegalStateException e) {
@@ -80,9 +80,9 @@ public class ReturnController {
      */
     @GetMapping("/order/{orderId}")
     @Operation(summary = "Get return request by order ID", description = "Fetches active return request details for an order ID.")
-    public ResponseEntity<ReturnRequest> getReturnRequest(@PathVariable Long orderId) {
+    public ResponseEntity<ReturnRequestDTO> getReturnRequest(@PathVariable Long orderId) {
         log.info("Request: fetch return request for order ID: {}", orderId);
-        ReturnRequest request = returnService.getReturnRequestByOrderId(orderId);
+        ReturnRequestDTO request = returnService.getReturnRequestByOrderId(orderId);
         if (request == null) {
             log.warn("No return request found for order ID: {}", orderId);
             return ResponseEntity.notFound().build();
@@ -97,9 +97,9 @@ public class ReturnController {
      */
     @GetMapping("/admin/all")
     @Operation(summary = "List all return requests (Admin)", description = "Retrieves all customer return requests for the admin review panel.")
-    public ResponseEntity<List<ReturnRequest>> getAllReturnRequests() {
+    public ResponseEntity<List<ReturnRequestDTO>> getAllReturnRequests() {
         log.info("Admin request: list all return requests");
-        List<ReturnRequest> list = returnService.getAllReturnRequests();
+        List<ReturnRequestDTO> list = returnService.getAllReturnRequests();
         log.info("Returning {} return request(s) to admin", list.size());
         return ResponseEntity.ok(list);
     }
@@ -115,7 +115,7 @@ public class ReturnController {
     public ResponseEntity<?> approveReturn(@PathVariable Long id) {
         log.info("Admin request: approve return request ID: {}", id);
         try {
-            ReturnRequest approved = returnService.approveReturnRequest(id);
+            ReturnRequestDTO approved = returnService.approveReturnRequest(id);
             log.info("Return request ID: {} successfully approved", id);
             return ResponseEntity.ok(approved);
         } catch (Exception e) {
@@ -130,12 +130,12 @@ public class ReturnController {
      * @param id return request ID
      * @return updated return request details
      */
-    @PostMapping("/admin/{id}/reject")
+    @PostMapping("/api/returns/admin/{id}/reject")
     @Operation(summary = "Reject return request (Admin)", description = "Rejects a pending return request by ID.")
     public ResponseEntity<?> rejectReturn(@PathVariable Long id) {
         log.info("Admin request: reject return request ID: {}", id);
         try {
-            ReturnRequest rejected = returnService.rejectReturnRequest(id);
+            ReturnRequestDTO rejected = returnService.rejectReturnRequest(id);
             log.info("Return request ID: {} successfully rejected", id);
             return ResponseEntity.ok(rejected);
         } catch (Exception e) {
@@ -154,7 +154,7 @@ public class ReturnController {
     @Operation(summary = "Get prepaid return shipping label", description = "Generates and exports an SVG shipping label containing tracking barcodes and receiver details.")
     public ResponseEntity<String> getShippingLabel(@PathVariable Long id) {
         log.info("Request: export SVG return label for return request ID: {}", id);
-        ReturnRequest request = returnService.getAllReturnRequests().stream()
+        ReturnRequestDTO request = returnService.getAllReturnRequests().stream()
                 .filter(r -> r.getId().equals(id))
                 .findFirst()
                 .orElse(null);

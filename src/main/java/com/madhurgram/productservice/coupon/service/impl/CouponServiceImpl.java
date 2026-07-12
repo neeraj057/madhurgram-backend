@@ -1,7 +1,9 @@
 package com.madhurgram.productservice.coupon.service.impl;
 
+import com.madhurgram.productservice.coupon.dto.CouponDTO;
 import com.madhurgram.productservice.coupon.entity.Coupon;
 import com.madhurgram.productservice.coupon.entity.CouponUsage;
+import com.madhurgram.productservice.coupon.mapper.CouponMapper;
 import com.madhurgram.productservice.coupon.repository.CouponRepository;
 import com.madhurgram.productservice.coupon.repository.CouponUsageRepository;
 import com.madhurgram.productservice.coupon.service.CouponService;
@@ -20,15 +22,19 @@ public class CouponServiceImpl implements CouponService {
     private static final Logger log = LoggerFactory.getLogger(CouponServiceImpl.class);
     private final CouponRepository couponRepository;
     private final CouponUsageRepository couponUsageRepository;
+    private final CouponMapper couponMapper;
 
-    public CouponServiceImpl(CouponRepository couponRepository, CouponUsageRepository couponUsageRepository) {
+    public CouponServiceImpl(CouponRepository couponRepository, 
+                             CouponUsageRepository couponUsageRepository,
+                             CouponMapper couponMapper) {
         this.couponRepository = couponRepository;
         this.couponUsageRepository = couponUsageRepository;
+        this.couponMapper = couponMapper;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Coupon validateCoupon(String code, String phone, BigDecimal cartAmount) {
+    public CouponDTO validateCoupon(String code, String phone, BigDecimal cartAmount) {
         log.info("Validating coupon code: {} for phone: {}, cartAmount: {}", code, phone, cartAmount);
         
         if (code == null || code.trim().isEmpty()) {
@@ -56,7 +62,7 @@ public class CouponServiceImpl implements CouponService {
         }
 
         log.info("Coupon code {} is valid. Discount: {}%", coupon.getCode(), coupon.getDiscountPercentage());
-        return coupon;
+        return couponMapper.toDTO(coupon);
     }
 
     @Override
@@ -74,36 +80,41 @@ public class CouponServiceImpl implements CouponService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Coupon> getAllCoupons() {
-        return couponRepository.findAll();
+    public List<CouponDTO> getAllCoupons() {
+        List<Coupon> coupons = couponRepository.findAll();
+        return coupons.stream()
+                .map(couponMapper::toDTO)
+                .toList();
     }
 
     @Override
     @Transactional
-    public Coupon createCoupon(Coupon coupon) {
-        if (coupon.getCode() == null || coupon.getCode().trim().isEmpty()) {
+    public CouponDTO createCoupon(CouponDTO dto) {
+        if (dto.getCode() == null || dto.getCode().trim().isEmpty()) {
             throw new IllegalArgumentException("Coupon code cannot be empty.");
         }
-        coupon.setCode(coupon.getCode().trim().toUpperCase());
+        dto.setCode(dto.getCode().trim().toUpperCase());
         
-        if (couponRepository.findByCodeIgnoreCase(coupon.getCode()).isPresent()) {
+        if (couponRepository.findByCodeIgnoreCase(dto.getCode()).isPresent()) {
             throw new IllegalArgumentException("Coupon code already exists.");
         }
         
-        if (coupon.getDiscountPercentage() == null || coupon.getDiscountPercentage().compareTo(BigDecimal.ZERO) <= 0) {
+        if (dto.getDiscountPercentage() == null || dto.getDiscountPercentage().compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Discount percentage must be greater than 0.");
         }
         
-        if (coupon.getMinOrderValue() == null || coupon.getMinOrderValue().compareTo(BigDecimal.ZERO) < 0) {
+        if (dto.getMinOrderValue() == null || dto.getMinOrderValue().compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("Minimum order value cannot be negative.");
         }
 
-        return couponRepository.save(coupon);
+        Coupon coupon = couponMapper.toEntity(dto);
+        Coupon saved = couponRepository.save(coupon);
+        return couponMapper.toDTO(saved);
     }
 
     @Override
     @Transactional
-    public Coupon updateCoupon(Long id, Coupon dto) {
+    public CouponDTO updateCoupon(Long id, CouponDTO dto) {
         Coupon coupon = couponRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Coupon not found with id: " + id));
 
@@ -112,7 +123,8 @@ public class CouponServiceImpl implements CouponService {
         coupon.setDiscountPercentage(dto.getDiscountPercentage());
         coupon.setMaxUsagePerUser(dto.getMaxUsagePerUser());
 
-        return couponRepository.save(coupon);
+        Coupon saved = couponRepository.save(coupon);
+        return couponMapper.toDTO(saved);
     }
 
     @Override

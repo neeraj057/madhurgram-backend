@@ -1,7 +1,9 @@
 package com.madhurgram.productservice.procurement.service.impl;
 
 import com.madhurgram.productservice.common.service.EmailService;
+import com.madhurgram.productservice.procurement.dto.PurchaseOrderDTO;
 import com.madhurgram.productservice.procurement.entity.PurchaseOrder;
+import com.madhurgram.productservice.procurement.mapper.ProcurementMapper;
 import com.madhurgram.productservice.procurement.repository.PurchaseOrderRepository;
 import com.madhurgram.productservice.procurement.service.ProcurementService;
 import com.madhurgram.productservice.product.entity.Product;
@@ -24,34 +26,39 @@ public class ProcurementServiceImpl implements ProcurementService {
     private final PurchaseOrderRepository poRepository;
     private final ProductRepository productRepository;
     private final EmailService emailService;
+    private final ProcurementMapper procurementMapper;
 
     public ProcurementServiceImpl(
             PurchaseOrderRepository poRepository,
             ProductRepository productRepository,
-            EmailService emailService
+            EmailService emailService,
+            ProcurementMapper procurementMapper
     ) {
         this.poRepository = poRepository;
         this.productRepository = productRepository;
         this.emailService = emailService;
+        this.procurementMapper = procurementMapper;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<PurchaseOrder> getAllPurchaseOrders() {
-        return poRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
+    public List<PurchaseOrderDTO> getAllPurchaseOrders() {
+        List<PurchaseOrder> pos = poRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
+        return pos.stream()
+                .map(procurementMapper::toDTO)
+                .toList();
     }
 
     @Override
     @Transactional
-    public PurchaseOrder draftPurchaseOrder(Long productId, Integer quantity) {
+    public PurchaseOrderDTO draftPurchaseOrder(Long productId, Integer quantity) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found with ID: " + productId));
 
-        // Check if a DRAFT purchase order already exists for this product
         Optional<PurchaseOrder> existingDraft = poRepository.findByProductIdAndStatus(productId, "DRAFT");
         if (existingDraft.isPresent()) {
             log.info("Purchase Order draft already exists for product ID: {}. Skipping auto-draft.", productId);
-            return existingDraft.get();
+            return procurementMapper.toDTO(existingDraft.get());
         }
 
         log.info("Creating a new restock Purchase Order draft for product: {}", product.getName());
@@ -63,12 +70,13 @@ public class ProcurementServiceImpl implements ProcurementService {
                 .status("DRAFT")
                 .build();
 
-        return poRepository.save(po);
+        PurchaseOrder saved = poRepository.save(po);
+        return procurementMapper.toDTO(saved);
     }
 
     @Override
     @Transactional
-    public PurchaseOrder updatePurchaseOrder(Long id, Integer quantity, String supplierName, String supplierEmail) {
+    public PurchaseOrderDTO updatePurchaseOrder(Long id, Integer quantity, String supplierName, String supplierEmail) {
         PurchaseOrder po = poRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Purchase Order not found with ID: " + id));
 
@@ -81,12 +89,13 @@ public class ProcurementServiceImpl implements ProcurementService {
         if (supplierEmail != null) po.setSupplierEmail(supplierEmail);
 
         log.info("Updated Purchase Order ID: {} draft details.", id);
-        return poRepository.save(po);
+        PurchaseOrder saved = poRepository.save(po);
+        return procurementMapper.toDTO(saved);
     }
 
     @Override
     @Transactional
-    public PurchaseOrder approvePurchaseOrder(Long id) {
+    public PurchaseOrderDTO approvePurchaseOrder(Long id) {
         PurchaseOrder po = poRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Purchase Order not found with ID: " + id));
 
@@ -98,7 +107,6 @@ public class ProcurementServiceImpl implements ProcurementService {
         po.setApprovedAt(LocalDateTime.now());
         PurchaseOrder saved = poRepository.save(po);
 
-        // Send Email to Supplier
         String subject = String.format("[APPROVED RESTOCK REQUEST] MadhurGram PO Ref: PO-%05d", saved.getId());
         String body = String.format(
                 "Dear %s,\n\n" +
@@ -120,6 +128,6 @@ public class ProcurementServiceImpl implements ProcurementService {
             log.error("Failed to send Purchase Order email to supplier for PO ID: {}", saved.getId(), e);
         }
 
-        return saved;
+        return procurementMapper.toDTO(saved);
     }
 }

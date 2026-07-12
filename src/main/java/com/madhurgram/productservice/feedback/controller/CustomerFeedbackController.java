@@ -1,7 +1,7 @@
 package com.madhurgram.productservice.feedback.controller;
 
-import com.madhurgram.productservice.feedback.entity.CustomerFeedback;
-import com.madhurgram.productservice.feedback.repository.CustomerFeedbackRepository;
+import com.madhurgram.productservice.feedback.dto.CustomerFeedbackDTO;
+import com.madhurgram.productservice.feedback.service.FeedbackService;
 import com.madhurgram.productservice.order.entity.Order;
 import com.madhurgram.productservice.order.entity.OrderItem;
 import com.madhurgram.productservice.order.repository.OrderRepository;
@@ -29,33 +29,33 @@ import java.util.*;
 @Tag(name = "Customer Feedback", description = "Endpoints for submitting and retrieving reviews, testimonials, and feedback images")
 public class CustomerFeedbackController {
 
-    private final CustomerFeedbackRepository feedbackRepository;
+    private final FeedbackService feedbackService;
     private final OrderRepository orderRepository;
 
     /**
      * Constructor injection for CustomerFeedbackController.
      *
-     * @param feedbackRepository feedback repository
-     * @param orderRepository    order repository
+     * @param feedbackService feedback management service
+     * @param orderRepository order repository
      */
     public CustomerFeedbackController(
-            CustomerFeedbackRepository feedbackRepository,
+            FeedbackService feedbackService,
             OrderRepository orderRepository) {
-        this.feedbackRepository = feedbackRepository;
+        this.feedbackService = feedbackService;
         this.orderRepository = orderRepository;
     }
 
     /**
      * Submits customer feedback.
      *
-     * @param feedback feedback details payload
-     * @return the saved feedback
+     * @param dto feedback details payload DTO
+     * @return the saved feedback details
      */
     @PostMapping("/public/feedback")
     @Operation(summary = "Submit new feedback", description = "Allows a customer to submit their rating, comments, and order references.")
-    public ResponseEntity<CustomerFeedback> submitFeedback(@RequestBody CustomerFeedback feedback) {
-        log.info("Feedback submission request: Rating={}, Order ID={}", feedback.getRating(), feedback.getOrderId());
-        CustomerFeedback saved = feedbackRepository.save(feedback);
+    public ResponseEntity<CustomerFeedbackDTO> submitFeedback(@RequestBody CustomerFeedbackDTO dto) {
+        log.info("Feedback submission request: Rating={}, Order ID={}", dto.getRating(), dto.getOrderId());
+        CustomerFeedbackDTO saved = feedbackService.submitFeedback(dto);
         log.info("Feedback successfully saved with ID: {}", saved.getId());
         return ResponseEntity.ok(saved);
     }
@@ -170,11 +170,11 @@ public class CustomerFeedbackController {
      */
     @GetMapping("/public/feedback/testimonials")
     @Operation(summary = "Get storefront testimonials", description = "Retrieves the top 8 recent customer feedbacks with 4+ star ratings.")
-    public ResponseEntity<List<CustomerFeedback>> getTestimonials() {
+    public ResponseEntity<List<CustomerFeedbackDTO>> getTestimonials() {
         log.info("Request: fetch public testimonials");
-        List<CustomerFeedback> testimonials = feedbackRepository.findTop8ByRatingGreaterThanEqualOrderByCreatedAtDesc(4);
-        log.info("Returning {} testimonials", testimonials.size());
-        return ResponseEntity.ok(testimonials);
+        List<CustomerFeedbackDTO> dtos = feedbackService.getTestimonials();
+        log.info("Returning {} testimonials", dtos.size());
+        return ResponseEntity.ok(dtos);
     }
 
     /**
@@ -184,10 +184,10 @@ public class CustomerFeedbackController {
      */
     @GetMapping("/admin/feedback")
     @Operation(summary = "List all feedbacks (Admin)", description = "Retrieves all feedback submissions sorted by creation date descending.")
-    public ResponseEntity<List<CustomerFeedback>> getFeedbacks() {
+    public ResponseEntity<List<CustomerFeedbackDTO>> getFeedbacks() {
         log.info("Admin request: list all feedbacks");
-        List<CustomerFeedback> feedbacks = feedbackRepository.findAllByOrderByCreatedAtDesc();
-        log.info("Returning {} feedbacks to admin", feedbacks.size());
-        return ResponseEntity.ok(feedbacks);
+        List<CustomerFeedbackDTO> dtos = feedbackService.getFeedbacks();
+        log.info("Returning {} feedbacks to admin", dtos.size());
+        return ResponseEntity.ok(dtos);
     }
 }
