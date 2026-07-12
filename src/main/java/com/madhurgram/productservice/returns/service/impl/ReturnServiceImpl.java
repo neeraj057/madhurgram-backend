@@ -11,8 +11,7 @@ import com.madhurgram.productservice.returns.entity.ReturnRequest;
 import com.madhurgram.productservice.returns.mapper.ReturnMapper;
 import com.madhurgram.productservice.returns.repository.ReturnRequestRepository;
 import com.madhurgram.productservice.returns.service.ReturnService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,10 +21,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Service implementation for administering product return requests, 
+ * stock restocking, and automated digital UPI refund processes.
+ */
+@Slf4j
 @Service
 public class ReturnServiceImpl implements ReturnService {
-
-    private static final Logger log = LoggerFactory.getLogger(ReturnServiceImpl.class);
 
     private final ReturnRequestRepository returnRepository;
     private final OrderRepository orderRepository;
@@ -33,6 +35,15 @@ public class ReturnServiceImpl implements ReturnService {
     private final AuditLogService auditLogService;
     private final ReturnMapper returnMapper;
 
+    /**
+     * Constructor injection for ReturnServiceImpl.
+     *
+     * @param returnRepository return request database repository
+     * @param orderRepository  order database access
+     * @param productService   product catalog stock modifier service
+     * @param auditLogService  security audit logs manager
+     * @param returnMapper     returns data mapper helper
+     */
     public ReturnServiceImpl(
             ReturnRequestRepository returnRepository,
             OrderRepository orderRepository,
@@ -47,10 +58,23 @@ public class ReturnServiceImpl implements ReturnService {
         this.returnMapper = returnMapper;
     }
 
+    /**
+     * Submits a new return request for a given order ID and phone number.
+     * Only delivered orders can be requested for return.
+     *
+     * @param orderId the order ID reference
+     * @param phone   customer phone number verification
+     * @param reason  return reasons description
+     * @return the created return request DTO
+     */
     @Override
     @Transactional
     public ReturnRequestDTO createReturnRequest(Long orderId, String phone, String reason) {
-        log.info("Attempting to create return request for Order ID: {} and Phone: {}", orderId, phone);
+        log.info("Attempting to create return request for Order ID: {} and Phone: '{}'", orderId, phone);
+
+        if (orderId == null || phone == null || phone.trim().isEmpty() || reason == null || reason.trim().isEmpty()) {
+            throw new IllegalArgumentException("Order ID, customer phone number, and return reason must not be blank.");
+        }
 
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("Order not found with ID: " + orderId));
@@ -62,25 +86,29 @@ public class ReturnServiceImpl implements ReturnService {
             String suffixOrder = normalizedOrderPhone.substring(normalizedOrderPhone.length() - 10);
             String suffixInput = normalizedInputPhone.substring(normalizedInputPhone.length() - 10);
             if (!suffixOrder.equals(suffixInput)) {
+                log.warn("Create return request rejected: phone suffix mismatch for Order ID: {}", orderId);
                 throw new IllegalArgumentException("The phone number provided does not match the order records.");
             }
         } else if (!normalizedOrderPhone.equals(normalizedInputPhone)) {
+            log.warn("Create return request rejected: phone number mismatch for Order ID: {}", orderId);
             throw new IllegalArgumentException("The phone number provided does not match the order records.");
         }
 
         if (order.getOrderStatus() != OrderStatus.DELIVERED) {
+            log.warn("Create return request rejected: order ID: {} status is not DELIVERED", orderId);
             throw new IllegalStateException("Only delivered orders can be requested for return. Current status: " + order.getOrderStatus());
         }
 
         Optional<ReturnRequest> existing = returnRepository.findByOrderId(orderId);
         if (existing.isPresent()) {
+            log.warn("Create return request rejected: active return already exists for Order ID: {}", orderId);
             throw new IllegalStateException("A return request has already been filed for this Order ID.");
         }
 
         ReturnRequest request = ReturnRequest.builder()
                 .orderId(orderId)
                 .customerPhone(phone.trim())
-                .reason(reason)
+                .reason(reason.trim())
                 .status("PENDING")
                 .build();
 
@@ -90,26 +118,55 @@ public class ReturnServiceImpl implements ReturnService {
         return returnMapper.toDTO(saved);
     }
 
+    /**
+     * Resolves return request details for a specific order.
+     *
+     * @param orderId order ID identifier
+     * @return return request if found, otherwise null
+     */
     @Override
     @Transactional(readOnly = true)
     public ReturnRequestDTO getReturnRequestByOrderId(Long orderId) {
+        log.info("Fetching return request details for order ID: {}", orderId);
+        
+        if (orderId == null) {
+            throw new IllegalArgumentException("Order ID cannot be null.");
+        }
+
         ReturnRequest request = returnRepository.findByOrderId(orderId).orElse(null);
         return returnMapper.toDTO(request);
     }
 
+    /**
+     * Lists all return requests sorted by creation date descending.
+     *
+     * @return list of return requests DTO
+     */
     @Override
     @Transactional(readOnly = true)
     public List<ReturnRequestDTO> getAllReturnRequests() {
+        log.info("Admin request: list all return requests");
         List<ReturnRequest> list = returnRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
         return list.stream()
                 .map(returnMapper::toDTO)
                 .toList();
     }
 
+    /**
+     * Approves a customer return request, cancels order status, and generates mock UPI transaction code.
+     * Restores stock automatically to the catalog.
+     *
+     * @param returnId target return identifier
+     * @return approved return details DTO
+     */
     @Override
     @Transactional
     public ReturnRequestDTO approveReturnRequest(Long returnId) {
         log.info("Approving return request ID: {}", returnId);
+
+        if (returnId == null) {
+            throw new IllegalArgumentException("Return Request ID cannot be null.");
+        }
 
         ReturnRequest request = returnRepository.findById(returnId)
                 .orElseThrow(() -> new IllegalArgumentException("Return request not found for ID: " + returnId));
@@ -145,10 +202,20 @@ public class ReturnServiceImpl implements ReturnService {
         return returnMapper.toDTO(saved);
     }
 
+    /**
+     * Rejects a pending return request.
+     *
+     * @param returnId target return identifier
+     * @return updated return details DTO
+     */
     @Override
     @Transactional
     public ReturnRequestDTO rejectReturnRequest(Long returnId) {
         log.info("Rejecting return request ID: {}", returnId);
+
+        if (returnId == null) {
+            throw new IllegalArgumentException("Return Request ID cannot be null.");
+        }
 
         ReturnRequest request = returnRepository.findById(returnId)
                 .orElseThrow(() -> new IllegalArgumentException("Return request not found for ID: " + returnId));

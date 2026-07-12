@@ -17,18 +17,21 @@ import java.util.List;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.madhurgram.productservice.product.repository.ProductRepository;
 import com.madhurgram.productservice.product.entity.Product;
 import com.madhurgram.productservice.logistics.service.LogisticsService;
 
+/**
+ * Service implementation for managing customer shopping orders, calculations, 
+ * stock deductions, logistics integrations, and status update flows.
+ */
+@Slf4j
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    private static final Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
     private final OrderRepository orderRepository;
     private final ProductService productService;
     private final ProductRepository productRepository;
@@ -41,6 +44,21 @@ public class OrderServiceImpl implements OrderService {
     private final com.madhurgram.productservice.coupon.service.CouponService couponService;
     private final OrderMapper orderMapper;
 
+    /**
+     * Constructor injection for OrderServiceImpl.
+     *
+     * @param orderRepository         order database repository
+     * @param productService          product catalog service
+     * @param productRepository       product repository
+     * @param logisticsService        logistics operations service
+     * @param abandonedCartService    abandoned cart tracking service
+     * @param orderNotificationService order notifications dispatch service
+     * @param eventPublisher          application event dispatcher
+     * @param auditLogService         security audit logger service
+     * @param reviewRequestRepository review requests scheduling repository
+     * @param couponService           discount coupons service
+     * @param orderMapper             order mapper utility
+     */
     public OrderServiceImpl(
             OrderRepository orderRepository, 
             ProductService productService, 
@@ -66,6 +84,13 @@ public class OrderServiceImpl implements OrderService {
         this.orderMapper = orderMapper;
     }
 
+    /**
+     * Submits and validates a new customer checkout order.
+     * Deducts stock and triggers automatic low inventory purchase orders if limits crossed.
+     *
+     * @param order raw checkout order details
+     * @return order details response DTO
+     */
     @Override
     @Transactional
     @CacheEvict(value = "analytics", allEntries = true)
@@ -139,8 +164,8 @@ public class OrderServiceImpl implements OrderService {
             } catch (RuntimeException e) {
                 log.warn("Stock deduction failed for Product ID: {}, Name: {}. Error: {}", item.getProductId(),
                         item.getProductName(), e.getMessage());
-                throw new RuntimeException(
-                        "Product '" + item.getProductName() + "' is Out of Stock or insufficient inventory.");
+                throw new IllegalArgumentException(
+                        "Product '" + item.getProductName() + "' is Out of Stock or has insufficient inventory.");
             }
 
             item.setOrder(order);
@@ -230,23 +255,42 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toResponseDTO(saved);
     }
 
+    /**
+     * Fetches all orders with their items in a single join query.
+     *
+     * @return a list of all order summaries DTO
+     */
     @Override
-    @org.springframework.transaction.annotation.Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public List<OrderResponseDTO> getAllOrders() {
-        log.info("Fetching all orders with their items in a single query.");
+        log.info("Fetching all orders with their items in a single optimized query.");
         List<Order> orders = orderRepository.findAllWithItems();
         return orders.stream()
                 .map(orderMapper::toResponseDTO)
                 .toList();
     }
 
+    /**
+     * Modifies the current execution status of an active customer order.
+     * Restores stock automatically on order cancellation.
+     *
+     * @param orderId    target order identifier
+     * @param nextStatus new status value to apply
+     * @return updated order details DTO
+     */
     @Override
     @Transactional
     @CacheEvict(value = "analytics", allEntries = true)
     public OrderResponseDTO updateOrderStatus(Long orderId, OrderStatus nextStatus) {
         log.info("Updating status for order ID: {} to {}", orderId, nextStatus);
+        
+        if (orderId == null || nextStatus == null) {
+            log.warn("Update status aborted: Order ID or target status parameter is null");
+            throw new IllegalArgumentException("Order ID and target status must not be null.");
+        }
+
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found with ID: " + orderId));
+                .orElseThrow(() -> new IllegalArgumentException("Order not found with ID: " + orderId));
 
         OrderStatus currentStatus = order.getOrderStatus();
         log.info("Order ID: {} current status is: {}", orderId, currentStatus);
@@ -322,10 +366,19 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toResponseDTO(saved);
     }
 
+    /**
+     * Resolves orders associated with a customer phone.
+     *
+     * @param phoneNumber customer phone number
+     * @return a list of order responses DTO
+     */
     @Override
-    @org.springframework.transaction.annotation.Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public List<OrderResponseDTO> getOrdersByCustomerPhone(String phoneNumber) {
+        log.info("Fetching orders by customer phone number: '{}'", phoneNumber);
+        
         if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
+            log.warn("Lookup aborted: phone number parameter is blank");
             throw new IllegalArgumentException("Phone number cannot be null or empty.");
         }
 
@@ -335,11 +388,24 @@ public class OrderServiceImpl implements OrderService {
                 .toList();
     }
 
+    /**
+     * Resolves detailed summary payload for a single order by ID.
+     *
+     * @param orderId target order identifier
+     * @return detailed order details DTO
+     */
     @Override
-    @org.springframework.transaction.annotation.Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public OrderResponseDTO getOrderDetails(Long orderId) {
+        log.info("Fetching order details for ID: {}", orderId);
+        
+        if (orderId == null) {
+            log.warn("Details lookup aborted: orderId parameter is null");
+            throw new IllegalArgumentException("Order ID cannot be null.");
+        }
+
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found with ID: " + orderId));
+                .orElseThrow(() -> new IllegalArgumentException("Order not found with ID: " + orderId));
         return orderMapper.toResponseDTO(order);
     }
 }

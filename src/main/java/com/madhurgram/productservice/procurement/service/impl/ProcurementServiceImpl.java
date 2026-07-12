@@ -8,8 +8,7 @@ import com.madhurgram.productservice.procurement.repository.PurchaseOrderReposit
 import com.madhurgram.productservice.procurement.service.ProcurementService;
 import com.madhurgram.productservice.product.entity.Product;
 import com.madhurgram.productservice.product.repository.ProductRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,16 +17,26 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service implementation for managing inventory restocking purchase orders and supplier dispatch update emails.
+ */
+@Slf4j
 @Service
 public class ProcurementServiceImpl implements ProcurementService {
-
-    private static final Logger log = LoggerFactory.getLogger(ProcurementServiceImpl.class);
 
     private final PurchaseOrderRepository poRepository;
     private final ProductRepository productRepository;
     private final EmailService emailService;
     private final ProcurementMapper procurementMapper;
 
+    /**
+     * Constructor injection for ProcurementServiceImpl.
+     *
+     * @param poRepository      purchase order database repository
+     * @param productRepository product catalog database repository
+     * @param emailService      email client notification dispatch service
+     * @param procurementMapper procurement data mapper
+     */
     public ProcurementServiceImpl(
             PurchaseOrderRepository poRepository,
             ProductRepository productRepository,
@@ -40,20 +49,40 @@ public class ProcurementServiceImpl implements ProcurementService {
         this.procurementMapper = procurementMapper;
     }
 
+    /**
+     * Retrieves all purchase orders sorted chronologically descending.
+     *
+     * @return a list of purchase orders DTO
+     */
     @Override
     @Transactional(readOnly = true)
     public List<PurchaseOrderDTO> getAllPurchaseOrders() {
+        log.info("Admin request: fetch all purchase orders");
         List<PurchaseOrder> pos = poRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
         return pos.stream()
                 .map(procurementMapper::toDTO)
                 .toList();
     }
 
+    /**
+     * Drafts a new purchase order for a product when inventory count hits threshold.
+     * Skips drafting if a DRAFT purchase order is already outstanding.
+     *
+     * @param productId target product to restock
+     * @param quantity  quantity to request
+     * @return created purchase order DTO
+     */
     @Override
     @Transactional
     public PurchaseOrderDTO draftPurchaseOrder(Long productId, Integer quantity) {
+        log.info("Attempting to draft Purchase Order for product ID: {} (Quantity: {})", productId, quantity);
+        
+        if (productId == null) {
+            throw new IllegalArgumentException("Product ID must not be null.");
+        }
+
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found with ID: " + productId));
+                .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + productId));
 
         Optional<PurchaseOrder> existingDraft = poRepository.findByProductIdAndStatus(productId, "DRAFT");
         if (existingDraft.isPresent()) {
@@ -64,42 +93,77 @@ public class ProcurementServiceImpl implements ProcurementService {
         log.info("Creating a new restock Purchase Order draft for product: {}", product.getName());
         PurchaseOrder po = PurchaseOrder.builder()
                 .product(product)
-                .quantity(quantity != null ? quantity : 50)
+                .quantity(quantity != null && quantity > 0 ? quantity : 50)
                 .supplierName("Gopiganj Traditional Co.")
                 .supplierEmail("rawmaterials@madhurgram.com")
                 .status("DRAFT")
                 .build();
 
         PurchaseOrder saved = poRepository.save(po);
+        log.info("Successfully created restock draft PO ID: {}", saved.getId());
         return procurementMapper.toDTO(saved);
     }
 
+    /**
+     * Modifies outstanding supplier details or quantity count of a drafted purchase order.
+     *
+     * @param id            target purchase order ID
+     * @param quantity      updated restock count limit
+     * @param supplierName  updated supplier name
+     * @param supplierEmail updated supplier email address
+     * @return modified purchase order DTO
+     */
     @Override
     @Transactional
     public PurchaseOrderDTO updatePurchaseOrder(Long id, Integer quantity, String supplierName, String supplierEmail) {
+        log.info("Updating Purchase Order ID: {} details", id);
+        
+        if (id == null) {
+            throw new IllegalArgumentException("Purchase Order ID must not be null.");
+        }
+
         PurchaseOrder po = poRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Purchase Order not found with ID: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Purchase Order not found with ID: " + id));
 
         if (!"DRAFT".equals(po.getStatus())) {
+            log.warn("Update purchase order rejected: PO ID: {} is not in DRAFT state (Status: {})", id, po.getStatus());
             throw new IllegalStateException("Only drafted Purchase Orders can be updated.");
         }
 
-        if (quantity != null) po.setQuantity(quantity);
-        if (supplierName != null) po.setSupplierName(supplierName);
-        if (supplierEmail != null) po.setSupplierEmail(supplierEmail);
+        if (quantity != null && quantity <= 0) {
+            throw new IllegalArgumentException("Purchase order quantity must be greater than zero.");
+        }
 
-        log.info("Updated Purchase Order ID: {} draft details.", id);
+        if (quantity != null) po.setQuantity(quantity);
+        if (supplierName != null) po.setSupplierName(supplierName.trim());
+        if (supplierEmail != null) po.setSupplierEmail(supplierEmail.trim());
+
+        log.info("Updated Purchase Order ID: {} draft details successfully.", id);
         PurchaseOrder saved = poRepository.save(po);
         return procurementMapper.toDTO(saved);
     }
 
+    /**
+     * Approves and executes a purchase order draft.
+     * Dispatches notification email payload to supplier address.
+     *
+     * @param id target purchase order ID
+     * @return approved purchase order details DTO
+     */
     @Override
     @Transactional
     public PurchaseOrderDTO approvePurchaseOrder(Long id) {
+        log.info("Approving and dispatching Purchase Order ID: {}", id);
+        
+        if (id == null) {
+            throw new IllegalArgumentException("Purchase Order ID must not be null.");
+        }
+
         PurchaseOrder po = poRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Purchase Order not found with ID: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Purchase Order not found with ID: " + id));
 
         if (!"DRAFT".equals(po.getStatus())) {
+            log.warn("Approve purchase order rejected: PO ID: {} is already approved/sent", id);
             throw new IllegalStateException("Purchase Order has already been approved/sent.");
         }
 

@@ -6,6 +6,7 @@ import com.madhurgram.productservice.marketing.mapper.ReviewMapper;
 import com.madhurgram.productservice.marketing.repository.ReviewRequestRepository;
 import com.madhurgram.productservice.marketing.scheduler.ReviewAutomationScheduler;
 import com.madhurgram.productservice.marketing.service.ReviewService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Service implementation for administering the automated reviews queue, 
+ * scheduler dispatches, and WhatsApp outreach triggers.
+ */
+@Slf4j
 @Service
 public class ReviewServiceImpl implements ReviewService {
 
@@ -20,6 +26,13 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewAutomationScheduler scheduler;
     private final ReviewMapper reviewMapper;
 
+    /**
+     * Constructor injection for ReviewServiceImpl.
+     *
+     * @param reviewRequestRepository review requests queue repository
+     * @param scheduler               automation worker scheduler
+     * @param reviewMapper            review request mapper
+     */
     public ReviewServiceImpl(ReviewRequestRepository reviewRequestRepository,
                              ReviewAutomationScheduler scheduler,
                              ReviewMapper reviewMapper) {
@@ -28,37 +41,71 @@ public class ReviewServiceImpl implements ReviewService {
         this.reviewMapper = reviewMapper;
     }
 
+    /**
+     * Lists review scheduling queue entries sorted chronologically descending.
+     *
+     * @return list of scheduled review requests DTO
+     */
     @Override
+    @Transactional(readOnly = true)
     public List<ReviewRequestDTO> getReviewQueue() {
+        log.info("Admin request: fetch review invite queue");
         List<ReviewRequest> queue = reviewRequestRepository.findAll(Sort.by(Sort.Direction.DESC, "scheduledAt"));
         return queue.stream()
                 .map(reviewMapper::toDTO)
                 .toList();
     }
 
+    /**
+     * Manually triggers an outbound review invite immediately, skipping scheduler delay limits.
+     *
+     * @param id target scheduled review invite ID
+     * @return updated review request details DTO
+     */
     @Override
     @Transactional
     public ReviewRequestDTO sendNow(Long id) {
+        log.info("Manually sending review request immediately for ID: {}", id);
+        
+        if (id == null) {
+            throw new IllegalArgumentException("Review invite ID must not be null.");
+        }
+
         ReviewRequest request = reviewRequestRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Review invite request ID not found: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Review invite request ID not found: " + id));
 
         if ("SENT".equals(request.getStatus())) {
+            log.warn("Send immediately rejected: Review invite ID: {} already sent", id);
             throw new IllegalArgumentException("Review invitation has already been sent.");
         }
 
         try {
             scheduler.sendReviewInvite(request);
+            log.info("Successfully dispatched review request ID: {}", id);
             return reviewMapper.toDTO(request);
         } catch (Exception e) {
+            log.error("Failed to send review invite ID: {} immediately", id, e);
             throw new RuntimeException("Failed to send review invite ID " + id + ": " + e.getMessage(), e);
         }
     }
 
+    /**
+     * Dispatches a manual test invite to check message formats.
+     *
+     * @param name  customer test name
+     * @param phone customer target phone number
+     * @return saved review request details DTO
+     */
     @Override
     @Transactional
     public ReviewRequestDTO sendTest(String name, String phone) {
+        log.info("Sending test review invitation to phone: '{}', name: '{}'", phone, name);
+        
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Name is required.");
+        }
+        if (phone == null || phone.isBlank()) {
+            throw new IllegalArgumentException("Phone number is required.");
         }
 
         ReviewRequest request = ReviewRequest.builder()
@@ -72,8 +119,10 @@ public class ReviewServiceImpl implements ReviewService {
         ReviewRequest saved = reviewRequestRepository.save(request);
         try {
             scheduler.sendReviewInvite(saved);
+            log.info("Successfully dispatched test review invitation to phone: '{}'", phone);
             return reviewMapper.toDTO(saved);
         } catch (Exception e) {
+            log.error("Failed to send test review invite to phone: '{}'", phone, e);
             throw new RuntimeException("Failed to send test review invite: " + e.getMessage(), e);
         }
     }

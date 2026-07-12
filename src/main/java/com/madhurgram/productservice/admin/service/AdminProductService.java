@@ -4,9 +4,18 @@ import com.madhurgram.productservice.product.dto.ProductDTO;
 import java.util.List;
 
 public interface AdminProductService {
+    // list of all products including inactive ones
     List<ProductDTO> getAllProductsForAdmin();
+
+    // list of all active products for public
     List<ProductDTO> getAllActiveProductsForPublic();
+
+    // add new product
     ProductDTO addProduct(ProductDTO productDTO);
+
+    // update product
     ProductDTO updateProduct(Long id, ProductDTO productDTO);
-    void deleteProduct(Long id); // 👈 प्रोडक्ट डिलीट करने का कॉन्ट्रैक्ट
+
+    // delete product
+    void deleteProduct(Long id);
 }

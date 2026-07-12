@@ -1,2 +1,437 @@
 2026-07-12 08:25:21 [main] INFO  c.m.p.ProductServiceApplication - Starting ProductServiceApplication using Java 21.0.2 with PID 34080 (D:\MadhurGram\product-service\target\classes started by victus in D:\MadhurGram\product-service)
 2026-07-12 08:25:21 [main] INFO  c.m.p.ProductServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-07-12 08:25:22 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.1.0.Final
+2026-07-12 08:25:23 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-12 08:25:23 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-12 08:25:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 429 ms. Found 14 JPA repository interfaces.
+2026-07-12 08:25:25 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-12 08:25:25 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-07-12 08:25:25 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-12 08:25:25 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-12 08:25:25 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 3950 ms
+2026-07-12 08:25:25 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-12 08:25:26 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-07-12 08:25:26 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-12 08:25:26 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-07-12 08:25:26 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@abe7d36
+2026-07-12 08:25:26 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-07-12 08:25:27 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/madhurgram_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.36
+	Default catalog/schema: madhurgram_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-12 08:25:28 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-12 08:25:28 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-12 08:25:28 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-12 08:25:31 [main] INFO  c.m.p.config.CacheConfig - Initializing RedisCacheManager with JSON Serialization...
+2026-07-12 08:25:31 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
+2026-07-12 08:25:32 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoints beneath base path '/actuator'
+2026-07-12 08:25:32 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-07-12 08:25:32 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-07-12 08:25:32 [main] INFO  c.m.p.ProductServiceApplication - Started ProductServiceApplication in 11.927 seconds (process running for 12.622)
+2026-07-12 08:25:32 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-12 08:25:32 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-12 08:25:32 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-12 08:25:32 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-10T08:25:32.792749400 (Retention: 48 hours)
+2026-07-12 08:25:47 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-12 08:25:47 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-12 08:25:47 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 5 ms
+2026-07-12 08:25:47 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:25:51 [http-nio-8080-exec-3] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-12 08:25:51 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:25:51 [http-nio-8080-exec-3] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-12 08:25:52 [http-nio-8080-exec-7] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-12 08:25:52 [http-nio-8080-exec-6] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-12 08:25:52 [http-nio-8080-exec-7] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-12 08:25:52 [http-nio-8080-exec-8] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-12 08:25:52 [http-nio-8080-exec-8] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-12 08:25:52 [http-nio-8080-exec-6] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-12 08:25:52 [http-nio-8080-exec-10] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-12 08:25:52 [http-nio-8080-exec-10] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-12 08:25:57 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:25:58 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:26:10 [http-nio-8080-exec-8] INFO  c.m.p.auth.controller.AuthController - Request: administrator login attempt for username: 'admin'
+2026-07-12 08:26:10 [http-nio-8080-exec-8] INFO  c.m.p.auth.controller.AuthController - Login successful for Super Admin: 'admin'
+2026-07-12 08:26:10 [http-nio-8080-exec-10] INFO  c.m.p.a.c.AdminProductController - Admin request: list all products
+2026-07-12 08:26:11 [http-nio-8080-exec-10] INFO  c.m.p.a.c.AdminProductController - Returning 14 product(s) to admin
+2026-07-12 08:26:11 [http-nio-8080-exec-2] INFO  c.m.p.a.c.AdminProductController - Admin request: list all products
+2026-07-12 08:26:11 [http-nio-8080-exec-2] INFO  c.m.p.a.c.AdminProductController - Returning 14 product(s) to admin
+2026-07-12 08:26:12 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:26:18 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:26:18 [http-nio-8080-exec-7] INFO  c.m.p.a.c.AnalyticsController - Admin request: fetch daily business report for range: 7 day(s)
+2026-07-12 08:26:18 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Starting dashboard computation for last 7 days...
+2026-07-12 08:26:18 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1: Querying abandoned cart repository counts...
+2026-07-12 08:26:18 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1 complete. Conversion rate: 80.64516129032258
+2026-07-12 08:26:18 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Querying orders since: 2026-06-29T00:00
+2026-07-12 08:26:18 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Orders queried: 42. Processing growth in memory...
+2026-07-12 08:26:18 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2 complete. Sales Growth: 20.47758742079324
+2026-07-12 08:26:18 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3: Fetching low stock products from database...
+2026-07-12 08:26:18 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3 complete. Low stock count: 1
+2026-07-12 08:26:18 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4: Querying active user count from Redis Sorted Set...
+2026-07-12 08:26:18 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4 complete. Active users: 2
+2026-07-12 08:26:18 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Completing dashboard stats builder...
+2026-07-12 08:26:18 [http-nio-8080-exec-7] INFO  c.m.p.a.c.AnalyticsController - Successfully calculated and retrieved dashboard metrics
+2026-07-12 08:26:18 [http-nio-8080-exec-6] INFO  c.m.p.a.c.AnalyticsController - Admin request: fetch daily business report for range: 7 day(s)
+2026-07-12 08:26:18 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Starting dashboard computation for last 7 days...
+2026-07-12 08:26:18 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1: Querying abandoned cart repository counts...
+2026-07-12 08:26:18 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1 complete. Conversion rate: 80.64516129032258
+2026-07-12 08:26:18 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Querying orders since: 2026-06-29T00:00
+2026-07-12 08:26:18 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Orders queried: 42. Processing growth in memory...
+2026-07-12 08:26:18 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2 complete. Sales Growth: 20.47758742079324
+2026-07-12 08:26:18 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3: Fetching low stock products from database...
+2026-07-12 08:26:18 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3 complete. Low stock count: 1
+2026-07-12 08:26:18 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4: Querying active user count from Redis Sorted Set...
+2026-07-12 08:26:18 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4 complete. Active users: 2
+2026-07-12 08:26:18 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Completing dashboard stats builder...
+2026-07-12 08:26:18 [http-nio-8080-exec-6] INFO  c.m.p.a.c.AnalyticsController - Successfully calculated and retrieved dashboard metrics
+2026-07-12 08:26:32 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:26:33 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Request: list all orders
+2026-07-12 08:26:33 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-12 08:26:33 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Returning 42 order(s) [superAdmin=true]
+2026-07-12 08:26:33 [http-nio-8080-exec-3] INFO  c.m.p.o.controller.OrderController - Request: list all orders
+2026-07-12 08:26:33 [http-nio-8080-exec-3] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-12 08:26:33 [http-nio-8080-exec-3] INFO  c.m.p.o.controller.OrderController - Returning 42 order(s) [superAdmin=true]
+2026-07-12 08:26:38 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:26:40 [http-nio-8080-exec-6] INFO  c.m.p.o.controller.OrderController - Request: update order ID: 11 to status: DELIVERED
+2026-07-12 08:26:40 [http-nio-8080-exec-6] INFO  c.m.p.o.s.impl.OrderServiceImpl - Updating status for order ID: 11 to DELIVERED
+2026-07-12 08:26:40 [http-nio-8080-exec-6] INFO  c.m.p.o.s.impl.OrderServiceImpl - Order ID: 11 current status is: OUT_FOR_DELIVERY
+2026-07-12 08:26:40 [http-nio-8080-exec-6] INFO  c.m.p.o.s.impl.OrderServiceImpl - Order ID: 11 status updated successfully from OUT_FOR_DELIVERY to DELIVERED
+2026-07-12 08:26:40 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AuditLogServiceImpl - Audit log written: [UPDATE_ORDER_STATUS] by user: admin on entity: 11
+2026-07-12 08:26:40 [http-nio-8080-exec-6] INFO  c.m.p.o.s.OrderNotificationService - Dispatching WhatsApp status notification (DELIVERED) to phone: 8770242812
+2026-07-12 08:26:40 [http-nio-8080-exec-6] INFO  c.m.p.cart.service.TwilioService - [MOCK TWILIO WHATSAPP DISPATCH] Successfully triggered in DEV mode.
+2026-07-12 08:26:40 [http-nio-8080-exec-6] INFO  c.m.p.cart.service.TwilioService - From: whatsapp:+1234567890
+2026-07-12 08:26:40 [http-nio-8080-exec-6] INFO  c.m.p.cart.service.TwilioService - To: whatsapp:+918770242812
+2026-07-12 08:26:40 [http-nio-8080-exec-6] INFO  c.m.p.cart.service.TwilioService - Message Body:
+नमस्ते TTE! आपका MadhurGram ऑर्डर (ID: MG-00011) सफलतापूर्वक डिलीवर हो गया है। हमें आशा है कि आपको हमारे शुद्ध उत्पाद पसंद आएंगे। कृपया अपना फीडबैक यहाँ दें: http://localhost:3000/feedback?orderId=11। धन्यवाद, टीम MadhurGram 💛
+2026-07-12 08:26:40 [http-nio-8080-exec-6] INFO  c.m.p.o.s.impl.OrderServiceImpl - Order ID: 11 has been DELIVERED. Scheduling Google Review request...
+2026-07-12 08:26:40 [http-nio-8080-exec-6] INFO  c.m.p.o.s.impl.OrderServiceImpl - Successfully scheduled Google Review request for Order ID: 11
+2026-07-12 08:26:40 [http-nio-8080-exec-6] INFO  c.m.p.o.controller.OrderController - Order ID: 11 status updated successfully to: DELIVERED
+2026-07-12 08:26:52 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:26:58 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:27:04 [http-nio-8080-exec-7] INFO  c.m.p.o.controller.OrderController - Request: list all orders
+2026-07-12 08:27:04 [http-nio-8080-exec-7] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single query.
+2026-07-12 08:27:04 [http-nio-8080-exec-7] INFO  c.m.p.o.controller.OrderController - Returning 42 order(s) [superAdmin=true]
+2026-07-12 08:27:09 [http-nio-8080-exec-2] INFO  c.m.p.a.c.AdminProductController - Admin request: list all products
+2026-07-12 08:27:09 [http-nio-8080-exec-2] INFO  c.m.p.a.c.AdminProductController - Returning 14 product(s) to admin
+2026-07-12 08:27:09 [http-nio-8080-exec-4] INFO  c.m.p.a.c.AdminProductController - Admin request: list all products
+2026-07-12 08:27:09 [http-nio-8080-exec-4] INFO  c.m.p.a.c.AdminProductController - Returning 14 product(s) to admin
+2026-07-12 08:27:12 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:27:14 [http-nio-8080-exec-9] INFO  c.m.p.a.c.AdminTaxController - Admin request: list all tax slabs
+2026-07-12 08:27:14 [http-nio-8080-exec-9] INFO  c.m.p.a.c.AdminTaxController - Returning 4 tax slab(s)
+2026-07-12 08:27:14 [http-nio-8080-exec-7] INFO  c.m.p.a.c.AdminTaxController - Admin request: list all tax slabs
+2026-07-12 08:27:14 [http-nio-8080-exec-7] INFO  c.m.p.a.c.AdminTaxController - Returning 4 tax slab(s)
+2026-07-12 08:27:17 [http-nio-8080-exec-2] INFO  c.m.p.c.controller.CouponController - Admin request: list all coupons
+2026-07-12 08:27:17 [http-nio-8080-exec-2] INFO  c.m.p.c.controller.CouponController - Returning 1 coupon(s) to admin
+2026-07-12 08:27:17 [http-nio-8080-exec-4] INFO  c.m.p.c.controller.CouponController - Admin request: list all coupons
+2026-07-12 08:27:17 [http-nio-8080-exec-4] INFO  c.m.p.c.controller.CouponController - Returning 1 coupon(s) to admin
+2026-07-12 08:27:18 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:27:22 [http-nio-8080-exec-9] INFO  c.m.p.a.c.AdminCustomerController - Admin request: list customers, search='null'
+2026-07-12 08:27:22 [http-nio-8080-exec-9] INFO  c.m.p.a.c.AdminCustomerController - Returning 24 customer(s) [superAdmin=true]
+2026-07-12 08:27:22 [http-nio-8080-exec-7] INFO  c.m.p.a.c.AdminCustomerController - Admin request: list customers, search='null'
+2026-07-12 08:27:22 [http-nio-8080-exec-7] INFO  c.m.p.a.c.AdminCustomerController - Returning 24 customer(s) [superAdmin=true]
+2026-07-12 08:27:26 [http-nio-8080-exec-2] INFO  c.m.p.f.c.CustomerFeedbackController - Admin request: list all feedbacks
+2026-07-12 08:27:26 [http-nio-8080-exec-2] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 feedbacks to admin
+2026-07-12 08:27:26 [http-nio-8080-exec-4] INFO  c.m.p.f.c.CustomerFeedbackController - Admin request: list all feedbacks
+2026-07-12 08:27:26 [http-nio-8080-exec-4] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 feedbacks to admin
+2026-07-12 08:27:28 [http-nio-8080-exec-8] INFO  c.m.p.p.c.ProcurementController - Admin request: list all purchase orders
+2026-07-12 08:27:28 [http-nio-8080-exec-8] INFO  c.m.p.p.c.ProcurementController - Returning 2 purchase order(s)
+2026-07-12 08:27:29 [http-nio-8080-exec-9] INFO  c.m.p.p.c.ProcurementController - Admin request: list all purchase orders
+2026-07-12 08:27:29 [http-nio-8080-exec-9] INFO  c.m.p.p.c.ProcurementController - Returning 2 purchase order(s)
+2026-07-12 08:27:31 [http-nio-8080-exec-6] INFO  c.m.p.r.controller.ReturnController - Admin request: list all return requests
+2026-07-12 08:27:31 [http-nio-8080-exec-6] INFO  c.m.p.r.controller.ReturnController - Returning 0 return request(s) to admin
+2026-07-12 08:27:31 [http-nio-8080-exec-2] INFO  c.m.p.r.controller.ReturnController - Admin request: list all return requests
+2026-07-12 08:27:31 [http-nio-8080-exec-2] INFO  c.m.p.r.controller.ReturnController - Returning 0 return request(s) to admin
+2026-07-12 08:27:32 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:27:33 [http-nio-8080-exec-3] INFO  c.m.p.a.c.AdminProductController - Admin request: list all products
+2026-07-12 08:27:33 [http-nio-8080-exec-1] INFO  c.m.p.m.c.MarketingController - Admin request: list all campaigns
+2026-07-12 08:27:33 [http-nio-8080-exec-8] INFO  c.m.p.m.controller.ReviewController - Admin request: fetch review invite queue
+2026-07-12 08:27:33 [http-nio-8080-exec-5] INFO  c.m.p.m.controller.ReviewController - Admin request: fetch review configuration
+2026-07-12 08:27:33 [http-nio-8080-exec-3] INFO  c.m.p.a.c.AdminProductController - Returning 14 product(s) to admin
+2026-07-12 08:27:33 [http-nio-8080-exec-1] INFO  c.m.p.m.c.MarketingController - Returning 1 campaign summary/summaries
+2026-07-12 08:27:33 [http-nio-8080-exec-8] INFO  c.m.p.m.controller.ReviewController - Returning 3 queue entry/entries
+2026-07-12 08:27:33 [http-nio-8080-exec-7] INFO  c.m.p.a.c.AdminProductController - Admin request: list all products
+2026-07-12 08:27:33 [http-nio-8080-exec-9] INFO  c.m.p.m.controller.ReviewController - Admin request: fetch review configuration
+2026-07-12 08:27:33 [http-nio-8080-exec-6] INFO  c.m.p.m.c.MarketingController - Admin request: list all campaigns
+2026-07-12 08:27:33 [http-nio-8080-exec-2] INFO  c.m.p.m.controller.ReviewController - Admin request: fetch review invite queue
+2026-07-12 08:27:33 [http-nio-8080-exec-6] INFO  c.m.p.m.c.MarketingController - Returning 1 campaign summary/summaries
+2026-07-12 08:27:33 [http-nio-8080-exec-7] INFO  c.m.p.a.c.AdminProductController - Returning 14 product(s) to admin
+2026-07-12 08:27:33 [http-nio-8080-exec-2] INFO  c.m.p.m.controller.ReviewController - Returning 3 queue entry/entries
+2026-07-12 08:27:33 [http-nio-8080-exec-4] INFO  c.m.p.a.c.AdminProductController - Admin request: list all products
+2026-07-12 08:27:33 [http-nio-8080-exec-4] INFO  c.m.p.a.c.AdminProductController - Returning 14 product(s) to admin
+2026-07-12 08:27:33 [http-nio-8080-exec-10] INFO  c.m.p.a.c.AdminProductController - Admin request: list all products
+2026-07-12 08:27:33 [http-nio-8080-exec-10] INFO  c.m.p.a.c.AdminProductController - Returning 14 product(s) to admin
+2026-07-12 08:27:35 [http-nio-8080-exec-9] INFO  c.m.p.c.c.AdminSettingsController - Admin request: fetch Auto-Pilot Recovery status
+2026-07-12 08:27:35 [http-nio-8080-exec-6] INFO  c.m.p.c.c.AdminAbandonedCartController - Admin request: fetch abandoned carts older than 30 minutes
+2026-07-12 08:27:35 [http-nio-8080-exec-6] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Fetching unrecovered carts inactive since before: 2026-07-12T07:57:35.507183600
+2026-07-12 08:27:35 [http-nio-8080-exec-9] INFO  c.m.p.c.c.AdminSettingsController - Auto-Pilot Recovery status is: true
+2026-07-12 08:27:35 [http-nio-8080-exec-7] INFO  c.m.p.c.c.AdminSettingsController - Admin request: fetch Auto-Pilot Recovery status
+2026-07-12 08:27:35 [http-nio-8080-exec-7] INFO  c.m.p.c.c.AdminSettingsController - Auto-Pilot Recovery status is: true
+2026-07-12 08:27:35 [http-nio-8080-exec-6] INFO  c.m.p.c.c.AdminAbandonedCartController - Returning 6 abandoned cart(s) to admin
+2026-07-12 08:27:35 [http-nio-8080-exec-2] INFO  c.m.p.c.c.AdminAbandonedCartController - Admin request: fetch abandoned carts older than 30 minutes
+2026-07-12 08:27:35 [http-nio-8080-exec-2] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Fetching unrecovered carts inactive since before: 2026-07-12T07:57:35.619292300
+2026-07-12 08:27:35 [http-nio-8080-exec-2] INFO  c.m.p.c.c.AdminAbandonedCartController - Returning 6 abandoned cart(s) to admin
+2026-07-12 08:27:38 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:27:49 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: pickles
+2026-07-12 08:27:49 [http-nio-8080-exec-5] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching products by category 'pickles' from database...
+2026-07-12 08:27:50 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Returning 4 product(s) for category: pickles
+2026-07-12 08:27:51 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:27:57 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: oils
+2026-07-12 08:27:57 [http-nio-8080-exec-8] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching products by category 'oils' from database...
+2026-07-12 08:27:58 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Returning 1 product(s) for category: oils
+2026-07-12 08:27:58 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:27:59 [http-nio-8080-exec-6] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: sweeteners
+2026-07-12 08:27:59 [http-nio-8080-exec-6] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching products by category 'sweeteners' from database...
+2026-07-12 08:27:59 [http-nio-8080-exec-6] INFO  c.m.p.p.controller.ProductController - Returning 6 product(s) for category: sweeteners
+2026-07-12 08:28:01 [http-nio-8080-exec-2] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: dairy
+2026-07-12 08:28:01 [http-nio-8080-exec-2] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching products by category 'dairy' from database...
+2026-07-12 08:28:01 [http-nio-8080-exec-2] INFO  c.m.p.p.controller.ProductController - Returning 3 product(s) for category: dairy
+2026-07-12 08:28:11 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:28:12 [http-nio-8080-exec-3] INFO  c.m.p.c.c.CustomerController - Request: get customer profile for phone='8542047373'
+2026-07-12 08:28:12 [http-nio-8080-exec-3] INFO  c.m.p.c.c.CustomerController - Returning profile for phone='8542047373' (name='null')
+2026-07-12 08:28:12 [http-nio-8080-exec-8] INFO  c.m.p.cart.controller.CartController - Request: sync cart state for phone: '8542047373'
+2026-07-12 08:28:12 [http-nio-8080-exec-8] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8542047373
+2026-07-12 08:28:12 [http-nio-8080-exec-8] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Existing unrecovered cart found (ID: 18). Updating items and total.
+2026-07-12 08:28:12 [http-nio-8080-exec-8] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Saved cart tracking manifest with ID: 18
+2026-07-12 08:28:12 [http-nio-8080-exec-8] INFO  c.m.p.cart.controller.CartController - Cart state successfully updated for phone: '8542047373'
+2026-07-12 08:28:18 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:28:28 [http-nio-8080-exec-4] INFO  c.m.p.cart.controller.CartController - Request: sync cart state for phone: '8542047373'
+2026-07-12 08:28:28 [http-nio-8080-exec-4] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8542047373
+2026-07-12 08:28:28 [http-nio-8080-exec-4] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Existing unrecovered cart found (ID: 18). Updating items and total.
+2026-07-12 08:28:28 [http-nio-8080-exec-4] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Saved cart tracking manifest with ID: 18
+2026-07-12 08:28:28 [http-nio-8080-exec-4] INFO  c.m.p.cart.controller.CartController - Cart state successfully updated for phone: '8542047373'
+2026-07-12 08:28:31 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:28:35 [http-nio-8080-exec-9] INFO  c.m.p.o.controller.OrderController - Request: place order for customer 'markande'
+2026-07-12 08:28:35 [http-nio-8080-exec-9] INFO  c.m.p.o.s.impl.OrderServiceImpl - Processing order placement for customer: markande
+2026-07-12 08:28:35 [http-nio-8080-exec-9] INFO  c.m.p.o.s.impl.OrderServiceImpl - Place of Supply resolved. Is Intra-State (UP): false
+2026-07-12 08:28:35 [http-nio-8080-exec-9] INFO  c.m.p.o.s.impl.OrderServiceImpl - Deducting stock for Product ID: 2, Quantity: 1
+2026-07-12 08:28:35 [http-nio-8080-exec-9] INFO  c.m.p.p.s.impl.ProductServiceImpl - Attempting to deduct stock for product ID: 2 (Quantity: 1)
+2026-07-12 08:28:35 [http-nio-8080-exec-9] INFO  c.m.p.p.s.impl.ProductServiceImpl - Successfully deducted stock for product ID: 2 (Quantity: 1). Invalidating caches.
+2026-07-12 08:28:35 [http-nio-8080-exec-9] INFO  c.m.p.o.s.impl.OrderServiceImpl - Order saved in database with ID: 43
+2026-07-12 08:28:35 [http-nio-8080-exec-9] INFO  c.m.p.a.s.impl.AuditLogServiceImpl - Audit log written: [PLACE_ORDER_COD] by user: anonymousUser on entity: 43
+2026-07-12 08:28:35 [http-nio-8080-exec-9] INFO  c.m.p.o.s.OrderNotificationService - Dispatching WhatsApp status notification (CONFIRMED) to phone: 8542047373
+2026-07-12 08:28:35 [http-nio-8080-exec-9] INFO  c.m.p.cart.service.TwilioService - [MOCK TWILIO WHATSAPP DISPATCH] Successfully triggered in DEV mode.
+2026-07-12 08:28:35 [http-nio-8080-exec-9] INFO  c.m.p.cart.service.TwilioService - From: whatsapp:+1234567890
+2026-07-12 08:28:35 [http-nio-8080-exec-9] INFO  c.m.p.cart.service.TwilioService - To: whatsapp:+918542047373
+2026-07-12 08:28:35 [http-nio-8080-exec-9] INFO  c.m.p.cart.service.TwilioService - Message Body:
+नमस्ते markande! आपका MadhurGram ऑर्डर (ID: MG-00043) कन्फर्म हो गया है। हम इसे जल्द ही पैक करके शिप करेंगे। धन्यवाद, टीम MadhurGram 💛
+2026-07-12 08:28:35 [http-nio-8080-exec-9] INFO  c.m.p.o.s.impl.OrderServiceImpl - Publishing OrderConfirmedEvent for COD Order ID: 43
+2026-07-12 08:28:35 [http-nio-8080-exec-9] INFO  c.m.p.o.s.impl.OrderServiceImpl - Triggering cart recovery finalization for phone: 8542047373
+2026-07-12 08:28:35 [http-nio-8080-exec-9] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Attempting to mark cart as recovered for phone number: 8542047373
+2026-07-12 08:28:35 [http-nio-8080-exec-9] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully marked cart ID: 18 as recovered for phone: 8542047373
+2026-07-12 08:28:35 [task-1] INFO  c.m.p.o.l.OrderConfirmedListener - OrderConfirmedEvent received for Order ID: 43 - Auto-logistics booking disabled to wait for manual dispatch by Admin.
+2026-07-12 08:28:35 [http-nio-8080-exec-9] INFO  c.m.p.o.controller.OrderController - Order successfully placed with ID: 43
+2026-07-12 08:28:38 [http-nio-8080-exec-10] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-12 08:28:38 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:28:38 [http-nio-8080-exec-10] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-12 08:28:38 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-12 08:28:38 [http-nio-8080-exec-3] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-12 08:28:38 [http-nio-8080-exec-3] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-12 08:28:38 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-12 08:28:38 [http-nio-8080-exec-8] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-12 08:28:38 [http-nio-8080-exec-8] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-12 08:28:38 [http-nio-8080-exec-3] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-12 08:28:38 [http-nio-8080-exec-6] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-12 08:28:38 [http-nio-8080-exec-6] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (START_OBJECT), expected VALUE_STRING: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 2] 
+2026-07-12 08:28:38 [http-nio-8080-exec-6] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-12 08:28:38 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:28:38 [http-nio-8080-exec-6] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-12 08:28:44 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:28:44 [http-nio-8080-exec-3] INFO  c.m.p.c.c.AdminSettingsController - Admin request: fetch Auto-Pilot Recovery status
+2026-07-12 08:28:45 [http-nio-8080-exec-1] INFO  c.m.p.c.c.AdminAbandonedCartController - Admin request: fetch abandoned carts older than 30 minutes
+2026-07-12 08:28:45 [http-nio-8080-exec-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Fetching unrecovered carts inactive since before: 2026-07-12T07:58:45.002715600
+2026-07-12 08:28:45 [http-nio-8080-exec-3] INFO  c.m.p.c.c.AdminSettingsController - Auto-Pilot Recovery status is: true
+2026-07-12 08:28:45 [http-nio-8080-exec-1] INFO  c.m.p.c.c.AdminAbandonedCartController - Returning 5 abandoned cart(s) to admin
+2026-07-12 08:28:47 [http-nio-8080-exec-2] INFO  c.m.p.a.c.AnalyticsController - Admin request: fetch daily business report for range: 7 day(s)
+2026-07-12 08:28:47 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Starting dashboard computation for last 7 days...
+2026-07-12 08:28:47 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1: Querying abandoned cart repository counts...
+2026-07-12 08:28:47 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1 complete. Conversion rate: 83.87096774193549
+2026-07-12 08:28:47 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Querying orders since: 2026-06-29T00:00
+2026-07-12 08:28:47 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Orders queried: 43. Processing growth in memory...
+2026-07-12 08:28:47 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2 complete. Sales Growth: 27.506453884064776
+2026-07-12 08:28:47 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3: Fetching low stock products from database...
+2026-07-12 08:28:47 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3 complete. Low stock count: 1
+2026-07-12 08:28:47 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4: Querying active user count from Redis Sorted Set...
+2026-07-12 08:28:47 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4 complete. Active users: 2
+2026-07-12 08:28:47 [http-nio-8080-exec-2] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Completing dashboard stats builder...
+2026-07-12 08:28:47 [http-nio-8080-exec-2] INFO  c.m.p.a.c.AnalyticsController - Successfully calculated and retrieved dashboard metrics
+2026-07-12 08:28:47 [http-nio-8080-exec-6] INFO  c.m.p.a.c.AnalyticsController - Admin request: fetch daily business report for range: 7 day(s)
+2026-07-12 08:28:47 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Starting dashboard computation for last 7 days...
+2026-07-12 08:28:47 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1: Querying abandoned cart repository counts...
+2026-07-12 08:28:47 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1 complete. Conversion rate: 83.87096774193549
+2026-07-12 08:28:47 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Querying orders since: 2026-06-29T00:00
+2026-07-12 08:28:47 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Orders queried: 43. Processing growth in memory...
+2026-07-12 08:28:47 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2 complete. Sales Growth: 27.506453884064776
+2026-07-12 08:28:47 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3: Fetching low stock products from database...
+2026-07-12 08:28:47 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3 complete. Low stock count: 1
+2026-07-12 08:28:47 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4: Querying active user count from Redis Sorted Set...
+2026-07-12 08:28:47 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4 complete. Active users: 2
+2026-07-12 08:28:47 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Completing dashboard stats builder...
+2026-07-12 08:28:47 [http-nio-8080-exec-6] INFO  c.m.p.a.c.AnalyticsController - Successfully calculated and retrieved dashboard metrics
+2026-07-12 08:28:58 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:29:05 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:29:18 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:29:25 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:29:39 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:29:45 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:29:48 [http-nio-8080-exec-7] INFO  c.m.p.a.c.AnalyticsController - Admin request: fetch daily business report for range: 7 day(s)
+2026-07-12 08:29:48 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Starting dashboard computation for last 7 days...
+2026-07-12 08:29:48 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1: Querying abandoned cart repository counts...
+2026-07-12 08:29:48 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1 complete. Conversion rate: 83.87096774193549
+2026-07-12 08:29:48 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Querying orders since: 2026-06-29T00:00
+2026-07-12 08:29:48 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Orders queried: 43. Processing growth in memory...
+2026-07-12 08:29:48 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2 complete. Sales Growth: 27.506453884064776
+2026-07-12 08:29:48 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3: Fetching low stock products from database...
+2026-07-12 08:29:48 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3 complete. Low stock count: 1
+2026-07-12 08:29:48 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4: Querying active user count from Redis Sorted Set...
+2026-07-12 08:29:48 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4 complete. Active users: 2
+2026-07-12 08:29:48 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Completing dashboard stats builder...
+2026-07-12 08:29:48 [http-nio-8080-exec-7] INFO  c.m.p.a.c.AnalyticsController - Successfully calculated and retrieved dashboard metrics
+2026-07-12 08:29:58 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:30:04 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:30:18 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:30:24 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:30:32 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-12 08:30:32 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-12 08:30:32 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-12 08:30:32 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-10T08:30:32.619492600 (Retention: 48 hours)
+2026-07-12 08:30:38 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:30:45 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:30:48 [http-nio-8080-exec-10] INFO  c.m.p.a.c.AnalyticsController - Admin request: fetch daily business report for range: 7 day(s)
+2026-07-12 08:30:48 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Starting dashboard computation for last 7 days...
+2026-07-12 08:30:48 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1: Querying abandoned cart repository counts...
+2026-07-12 08:30:48 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1 complete. Conversion rate: 83.87096774193549
+2026-07-12 08:30:48 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Querying orders since: 2026-06-29T00:00
+2026-07-12 08:30:48 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Orders queried: 43. Processing growth in memory...
+2026-07-12 08:30:48 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2 complete. Sales Growth: 27.506453884064776
+2026-07-12 08:30:48 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3: Fetching low stock products from database...
+2026-07-12 08:30:48 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3 complete. Low stock count: 1
+2026-07-12 08:30:48 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4: Querying active user count from Redis Sorted Set...
+2026-07-12 08:30:48 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4 complete. Active users: 2
+2026-07-12 08:30:48 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Completing dashboard stats builder...
+2026-07-12 08:30:48 [http-nio-8080-exec-10] INFO  c.m.p.a.c.AnalyticsController - Successfully calculated and retrieved dashboard metrics
+2026-07-12 08:30:58 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:31:05 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:31:18 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:31:25 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:31:38 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:31:48 [http-nio-8080-exec-3] INFO  c.m.p.a.c.AnalyticsController - Admin request: fetch daily business report for range: 7 day(s)
+2026-07-12 08:31:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Starting dashboard computation for last 7 days...
+2026-07-12 08:31:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1: Querying abandoned cart repository counts...
+2026-07-12 08:31:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1 complete. Conversion rate: 83.87096774193549
+2026-07-12 08:31:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Querying orders since: 2026-06-29T00:00
+2026-07-12 08:31:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Orders queried: 43. Processing growth in memory...
+2026-07-12 08:31:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2 complete. Sales Growth: 27.506453884064776
+2026-07-12 08:31:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3: Fetching low stock products from database...
+2026-07-12 08:31:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3 complete. Low stock count: 1
+2026-07-12 08:31:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4: Querying active user count from Redis Sorted Set...
+2026-07-12 08:31:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4 complete. Active users: 2
+2026-07-12 08:31:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Completing dashboard stats builder...
+2026-07-12 08:31:48 [http-nio-8080-exec-3] INFO  c.m.p.a.c.AnalyticsController - Successfully calculated and retrieved dashboard metrics
+2026-07-12 08:31:53 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:31:58 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:32:18 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:32:37 [http-nio-8080-exec-4] INFO  o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 2950 ms
+2026-07-12 08:32:38 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:32:48 [http-nio-8080-exec-8] INFO  c.m.p.a.c.AnalyticsController - Admin request: fetch daily business report for range: 7 day(s)
+2026-07-12 08:32:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Starting dashboard computation for last 7 days...
+2026-07-12 08:32:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1: Querying abandoned cart repository counts...
+2026-07-12 08:32:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1 complete. Conversion rate: 83.87096774193549
+2026-07-12 08:32:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Querying orders since: 2026-06-29T00:00
+2026-07-12 08:32:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Orders queried: 43. Processing growth in memory...
+2026-07-12 08:32:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2 complete. Sales Growth: 27.506453884064776
+2026-07-12 08:32:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3: Fetching low stock products from database...
+2026-07-12 08:32:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3 complete. Low stock count: 1
+2026-07-12 08:32:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4: Querying active user count from Redis Sorted Set...
+2026-07-12 08:32:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4 complete. Active users: 1
+2026-07-12 08:32:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Completing dashboard stats builder...
+2026-07-12 08:32:48 [http-nio-8080-exec-8] INFO  c.m.p.a.c.AnalyticsController - Successfully calculated and retrieved dashboard metrics
+2026-07-12 08:32:53 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:32:58 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:33:18 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:33:48 [http-nio-8080-exec-3] INFO  c.m.p.a.c.AnalyticsController - Admin request: fetch daily business report for range: 7 day(s)
+2026-07-12 08:33:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Starting dashboard computation for last 7 days...
+2026-07-12 08:33:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1: Querying abandoned cart repository counts...
+2026-07-12 08:33:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1 complete. Conversion rate: 83.87096774193549
+2026-07-12 08:33:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Querying orders since: 2026-06-29T00:00
+2026-07-12 08:33:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Orders queried: 43. Processing growth in memory...
+2026-07-12 08:33:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2 complete. Sales Growth: 27.506453884064776
+2026-07-12 08:33:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3: Fetching low stock products from database...
+2026-07-12 08:33:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3 complete. Low stock count: 1
+2026-07-12 08:33:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4: Querying active user count from Redis Sorted Set...
+2026-07-12 08:33:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4 complete. Active users: 1
+2026-07-12 08:33:48 [http-nio-8080-exec-3] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Completing dashboard stats builder...
+2026-07-12 08:33:48 [http-nio-8080-exec-3] INFO  c.m.p.a.c.AnalyticsController - Successfully calculated and retrieved dashboard metrics
+2026-07-12 08:33:53 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:33:53 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:34:48 [http-nio-8080-exec-8] INFO  c.m.p.a.c.AnalyticsController - Admin request: fetch daily business report for range: 7 day(s)
+2026-07-12 08:34:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Starting dashboard computation for last 7 days...
+2026-07-12 08:34:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1: Querying abandoned cart repository counts...
+2026-07-12 08:34:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1 complete. Conversion rate: 83.87096774193549
+2026-07-12 08:34:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Querying orders since: 2026-06-29T00:00
+2026-07-12 08:34:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Orders queried: 43. Processing growth in memory...
+2026-07-12 08:34:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2 complete. Sales Growth: 27.506453884064776
+2026-07-12 08:34:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3: Fetching low stock products from database...
+2026-07-12 08:34:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3 complete. Low stock count: 1
+2026-07-12 08:34:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4: Querying active user count from Redis Sorted Set...
+2026-07-12 08:34:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4 complete. Active users: 1
+2026-07-12 08:34:48 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Completing dashboard stats builder...
+2026-07-12 08:34:48 [http-nio-8080-exec-8] INFO  c.m.p.a.c.AnalyticsController - Successfully calculated and retrieved dashboard metrics
+2026-07-12 08:34:53 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:34:53 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:35:32 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-12 08:35:32 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Running automated cart recovery worker...
+2026-07-12 08:35:32 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Found 0 pending abandoned carts for auto-reminder dispatch.
+2026-07-12 08:35:32 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Starting purge execution for abandoned carts inactive since before: 2026-07-10T08:35:32.613371700 (Retention: 48 hours)
+2026-07-12 08:35:53 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:35:53 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:35:53 [http-nio-8080-exec-8] INFO  c.m.p.a.c.AnalyticsController - Admin request: fetch daily business report for range: 7 day(s)
+2026-07-12 08:35:53 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Starting dashboard computation for last 7 days...
+2026-07-12 08:35:53 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1: Querying abandoned cart repository counts...
+2026-07-12 08:35:53 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1 complete. Conversion rate: 83.87096774193549
+2026-07-12 08:35:53 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Querying orders since: 2026-06-29T00:00
+2026-07-12 08:35:53 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Orders queried: 43. Processing growth in memory...
+2026-07-12 08:35:53 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2 complete. Sales Growth: 27.506453884064776
+2026-07-12 08:35:53 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3: Fetching low stock products from database...
+2026-07-12 08:35:53 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3 complete. Low stock count: 1
+2026-07-12 08:35:53 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4: Querying active user count from Redis Sorted Set...
+2026-07-12 08:35:53 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4 complete. Active users: 2
+2026-07-12 08:35:53 [http-nio-8080-exec-8] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Completing dashboard stats builder...
+2026-07-12 08:35:53 [http-nio-8080-exec-8] INFO  c.m.p.a.c.AnalyticsController - Successfully calculated and retrieved dashboard metrics
+2026-07-12 08:36:53 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:36:53 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:36:53 [http-nio-8080-exec-7] INFO  c.m.p.a.c.AnalyticsController - Admin request: fetch daily business report for range: 7 day(s)
+2026-07-12 08:36:53 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Starting dashboard computation for last 7 days...
+2026-07-12 08:36:53 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1: Querying abandoned cart repository counts...
+2026-07-12 08:36:53 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1 complete. Conversion rate: 83.87096774193549
+2026-07-12 08:36:53 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Querying orders since: 2026-06-29T00:00
+2026-07-12 08:36:53 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Orders queried: 43. Processing growth in memory...
+2026-07-12 08:36:53 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2 complete. Sales Growth: 27.506453884064776
+2026-07-12 08:36:53 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3: Fetching low stock products from database...
+2026-07-12 08:36:53 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3 complete. Low stock count: 1
+2026-07-12 08:36:53 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4: Querying active user count from Redis Sorted Set...
+2026-07-12 08:36:53 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4 complete. Active users: 2
+2026-07-12 08:36:53 [http-nio-8080-exec-7] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Completing dashboard stats builder...
+2026-07-12 08:36:53 [http-nio-8080-exec-7] INFO  c.m.p.a.c.AnalyticsController - Successfully calculated and retrieved dashboard metrics
+2026-07-12 08:37:53 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_mjesri9i9e'
+2026-07-12 08:37:53 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-12 08:37:53 [http-nio-8080-exec-10] INFO  c.m.p.a.c.AnalyticsController - Admin request: fetch daily business report for range: 7 day(s)
+2026-07-12 08:37:53 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Starting dashboard computation for last 7 days...
+2026-07-12 08:37:53 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1: Querying abandoned cart repository counts...
+2026-07-12 08:37:53 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1 complete. Conversion rate: 83.87096774193549
+2026-07-12 08:37:53 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Querying orders since: 2026-06-29T00:00
+2026-07-12 08:37:53 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Orders queried: 43. Processing growth in memory...
+2026-07-12 08:37:53 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2 complete. Sales Growth: 27.506453884064776
+2026-07-12 08:37:53 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3: Fetching low stock products from database...
+2026-07-12 08:37:53 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3 complete. Low stock count: 1
+2026-07-12 08:37:53 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4: Querying active user count from Redis Sorted Set...
+2026-07-12 08:37:53 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4 complete. Active users: 2
+2026-07-12 08:37:53 [http-nio-8080-exec-10] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Completing dashboard stats builder...
+2026-07-12 08:37:53 [http-nio-8080-exec-10] INFO  c.m.p.a.c.AnalyticsController - Successfully calculated and retrieved dashboard metrics

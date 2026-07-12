@@ -7,45 +7,86 @@ import com.madhurgram.productservice.customer.entity.Customer;
 import com.madhurgram.productservice.customer.repository.CustomerRepository;
 import com.madhurgram.productservice.customer.service.CustomerService;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Service implementation for managing customer profiles, registration, 
+ * and delivery addresses.
+ */
+@Slf4j
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
 
-    // SOLID - Dependency Inversion (Constructor Injection)
+    /**
+     * Constructor injection for CustomerServiceImpl.
+     *
+     * @param customerRepository customer repository dependency
+     */
     public CustomerServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
+    /**
+     * Resolves the profile details of a customer.
+     * Registers a new customer profile on-the-fly if not already present.
+     *
+     * @param phoneNumber customer phone number
+     * @return resolved customer details DTO
+     */
     @Override
     @Transactional
     public CustomerDTO getCustomerProfile(String phoneNumber) {
+        log.info("Request: fetch customer profile for phone: '{}'", phoneNumber);
+        
         if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
+            log.warn("Profile fetch failed: phone parameter is blank");
             throw new IllegalArgumentException("Phone number cannot be null or empty.");
         }
 
         String cleanPhone = phoneNumber.trim();
 
-        // 🔄 On-the-fly Registration: Agar customer database me nahi hai, to naya
-        // profile create karke save kar do
         Customer customer = customerRepository.findByPhoneNumberWithAddresses(cleanPhone)
-                .orElseGet(() -> customerRepository.save(Customer.builder()
-                        .phoneNumber(cleanPhone)
-                        .build()));
+                .orElseGet(() -> {
+                    log.info("Customer record not found. Auto-registering profile for phone: '{}'", cleanPhone);
+                    return customerRepository.save(Customer.builder()
+                            .phoneNumber(cleanPhone)
+                            .build());
+                });
 
+        log.info("Customer profile successfully resolved for phone: '{}'", cleanPhone);
         return mapToCustomerDTO(customer);
     }
 
+    /**
+     * Appends a new delivery address to a customer's active profile.
+     * Toggles existing default address markers to maintain single-default rule.
+     *
+     * @param phoneNumber customer phone identifier
+     * @param addressDTO  address attributes payload DTO
+     * @return updated customer details DTO
+     */
     @Override
     @Transactional
     public CustomerDTO addAddressToProfile(String phoneNumber, AddressDTO addressDTO) {
-        Customer customer = customerRepository.findByPhoneNumber(phoneNumber.trim())
-                .orElseThrow(() -> new RuntimeException("customer not found for phone number: " + phoneNumber));
+        log.info("Adding new delivery address to customer profile with phone: '{}'", phoneNumber);
+        
+        if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
+            throw new IllegalArgumentException("Phone number cannot be null or empty.");
+        }
+        if (addressDTO == null) {
+            throw new IllegalArgumentException("Address payload cannot be null.");
+        }
 
-        // Naya Address Entity entity instantiation
+        Customer customer = customerRepository.findByPhoneNumber(phoneNumber.trim())
+                .orElseThrow(() -> {
+                    log.warn("Address append failed: customer profile not found for phone: '{}'", phoneNumber);
+                    return new IllegalArgumentException("Customer not found for phone number: " + phoneNumber);
+                });
+
         Address newAddress = Address.builder()
                 .addressType(addressDTO.getAddressType())
                 .fullAddress(addressDTO.getFullAddress())
@@ -57,20 +98,20 @@ public class CustomerServiceImpl implements CustomerService {
                 .longitude(addressDTO.getLongitude())
                 .build();
 
-        // 🛡️ Business Rule: Agar ye naya address DEFAULT mark hua hai, to baaki sabko
-        // false karo
         if (Boolean.TRUE.equals(newAddress.getIsDefault())) {
+            log.info("New address is set as default. Clearing default flag from other addresses for customer ID: {}", customer.getId());
             customer.getAddresses().forEach(addr -> addr.setIsDefault(false));
         }
 
-        // Bi-directional state sync helper call
         customer.addAddress(newAddress);
-
         Customer updatedCustomer = customerRepository.save(customer);
+        log.info("Address successfully added to customer ID: {}", updatedCustomer.getId());
         return mapToCustomerDTO(updatedCustomer);
     }
 
-    // 🔄 Entity to DTO Conversion Engine
+    /**
+     * Converts a Customer entity to a CustomerDTO.
+     */
     private CustomerDTO mapToCustomerDTO(Customer customer) {
         return CustomerDTO.builder()
                 .id(customer.getId())
@@ -90,5 +131,4 @@ public class CustomerServiceImpl implements CustomerService {
                         .build()).toList())
                 .build();
     }
-
 }

@@ -9,8 +9,7 @@ import com.madhurgram.productservice.cart.service.AbandonedCartService;
 import com.madhurgram.productservice.cart.service.TwilioService;
 import com.madhurgram.productservice.common.entity.SystemSetting;
 import com.madhurgram.productservice.common.repository.SystemSettingRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.cache.annotation.CacheEvict;
@@ -19,10 +18,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service implementation for managing abandoned cart sessions, recovery, 
+ * and automated marketing WhatsApp follow-up reminder cycles.
+ */
+@Slf4j
 @Service
 public class AbandonedCartServiceImpl implements AbandonedCartService {
 
-    private static final Logger log = LoggerFactory.getLogger(AbandonedCartServiceImpl.class);
     private static final String AUTO_RECOVERY_KEY = "AUTO_RECOVERY_ENABLED";
 
     private final AbandonedCartRepository repository;
@@ -33,6 +36,14 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
     @org.springframework.beans.factory.annotation.Value("${madhurgram.cart.retention-hours:48}")
     private int retentionHours;
 
+    /**
+     * Constructor injection for AbandonedCartServiceImpl.
+     *
+     * @param repository              cart database repository
+     * @param systemSettingRepository configuration settings repository
+     * @param twilioService           SMS/WhatsApp messaging client
+     * @param cartMapper              cart data mapper
+     */
     public AbandonedCartServiceImpl(
             AbandonedCartRepository repository,
             SystemSettingRepository systemSettingRepository,
@@ -44,12 +55,20 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
         this.cartMapper = cartMapper;
     }
 
+    /**
+     * Updates/syncs the current state of items inside a customer's active shopping cart.
+     *
+     * @param request cart details payload containing phone, name, and items
+     * @return the saved cart response wrapper
+     */
     @Override
     @Transactional
     @CacheEvict(value = "analytics", allEntries = true)
     public AbandonedCartResponse updateCart(CartUpdateRequest request) {
         log.info("Updating cart state for phone number: {}", request.getPhoneNumber());
+        
         if (request.getPhoneNumber() == null || request.getPhoneNumber().trim().isEmpty()) {
+            log.warn("Cart update aborted: phone number parameter is blank");
             throw new IllegalArgumentException("Phone number cannot be empty.");
         }
 
@@ -58,7 +77,7 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
 
         if (existingOpt.isPresent()) {
             cart = existingOpt.get();
-            log.info("Existing unrecovered cart found (ID: {}). Updating items and total.", cart.getId());
+            log.info("Existing active cart found (ID: {}). Merging newer items and amount.", cart.getId());
             cart.setCartItemsJson(request.getCartItemsJson());
             cart.setTotalAmount(request.getTotalAmount());
             if (request.getCustomerName() != null && !request.getCustomerName().trim().isEmpty()) {
@@ -66,7 +85,7 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
             }
             cart.setLastUpdated(LocalDateTime.now());
         } else {
-            log.info("No active cart session found. Creating a new tracking manifest.");
+            log.info("Creating a new abandoned cart session for phone: '{}'", request.getPhoneNumber().trim());
             cart = AbandonedCart.builder()
                     .phoneNumber(request.getPhoneNumber().trim())
                     .customerName(request.getCustomerName() != null ? request.getCustomerName().trim() : null)
@@ -78,38 +97,60 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
         }
 
         AbandonedCart saved = repository.save(cart);
-        log.info("Saved cart tracking manifest with ID: {}", saved.getId());
+        log.info("Successfully updated cart session ID: {}", saved.getId());
         return cartMapper.toResponse(saved);
     }
 
+    /**
+     * Retrieves the unrecovered cart associated with a phone number.
+     *
+     * @param phoneNumber customer phone number
+     * @return optional containing the recovered cart details if found
+     */
     @Override
     @Transactional(readOnly = true)
     public Optional<AbandonedCartResponse> getCartToRecover(String phoneNumber) {
-        log.info("Retrieving cart for recovery with phone number: {}", phoneNumber);
+        log.info("Request: recover cart for phone number: '{}'", phoneNumber);
+        
         if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
+            log.warn("Cart recovery lookup skipped: phone parameter is blank");
             return Optional.empty();
         }
+        
         return repository.findByPhoneNumberAndIsRecoveredFalse(phoneNumber.trim())
                 .map(cartMapper::toResponse);
     }
 
+    /**
+     * Lists active abandoned carts that haven't been updated since a cutoff.
+     *
+     * @param minutesAgo inactive limit threshold
+     * @return list of matching abandoned cart responses
+     */
     @Override
     @Transactional(readOnly = true)
     public List<AbandonedCartResponse> getAbandonedCarts(int minutesAgo) {
         LocalDateTime cutoff = LocalDateTime.now().minusMinutes(minutesAgo);
-        log.info("Fetching unrecovered carts inactive since before: {}", cutoff);
+        log.info("Retrieving unrecovered carts inactive since before: {}", cutoff);
         List<AbandonedCart> carts = repository.findByIsRecoveredFalseAndLastUpdatedBeforeOrderByLastUpdatedDesc(cutoff);
         return carts.stream()
                 .map(cartMapper::toResponse)
                 .toList();
     }
 
+    /**
+     * Flags a cart as recovered upon order completion.
+     *
+     * @param phoneNumber customer phone number
+     */
     @Override
     @Transactional
     @CacheEvict(value = "analytics", allEntries = true)
     public void markAsRecovered(String phoneNumber) {
-        log.info("Attempting to mark cart as recovered for phone number: {}", phoneNumber);
+        log.info("Marking cart as recovered for phone number: '{}'", phoneNumber);
+        
         if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
+            log.warn("Cannot mark cart as recovered: phone parameter is empty");
             return;
         }
 
@@ -118,12 +159,17 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
             AbandonedCart cart = cartOpt.get();
             cart.setRecovered(true);
             repository.save(cart);
-            log.info("Successfully marked cart ID: {} as recovered for phone: {}", cart.getId(), phoneNumber);
+            log.info("Successfully marked cart ID: {} as recovered for phone: '{}'", cart.getId(), phoneNumber);
         } else {
-            log.info("No active unrecovered cart found to mark as recovered for phone: {}", phoneNumber);
+            log.info("No active unrecovered cart found to flag for phone: '{}'", phoneNumber);
         }
     }
 
+    /**
+     * Checks if automated recovery reminder engine is active.
+     *
+     * @return true if autopilot recovery is enabled
+     */
     @Override
     @Transactional(readOnly = true)
     public boolean isAutoRecoveryEnabled() {
@@ -132,10 +178,15 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
                 .orElse(false);
     }
 
+    /**
+     * Toggles the automated recovery autopilot status.
+     *
+     * @param enabled status state
+     */
     @Override
     @Transactional
     public void setAutoRecoveryEnabled(boolean enabled) {
-        log.info("Updating Auto-Pilot recovery engine status to: {}", enabled);
+        log.info("Toggling automated autopilot recovery status to: {}", enabled);
         SystemSetting setting = systemSettingRepository.findById(AUTO_RECOVERY_KEY)
                 .orElse(SystemSetting.builder()
                         .settingKey(AUTO_RECOVERY_KEY)
@@ -143,32 +194,36 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
                         .build());
         setting.setSettingValue(String.valueOf(enabled));
         systemSettingRepository.save(setting);
+        log.info("Autopilot recovery status successfully saved as: {}", enabled);
     }
 
+    /**
+     * Executes automated WhatsApp notifications to prompt checkouts.
+     */
     @Override
     @Transactional
     public void sendAutomatedReminders() {
         if (!isAutoRecoveryEnabled()) {
-            log.info("Automated Cart Recovery (Auto-Pilot) is disabled. Skipping dispatch.");
+            log.info("Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.");
             return;
         }
 
-        log.info("Running automated cart recovery worker...");
+        log.info("Running automated cart recovery worker cycle...");
         LocalDateTime cutoff = LocalDateTime.now().minusMinutes(30);
         List<AbandonedCart> pendingReminders = repository
                 .findByIsRecoveredFalseAndReminderSentFalseAndLastUpdatedBeforeOrderByLastUpdatedDesc(cutoff);
 
-        log.info("Found {} pending abandoned carts for auto-reminder dispatch.", pendingReminders.size());
+        log.info("Found {} pending abandoned cart(s) for auto-reminder dispatch.", pendingReminders.size());
 
         for (AbandonedCart cart : pendingReminders) {
             try {
-                log.info("Dispatching auto-reminder for cart ID: {}, phone: {}", cart.getId(), cart.getPhoneNumber());
+                log.info("Dispatching WhatsApp reminder for cart ID: {}, phone: '{}'", cart.getId(), cart.getPhoneNumber());
                 
                 String greeting = cart.getCustomerName() != null ? "नमस्ते " + cart.getCustomerName() + "!" : "नमस्ते!";
                 String domain = "http://localhost:3000";
                 String deepLink = domain + "/?recoverCart=" + cart.getPhoneNumber();
                 
-                String message = greeting + " आपने MadhurGram पर शुद्ध, विलेज-क्राफ्टेड Ghee & तेल्स कार्ट में छोड़े थे। 🌾\n\n" +
+                String message = greeting + " आपने MadhurGram पर शुद्ध, विलेज-क्राफ़्टेड Ghee & तेल्स कार्ट में छोड़े थे। 🌾\n\n" +
                         "ऑर्डर पूरा करने के लिए आपकी कार्ट यहाँ सुरक्षित है। आपके लिए स्पेशल 5% डिस्काउंट कूपन तैयार है!\n\n" +
                         "Complete your order here: " + deepLink + "\n\n" +
                         "धन्यवाद, टीम MadhurGram 💛";
@@ -179,43 +234,55 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
                 cart.setReminderSentAt(LocalDateTime.now());
                 repository.save(cart);
                 
-                log.info("Successfully dispatched automated reminder and updated cart ID: {}", cart.getId());
+                log.info("Successfully dispatched auto-reminder and updated cart ID: {}", cart.getId());
             } catch (Exception e) {
-                log.error("Failed to dispatch automated reminder for cart ID: {}, phone: {}. Error: {}", 
-                        cart.getId(), cart.getPhoneNumber(), e.getMessage());
+                log.error("Failed to dispatch automated reminder for cart ID: {}, phone: '{}'. Error: {}", 
+                        cart.getId(), cart.getPhoneNumber(), e.getMessage(), e);
             }
         }
     }
 
+    /**
+     * Purges expired unrecovered abandoned carts from database.
+     */
     @Override
     @Transactional
     @CacheEvict(value = "analytics", allEntries = true)
     public void purgeExpiredCarts() {
         LocalDateTime cutoff = LocalDateTime.now().minusHours(retentionHours);
-        log.info("Starting purge execution for abandoned carts inactive since before: {} (Retention: {} hours)", 
-                cutoff, retentionHours);
+        log.info("Executing cleanup purge for carts older than: {} hours (Cutoff: {})", retentionHours, cutoff);
         try {
             int deletedCount = repository.deleteExpiredCarts(cutoff);
             if (deletedCount > 0) {
-                log.info("Purged {} expired unrecovered abandoned carts from database.", deletedCount);
+                log.info("Successfully purged {} expired cart(s) from database", deletedCount);
             } else {
-                log.debug("No expired abandoned carts found to purge.");
+                log.debug("No expired carts found to purge.");
             }
         } catch (Exception e) {
-            log.error("Failed to execute purge query for expired abandoned carts: {}", e.getMessage(), e);
+            log.error("Failed to execute expired carts purge query: {}", e.getMessage(), e);
         }
     }
 
+    /**
+     * Manually deletes an abandoned cart by its ID.
+     */
     @Override
     @Transactional
     @CacheEvict(value = "analytics", allEntries = true)
     public void deleteAbandonedCart(Long id) {
-        log.info("Executing delete command for abandoned cart ID: {}", id);
+        log.info("Deleting abandoned cart by ID: {}", id);
+        
+        if (id == null) {
+            log.warn("Cart deletion aborted: ID parameter is null");
+            throw new IllegalArgumentException("Cart ID cannot be null.");
+        }
+
         try {
             repository.deleteById(id);
             log.info("Successfully deleted abandoned cart ID: {}", id);
         } catch (Exception e) {
             log.error("Failed to delete abandoned cart ID: {}. Error: {}", id, e.getMessage(), e);
+            throw new RuntimeException("Failed to delete abandoned cart.", e);
         }
     }
 }

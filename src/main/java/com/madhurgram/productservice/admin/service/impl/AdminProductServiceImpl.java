@@ -7,8 +7,7 @@ import com.madhurgram.productservice.product.mapper.ProductMapper;
 import com.madhurgram.productservice.product.repository.ProductRepository;
 import com.madhurgram.productservice.product.repository.HsnTaxMasterRepository;
 import com.madhurgram.productservice.admin.service.AdminProductService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -17,14 +16,25 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Service implementation for administrative product catalog updates, additions, 
+ * deletions, and inventory audits.
+ */
+@Slf4j
 @Service
 public class AdminProductServiceImpl implements AdminProductService {
 
-    private static final Logger log = LoggerFactory.getLogger(AdminProductServiceImpl.class);
     private final ProductRepository productRepository;
     private final HsnTaxMasterRepository hsnTaxMasterRepository;
     private final ProductMapper productMapper;
 
+    /**
+     * Constructor injection for AdminProductServiceImpl.
+     *
+     * @param productRepository      product database repository
+     * @param hsnTaxMasterRepository HSN tax database repository
+     * @param productMapper          product mapper instance
+     */
     public AdminProductServiceImpl(ProductRepository productRepository, 
                                    HsnTaxMasterRepository hsnTaxMasterRepository,
                                    ProductMapper productMapper) {
@@ -33,15 +43,28 @@ public class AdminProductServiceImpl implements AdminProductService {
         this.productMapper = productMapper;
     }
 
+    /**
+     * Lists all products including inactive ones for administrative monitoring.
+     *
+     * @return list of products as DTOs
+     */
     @Override
+    @Transactional(readOnly = true)
     public List<ProductDTO> getAllProductsForAdmin() {
+        log.info("Admin request: fetch all products including inactive ones");
         return productRepository.findAll().stream()
                 .map(productMapper::toProductDTO)
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Lists active products for storefront caching.
+     *
+     * @return list of active products as DTOs
+     */
     @Override
     @Cacheable(value = "products", key = "'public_active'")
+    @Transactional(readOnly = true)
     public List<ProductDTO> getAllActiveProductsForPublic() {
         log.info("[CACHE MISS] Fetching all active products for public catalog...");
         return productRepository.findByIsActiveTrue().stream()
@@ -49,11 +72,23 @@ public class AdminProductServiceImpl implements AdminProductService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Adds a new product to the catalog.
+     * Evicts active catalog caches.
+     *
+     * @param dto product details DTO
+     * @return created product details DTO
+     */
     @Override
     @Transactional
     @CacheEvict(value = {"products", "analytics"}, allEntries = true)
     public ProductDTO addProduct(ProductDTO dto) {
         log.info("Adding new product: {}. Invalidating caches.", dto.getName());
+        
+        if (dto.getName() == null || dto.getName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Product name cannot be null or empty.");
+        }
+        
         if (dto.getCategory() == null || dto.getCategory().trim().isEmpty()) {
             throw new IllegalArgumentException("Product category cannot be null or empty.");
         }
@@ -64,7 +99,7 @@ public class AdminProductServiceImpl implements AdminProductService {
         }
 
         Product product = Product.builder()
-                .name(dto.getName())
+                .name(dto.getName().trim())
                 .price(dto.getPrice())
                 .originalPrice(dto.getOriginalPrice())
                 .volume(dto.getVolume())
@@ -77,16 +112,30 @@ public class AdminProductServiceImpl implements AdminProductService {
                 .build();
         
         Product savedProduct = productRepository.save(product);
+        log.info("Successfully added new product with ID: {}", savedProduct.getId());
         return productMapper.toProductDTO(savedProduct);
     }
 
+    /**
+     * Updates details of an existing product.
+     * Evicts catalog and analytic caches.
+     *
+     * @param id  target product ID
+     * @param dto updated details
+     * @return updated product details DTO
+     */
     @Override
     @Transactional
     @CacheEvict(value = {"products", "analytics"}, allEntries = true)
     public ProductDTO updateProduct(Long id, ProductDTO dto) {
         log.info("Updating product ID: {}. Invalidating caches.", id);
+        
+        if (id == null) {
+            throw new IllegalArgumentException("Product ID cannot be null.");
+        }
+
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found with ID: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + id));
 
         if (dto.getCategory() == null || dto.getCategory().trim().isEmpty()) {
             throw new IllegalArgumentException("Product category cannot be null or empty.");
@@ -97,7 +146,7 @@ public class AdminProductServiceImpl implements AdminProductService {
             hsn = hsnTaxMasterRepository.findById(dto.getHsnCode().trim()).orElse(null);
         }
 
-        product.setName(dto.getName());
+        product.setName(dto.getName() != null ? dto.getName().trim() : product.getName());
         product.setPrice(dto.getPrice());
         product.setOriginalPrice(dto.getOriginalPrice());
         product.setVolume(dto.getVolume());
@@ -112,17 +161,30 @@ public class AdminProductServiceImpl implements AdminProductService {
         }
 
         Product updatedProduct = productRepository.save(product);
+        log.info("Successfully updated product ID: {}", updatedProduct.getId());
         return productMapper.toProductDTO(updatedProduct);
     }
 
+    /**
+     * Deletes a product from the catalog by ID.
+     * Evicts catalog and analytic caches.
+     *
+     * @param id target product ID
+     */
     @Override
     @Transactional
     @CacheEvict(value = {"products", "analytics"}, allEntries = true)
     public void deleteProduct(Long id) {
         log.info("Deleting product ID: {}. Invalidating caches.", id);
+        
+        if (id == null) {
+            throw new IllegalArgumentException("Product ID cannot be null.");
+        }
+        
         if (!productRepository.existsById(id)) {
-            throw new RuntimeException("Product not found with ID: " + id);
+            throw new IllegalArgumentException("Product not found with ID: " + id);
         }
         productRepository.deleteById(id);
+        log.info("Successfully deleted product ID: {}", id);
     }
 }
