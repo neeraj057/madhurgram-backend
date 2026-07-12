@@ -10,6 +10,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.List;
@@ -19,9 +20,13 @@ import java.util.List;
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
+    private final String frontendUrl;
 
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthFilter) {
+    public SecurityConfig(
+            JwtAuthenticationFilter jwtAuthFilter,
+            @Value("${madhurgram.app.domain-url}") String frontendUrl) {
         this.jwtAuthFilter = jwtAuthFilter;
+        this.frontendUrl = frontendUrl;
     }
 
     @Bean
@@ -41,7 +46,8 @@ public class SecurityConfig {
                     "http://localhost:3000",
                     "http://localhost:5173",
                     "http://127.0.0.1:3000",
-                    "http://192.168.31.211:3000"
+                    "http://192.168.31.211:3000",
+                    frontendUrl.trim().replaceAll("/+$", "")
                 ));
                 config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
                 config.setAllowedHeaders(List.of("*"));
