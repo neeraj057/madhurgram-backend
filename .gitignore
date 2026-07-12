@@ -36,3 +36,6 @@ build/
 .env
 .env.local
 .env.*
+
+# Secrets and credentials
+STAGING_DB_CREDENTIALS.md
