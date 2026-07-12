@@ -18,14 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Service implementation for running business dashboard analytics queries, 
+ * Service implementation for running business dashboard analytics queries,
  * sales growth estimations, conversions, and inventory stock tracking metrics.
  */
 @Slf4j
@@ -57,7 +56,8 @@ public class AnalyticsServiceImpl implements AnalyticsService {
     }
 
     /**
-     * Aggregates storefront dashboard metrics including sales, conversions, and stock warnings.
+     * Aggregates storefront dashboard metrics including sales, conversions, and
+     * stock warnings.
      * Caches calculations to avoid heavy SQL computation.
      *
      * @param days metrics window standard duration (e.g. 7, 30 days)
@@ -68,13 +68,10 @@ public class AnalyticsServiceImpl implements AnalyticsService {
     @Cacheable(value = "analytics", key = "'dashboard_' + #days")
     public AdminAnalyticsDTO getDailyDashboardMetrics(int days) {
         log.info("[ANALYTICS] Starting dashboard computation for last {} days...", days);
-        
+
         if (days <= 0) {
             throw new IllegalArgumentException("Analytics duration window must be a positive number of days.");
         }
-
-        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
-        LocalDateTime endOfDay = LocalDate.now().atTime(LocalTime.MAX);
 
         // 1. Calculate live conversion rate
         log.info("[ANALYTICS] Step 1: Querying abandoned cart repository counts...");
@@ -85,10 +82,11 @@ public class AnalyticsServiceImpl implements AnalyticsService {
                 : 0.0;
         log.info("[ANALYTICS] Step 1 complete. Conversion rate: {}", conversionRate);
 
-        // 2. Fetch orders from current period and previous period to calculate sales growth
+        // 2. Fetch orders from current period and previous period to calculate sales
+        // growth
         LocalDateTime since = LocalDate.now().minusDays(days - 1).atStartOfDay();
         LocalDateTime prevSince = LocalDate.now().minusDays((days * 2) - 1).atStartOfDay();
-        
+
         log.info("[ANALYTICS] Step 2: Querying orders since: {}", prevSince);
         List<Order> orders = orderRepository.findByOrderDateAfter(prevSince);
         log.info("[ANALYTICS] Step 2: Orders queried: {}. Processing growth in memory...", orders.size());
@@ -101,6 +99,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
                 .filter(o -> o.getOrderDate().isBefore(since) && o.getOrderStatus() != OrderStatus.CANCELLED)
                 .toList();
 
+        // Period-based revenue (used for growth % comparison only)
         BigDecimal currentRevenue = currentPeriodOrders.stream()
                 .map(Order::getTotalAmount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -111,18 +110,31 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 
         double salesGrowthPercent = 0.0;
         if (previousRevenue.compareTo(BigDecimal.ZERO) > 0) {
-            salesGrowthPercent = ((currentRevenue.subtract(previousRevenue)).doubleValue() / previousRevenue.doubleValue()) * 100.0;
+            salesGrowthPercent = ((currentRevenue.subtract(previousRevenue)).doubleValue()
+                    / previousRevenue.doubleValue()) * 100.0;
         } else if (currentRevenue.compareTo(BigDecimal.ZERO) > 0) {
             salesGrowthPercent = 100.0;
         }
         log.info("[ANALYTICS] Step 2 complete. Sales Growth: {}", salesGrowthPercent);
 
+        // ✅ Actual TODAY's metrics (midnight → now), separate from growth window
+        LocalDateTime todayStart = LocalDate.now().atStartOfDay();
+        List<Order> todayOrders = currentPeriodOrders.stream()
+                .filter(o -> !o.getOrderDate().isBefore(todayStart))
+                .toList();
+
+        BigDecimal todayRevenue = todayOrders.stream()
+                .map(Order::getTotalAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        long todayOrderCount = todayOrders.size();
+        log.info("[ANALYTICS] Today's orders: {}, Today's revenue: {}", todayOrderCount, todayRevenue);
+
         // Group by LocalDate in memory and sum amounts
         Map<LocalDate, BigDecimal> revenueMap = currentPeriodOrders.stream()
                 .collect(Collectors.groupingBy(
                         o -> o.getOrderDate().toLocalDate(),
-                        Collectors.reducing(BigDecimal.ZERO, Order::getTotalAmount, BigDecimal::add)
-                ));
+                        Collectors.reducing(BigDecimal.ZERO, Order::getTotalAmount, BigDecimal::add)));
 
         List<DailyRevenueDTO> chartData = new ArrayList<>();
         for (int i = 0; i < days; i++) {
@@ -131,7 +143,8 @@ public class AnalyticsServiceImpl implements AnalyticsService {
             chartData.add(new DailyRevenueDTO(date.toString(), dayRevenue));
         }
         // reverse chart data to chronological order
-        chartData = chartData.stream().sorted((a, b) -> a.getDate().compareTo(b.getDate())).collect(Collectors.toList());
+        chartData = chartData.stream().sorted((a, b) -> a.getDate().compareTo(b.getDate()))
+                .collect(Collectors.toList());
 
         // 3. Fetch low stock items count
         log.info("[ANALYTICS] Step 3: Fetching low stock products from database...");
@@ -155,11 +168,12 @@ public class AnalyticsServiceImpl implements AnalyticsService {
         log.info("[ANALYTICS] Step 4 complete. Active users: {}", activeUsers);
 
         log.info("[ANALYTICS] Completing dashboard stats builder...");
-        long pendingOrdersCount = currentPeriodOrders.stream().filter(o -> o.getOrderStatus() == OrderStatus.PENDING).count();
+        long pendingOrdersCount = currentPeriodOrders.stream().filter(o -> o.getOrderStatus() == OrderStatus.PENDING)
+                .count();
 
         return AdminAnalyticsDTO.builder()
-                .todayRevenue(currentRevenue)
-                .todayOrderCount((long) currentPeriodOrders.size())
+                .todayRevenue(todayRevenue)
+                .todayOrderCount(todayOrderCount)
                 .pendingOrderCount(pendingOrdersCount)
                 .lowStockProductCount((long) lowStockProducts.size())
                 .conversionRate(conversionRate)

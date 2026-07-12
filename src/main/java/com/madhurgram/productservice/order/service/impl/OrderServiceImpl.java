@@ -16,6 +16,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import java.util.List;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
+import java.util.regex.Pattern;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,18 @@ import com.madhurgram.productservice.logistics.service.LogisticsService;
 @Slf4j
 @Service
 public class OrderServiceImpl implements OrderService {
+
+    private static final String STATUS_PENDING = "PENDING";
+    private static final String PAYMENT_COD = "COD";
+    
+    private static final String DEFAULT_HSN_CODE = "0000";
+    private static final BigDecimal DEFAULT_GST_RATE = BigDecimal.valueOf(5.00);
+
+    private static final String AUDIT_ACTION_PLACE_COD = "PLACE_ORDER_COD";
+    private static final String AUDIT_ACTION_UPDATE_STATUS = "UPDATE_ORDER_STATUS";
+
+    // Validates if delivery state is Uttar Pradesh (UP) using word boundaries to avoid false positives (e.g. Tirupati containing 'up')
+    private static final Pattern UP_STATE_PATTERN = Pattern.compile("\\b(uttar\\s+pradesh|u\\.p\\.|up)\\b", Pattern.CASE_INSENSITIVE);
 
     private final OrderRepository orderRepository;
     private final ProductService productService;
@@ -93,15 +106,14 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     @Transactional
-    @CacheEvict(value = "analytics", allEntries = true)
     public OrderResponseDTO placeOrder(Order order) {
         log.info("Processing order placement for customer: {}", order.getCustomerName());
         
         if (order.getPaymentStatus() == null) {
-            order.setPaymentStatus("PENDING");
+            order.setPaymentStatus(STATUS_PENDING);
         }
         
-        if ("COD".equalsIgnoreCase(order.getPaymentStatus())) {
+        if (PAYMENT_COD.equalsIgnoreCase(order.getPaymentStatus())) {
             order.setOrderStatus(OrderStatus.CONFIRMED);
         } else if (order.getOrderStatus() == null) {
             order.setOrderStatus(OrderStatus.PENDING);
@@ -122,10 +134,10 @@ public class OrderServiceImpl implements OrderService {
             }
         }
 
+        // Secure state regex match check to prevent false positives (e.g., 'Tirupati, AP' matching 'up')
         boolean isIntraState = false;
         if (order.getCityState() != null) {
-            String stateStr = order.getCityState().toLowerCase();
-            if (stateStr.contains("uttar pradesh") || stateStr.contains("up") || stateStr.contains("u.p.")) {
+            if (UP_STATE_PATTERN.matcher(order.getCityState()).find()) {
                 isIntraState = true;
             }
         }
@@ -171,8 +183,8 @@ public class OrderServiceImpl implements OrderService {
             item.setOrder(order);
 
             Product product = productRepository.findById(item.getProductId()).orElse(null);
-            String hsnCode = "0000";
-            BigDecimal gstRate = BigDecimal.valueOf(5.00);
+            String hsnCode = DEFAULT_HSN_CODE;
+            BigDecimal gstRate = DEFAULT_GST_RATE;
 
             if (product != null && product.getHsnTaxMaster() != null) {
                 hsnCode = product.getHsnTaxMaster().getHsnCode();
@@ -233,7 +245,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         if (OrderStatus.CONFIRMED.equals(saved.getOrderStatus())) {
-            auditLogService.log("PLACE_ORDER_COD", String.valueOf(saved.getId()), "Order placed via Cash on Delivery");
+            auditLogService.log(AUDIT_ACTION_PLACE_COD, String.valueOf(saved.getId()), "Order placed via Cash on Delivery");
 
             try {
                 orderNotificationService.sendOrderStatusNotification(saved, OrderStatus.CONFIRMED);
@@ -326,7 +338,7 @@ public class OrderServiceImpl implements OrderService {
         Order saved = orderRepository.save(order);
         log.info("Order ID: {} status updated successfully from {} to {}", orderId, currentStatus, nextStatus);
         
-        auditLogService.log("UPDATE_ORDER_STATUS", String.valueOf(orderId), 
+        auditLogService.log(AUDIT_ACTION_UPDATE_STATUS, String.valueOf(orderId), 
                 "Status transitioned from " + currentStatus + " to " + nextStatus);
         
         try {
@@ -343,7 +355,7 @@ public class OrderServiceImpl implements OrderService {
                             .orderId(orderId)
                             .customerName(saved.getCustomerName())
                             .customerPhone(saved.getPhoneNumber())
-                            .status("PENDING")
+                            .status(STATUS_PENDING)
                             .scheduledAt(LocalDateTime.now().plusDays(1))
                             .build();
                     reviewRequestRepository.save(reviewRequest);
@@ -406,6 +418,47 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("Order not found with ID: " + orderId));
+        return orderMapper.toResponseDTO(order);
+    }
+
+    /**
+     * Updates order payment details and resolves order status updates based on payment result.
+     *
+     * @param orderId       target order identifier
+     * @param paymentStatus new payment status to record
+     * @param transactionId gateway transaction identifier
+     * @return updated order details DTO
+     */
+    @Override
+    @Transactional
+    @CacheEvict(value = "analytics", allEntries = true)
+    public OrderResponseDTO updateOrderPaymentStatus(Long orderId, String paymentStatus, String transactionId) {
+        log.info("Updating payment status for order ID: {} to {} (Transaction: {})", orderId, paymentStatus, transactionId);
+
+        if (orderId == null || paymentStatus == null) {
+            log.warn("Payment status update aborted: Order ID or payment status parameter is null");
+            throw new IllegalArgumentException("Order ID and payment status parameters must not be null.");
+        }
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Order not found with ID: " + orderId));
+
+        order.setPaymentStatus(paymentStatus);
+        if (transactionId != null) {
+            order.setPaymentTransactionId(transactionId);
+        }
+        orderRepository.save(order);
+
+        if ("COMPLETED".equalsIgnoreCase(paymentStatus)) {
+            // Enforce lifecycle update: Transition PENDING to CONFIRMED
+            updateOrderStatus(orderId, OrderStatus.CONFIRMED);
+            log.info("Order ID: {} successfully CONFIRMED via successful payment webhook processing", orderId);
+        } else if ("FAILED".equalsIgnoreCase(paymentStatus)) {
+            // Transition order to CANCELLED (which automatically releases stock)
+            updateOrderStatus(orderId, OrderStatus.CANCELLED);
+            log.info("Order ID: {} successfully CANCELLED due to failed payment webhook processing", orderId);
+        }
+
         return orderMapper.toResponseDTO(order);
     }
 }

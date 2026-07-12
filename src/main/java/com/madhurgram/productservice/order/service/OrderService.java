@@ -15,4 +15,6 @@ public interface OrderService {
     List<OrderResponseDTO> getOrdersByCustomerPhone(String phoneNumber);
 
     OrderResponseDTO getOrderDetails(Long orderId);
+
+    OrderResponseDTO updateOrderPaymentStatus(Long orderId, String paymentStatus, String transactionId);
 }

@@ -1,20 +1,18 @@
 package com.madhurgram.productservice.payment.controller;
 
-import com.madhurgram.productservice.order.entity.Order;
-import com.madhurgram.productservice.order.entity.OrderStatus;
-import com.madhurgram.productservice.order.repository.OrderRepository;
+import com.madhurgram.productservice.order.dto.OrderResponseDTO;
 import com.madhurgram.productservice.order.service.OrderService;
 import com.madhurgram.productservice.payment.factory.PaymentStrategyFactory;
 import com.madhurgram.productservice.payment.service.PaymentProcessor;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
@@ -27,7 +25,12 @@ import java.util.Map;
 @Tag(name = "Payments Gateway", description = "Endpoints for processing checkout payments and handling gateway webhooks")
 public class PaymentController {
 
-    private final OrderRepository orderRepository;
+    private static final String EVENT_SUCCEEDED = "payment_intent.succeeded";
+    private static final String EVENT_FAILED = "payment_intent.failed";
+
+    private static final String STATUS_COMPLETED = "COMPLETED";
+    private static final String STATUS_FAILED = "FAILED";
+
     private final OrderService orderService;
     private final PaymentStrategyFactory paymentStrategyFactory;
 
@@ -36,29 +39,25 @@ public class PaymentController {
 
     /**
      * Constructor injection for PaymentController.
+     * Decoupled from direct repository access to follow strict MVC boundaries.
      *
-     * @param orderRepository        order data access
      * @param orderService           order business services
      * @param paymentStrategyFactory strategy factory resolved by provider type
      */
     public PaymentController(
-            OrderRepository orderRepository, 
             OrderService orderService, 
             PaymentStrategyFactory paymentStrategyFactory) {
-        this.orderRepository = orderRepository;
         this.orderService = orderService;
         this.paymentStrategyFactory = paymentStrategyFactory;
     }
 
     /**
      * Receives and validates asynchronous webhooks sent by the active payment provider (e.g. Stripe, Razorpay).
-     * Clears dashboard/analytics caches to ensure real-time reporting.
      *
      * @param payload external webhook payload Map containing event type and customer tracking fields
-     * @return operation status JSON response
+     * @return updated order details DTO JSON response
      */
     @PostMapping("/webhook")
-    @CacheEvict(value = "analytics", allEntries = true)
     @com.madhurgram.productservice.common.annotation.RateLimit(limit = 20, windowSeconds = 60)
     @Operation(summary = "Handle gateway payment webhook", description = "Asynchronously processes incoming gateway webhooks to capture successful payments or handle checkout failures.")
     public ResponseEntity<?> handlePaymentWebhook(@RequestBody Map<String, Object> payload) {
@@ -91,29 +90,15 @@ public class PaymentController {
             Long orderId = orderIdNum.longValue();
             String transactionId = (String) data.get("transactionId");
 
-            Order order = orderRepository.findById(orderId)
-                    .orElseThrow(() -> new IllegalArgumentException("Order not found with ID: " + orderId));
-
-            if ("payment_intent.succeeded".equalsIgnoreCase(eventType)) {
+            if (EVENT_SUCCEEDED.equalsIgnoreCase(eventType)) {
                 log.info("Processing successful payment for Order ID: {} (Transaction: {})", orderId, transactionId);
-                order.setPaymentStatus("COMPLETED");
-                order.setPaymentTransactionId(transactionId);
-                orderRepository.save(order);
+                OrderResponseDTO response = orderService.updateOrderPaymentStatus(orderId, STATUS_COMPLETED, transactionId);
+                return ResponseEntity.ok(response);
 
-                // Enforce lifecycle update: Transition PENDING to CONFIRMED
-                orderService.updateOrderStatus(orderId, OrderStatus.CONFIRMED);
-                log.info("Order ID: {} successfully CONFIRMED", orderId);
-                return ResponseEntity.ok(Map.of("message", "Payment processed successfully. Order CONFIRMED."));
-
-            } else if ("payment_intent.failed".equalsIgnoreCase(eventType)) {
+            } else if (EVENT_FAILED.equalsIgnoreCase(eventType)) {
                 log.warn("Processing failed payment for Order ID: {}", orderId);
-                order.setPaymentStatus("FAILED");
-                orderRepository.save(order);
-
-                // Transition order to CANCELLED (which automatically releases stock)
-                orderService.updateOrderStatus(orderId, OrderStatus.CANCELLED);
-                log.info("Order ID: {} successfully CANCELLED due to payment failure", orderId);
-                return ResponseEntity.ok(Map.of("message", "Payment failed processed. Order CANCELLED."));
+                OrderResponseDTO response = orderService.updateOrderPaymentStatus(orderId, STATUS_FAILED, transactionId);
+                return ResponseEntity.ok(response);
             }
 
             log.info("Ignored payment webhook event type: '{}'", eventType);

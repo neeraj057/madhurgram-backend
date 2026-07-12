@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.MessageDigest;
+
 /**
  * Controller managing administrative authentication, login validation, and JWT token issuance.
  */
@@ -24,6 +26,9 @@ public class AuthController {
 
     private static final String ROLE_SUPER_ADMIN = "ROLE_SUPER_ADMIN";
     private static final String ROLE_SUPPORT_STAFF = "ROLE_SUPPORT_STAFF";
+
+    private static final String LOGIN_SUCCESS_MSG = "Login Successful";
+    private static final String INVALID_CREDENTIALS_MSG = "Invalid Username or Password";
 
     private final JwtUtil jwtUtil;
 
@@ -61,19 +66,45 @@ public class AuthController {
     public ResponseEntity<?> loginAdmin(@RequestBody LoginRequest request) {
         log.info("Request: administrator login attempt for username: '{}'", request.getUsername());
         
-        if (adminUsername.equals(request.getUsername()) && adminPassword.equals(request.getPassword())) {
-            String token = jwtUtil.generateToken(request.getUsername(), ROLE_SUPER_ADMIN);
-            log.info("Login successful for Super Admin: '{}'", request.getUsername());
-            return ResponseEntity.ok(new AuthResponse(token, "Login Successful"));
+        if (request.getUsername() == null || request.getUsername().trim().isEmpty() ||
+                request.getPassword() == null || request.getPassword().isEmpty()) {
+            log.warn("Login rejected: username or password parameter is blank");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(INVALID_CREDENTIALS_MSG);
+        }
+
+        String usernameInput = request.getUsername().trim();
+        String passwordInput = request.getPassword();
+
+        // Constant-time comparison check to prevent timing attacks
+        boolean isSuperAdmin = adminUsername.equals(usernameInput) && 
+                safeStringEquals(adminPassword, passwordInput);
+        
+        boolean isSupportStaff = supportUsername.equals(usernameInput) && 
+                safeStringEquals(supportPassword, passwordInput);
+
+        if (isSuperAdmin) {
+            String token = jwtUtil.generateToken(usernameInput, ROLE_SUPER_ADMIN);
+            log.info("Login successful for Super Admin: '{}'", usernameInput);
+            return ResponseEntity.ok(new AuthResponse(token, LOGIN_SUCCESS_MSG));
             
-        } else if (supportUsername.equals(request.getUsername()) && supportPassword.equals(request.getPassword())) {
-            String token = jwtUtil.generateToken(request.getUsername(), ROLE_SUPPORT_STAFF);
-            log.info("Login successful for Support Staff: '{}'", request.getUsername());
-            return ResponseEntity.ok(new AuthResponse(token, "Login Successful"));
+        } else if (isSupportStaff) {
+            String token = jwtUtil.generateToken(usernameInput, ROLE_SUPPORT_STAFF);
+            log.info("Login successful for Support Staff: '{}'", usernameInput);
+            return ResponseEntity.ok(new AuthResponse(token, LOGIN_SUCCESS_MSG));
             
         } else {
-            log.warn("Login failure: invalid credentials for username: '{}'", request.getUsername());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Username or Password");
+            log.warn("Login failure: invalid credentials for username: '{}'", usernameInput);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(INVALID_CREDENTIALS_MSG);
         }
+    }
+
+    /**
+     * Compares two strings in constant-time to prevent timing attacks.
+     */
+    private boolean safeStringEquals(String a, String b) {
+        if (a == null || b == null) {
+            return false;
+        }
+        return MessageDigest.isEqual(a.getBytes(), b.getBytes());
     }
 }

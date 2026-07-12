@@ -32,6 +32,7 @@ public class Address {
     @Column(nullable = false, length = 10)
     private String pincode;
 
+    @Builder.Default
     @Column(nullable = false)
     private Boolean isDefault = false; // बाय डिफ़ॉल्ट कौन सा एड्रेस सिलेक्टेड रहेगा
 

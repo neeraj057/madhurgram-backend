@@ -1,43 +1,65 @@
 package com.madhurgram.productservice.common.util;
 
-public class DataMaskingUtil {
+/**
+ * Utility class for obfuscating sensitive customer data (such as phone numbers 
+ * and email addresses) for security and privacy protection.
+ */
+public final class DataMaskingUtil {
+
+    private static final String MASK_PHONE_PREFIX = "+91-XXXXX-";
+    private static final String SHORT_PHONE_MASK = "****";
+    private static final String EMPTY_STRING = "";
+    
+    private static final String EMAIL_AT_SYMBOL = "@";
+    private static final String EMAIL_MASK_MIDDLE = "***";
+
+    private DataMaskingUtil() {
+        // Prevent instantiation of utility class
+        throw new UnsupportedOperationException("Utility class should not be instantiated.");
+    }
 
     /**
-     * Obfuscates phone numbers to +91-XXXXX-9988 format
+     * Obfuscates phone numbers to +91-XXXXX-9988 format.
+     *
+     * @param phone the raw phone number to mask
+     * @return the masked phone number string
      */
     public static String maskPhoneNumber(String phone) {
         if (phone == null || phone.trim().isEmpty()) {
-            return "";
+            return EMPTY_STRING;
         }
         
         String cleanPhone = phone.trim();
         int len = cleanPhone.length();
         
         if (len < 4) {
-            return "****";
+            return SHORT_PHONE_MASK;
         }
         
         // Retain last 4 digits, replace middle block with XXXXX
         String lastFour = cleanPhone.substring(len - 4);
-        return "+91-XXXXX-" + lastFour;
+        return MASK_PHONE_PREFIX + lastFour;
     }
 
     /**
-     * Obfuscates email addresses to a***b@domain.com format
+     * Obfuscates email addresses to a***b@domain.com format.
+     *
+     * @param email the raw email address to mask
+     * @return the masked email string
      */
     public static String maskEmail(String email) {
-        if (email == null || !email.contains("@")) {
+        if (email == null || !email.contains(EMAIL_AT_SYMBOL)) {
             return email;
         }
         String cleanEmail = email.trim();
-        int atIndex = cleanEmail.indexOf("@");
+        int atIndex = cleanEmail.indexOf(EMAIL_AT_SYMBOL);
         if (atIndex <= 2) {
-            return "***" + cleanEmail.substring(atIndex);
+            return EMAIL_MASK_MIDDLE + cleanEmail.substring(atIndex);
         }
         
         String name = cleanEmail.substring(0, atIndex);
         String domain = cleanEmail.substring(atIndex);
         
-        return name.charAt(0) + "***" + name.charAt(name.length() - 1) + domain;
+        return name.charAt(0) + EMAIL_MASK_MIDDLE + name.charAt(name.length() - 1) + domain;
     }
 }

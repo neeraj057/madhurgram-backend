@@ -1,7 +1,6 @@
 package com.madhurgram.productservice.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurer;
@@ -12,29 +11,42 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;
 
+/**
+ * Configuration class for setting up Spring Cache with Redis backend, 
+ * utilizing clean Jackson JSON serialization and safe error handling.
+ */
+@Slf4j
 @Configuration
 @EnableCaching
 public class CacheConfig implements CachingConfigurer {
 
-    private static final Logger log = LoggerFactory.getLogger(CacheConfig.class);
     private final RedisConnectionFactory redisConnectionFactory;
 
+    /**
+     * Constructor injection for CacheConfig.
+     *
+     * @param redisConnectionFactory connection factory provider
+     */
     public CacheConfig(RedisConnectionFactory redisConnectionFactory) {
         this.redisConnectionFactory = redisConnectionFactory;
     }
 
+    /**
+     * Creates the RedisCacheManager bean configured with JSON serialization.
+     *
+     * @return the cache manager bean
+     */
     @Bean
     @Override
     public CacheManager cacheManager() {
         log.info("Initializing RedisCacheManager with JSON Serialization...");
 
-        // 1. Define JSON serializer for values and String serializer for keys
-        GenericJackson2JsonRedisSerializer jsonSerializer = new GenericJackson2JsonRedisSerializer();
-        StringRedisSerializer stringSerializer = new StringRedisSerializer();
+        // 1. Define JSON serializer for values (non-deprecated RedisSerializer.json())
+        RedisSerializer<Object> jsonSerializer = RedisSerializer.json();
+        RedisSerializer<String> stringSerializer = RedisSerializer.string();
 
         // 2. Build Cache Config mapping keys -> String, values -> JSON
         RedisCacheConfiguration cacheConfig = RedisCacheConfiguration.defaultCacheConfig()
@@ -46,6 +58,12 @@ public class CacheConfig implements CachingConfigurer {
                 .build();
     }
 
+    /**
+     * Custom cache error handler that logs Redis failures and bypasses to the database.
+     * Prevents cache outages from crashing business operations.
+     *
+     * @return cache error handler
+     */
     @Override
     public CacheErrorHandler errorHandler() {
         return new CacheErrorHandler() {

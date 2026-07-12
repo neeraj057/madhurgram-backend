@@ -24,6 +24,28 @@ import java.util.Optional;
 @Service
 public class ProcurementServiceImpl implements ProcurementService {
 
+    private static final String STATUS_DRAFT = "DRAFT";
+    private static final String STATUS_APPROVED = "APPROVED";
+    
+    private static final String SORT_FIELD_CREATED = "createdAt";
+
+    private static final String DEFAULT_SUPPLIER_NAME = "Gopiganj Traditional Co.";
+    private static final String DEFAULT_SUPPLIER_EMAIL = "rawmaterials@madhurgram.com";
+
+    private static final int DEFAULT_RESTOCK_QUANTITY = 50;
+
+    private static final String EMAIL_SUBJECT_TEMPLATE = "[APPROVED RESTOCK REQUEST] MadhurGram PO Ref: PO-%05d";
+    private static final String EMAIL_BODY_TEMPLATE = 
+            "Dear %s,\n\n" +
+            "Please accept this approved Purchase Order for restocking our warehouse inventory:\n\n" +
+            "Purchase Order Ref: PO-%05d\n" +
+            "Product: %s (%s)\n" +
+            "Quantity Requested: %d units\n" +
+            "Destination Address: MadhurGram Warehouse, Sarafa Bazar, Indore, MP.\n\n" +
+            "Kindly process this restock order and send us the dispatch details.\n\n" +
+            "Regards,\n" +
+            "MadhurGram Procurement Operations Team";
+
     private final PurchaseOrderRepository poRepository;
     private final ProductRepository productRepository;
     private final EmailService emailService;
@@ -58,7 +80,7 @@ public class ProcurementServiceImpl implements ProcurementService {
     @Transactional(readOnly = true)
     public List<PurchaseOrderDTO> getAllPurchaseOrders() {
         log.info("Admin request: fetch all purchase orders");
-        List<PurchaseOrder> pos = poRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
+        List<PurchaseOrder> pos = poRepository.findAll(Sort.by(Sort.Direction.DESC, SORT_FIELD_CREATED));
         return pos.stream()
                 .map(procurementMapper::toDTO)
                 .toList();
@@ -84,7 +106,7 @@ public class ProcurementServiceImpl implements ProcurementService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + productId));
 
-        Optional<PurchaseOrder> existingDraft = poRepository.findByProductIdAndStatus(productId, "DRAFT");
+        Optional<PurchaseOrder> existingDraft = poRepository.findByProductIdAndStatus(productId, STATUS_DRAFT);
         if (existingDraft.isPresent()) {
             log.info("Purchase Order draft already exists for product ID: {}. Skipping auto-draft.", productId);
             return procurementMapper.toDTO(existingDraft.get());
@@ -93,10 +115,10 @@ public class ProcurementServiceImpl implements ProcurementService {
         log.info("Creating a new restock Purchase Order draft for product: {}", product.getName());
         PurchaseOrder po = PurchaseOrder.builder()
                 .product(product)
-                .quantity(quantity != null && quantity > 0 ? quantity : 50)
-                .supplierName("Gopiganj Traditional Co.")
-                .supplierEmail("rawmaterials@madhurgram.com")
-                .status("DRAFT")
+                .quantity(quantity != null && quantity > 0 ? quantity : DEFAULT_RESTOCK_QUANTITY)
+                .supplierName(DEFAULT_SUPPLIER_NAME)
+                .supplierEmail(DEFAULT_SUPPLIER_EMAIL)
+                .status(STATUS_DRAFT)
                 .build();
 
         PurchaseOrder saved = poRepository.save(po);
@@ -125,7 +147,7 @@ public class ProcurementServiceImpl implements ProcurementService {
         PurchaseOrder po = poRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Purchase Order not found with ID: " + id));
 
-        if (!"DRAFT".equals(po.getStatus())) {
+        if (!STATUS_DRAFT.equals(po.getStatus())) {
             log.warn("Update purchase order rejected: PO ID: {} is not in DRAFT state (Status: {})", id, po.getStatus());
             throw new IllegalStateException("Only drafted Purchase Orders can be updated.");
         }
@@ -134,9 +156,15 @@ public class ProcurementServiceImpl implements ProcurementService {
             throw new IllegalArgumentException("Purchase order quantity must be greater than zero.");
         }
 
-        if (quantity != null) po.setQuantity(quantity);
-        if (supplierName != null) po.setSupplierName(supplierName.trim());
-        if (supplierEmail != null) po.setSupplierEmail(supplierEmail.trim());
+        if (quantity != null) {
+            po.setQuantity(quantity);
+        }
+        if (supplierName != null) {
+            po.setSupplierName(supplierName.trim());
+        }
+        if (supplierEmail != null) {
+            po.setSupplierEmail(supplierEmail.trim());
+        }
 
         log.info("Updated Purchase Order ID: {} draft details successfully.", id);
         PurchaseOrder saved = poRepository.save(po);
@@ -162,26 +190,18 @@ public class ProcurementServiceImpl implements ProcurementService {
         PurchaseOrder po = poRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Purchase Order not found with ID: " + id));
 
-        if (!"DRAFT".equals(po.getStatus())) {
+        if (!STATUS_DRAFT.equals(po.getStatus())) {
             log.warn("Approve purchase order rejected: PO ID: {} is already approved/sent", id);
             throw new IllegalStateException("Purchase Order has already been approved/sent.");
         }
 
-        po.setStatus("APPROVED");
+        po.setStatus(STATUS_APPROVED);
         po.setApprovedAt(LocalDateTime.now());
         PurchaseOrder saved = poRepository.save(po);
 
-        String subject = String.format("[APPROVED RESTOCK REQUEST] MadhurGram PO Ref: PO-%05d", saved.getId());
+        String subject = String.format(EMAIL_SUBJECT_TEMPLATE, saved.getId());
         String body = String.format(
-                "Dear %s,\n\n" +
-                "Please accept this approved Purchase Order for restocking our warehouse inventory:\n\n" +
-                "Purchase Order Ref: PO-%05d\n" +
-                "Product: %s (%s)\n" +
-                "Quantity Requested: %d units\n" +
-                "Destination Address: MadhurGram Warehouse, Sarafa Bazar, Indore, MP.\n\n" +
-                "Kindly process this restock order and send us the dispatch details.\n\n" +
-                "Regards,\n" +
-                "MadhurGram Procurement Operations Team",
+                EMAIL_BODY_TEMPLATE,
                 saved.getSupplierName(), saved.getId(), saved.getProduct().getName(), saved.getProduct().getVolume(), saved.getQuantity()
         );
 

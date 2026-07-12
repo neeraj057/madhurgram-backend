@@ -8,13 +8,13 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class AdminAnalyticsDTO {
-    private BigDecimal todayRevenue;       // आज की कुल कमाई
-    private Long todayOrderCount;          // आज आए कुल ऑर्डर्स
-    private Long pendingOrderCount;        // कुल पेंडिंग ऑर्डर्स (जो अभी प्रोसेस होने हैं)
-    private Long lowStockProductCount;     // कितने प्रोडक्ट्स का स्टॉक खत्म होने वाला है (< 5)
-    private double conversionRate;         // लाइव आर्डर कन्वर्जन रेट (%)
-    private int activeUserCount;           // लाइव यूजर काउंट
-    private double salesGrowthPercent;     // बिक्री में हुई वृद्धि या कमी (%)
-    private java.util.List<DailyRevenueDTO> revenueGraph; // पिछले n दिन का रेवेन्यू चार्ट डेटा
-    private java.util.List<LowStockProductDTO> lowStockProducts; // कम स्टॉक वाले प्रोडक्ट्स की लिस्ट
+    private BigDecimal todayRevenue; // today revenue
+    private Long todayOrderCount; // today order count
+    private Long pendingOrderCount; // today pending order count
+    private Long lowStockProductCount; // how much products are left (less than 5)
+    private double conversionRate; // live order conversion rate (%)
+    private int activeUserCount; // live user count
+    private double salesGrowthPercent; // sales growth percent(%)
+    private java.util.List<DailyRevenueDTO> revenueGraph; // past revenue (30 days)
+    private java.util.List<LowStockProductDTO> lowStockProducts; // how much products are left (less than 5)
 }

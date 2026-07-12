@@ -21,6 +21,10 @@ import java.util.Map;
 @Tag(name = "Admin — Cart Settings", description = "Settings to manage automated abandoned cart recovery")
 public class AdminSettingsController {
 
+    private static final String KEY_ENABLED = "enabled";
+    private static final String AUDIT_ACTION_TOGGLE = "TOGGLE_AUTO_RECOVERY";
+    private static final String AUDIT_DETAILS_PREFIX = "Auto-Pilot recovery status changed to: ";
+
     private final AbandonedCartService service;
     private final AuditLogService auditLogService;
 
@@ -46,7 +50,7 @@ public class AdminSettingsController {
         log.info("Admin request: fetch Auto-Pilot Recovery status");
         boolean enabled = service.isAutoRecoveryEnabled();
         log.info("Auto-Pilot Recovery status is: {}", enabled);
-        return ResponseEntity.ok(Map.of("enabled", enabled));
+        return ResponseEntity.ok(Map.of(KEY_ENABLED, enabled));
     }
 
     /**
@@ -62,9 +66,9 @@ public class AdminSettingsController {
         log.info("Admin request: update Auto-Pilot Recovery status to: {}", enabled);
         service.setAutoRecoveryEnabled(enabled);
         
-        auditLogService.log("TOGGLE_AUTO_RECOVERY", null, "Auto-Pilot recovery status changed to: " + enabled);
+        auditLogService.log(AUDIT_ACTION_TOGGLE, null, AUDIT_DETAILS_PREFIX + enabled);
         
         log.info("Auto-Pilot Recovery successfully updated to: {}", enabled);
-        return ResponseEntity.ok(Map.of("enabled", enabled));
+        return ResponseEntity.ok(Map.of(KEY_ENABLED, enabled));
     }
 }

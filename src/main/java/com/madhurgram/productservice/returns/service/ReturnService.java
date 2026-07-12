@@ -9,4 +9,6 @@ public interface ReturnService {
     List<ReturnRequestDTO> getAllReturnRequests();
     ReturnRequestDTO approveReturnRequest(Long returnId);
     ReturnRequestDTO rejectReturnRequest(Long returnId);
+
+    String generateShippingLabelSvg(Long returnRequestId);
 }

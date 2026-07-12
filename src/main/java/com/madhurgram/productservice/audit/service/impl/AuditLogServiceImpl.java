@@ -22,6 +22,11 @@ import java.time.LocalDateTime;
 @Service
 public class AuditLogServiceImpl implements AuditLogService {
 
+    private static final String SYSTEM_USER = "SYSTEM";
+    private static final String X_FORWARDED_FOR_HEADER = "X-Forwarded-For";
+    private static final String UNKNOWN_IP = "UNKNOWN";
+    private static final String COMMA_SEPARATOR = ",";
+
     private final AuditLogRepository repository;
 
     /**
@@ -41,7 +46,7 @@ public class AuditLogServiceImpl implements AuditLogService {
      * @param details  action parameters summary description
      */
     @Override
-    @Transactional
+    @Transactional(propagation = org.springframework.transaction.annotation.Propagation.REQUIRES_NEW)
     public void log(String action, String entityId, String details) {
         if (action == null || action.trim().isEmpty()) {
             throw new IllegalArgumentException("Audit action must not be null or blank.");
@@ -72,7 +77,7 @@ public class AuditLogServiceImpl implements AuditLogService {
         if (auth != null && auth.isAuthenticated()) {
             return auth.getName();
         }
-        return "SYSTEM";
+        return SYSTEM_USER;
     }
 
     private String getClientIpAddress() {
@@ -80,15 +85,15 @@ public class AuditLogServiceImpl implements AuditLogService {
             ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
             if (attributes != null) {
                 HttpServletRequest request = attributes.getRequest();
-                String xfHeader = request.getHeader("X-Forwarded-For");
+                String xfHeader = request.getHeader(X_FORWARDED_FOR_HEADER);
                 if (xfHeader == null || xfHeader.isEmpty()) {
                     return request.getRemoteAddr();
                 }
-                return xfHeader.split(",")[0].trim();
+                return xfHeader.split(COMMA_SEPARATOR)[0].trim();
             }
         } catch (Exception e) {
             log.debug("Could not resolve request attributes context for IP extraction: {}", e.getMessage());
         }
-        return "UNKNOWN";
+        return UNKNOWN_IP;
     }
 }

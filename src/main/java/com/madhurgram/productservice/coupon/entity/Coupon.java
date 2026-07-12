@@ -26,10 +26,12 @@ public class Coupon {
     @Column(name = "min_order_value", nullable = false, precision = 38, scale = 2)
     private BigDecimal minOrderValue;
 
+    @Builder.Default
     @Column(name = "is_active", nullable = false)
     @com.fasterxml.jackson.annotation.JsonProperty("isActive")
     private Boolean isActive = true;
 
+    @Builder.Default
     @Column(name = "max_usage_per_user", nullable = false)
     private int maxUsagePerUser = 1;
 }

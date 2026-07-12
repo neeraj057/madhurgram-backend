@@ -41,6 +41,7 @@ public class Product {
     @Column(nullable = false)
     private Integer stock; // Inventory tracking for "Out of Stock" logic
 
+    @Builder.Default
     @Column(name = "is_active")
     private boolean isActive = true;
 

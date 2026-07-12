@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Service implementation for administering the automated reviews queue, 
@@ -21,6 +22,13 @@ import java.util.List;
 @Slf4j
 @Service
 public class ReviewServiceImpl implements ReviewService {
+
+    private static final String STATUS_PENDING = "PENDING";
+    private static final String STATUS_SENT = "SENT";
+    private static final String SORT_FIELD_SCHEDULED = "scheduledAt";
+
+    // Validates Indian phone numbers: optional country code (+91/91) followed by 10 digits starting with 6-9
+    private static final Pattern PHONE_PATTERN = Pattern.compile("^(?:\\+91|91)?[6-9]\\d{9}$");
 
     private final ReviewRequestRepository reviewRequestRepository;
     private final ReviewAutomationScheduler scheduler;
@@ -50,7 +58,7 @@ public class ReviewServiceImpl implements ReviewService {
     @Transactional(readOnly = true)
     public List<ReviewRequestDTO> getReviewQueue() {
         log.info("Admin request: fetch review invite queue");
-        List<ReviewRequest> queue = reviewRequestRepository.findAll(Sort.by(Sort.Direction.DESC, "scheduledAt"));
+        List<ReviewRequest> queue = reviewRequestRepository.findAll(Sort.by(Sort.Direction.DESC, SORT_FIELD_SCHEDULED));
         return queue.stream()
                 .map(reviewMapper::toDTO)
                 .toList();
@@ -74,7 +82,7 @@ public class ReviewServiceImpl implements ReviewService {
         ReviewRequest request = reviewRequestRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Review invite request ID not found: " + id));
 
-        if ("SENT".equals(request.getStatus())) {
+        if (STATUS_SENT.equals(request.getStatus())) {
             log.warn("Send immediately rejected: Review invite ID: {} already sent", id);
             throw new IllegalArgumentException("Review invitation has already been sent.");
         }
@@ -108,21 +116,30 @@ public class ReviewServiceImpl implements ReviewService {
             throw new IllegalArgumentException("Phone number is required.");
         }
 
+        String cleanPhone = phone.trim();
+        String cleanName = name.trim();
+
+        // Perform strict Indian phone validation to reject invalid formats before Twilio API dispatch
+        if (!PHONE_PATTERN.matcher(cleanPhone).matches()) {
+            log.warn("Test invitation rejected: phone number format is invalid: '{}'", cleanPhone);
+            throw new IllegalArgumentException("Invalid Indian mobile number format. Must match standard +91 or 10-digit formats.");
+        }
+
         ReviewRequest request = ReviewRequest.builder()
                 .orderId(0L)
-                .customerName(name.trim())
-                .customerPhone(phone.trim())
-                .status("PENDING")
+                .customerName(cleanName)
+                .customerPhone(cleanPhone)
+                .status(STATUS_PENDING)
                 .scheduledAt(LocalDateTime.now())
                 .build();
 
         ReviewRequest saved = reviewRequestRepository.save(request);
         try {
             scheduler.sendReviewInvite(saved);
-            log.info("Successfully dispatched test review invitation to phone: '{}'", phone);
+            log.info("Successfully dispatched test review invitation to phone: '{}'", cleanPhone);
             return reviewMapper.toDTO(saved);
         } catch (Exception e) {
-            log.error("Failed to send test review invite to phone: '{}'", phone, e);
+            log.error("Failed to send test review invite to phone: '{}'", cleanPhone, e);
             throw new RuntimeException("Failed to send test review invite: " + e.getMessage(), e);
         }
     }

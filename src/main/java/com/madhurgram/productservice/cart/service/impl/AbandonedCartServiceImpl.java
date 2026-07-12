@@ -27,6 +27,10 @@ import java.util.Optional;
 public class AbandonedCartServiceImpl implements AbandonedCartService {
 
     private static final String AUTO_RECOVERY_KEY = "AUTO_RECOVERY_ENABLED";
+    private static final String DEFAULT_RECOVERY_TEMPLATE = "{greeting} आपने MadhurGram पर शुद्ध, विलेज-क्राफ़्टेड Ghee & तेल्स कार्ट में छोड़े थे। 🌾\n\n" +
+            "ऑर्डर पूरा करने के लिए आपकी कार्ट यहाँ सुरक्षित है। आपके लिए स्पेशल 5% डिस्काउंट कूपन तैयार है!\n\n" +
+            "Complete your order here: {deepLink}\n\n" +
+            "धन्यवाद, टीम MadhurGram 💛";
 
     private final AbandonedCartRepository repository;
     private final SystemSettingRepository systemSettingRepository;
@@ -35,6 +39,9 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
 
     @org.springframework.beans.factory.annotation.Value("${madhurgram.cart.retention-hours:48}")
     private int retentionHours;
+
+    @org.springframework.beans.factory.annotation.Value("${madhurgram.app.domain-url:http://localhost:3000}")
+    private String domainUrl;
 
     /**
      * Constructor injection for AbandonedCartServiceImpl.
@@ -220,13 +227,12 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
                 log.info("Dispatching WhatsApp reminder for cart ID: {}, phone: '{}'", cart.getId(), cart.getPhoneNumber());
                 
                 String greeting = cart.getCustomerName() != null ? "नमस्ते " + cart.getCustomerName() + "!" : "नमस्ते!";
-                String domain = "http://localhost:3000";
-                String deepLink = domain + "/?recoverCart=" + cart.getPhoneNumber();
+                String deepLink = domainUrl + "/?recoverCart=" + cart.getPhoneNumber();
                 
-                String message = greeting + " आपने MadhurGram पर शुद्ध, विलेज-क्राफ़्टेड Ghee & तेल्स कार्ट में छोड़े थे। 🌾\n\n" +
-                        "ऑर्डर पूरा करने के लिए आपकी कार्ट यहाँ सुरक्षित है। आपके लिए स्पेशल 5% डिस्काउंट कूपन तैयार है!\n\n" +
-                        "Complete your order here: " + deepLink + "\n\n" +
-                        "धन्यवाद, टीम MadhurGram 💛";
+                String template = getRecoveryMessageTemplate();
+                String message = template
+                        .replace("{greeting}", greeting)
+                        .replace("{deepLink}", deepLink);
 
                 twilioService.sendWhatsAppMessage(cart.getPhoneNumber(), message);
 
@@ -284,5 +290,11 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
             log.error("Failed to delete abandoned cart ID: {}. Error: {}", id, e.getMessage(), e);
             throw new RuntimeException("Failed to delete abandoned cart.", e);
         }
+    }
+
+    private String getRecoveryMessageTemplate() {
+        return systemSettingRepository.findById("WHATSAPP_RECOVERY_TEMPLATE")
+                .map(com.madhurgram.productservice.common.entity.SystemSetting::getSettingValue)
+                .orElse(DEFAULT_RECOVERY_TEMPLATE);
     }
 }

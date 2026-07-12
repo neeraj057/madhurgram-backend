@@ -2,14 +2,12 @@ package com.madhurgram.productservice.feedback.controller;
 
 import com.madhurgram.productservice.feedback.dto.CustomerFeedbackDTO;
 import com.madhurgram.productservice.feedback.service.FeedbackService;
-import com.madhurgram.productservice.order.entity.Order;
-import com.madhurgram.productservice.order.entity.OrderItem;
-import com.madhurgram.productservice.order.repository.OrderRepository;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Controller for managing buyer testimonials, ratings, and feedback uploads.
@@ -29,20 +29,24 @@ import java.util.*;
 @Tag(name = "Customer Feedback", description = "Endpoints for submitting and retrieving reviews, testimonials, and feedback images")
 public class CustomerFeedbackController {
 
+    private static final String UPLOAD_DIR_PATH = "uploads/feedback";
+    private static final String DOT = ".";
+    private static final String ERROR_KEY = "error";
+    private static final String URL_KEY = "url";
+    private static final String UPLOAD_SUBPATH = "/uploads/feedback/";
+
     private final FeedbackService feedbackService;
-    private final OrderRepository orderRepository;
+
+    @Value("${madhurgram.app.backend-url:http://localhost:8080}")
+    private String backendUrl;
 
     /**
      * Constructor injection for CustomerFeedbackController.
      *
      * @param feedbackService feedback management service
-     * @param orderRepository order repository
      */
-    public CustomerFeedbackController(
-            FeedbackService feedbackService,
-            OrderRepository orderRepository) {
+    public CustomerFeedbackController(FeedbackService feedbackService) {
         this.feedbackService = feedbackService;
-        this.orderRepository = orderRepository;
     }
 
     /**
@@ -70,53 +74,7 @@ public class CustomerFeedbackController {
     @Operation(summary = "Get suggested feedback statements", description = "Analyzes items in an order and suggests context-specific review comments.")
     public ResponseEntity<List<String>> getFeedbackSuggestions(@RequestParam(required = false) Long orderId) {
         log.info("Request suggestions for order ID: {}", orderId);
-        List<String> suggestions = new ArrayList<>();
-
-        if (orderId != null) {
-            Optional<Order> orderOpt = orderRepository.findById(orderId);
-            if (orderOpt.isPresent()) {
-                Order order = orderOpt.get();
-                boolean hasGhee = false;
-                boolean hasOil = false;
-                boolean hasHoney = false;
-                boolean hasSweets = false;
-
-                if (order.getOrderItems() != null) {
-                    for (OrderItem item : order.getOrderItems()) {
-                        String name = item.getProductName().toLowerCase();
-                        if (name.contains("ghee")) hasGhee = true;
-                        if (name.contains("oil") || name.contains("tel")) hasOil = true;
-                        if (name.contains("honey") || name.contains("shahad")) hasHoney = true;
-                        if (name.contains("sweet") || name.contains("mithai") || name.contains("peda") || name.contains("laddu")) hasSweets = true;
-                    }
-                }
-
-                if (hasGhee) {
-                    suggestions.add("Desi Ghee ka swad sach mein lajawab aur shuddh hai! 💛");
-                    suggestions.add("Ghee ki dhoop jaisi khushboo ne dil jeet liya.");
-                }
-                if (hasOil) {
-                    suggestions.add("Kachchi ghani tel ki shuddhata 100% genuine hai.");
-                    suggestions.add("Tel ki packaging leak-proof aur secure thi.");
-                }
-                if (hasHoney) {
-                    suggestions.add("Pure honey ki mithas aur swad lajawab hai! 🍯");
-                }
-                if (hasSweets) {
-                    suggestions.add("Mithai ka swad bilkul shuddh desi ghee jaisa hai!");
-                    suggestions.add("Mithai bohot tazi aur naram thi.");
-                }
-            }
-        }
-
-        // Add default/generic suggestions if list is small to ensure premium options
-        if (suggestions.size() < 4) {
-            suggestions.add("Delivery bilkul sahi samay par hui. 🚚");
-            suggestions.add("MadhurGram ke products ka swad bilkul gaanv jaisa authentic hai! ✨");
-            suggestions.add("Packaging bohot surakshit aur clean thi.");
-            suggestions.add("Customer support aur ordering experience bohot smooth tha.");
-        }
-
+        List<String> suggestions = feedbackService.getFeedbackSuggestions(orderId);
         return ResponseEntity.ok(suggestions);
     }
 
@@ -131,17 +89,17 @@ public class CustomerFeedbackController {
     public ResponseEntity<Map<String, String>> uploadFeedbackImage(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
             log.warn("Feedback image upload failed: file is empty");
-            return ResponseEntity.badRequest().body(Map.of("error", "File is empty"));
+            return ResponseEntity.badRequest().body(Map.of(ERROR_KEY, "File is empty"));
         }
         try {
             String originalFileName = file.getOriginalFilename();
             String extension = "";
-            if (originalFileName != null && originalFileName.contains(".")) {
-                extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+            if (originalFileName != null && originalFileName.contains(DOT)) {
+                extension = originalFileName.substring(originalFileName.lastIndexOf(DOT));
             }
             String fileName = UUID.randomUUID().toString() + extension;
 
-            File uploadDir = new File("uploads/feedback");
+            File uploadDir = new File(UPLOAD_DIR_PATH);
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs();
             }
@@ -153,13 +111,13 @@ public class CustomerFeedbackController {
                 StandardCopyOption.REPLACE_EXISTING
             );
 
-            // TODO [PRODUCTION]: Replace localhost URL with production static asset CDN
-            String fileUrl = "http://localhost:8080/uploads/feedback/" + fileName;
+            // Resolved hardcoded localhost URL: read backendUrl property dynamically
+            String fileUrl = backendUrl.trim() + UPLOAD_SUBPATH + fileName;
             log.info("Feedback image successfully uploaded: '{}'", fileUrl);
-            return ResponseEntity.ok(Map.of("url", fileUrl));
+            return ResponseEntity.ok(Map.of(URL_KEY, fileUrl));
         } catch (Exception e) {
             log.error("Failed to upload feedback image", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Failed to upload file"));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of(ERROR_KEY, "Failed to upload file"));
         }
     }
 
