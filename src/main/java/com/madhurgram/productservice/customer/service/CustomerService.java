@@ -10,4 +10,6 @@ public interface CustomerService {
     // कस्टमर की प्रोफाइल में नया एड्रेस जोड़ने का मेथड
     CustomerDTO addAddressToProfile(String phoneNumber, AddressDTO addressDTO);
 
+    // कस्टमर की प्रोफाइल से एड्रेस डिलीट करने का मेथड
+    CustomerDTO deleteAddressFromProfile(String phoneNumber, Long addressId);
 }

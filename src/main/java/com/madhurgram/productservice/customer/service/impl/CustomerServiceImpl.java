@@ -87,6 +87,12 @@ public class CustomerServiceImpl implements CustomerService {
                     return new IllegalArgumentException("Customer not found for phone number: " + phoneNumber);
                 });
 
+        // 🛑 Enforce maximum address limit of 5
+        if (customer.getAddresses().size() >= 5) {
+            log.warn("Address append failed: customer profile with phone '{}' reached max limit of 5 addresses", phoneNumber);
+            throw new IllegalArgumentException("You cannot save more than 5 delivery addresses.");
+        }
+
         Address newAddress = Address.builder()
                 .addressType(addressDTO.getAddressType())
                 .fullAddress(addressDTO.getFullAddress())
@@ -106,6 +112,52 @@ public class CustomerServiceImpl implements CustomerService {
         customer.addAddress(newAddress);
         Customer updatedCustomer = customerRepository.save(customer);
         log.info("Address successfully added to customer ID: {}", updatedCustomer.getId());
+        return mapToCustomerDTO(updatedCustomer);
+    }
+
+    /**
+     * Deletes a delivery address from a customer's active profile.
+     *
+     * @param phoneNumber customer phone identifier
+     * @param addressId   ID of the address to delete
+     * @return updated customer details DTO
+     */
+    @Override
+    @Transactional
+    public CustomerDTO deleteAddressFromProfile(String phoneNumber, Long addressId) {
+        log.info("Request: delete address with ID: {} for customer phone: '{}'", addressId, phoneNumber);
+
+        if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
+            throw new IllegalArgumentException("Phone number cannot be null or empty.");
+        }
+        if (addressId == null) {
+            throw new IllegalArgumentException("Address ID cannot be null.");
+        }
+
+        Customer customer = customerRepository.findByPhoneNumber(phoneNumber.trim())
+                .orElseThrow(() -> new IllegalArgumentException("Customer not found for phone number: " + phoneNumber));
+
+        // Find the address to delete from the customer's addresses
+        Address addressToDelete = customer.getAddresses().stream()
+                .filter(addr -> addr.getId().equals(addressId))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Address with ID " + addressId + " not found for this customer."));
+
+        boolean wasDefault = Boolean.TRUE.equals(addressToDelete.getIsDefault());
+
+        // Remove the address from the customer's collection
+        customer.getAddresses().remove(addressToDelete);
+        addressToDelete.setCustomer(null);
+
+        // If the deleted address was marked as default, promote another address to default (if available)
+        if (wasDefault && !customer.getAddresses().isEmpty()) {
+            customer.getAddresses().get(0).setIsDefault(true);
+            log.info("Deleted address was default. Promoted address ID: {} as new default for customer ID: {}",
+                    customer.getAddresses().get(0).getId(), customer.getId());
+        }
+
+        Customer updatedCustomer = customerRepository.save(customer);
+        log.info("Address ID: {} successfully deleted from customer ID: {}", addressId, updatedCustomer.getId());
         return mapToCustomerDTO(updatedCustomer);
     }
 

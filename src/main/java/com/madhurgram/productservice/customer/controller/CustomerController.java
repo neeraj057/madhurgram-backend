@@ -87,4 +87,25 @@ public class CustomerController {
         log.info("Address successfully added to profile phone='{}'", phone);
         return ResponseEntity.status(HttpStatus.CREATED).body(updatedProfile);
     }
+
+    /**
+     * Deletes a delivery address from a customer's active profile.
+     *
+     * @param phone     validated buyer phone number
+     * @param addressId ID of the address to delete
+     * @return the updated customer profile containing remaining addresses
+     */
+    @DeleteMapping("/{phone}/addresses/{addressId}")
+    @Operation(summary = "Delete address from profile", description = "Removes a specific delivery address from a customer's profile.")
+    public ResponseEntity<CustomerDTO> deleteAddressFromProfile(
+            @PathVariable
+            @Pattern(regexp = "^(?:\\+91|91)?[6-9]\\d{9}$", message = "Invalid phone number format. Must be a valid 10-digit Indian mobile number optionally prefixed with +91 or 91.")
+            String phone,
+            @PathVariable Long addressId) {
+        log.info("Request: delete address ID {} for profile phone='{}'", addressId, phone);
+
+        CustomerDTO updatedProfile = customerService.deleteAddressFromProfile(phone.trim(), addressId);
+        log.info("Address ID {} successfully deleted from profile phone='{}'", addressId, phone);
+        return ResponseEntity.ok(updatedProfile);
+    }
 }

@@ -39,3 +39,4 @@ build/
 
 # Secrets and credentials
 STAGING_DB_CREDENTIALS.md
+STAGING_DEPLOYMENT_SUMMARY.md
