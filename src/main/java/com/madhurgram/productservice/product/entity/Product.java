@@ -45,6 +45,10 @@ public class Product {
     @Column(name = "is_active")
     private boolean isActive = true;
 
+    @Builder.Default
+    @Column(name = "rating", precision = 3, scale = 2)
+    private java.math.BigDecimal rating = java.math.BigDecimal.valueOf(4.8);
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "hsn_code", referencedColumnName = "hsn_code", nullable = true)
     private HsnTaxMaster hsnTaxMaster;

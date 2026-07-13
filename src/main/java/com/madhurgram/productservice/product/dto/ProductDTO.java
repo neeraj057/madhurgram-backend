@@ -18,6 +18,7 @@ public class ProductDTO {
     private Boolean isActive;
     private String category;
     private String tag;
+    private java.math.BigDecimal rating;
     private String hsnCode;
     private HsnTaxMasterDTO hsnTaxMaster;
 }

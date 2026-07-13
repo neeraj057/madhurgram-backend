@@ -33,6 +33,7 @@ public class ProductMapper {
                 .isActive(product.isActive())
                 .category(product.getCategory())
                 .tag(product.getTag())
+                .rating(product.getRating() != null ? product.getRating() : java.math.BigDecimal.valueOf(4.8))
                 .hsnCode(product.getHsnTaxMaster() != null ? product.getHsnTaxMaster().getHsnCode() : null)
                 .hsnTaxMaster(toHsnTaxMasterDTO(product.getHsnTaxMaster()))
                 .build();
