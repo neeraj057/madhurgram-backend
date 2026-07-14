@@ -30,6 +30,7 @@ public class FeedbackMapper {
                 .selectedChips(feedback.getSelectedChips())
                 .productImageUrl(feedback.getProductImageUrl())
                 .createdAt(feedback.getCreatedAt())
+                .isApproved(feedback.getIsApproved() != null ? feedback.getIsApproved() : true)
                 .build();
     }
 
@@ -53,6 +54,7 @@ public class FeedbackMapper {
                 .selectedChips(dto.getSelectedChips())
                 .productImageUrl(dto.getProductImageUrl())
                 .createdAt(dto.getCreatedAt())
+                .isApproved(dto.getIsApproved() != null ? dto.getIsApproved() : true)
                 .build();
     }
 }

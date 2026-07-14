@@ -99,8 +99,13 @@ public class FeedbackServiceImpl implements FeedbackService {
         }
 
         CustomerFeedback feedback = feedbackMapper.toEntity(dto);
+        if (dto.getOrderId() != null) {
+            feedback.setIsApproved(true);
+        } else {
+            feedback.setIsApproved(false);
+        }
         CustomerFeedback saved = feedbackRepository.save(feedback);
-        log.info("Feedback entry successfully persisted with ID: {}", saved.getId());
+        log.info("Feedback entry successfully persisted with ID: {} (Approved: {})", saved.getId(), saved.getIsApproved());
         return feedbackMapper.toDTO(saved);
     }
 
@@ -114,7 +119,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     public List<CustomerFeedbackDTO> getTestimonials() {
         log.info("Retrieving top 8 positive testimonials with 4+ star ratings");
         List<CustomerFeedback> testimonials = feedbackRepository
-                .findTop8ByRatingGreaterThanEqualOrderByCreatedAtDesc(4);
+                .findTop8ByRatingGreaterThanEqualAndIsApprovedTrueOrderByCreatedAtDesc(4);
         return testimonials.stream()
                 .map(feedbackMapper::toDTO)
                 .toList();
@@ -215,5 +220,26 @@ public class FeedbackServiceImpl implements FeedbackService {
                             .toList();
                 })
                 .orElse(defaultList);
+    }
+
+    @Override
+    @Transactional
+    public CustomerFeedbackDTO approveFeedback(Long id) {
+        log.info("Approving customer feedback ID: {}", id);
+        CustomerFeedback feedback = feedbackRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Feedback not found with ID: " + id));
+        feedback.setIsApproved(true);
+        CustomerFeedback saved = feedbackRepository.save(feedback);
+        return feedbackMapper.toDTO(saved);
+    }
+
+    @Override
+    @Transactional
+    public void deleteFeedback(Long id) {
+        log.info("Deleting/Rejecting customer feedback ID: {}", id);
+        if (!feedbackRepository.existsById(id)) {
+            throw new IllegalArgumentException("Feedback not found with ID: " + id);
+        }
+        feedbackRepository.deleteById(id);
     }
 }

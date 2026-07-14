@@ -16,4 +16,8 @@ public interface FeedbackService {
     List<CustomerFeedbackDTO> getFeedbacks();
 
     List<String> getFeedbackSuggestions(Long orderId);
+
+    CustomerFeedbackDTO approveFeedback(Long id);
+
+    void deleteFeedback(Long id);
 }

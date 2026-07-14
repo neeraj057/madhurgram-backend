@@ -17,4 +17,5 @@ public class CustomerFeedbackDTO {
     private String selectedChips;
     private String productImageUrl;
     private LocalDateTime createdAt;
+    private Boolean isApproved;
 }

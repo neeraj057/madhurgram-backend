@@ -148,4 +148,32 @@ public class CustomerFeedbackController {
         log.info("Returning {} feedbacks to admin", dtos.size());
         return ResponseEntity.ok(dtos);
     }
+
+    /**
+     * Approves a customer feedback.
+     *
+     * @param id target feedback ID
+     * @return the approved feedback DTO
+     */
+    @PutMapping("/admin/feedback/{id}/approve")
+    @Operation(summary = "Approve feedback (Admin)", description = "Marks a customer feedback as approved and visible on storefront testimonials.")
+    public ResponseEntity<CustomerFeedbackDTO> approveFeedback(@PathVariable Long id) {
+        log.info("Admin request: approve feedback ID: {}", id);
+        CustomerFeedbackDTO approved = feedbackService.approveFeedback(id);
+        return ResponseEntity.ok(approved);
+    }
+
+    /**
+     * Deletes / rejects a customer feedback.
+     *
+     * @param id target feedback ID
+     * @return HTTP status 204 (No Content)
+     */
+    @DeleteMapping("/admin/feedback/{id}")
+    @Operation(summary = "Delete / Reject feedback (Admin)", description = "Permanently deletes a feedback submission.")
+    public ResponseEntity<Void> deleteFeedback(@PathVariable Long id) {
+        log.info("Admin request: reject/delete feedback ID: {}", id);
+        feedbackService.deleteFeedback(id);
+        return ResponseEntity.noContent().build();
+    }
 }

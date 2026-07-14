@@ -51,3 +51,7 @@ ALTER TABLE products ADD COLUMN IF NOT EXISTS sales_count INT DEFAULT 0;
 -- 8. Seed default values for existing products to prevent null mapping issues
 UPDATE products SET show_sales_count = FALSE WHERE show_sales_count IS NULL;
 UPDATE products SET sales_count = 0 WHERE sales_count IS NULL;
+
+-- 9. Add is_approved column for moderated customer reviews system
+ALTER TABLE customer_feedbacks ADD COLUMN IF NOT EXISTS is_approved BOOLEAN DEFAULT TRUE;
+UPDATE customer_feedbacks SET is_approved = TRUE WHERE is_approved IS NULL;

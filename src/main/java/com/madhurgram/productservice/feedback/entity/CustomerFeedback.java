@@ -38,6 +38,10 @@ public class CustomerFeedback {
     @Column(name = "product_image_url", length = 1000)
     private String productImageUrl; // Customer-uploaded product image URL
 
+    @Builder.Default
+    @Column(name = "is_approved", nullable = false)
+    private Boolean isApproved = true;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 

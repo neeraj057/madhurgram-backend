@@ -10,5 +10,5 @@ public interface CustomerFeedbackRepository extends JpaRepository<CustomerFeedba
 
     List<CustomerFeedback> findAllByOrderByCreatedAtDesc();
 
-    List<CustomerFeedback> findTop8ByRatingGreaterThanEqualOrderByCreatedAtDesc(int rating);
+    List<CustomerFeedback> findTop8ByRatingGreaterThanEqualAndIsApprovedTrueOrderByCreatedAtDesc(int rating);
 }
