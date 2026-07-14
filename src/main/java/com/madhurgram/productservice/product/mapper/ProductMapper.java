@@ -36,6 +36,9 @@ public class ProductMapper {
                 .rating(product.getRating() != null ? product.getRating() : java.math.BigDecimal.valueOf(4.8))
                 .hsnCode(product.getHsnTaxMaster() != null ? product.getHsnTaxMaster().getHsnCode() : null)
                 .hsnTaxMaster(toHsnTaxMasterDTO(product.getHsnTaxMaster()))
+                .showSalesCount(product.getShowSalesCount() != null && product.getShowSalesCount())
+                .salesCount(product.getSalesCount())
+                .realSalesCount(product.getRealSalesCount() != null ? product.getRealSalesCount() : 0)
                 .build();
     }
 

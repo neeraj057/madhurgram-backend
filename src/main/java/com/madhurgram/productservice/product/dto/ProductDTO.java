@@ -21,4 +21,7 @@ public class ProductDTO {
     private java.math.BigDecimal rating;
     private String hsnCode;
     private HsnTaxMasterDTO hsnTaxMaster;
+    private Boolean showSalesCount;
+    private Integer salesCount;
+    private Integer realSalesCount;
 }

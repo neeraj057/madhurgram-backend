@@ -43,3 +43,11 @@ UPDATE products SET hsn_code = '0405' WHERE category = 'dairy';
 UPDATE products SET hsn_code = '1701' WHERE category = 'sweeteners';
 UPDATE products SET hsn_code = '1512' WHERE category = 'oils';
 UPDATE products SET hsn_code = '2001' WHERE category = 'pickles';
+
+-- 7. Add sales count columns for social proof features
+ALTER TABLE products ADD COLUMN IF NOT EXISTS show_sales_count BOOLEAN DEFAULT FALSE;
+ALTER TABLE products ADD COLUMN IF NOT EXISTS sales_count INT DEFAULT 0;
+
+-- 8. Seed default values for existing products to prevent null mapping issues
+UPDATE products SET show_sales_count = FALSE WHERE show_sales_count IS NULL;
+UPDATE products SET sales_count = 0 WHERE sales_count IS NULL;

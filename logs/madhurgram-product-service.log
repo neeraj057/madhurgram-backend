@@ -1,2 +1,1250 @@
-2026-07-13 22:03:54 [main] INFO  c.m.p.ProductServiceApplication - Starting ProductServiceApplication using Java 21.0.2 with PID 8920 (D:\MadhurGram\product-service\target\classes started by victus in D:\MadhurGram\product-service)
-2026-07-13 22:03:54 [main] INFO  c.m.p.ProductServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-07-14 09:11:13 [main] INFO  c.m.p.ProductServiceApplication - Starting ProductServiceApplication using Java 21.0.2 with PID 39260 (D:\MadhurGram\product-service\target\classes started by victus in D:\MadhurGram\product-service)
+2026-07-14 09:11:13 [main] INFO  c.m.p.ProductServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-07-14 09:11:13 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.1.0.Final
+2026-07-14 09:11:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-14 09:11:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-14 09:11:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 263 ms. Found 14 JPA repository interfaces.
+2026-07-14 09:11:16 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-14 09:11:16 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-07-14 09:11:16 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-14 09:11:16 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-14 09:11:16 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 3245 ms
+2026-07-14 09:11:17 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-14 09:11:17 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-07-14 09:11:17 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-14 09:11:17 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-07-14 09:11:18 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1ae23815
+2026-07-14 09:11:18 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-07-14 09:11:18 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/madhurgram_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.36
+	Default catalog/schema: madhurgram_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-14 09:11:19 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-14 09:11:19 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-14 09:11:19 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-14 09:11:21 [main] INFO  c.m.p.config.CacheConfig - Initializing RedisCacheManager with JSON Serialization...
+2026-07-14 09:11:22 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
+2026-07-14 09:11:23 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoints beneath base path '/actuator'
+2026-07-14 09:11:23 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-07-14 09:11:23 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-07-14 09:11:23 [main] INFO  c.m.p.ProductServiceApplication - Started ProductServiceApplication in 10.514 seconds (process running for 11.025)
+2026-07-14 09:11:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-14 09:11:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-14 09:11:23 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-14 09:11:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-14 09:11:23 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-12T09:11:23.381825700)
+2026-07-14 09:11:43 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-14 09:11:43 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-14 09:11:43 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2026-07-14 09:11:43 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 09:11:43 [http-nio-8080-exec-1] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 09:11:43 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:11:43 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 09:11:43 [http-nio-8080-exec-5] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 09:11:43 [http-nio-8080-exec-4] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-14 09:11:43 [http-nio-8080-exec-5] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 09:11:43 [http-nio-8080-exec-5] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 09:11:43 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 09:11:43 [http-nio-8080-exec-6] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 09:11:43 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 09:11:43 [http-nio-8080-exec-4] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-14 09:11:43 [http-nio-8080-exec-4] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-14 09:11:43 [http-nio-8080-exec-4] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-14 09:11:43 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-14 09:11:44 [http-nio-8080-exec-8] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-14 09:11:44 [http-nio-8080-exec-8] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-14 09:11:44 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-14 09:11:59 [http-nio-8080-exec-10] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 09:11:59 [http-nio-8080-exec-10] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 09:11:59 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:11:59 [http-nio-8080-exec-10] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 09:11:59 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 09:11:59 [http-nio-8080-exec-3] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-14 09:11:59 [http-nio-8080-exec-1] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 09:11:59 [http-nio-8080-exec-3] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-14 09:11:59 [http-nio-8080-exec-3] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-14 09:11:59 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 09:11:59 [http-nio-8080-exec-5] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 09:11:59 [http-nio-8080-exec-5] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 09:11:59 [http-nio-8080-exec-5] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 09:11:59 [http-nio-8080-exec-3] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-14 09:11:59 [http-nio-8080-exec-7] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-14 09:11:59 [http-nio-8080-exec-7] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-14 09:11:59 [http-nio-8080-exec-7] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-14 09:11:59 [http-nio-8080-exec-7] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-14 09:12:19 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:12:39 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:12:59 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:13:19 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:13:39 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:13:59 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:14:24 [http-nio-8080-exec-1] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-14 09:14:24 [http-nio-8080-exec-1] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-14 09:14:24 [http-nio-8080-exec-1] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-14 09:14:24 [http-nio-8080-exec-1] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-14 09:14:52 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:15:52 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:16:12 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:16:18 [http-nio-8080-exec-10] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 09:16:18 [http-nio-8080-exec-10] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 09:16:18 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:16:18 [http-nio-8080-exec-10] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 09:16:18 [http-nio-8080-exec-5] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 09:16:18 [http-nio-8080-exec-3] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-14 09:16:18 [http-nio-8080-exec-5] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 09:16:18 [http-nio-8080-exec-3] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-14 09:16:18 [http-nio-8080-exec-5] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 09:16:18 [http-nio-8080-exec-3] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-14 09:16:18 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 09:16:18 [http-nio-8080-exec-6] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 09:16:18 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 09:16:18 [http-nio-8080-exec-3] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-14 09:16:18 [http-nio-8080-exec-4] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-14 09:16:18 [http-nio-8080-exec-4] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-14 09:16:18 [http-nio-8080-exec-4] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-14 09:16:18 [http-nio-8080-exec-4] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-14 09:16:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-14 09:16:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-14 09:16:23 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-14 09:16:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-14 09:16:23 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-12T09:16:23.316596600)
+2026-07-14 09:16:38 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:16:58 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:17:18 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:17:39 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:17:59 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:18:19 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:18:52 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:19:36 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:19:52 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:20:25 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:20:28 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:20:28 [http-nio-8080-exec-10] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 09:20:28 [http-nio-8080-exec-10] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 09:20:28 [http-nio-8080-exec-10] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 09:20:28 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 09:20:28 [http-nio-8080-exec-6] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 09:20:28 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-14 09:20:28 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 09:20:28 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 09:20:28 [http-nio-8080-exec-6] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 09:20:28 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 09:20:28 [http-nio-8080-exec-5] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-14 09:20:28 [http-nio-8080-exec-5] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-14 09:20:28 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-14 09:20:28 [http-nio-8080-exec-4] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-14 09:20:28 [http-nio-8080-exec-4] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-14 09:20:28 [http-nio-8080-exec-4] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-14 09:20:28 [http-nio-8080-exec-4] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-14 09:20:48 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:21:08 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:21:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-14 09:21:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-14 09:21:23 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-14 09:21:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-14 09:21:23 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-12T09:21:23.284226100)
+2026-07-14 09:21:28 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:21:48 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:22:08 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:22:28 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:22:49 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:23:09 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:23:29 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:23:52 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:24:52 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:25:22 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:25:42 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:25:52 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:26:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-14 09:26:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-14 09:26:23 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-14 09:26:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-14 09:26:23 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-12T09:26:23.297086500)
+2026-07-14 09:26:23 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:26:28 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:26:28 [http-nio-8080-exec-10] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 09:26:28 [http-nio-8080-exec-10] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 09:26:28 [http-nio-8080-exec-10] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 09:26:28 [http-nio-8080-exec-5] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 09:26:28 [http-nio-8080-exec-7] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-14 09:26:28 [http-nio-8080-exec-5] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 09:26:28 [http-nio-8080-exec-5] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 09:26:28 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 09:26:28 [http-nio-8080-exec-6] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 09:26:28 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 09:26:28 [http-nio-8080-exec-7] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-14 09:26:28 [http-nio-8080-exec-7] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-14 09:26:28 [http-nio-8080-exec-7] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-14 09:26:29 [http-nio-8080-exec-4] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-14 09:26:29 [http-nio-8080-exec-4] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-14 09:26:29 [http-nio-8080-exec-4] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-14 09:26:29 [http-nio-8080-exec-4] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-14 09:26:48 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:27:09 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:27:29 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:27:49 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:28:09 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:28:29 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:28:52 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:29:22 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:29:52 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:30:42 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:30:48 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:31:08 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:31:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-14 09:31:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-14 09:31:23 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-14 09:31:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-14 09:31:23 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-12T09:31:23.305546900)
+2026-07-14 09:31:29 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:31:49 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:32:09 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:32:29 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:32:52 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:33:52 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:34:21 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:34:52 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:35:52 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:36:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-14 09:36:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-14 09:36:23 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-14 09:36:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-14 09:36:23 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-12T09:36:23.315249700)
+2026-07-14 09:36:52 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:37:17 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:37:20 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:37:20 [http-nio-8080-exec-8] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 09:37:20 [http-nio-8080-exec-8] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 09:37:20 [http-nio-8080-exec-8] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 09:37:20 [http-nio-8080-exec-2] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 09:37:20 [http-nio-8080-exec-9] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-14 09:37:20 [http-nio-8080-exec-2] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 09:37:20 [http-nio-8080-exec-2] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 09:37:20 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 09:37:20 [http-nio-8080-exec-1] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 09:37:20 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 09:37:20 [http-nio-8080-exec-9] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-14 09:37:20 [http-nio-8080-exec-9] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-14 09:37:20 [http-nio-8080-exec-9] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-14 09:37:20 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-14 09:37:20 [http-nio-8080-exec-5] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-14 09:37:20 [http-nio-8080-exec-5] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-14 09:37:20 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-14 09:37:40 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:38:01 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:38:21 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:38:41 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:39:01 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:39:21 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:39:52 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:40:00 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:40:20 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:40:40 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:41:00 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:41:21 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:41:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-14 09:41:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-14 09:41:23 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-14 09:41:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-14 09:41:23 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-12T09:41:23.315092)
+2026-07-14 09:41:41 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:42:00 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:42:02 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: pickles
+2026-07-14 09:42:02 [http-nio-8080-exec-8] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching products by category 'pickles' from database...
+2026-07-14 09:42:02 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Returning 4 product(s) for category: pickles
+2026-07-14 09:42:20 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:42:40 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:43:00 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:43:20 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:43:40 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:44:00 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:44:20 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:44:41 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:45:01 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:45:21 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:45:52 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:46:01 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:46:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-14 09:46:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-14 09:46:23 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-14 09:46:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-14 09:46:23 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-12T09:46:23.354689700)
+2026-07-14 09:46:52 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:47:00 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:47:05 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:47:05 [http-nio-8080-exec-8] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 09:47:05 [http-nio-8080-exec-8] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 09:47:05 [http-nio-8080-exec-8] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 09:47:05 [http-nio-8080-exec-7] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 09:47:05 [http-nio-8080-exec-4] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-14 09:47:05 [http-nio-8080-exec-7] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 09:47:05 [http-nio-8080-exec-7] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 09:47:05 [http-nio-8080-exec-4] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-14 09:47:05 [http-nio-8080-exec-4] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-14 09:47:05 [http-nio-8080-exec-2] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 09:47:05 [http-nio-8080-exec-2] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 09:47:05 [http-nio-8080-exec-2] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 09:47:05 [http-nio-8080-exec-4] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-14 09:47:05 [http-nio-8080-exec-10] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-14 09:47:05 [http-nio-8080-exec-10] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-14 09:47:05 [http-nio-8080-exec-10] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-14 09:47:05 [http-nio-8080-exec-10] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-14 09:47:25 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:47:46 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:48:06 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:48:26 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:48:46 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:49:06 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:49:52 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:50:52 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:51:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-14 09:51:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-14 09:51:23 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-14 09:51:23 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-14 09:51:23 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-12T09:51:23.294444900)
+2026-07-14 09:51:52 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 09:52:52 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 10:07:59 [main] INFO  c.m.p.ProductServiceApplication - Starting ProductServiceApplication using Java 21.0.2 with PID 27784 (D:\MadhurGram\product-service\target\classes started by victus in D:\MadhurGram\product-service)
+2026-07-14 10:07:59 [main] INFO  c.m.p.ProductServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-07-14 10:08:00 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.1.0.Final
+2026-07-14 10:08:01 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-14 10:08:01 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-14 10:08:02 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 349 ms. Found 14 JPA repository interfaces.
+2026-07-14 10:08:03 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-14 10:08:03 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-07-14 10:08:03 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-14 10:08:03 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-14 10:08:03 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 3326 ms
+2026-07-14 10:08:03 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-14 10:08:03 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-07-14 10:08:04 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-14 10:08:04 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-07-14 10:08:04 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2f5a092e
+2026-07-14 10:08:04 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-07-14 10:08:04 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/madhurgram_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.36
+	Default catalog/schema: madhurgram_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-14 10:08:06 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-14 10:08:06 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-14 10:08:06 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-14 10:08:09 [main] INFO  c.m.p.config.CacheConfig - Initializing RedisCacheManager with JSON Serialization...
+2026-07-14 10:08:09 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
+2026-07-14 10:08:10 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoints beneath base path '/actuator'
+2026-07-14 10:08:10 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-07-14 10:08:10 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-07-14 10:08:10 [main] INFO  c.m.p.ProductServiceApplication - Started ProductServiceApplication in 11.131 seconds (process running for 11.776)
+2026-07-14 10:08:10 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-14 10:08:10 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-14 10:08:10 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-14 10:08:10 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-14 10:08:10 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-12T10:08:10.523880300)
+2026-07-14 10:08:42 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-14 10:08:42 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-14 10:08:42 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 9 ms
+2026-07-14 10:08:42 [http-nio-8080-exec-2] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 10:08:42 [http-nio-8080-exec-2] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 10:08:42 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 10:08:42 [http-nio-8080-exec-2] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 10:08:42 [http-nio-8080-exec-5] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 10:08:42 [http-nio-8080-exec-4] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-14 10:08:42 [http-nio-8080-exec-5] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 10:08:42 [http-nio-8080-exec-5] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 10:08:42 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-14 10:08:42 [http-nio-8080-exec-6] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-14 10:08:42 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-14 10:08:42 [http-nio-8080-exec-4] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-14 10:08:42 [http-nio-8080-exec-4] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-14 10:08:43 [http-nio-8080-exec-4] ERROR c.m.p.c.e.GlobalExceptionHandler - Unhandled Exception caught by GlobalExceptionHandler:
+org.springframework.orm.jpa.JpaSystemException: Null value was assigned to a property [class com.madhurgram.productservice.product.entity.Product.showSalesCount] of primitive type: 'com.madhurgram.productservice.product.entity.Product.showSalesCount' (setter)
+	at org.springframework.orm.jpa.hibernate.HibernateExceptionTranslator.convertHibernateAccessException(HibernateExceptionTranslator.java:223)
+	at org.springframework.orm.jpa.hibernate.HibernateExceptionTranslator.convertHibernateAccessException(HibernateExceptionTranslator.java:131)
+	at org.springframework.orm.jpa.hibernate.HibernateExceptionTranslator.translateExceptionIfPossible(HibernateExceptionTranslator.java:105)
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.translateExceptionIfPossible(HibernateJpaDialect.java:223)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.translateExceptionIfPossible(AbstractEntityManagerFactoryBean.java:577)
+	at org.springframework.dao.support.ChainedPersistenceExceptionTranslator.translateExceptionIfPossible(ChainedPersistenceExceptionTranslator.java:61)
+	at org.springframework.dao.support.DataAccessUtils.translateIfNecessary(DataAccessUtils.java:346)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:157)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:137)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:222)
+	at jdk.proxy2/jdk.proxy2.$Proxy184.findByIsActiveTrue(Unknown Source)
+	at com.madhurgram.productservice.product.service.impl.ProductServiceImpl.getAllActiveProducts(ProductServiceImpl.java:54)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:158)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:133)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:371)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.cache.interceptor.CacheInterceptor.lambda$invoke$0(CacheInterceptor.java:54)
+	at org.springframework.cache.interceptor.CacheAspectSupport.invokeOperation(CacheAspectSupport.java:426)
+	at org.springframework.cache.interceptor.CacheAspectSupport.evaluate(CacheAspectSupport.java:591)
+	at org.springframework.cache.interceptor.CacheAspectSupport.execute(CacheAspectSupport.java:442)
+	at org.springframework.cache.interceptor.CacheAspectSupport.execute(CacheAspectSupport.java:406)
+	at org.springframework.cache.interceptor.CacheInterceptor.invoke(CacheInterceptor.java:64)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719)
+	at com.madhurgram.productservice.product.service.impl.ProductServiceImpl$$SpringCGLIB$$0.getAllActiveProducts(<generated>)
+	at com.madhurgram.productservice.product.controller.ProductController.getProducts(ProductController.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$2(FilterChainProxy.java:235)
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:491)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:353)
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:84)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:131)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:132)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:86)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:181)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at com.madhurgram.productservice.security.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:35)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:110)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:96)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:336)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:237)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:195)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:317)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:355)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:272)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1272)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1801)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.hibernate.PropertyAccessException: Null value was assigned to a property [class com.madhurgram.productservice.product.entity.Product.showSalesCount] of primitive type: 'com.madhurgram.productservice.product.entity.Product.showSalesCount' (setter)
+	at org.hibernate.property.access.spi.SetterFieldImpl.set(SetterFieldImpl.java:62)
+	at org.hibernate.persister.entity.AbstractEntityPersister.setPropertyValues(AbstractEntityPersister.java:4279)
+	at org.hibernate.persister.entity.EntityPersister.setValues(EntityPersister.java:1167)
+	at org.hibernate.sql.results.graph.entity.internal.EntityInitializerImpl.initializeEntityInstance(EntityInitializerImpl.java:1721)
+	at org.hibernate.sql.results.graph.entity.internal.EntityInitializerImpl.initializeInstance(EntityInitializerImpl.java:1607)
+	at org.hibernate.sql.results.graph.entity.internal.EntityInitializerImpl.initializeInstance(EntityInitializerImpl.java:88)
+	at org.hibernate.sql.results.internal.StandardRowReader.coordinateInitializers(StandardRowReader.java:239)
+	at org.hibernate.sql.results.internal.StandardRowReader.readRow(StandardRowReader.java:137)
+	at org.hibernate.sql.results.spi.ListResultsConsumer.read(ListResultsConsumer.java:245)
+	at org.hibernate.sql.results.spi.ListResultsConsumer.readRows(ListResultsConsumer.java:235)
+	at org.hibernate.sql.results.spi.ListResultsConsumer.consume(ListResultsConsumer.java:164)
+	at org.hibernate.sql.results.spi.ListResultsConsumer.consume(ListResultsConsumer.java:31)
+	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.doExecuteQuery(JdbcSelectExecutorStandardImpl.java:213)
+	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.executeQuery(JdbcSelectExecutorStandardImpl.java:100)
+	at org.hibernate.sql.exec.spi.JdbcSelectExecutor.executeQuery(JdbcSelectExecutor.java:63)
+	at org.hibernate.sql.exec.spi.JdbcSelectExecutor.list(JdbcSelectExecutor.java:137)
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.lambda$new$1(ConcreteSqmSelectQueryPlan.java:136)
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.withCacheableSqmInterpretation(ConcreteSqmSelectQueryPlan.java:484)
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.performList(ConcreteSqmSelectQueryPlan.java:411)
+	at org.hibernate.query.sqm.internal.SqmQueryImpl.doList(SqmQueryImpl.java:379)
+	at org.hibernate.query.spi.AbstractSelectionQuery.list(AbstractSelectionQuery.java:153)
+	at org.hibernate.query.Query.getResultList(Query.java:121)
+	at org.springframework.data.jpa.repository.query.JpaQueryExecution$CollectionExecution.doExecute(JpaQueryExecution.java:141)
+	at org.springframework.data.jpa.repository.query.JpaQueryExecution.execute(JpaQueryExecution.java:100)
+	at org.springframework.data.jpa.repository.query.AbstractJpaQuery.doExecute(AbstractJpaQuery.java:166)
+	at org.springframework.data.jpa.repository.query.AbstractJpaQuery.execute(AbstractJpaQuery.java:156)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.doInvoke(RepositoryMethodInvoker.java:169)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.invoke(RepositoryMethodInvoker.java:158)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:167)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:146)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:69)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:133)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:371)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:135)
+	... 152 common frames omitted
+Caused by: java.lang.IllegalArgumentException: Can not set boolean field com.madhurgram.productservice.product.entity.Product.showSalesCount to null value
+	at java.base/jdk.internal.reflect.FieldAccessorImpl.throwSetIllegalArgumentException(FieldAccessorImpl.java:228)
+	at java.base/jdk.internal.reflect.FieldAccessorImpl.throwSetIllegalArgumentException(FieldAccessorImpl.java:232)
+	at java.base/jdk.internal.reflect.MethodHandleBooleanFieldAccessorImpl.set(MethodHandleBooleanFieldAccessorImpl.java:111)
+	at java.base/java.lang.reflect.Field.set(Field.java:836)
+	at org.hibernate.property.access.spi.SetterFieldImpl.set(SetterFieldImpl.java:56)
+	... 189 common frames omitted
+2026-07-14 10:08:43 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-14 10:08:43 [http-nio-8080-exec-8] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-14 10:08:43 [http-nio-8080-exec-8] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-14 10:08:43 [http-nio-8080-exec-8] ERROR c.m.p.c.e.GlobalExceptionHandler - Unhandled Exception caught by GlobalExceptionHandler:
+org.springframework.orm.jpa.JpaSystemException: Null value was assigned to a property [class com.madhurgram.productservice.product.entity.Product.showSalesCount] of primitive type: 'com.madhurgram.productservice.product.entity.Product.showSalesCount' (setter)
+	at org.springframework.orm.jpa.hibernate.HibernateExceptionTranslator.convertHibernateAccessException(HibernateExceptionTranslator.java:223)
+	at org.springframework.orm.jpa.hibernate.HibernateExceptionTranslator.convertHibernateAccessException(HibernateExceptionTranslator.java:131)
+	at org.springframework.orm.jpa.hibernate.HibernateExceptionTranslator.translateExceptionIfPossible(HibernateExceptionTranslator.java:105)
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.translateExceptionIfPossible(HibernateJpaDialect.java:223)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.translateExceptionIfPossible(AbstractEntityManagerFactoryBean.java:577)
+	at org.springframework.dao.support.ChainedPersistenceExceptionTranslator.translateExceptionIfPossible(ChainedPersistenceExceptionTranslator.java:61)
+	at org.springframework.dao.support.DataAccessUtils.translateIfNecessary(DataAccessUtils.java:346)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:157)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:137)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:222)
+	at jdk.proxy2/jdk.proxy2.$Proxy184.findByIsActiveTrue(Unknown Source)
+	at com.madhurgram.productservice.product.service.impl.ProductServiceImpl.getAllActiveProducts(ProductServiceImpl.java:54)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:158)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:133)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:371)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.cache.interceptor.CacheInterceptor.lambda$invoke$0(CacheInterceptor.java:54)
+	at org.springframework.cache.interceptor.CacheAspectSupport.invokeOperation(CacheAspectSupport.java:426)
+	at org.springframework.cache.interceptor.CacheAspectSupport.evaluate(CacheAspectSupport.java:591)
+	at org.springframework.cache.interceptor.CacheAspectSupport.execute(CacheAspectSupport.java:442)
+	at org.springframework.cache.interceptor.CacheAspectSupport.execute(CacheAspectSupport.java:406)
+	at org.springframework.cache.interceptor.CacheInterceptor.invoke(CacheInterceptor.java:64)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719)
+	at com.madhurgram.productservice.product.service.impl.ProductServiceImpl$$SpringCGLIB$$0.getAllActiveProducts(<generated>)
+	at com.madhurgram.productservice.product.controller.ProductController.getProducts(ProductController.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$2(FilterChainProxy.java:235)
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:491)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:353)
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:84)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:131)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:132)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:86)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:181)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at com.madhurgram.productservice.security.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:35)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:110)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:96)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:336)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:237)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:195)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:317)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:355)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:272)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1272)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1801)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.hibernate.PropertyAccessException: Null value was assigned to a property [class com.madhurgram.productservice.product.entity.Product.showSalesCount] of primitive type: 'com.madhurgram.productservice.product.entity.Product.showSalesCount' (setter)
+	at org.hibernate.property.access.spi.SetterFieldImpl.set(SetterFieldImpl.java:62)
+	at org.hibernate.persister.entity.AbstractEntityPersister.setPropertyValues(AbstractEntityPersister.java:4279)
+	at org.hibernate.persister.entity.EntityPersister.setValues(EntityPersister.java:1167)
+	at org.hibernate.sql.results.graph.entity.internal.EntityInitializerImpl.initializeEntityInstance(EntityInitializerImpl.java:1721)
+	at org.hibernate.sql.results.graph.entity.internal.EntityInitializerImpl.initializeInstance(EntityInitializerImpl.java:1607)
+	at org.hibernate.sql.results.graph.entity.internal.EntityInitializerImpl.initializeInstance(EntityInitializerImpl.java:88)
+	at org.hibernate.sql.results.internal.StandardRowReader.coordinateInitializers(StandardRowReader.java:239)
+	at org.hibernate.sql.results.internal.StandardRowReader.readRow(StandardRowReader.java:137)
+	at org.hibernate.sql.results.spi.ListResultsConsumer.read(ListResultsConsumer.java:245)
+	at org.hibernate.sql.results.spi.ListResultsConsumer.readRows(ListResultsConsumer.java:235)
+	at org.hibernate.sql.results.spi.ListResultsConsumer.consume(ListResultsConsumer.java:164)
+	at org.hibernate.sql.results.spi.ListResultsConsumer.consume(ListResultsConsumer.java:31)
+	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.doExecuteQuery(JdbcSelectExecutorStandardImpl.java:213)
+	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.executeQuery(JdbcSelectExecutorStandardImpl.java:100)
+	at org.hibernate.sql.exec.spi.JdbcSelectExecutor.executeQuery(JdbcSelectExecutor.java:63)
+	at org.hibernate.sql.exec.spi.JdbcSelectExecutor.list(JdbcSelectExecutor.java:137)
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.lambda$new$1(ConcreteSqmSelectQueryPlan.java:136)
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.withCacheableSqmInterpretation(ConcreteSqmSelectQueryPlan.java:484)
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.performList(ConcreteSqmSelectQueryPlan.java:411)
+	at org.hibernate.query.sqm.internal.SqmQueryImpl.doList(SqmQueryImpl.java:379)
+	at org.hibernate.query.spi.AbstractSelectionQuery.list(AbstractSelectionQuery.java:153)
+	at org.hibernate.query.Query.getResultList(Query.java:121)
+	at org.springframework.data.jpa.repository.query.JpaQueryExecution$CollectionExecution.doExecute(JpaQueryExecution.java:141)
+	at org.springframework.data.jpa.repository.query.JpaQueryExecution.execute(JpaQueryExecution.java:100)
+	at org.springframework.data.jpa.repository.query.AbstractJpaQuery.doExecute(AbstractJpaQuery.java:166)
+	at org.springframework.data.jpa.repository.query.AbstractJpaQuery.execute(AbstractJpaQuery.java:156)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.doInvoke(RepositoryMethodInvoker.java:169)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.invoke(RepositoryMethodInvoker.java:158)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:167)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:146)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:69)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:133)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:371)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:135)
+	... 152 common frames omitted
+Caused by: java.lang.IllegalArgumentException: Can not set boolean field com.madhurgram.productservice.product.entity.Product.showSalesCount to null value
+	at java.base/jdk.internal.reflect.FieldAccessorImpl.throwSetIllegalArgumentException(FieldAccessorImpl.java:228)
+	at java.base/jdk.internal.reflect.FieldAccessorImpl.throwSetIllegalArgumentException(FieldAccessorImpl.java:232)
+	at java.base/jdk.internal.reflect.MethodHandleBooleanFieldAccessorImpl.set(MethodHandleBooleanFieldAccessorImpl.java:111)
+	at java.base/java.lang.reflect.Field.set(Field.java:836)
+	at org.hibernate.property.access.spi.SetterFieldImpl.set(SetterFieldImpl.java:56)
+	... 189 common frames omitted
+2026-07-14 10:08:47 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 10:08:47 [http-nio-8080-exec-1] WARN  c.m.productservice.security.JwtUtil - Failed to extract username from JWT token: JWT expired at 2026-07-13T17:38:18Z. Current time: 2026-07-14T04:38:47Z, a difference of 39629718 milliseconds.  Allowed clock skew: 0 milliseconds.
+2026-07-14 10:08:47 [http-nio-8080-exec-1] WARN  c.m.productservice.security.JwtUtil - Failed to extract role from JWT token: JWT expired at 2026-07-13T17:38:18Z. Current time: 2026-07-14T04:38:47Z, a difference of 39629725 milliseconds.  Allowed clock skew: 0 milliseconds.
+2026-07-14 10:08:47 [http-nio-8080-exec-1] INFO  c.m.p.r.controller.ReturnController - Admin request: list all return requests
+2026-07-14 10:08:47 [http-nio-8080-exec-1] INFO  c.m.p.r.s.impl.ReturnServiceImpl - Admin request: list all return requests
+2026-07-14 10:08:47 [http-nio-8080-exec-1] INFO  c.m.p.r.controller.ReturnController - Returning 0 return request(s) to admin
+2026-07-14 10:08:50 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 10:09:03 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 10:09:10 [http-nio-8080-exec-4] INFO  c.m.p.auth.controller.AuthController - Request: administrator login attempt for username: 'admin'
+2026-07-14 10:09:10 [http-nio-8080-exec-4] INFO  c.m.productservice.security.JwtUtil - Generating secure JWT token for username: 'admin' with role: 'ROLE_SUPER_ADMIN'
+2026-07-14 10:09:10 [http-nio-8080-exec-4] INFO  c.m.p.auth.controller.AuthController - Login successful for Super Admin: 'admin'
+2026-07-14 10:09:10 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 10:09:11 [http-nio-8080-exec-1] INFO  c.m.p.a.c.AdminProductController - Admin request: list all products
+2026-07-14 10:09:11 [http-nio-8080-exec-1] INFO  c.m.p.a.s.i.AdminProductServiceImpl - Admin request: fetch all products including inactive ones
+2026-07-14 10:09:11 [http-nio-8080-exec-1] ERROR c.m.p.c.e.GlobalExceptionHandler - Unhandled Exception caught by GlobalExceptionHandler:
+org.springframework.orm.jpa.JpaSystemException: Null value was assigned to a property [class com.madhurgram.productservice.product.entity.Product.showSalesCount] of primitive type: 'com.madhurgram.productservice.product.entity.Product.showSalesCount' (setter)
+	at org.springframework.orm.jpa.hibernate.HibernateExceptionTranslator.convertHibernateAccessException(HibernateExceptionTranslator.java:223)
+	at org.springframework.orm.jpa.hibernate.HibernateExceptionTranslator.convertHibernateAccessException(HibernateExceptionTranslator.java:131)
+	at org.springframework.orm.jpa.hibernate.HibernateExceptionTranslator.translateExceptionIfPossible(HibernateExceptionTranslator.java:105)
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.translateExceptionIfPossible(HibernateJpaDialect.java:223)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.translateExceptionIfPossible(AbstractEntityManagerFactoryBean.java:577)
+	at org.springframework.dao.support.ChainedPersistenceExceptionTranslator.translateExceptionIfPossible(ChainedPersistenceExceptionTranslator.java:61)
+	at org.springframework.dao.support.DataAccessUtils.translateIfNecessary(DataAccessUtils.java:346)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:157)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:166)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:222)
+	at jdk.proxy2/jdk.proxy2.$Proxy184.findAll(Unknown Source)
+	at com.madhurgram.productservice.admin.service.impl.AdminProductServiceImpl.getAllProductsForAdmin(AdminProductServiceImpl.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:158)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:133)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:371)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719)
+	at com.madhurgram.productservice.admin.service.impl.AdminProductServiceImpl$$SpringCGLIB$$0.getAllProductsForAdmin(<generated>)
+	at com.madhurgram.productservice.admin.controller.AdminProductController.getAllProducts(AdminProductController.java:53)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$2(FilterChainProxy.java:235)
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:491)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:353)
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:84)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:131)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:132)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:86)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:181)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at com.madhurgram.productservice.security.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:71)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:110)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:96)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:336)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:237)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:195)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:317)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:355)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:272)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1272)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1801)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.hibernate.PropertyAccessException: Null value was assigned to a property [class com.madhurgram.productservice.product.entity.Product.showSalesCount] of primitive type: 'com.madhurgram.productservice.product.entity.Product.showSalesCount' (setter)
+	at org.hibernate.property.access.spi.SetterFieldImpl.set(SetterFieldImpl.java:62)
+	at org.hibernate.persister.entity.AbstractEntityPersister.setPropertyValues(AbstractEntityPersister.java:4279)
+	at org.hibernate.persister.entity.EntityPersister.setValues(EntityPersister.java:1167)
+	at org.hibernate.sql.results.graph.entity.internal.EntityInitializerImpl.initializeEntityInstance(EntityInitializerImpl.java:1721)
+	at org.hibernate.sql.results.graph.entity.internal.EntityInitializerImpl.initializeInstance(EntityInitializerImpl.java:1607)
+	at org.hibernate.sql.results.graph.entity.internal.EntityInitializerImpl.initializeInstance(EntityInitializerImpl.java:88)
+	at org.hibernate.sql.results.internal.StandardRowReader.coordinateInitializers(StandardRowReader.java:239)
+	at org.hibernate.sql.results.internal.StandardRowReader.readRow(StandardRowReader.java:137)
+	at org.hibernate.sql.results.spi.ListResultsConsumer.read(ListResultsConsumer.java:245)
+	at org.hibernate.sql.results.spi.ListResultsConsumer.readRows(ListResultsConsumer.java:235)
+	at org.hibernate.sql.results.spi.ListResultsConsumer.consume(ListResultsConsumer.java:164)
+	at org.hibernate.sql.results.spi.ListResultsConsumer.consume(ListResultsConsumer.java:31)
+	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.doExecuteQuery(JdbcSelectExecutorStandardImpl.java:213)
+	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.executeQuery(JdbcSelectExecutorStandardImpl.java:100)
+	at org.hibernate.sql.exec.spi.JdbcSelectExecutor.executeQuery(JdbcSelectExecutor.java:63)
+	at org.hibernate.sql.exec.spi.JdbcSelectExecutor.list(JdbcSelectExecutor.java:137)
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.lambda$new$1(ConcreteSqmSelectQueryPlan.java:136)
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.withCacheableSqmInterpretation(ConcreteSqmSelectQueryPlan.java:484)
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.performList(ConcreteSqmSelectQueryPlan.java:411)
+	at org.hibernate.query.sqm.internal.SqmQueryImpl.doList(SqmQueryImpl.java:379)
+	at org.hibernate.query.spi.AbstractSelectionQuery.list(AbstractSelectionQuery.java:153)
+	at org.hibernate.query.Query.getResultList(Query.java:121)
+	at org.springframework.data.jpa.repository.support.SimpleJpaRepository.findAll(SimpleJpaRepository.java:412)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker$RepositoryFragmentMethodInvoker.lambda$new$0(RepositoryMethodInvoker.java:278)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.doInvoke(RepositoryMethodInvoker.java:169)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.invoke(RepositoryMethodInvoker.java:158)
+	at org.springframework.data.repository.core.support.RepositoryComposition$RepositoryFragments.invoke(RepositoryComposition.java:545)
+	at org.springframework.data.repository.core.support.RepositoryComposition.invoke(RepositoryComposition.java:290)
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport$ImplementationMethodExecutionInterceptor.invoke(RepositoryFactorySupport.java:690)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:171)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:146)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:69)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:133)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:371)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:135)
+	... 145 common frames omitted
+Caused by: java.lang.IllegalArgumentException: Can not set boolean field com.madhurgram.productservice.product.entity.Product.showSalesCount to null value
+	at java.base/jdk.internal.reflect.FieldAccessorImpl.throwSetIllegalArgumentException(FieldAccessorImpl.java:228)
+	at java.base/jdk.internal.reflect.FieldAccessorImpl.throwSetIllegalArgumentException(FieldAccessorImpl.java:232)
+	at java.base/jdk.internal.reflect.MethodHandleBooleanFieldAccessorImpl.set(MethodHandleBooleanFieldAccessorImpl.java:111)
+	at java.base/java.lang.reflect.Field.set(Field.java:836)
+	at org.hibernate.property.access.spi.SetterFieldImpl.set(SetterFieldImpl.java:56)
+	... 187 common frames omitted
+2026-07-14 10:09:11 [http-nio-8080-exec-2] INFO  c.m.p.a.c.AdminProductController - Admin request: list all products
+2026-07-14 10:09:11 [http-nio-8080-exec-2] INFO  c.m.p.a.s.i.AdminProductServiceImpl - Admin request: fetch all products including inactive ones
+2026-07-14 10:09:11 [http-nio-8080-exec-2] ERROR c.m.p.c.e.GlobalExceptionHandler - Unhandled Exception caught by GlobalExceptionHandler:
+org.springframework.orm.jpa.JpaSystemException: Null value was assigned to a property [class com.madhurgram.productservice.product.entity.Product.showSalesCount] of primitive type: 'com.madhurgram.productservice.product.entity.Product.showSalesCount' (setter)
+	at org.springframework.orm.jpa.hibernate.HibernateExceptionTranslator.convertHibernateAccessException(HibernateExceptionTranslator.java:223)
+	at org.springframework.orm.jpa.hibernate.HibernateExceptionTranslator.convertHibernateAccessException(HibernateExceptionTranslator.java:131)
+	at org.springframework.orm.jpa.hibernate.HibernateExceptionTranslator.translateExceptionIfPossible(HibernateExceptionTranslator.java:105)
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.translateExceptionIfPossible(HibernateJpaDialect.java:223)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.translateExceptionIfPossible(AbstractEntityManagerFactoryBean.java:577)
+	at org.springframework.dao.support.ChainedPersistenceExceptionTranslator.translateExceptionIfPossible(ChainedPersistenceExceptionTranslator.java:61)
+	at org.springframework.dao.support.DataAccessUtils.translateIfNecessary(DataAccessUtils.java:346)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:157)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:166)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:222)
+	at jdk.proxy2/jdk.proxy2.$Proxy184.findAll(Unknown Source)
+	at com.madhurgram.productservice.admin.service.impl.AdminProductServiceImpl.getAllProductsForAdmin(AdminProductServiceImpl.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:158)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:133)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:371)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719)
+	at com.madhurgram.productservice.admin.service.impl.AdminProductServiceImpl$$SpringCGLIB$$0.getAllProductsForAdmin(<generated>)
+	at com.madhurgram.productservice.admin.controller.AdminProductController.getAllProducts(AdminProductController.java:53)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$2(FilterChainProxy.java:235)
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:491)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:353)
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:84)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:131)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:132)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:86)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:181)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at com.madhurgram.productservice.security.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:71)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:110)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:96)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:336)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:237)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:195)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:317)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:355)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:272)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1272)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1801)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.hibernate.PropertyAccessException: Null value was assigned to a property [class com.madhurgram.productservice.product.entity.Product.showSalesCount] of primitive type: 'com.madhurgram.productservice.product.entity.Product.showSalesCount' (setter)
+	at org.hibernate.property.access.spi.SetterFieldImpl.set(SetterFieldImpl.java:62)
+	at org.hibernate.persister.entity.AbstractEntityPersister.setPropertyValues(AbstractEntityPersister.java:4279)
+	at org.hibernate.persister.entity.EntityPersister.setValues(EntityPersister.java:1167)
+	at org.hibernate.sql.results.graph.entity.internal.EntityInitializerImpl.initializeEntityInstance(EntityInitializerImpl.java:1721)
+	at org.hibernate.sql.results.graph.entity.internal.EntityInitializerImpl.initializeInstance(EntityInitializerImpl.java:1607)
+	at org.hibernate.sql.results.graph.entity.internal.EntityInitializerImpl.initializeInstance(EntityInitializerImpl.java:88)
+	at org.hibernate.sql.results.internal.StandardRowReader.coordinateInitializers(StandardRowReader.java:239)
+	at org.hibernate.sql.results.internal.StandardRowReader.readRow(StandardRowReader.java:137)
+	at org.hibernate.sql.results.spi.ListResultsConsumer.read(ListResultsConsumer.java:245)
+	at org.hibernate.sql.results.spi.ListResultsConsumer.readRows(ListResultsConsumer.java:235)
+	at org.hibernate.sql.results.spi.ListResultsConsumer.consume(ListResultsConsumer.java:164)
+	at org.hibernate.sql.results.spi.ListResultsConsumer.consume(ListResultsConsumer.java:31)
+	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.doExecuteQuery(JdbcSelectExecutorStandardImpl.java:213)
+	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.executeQuery(JdbcSelectExecutorStandardImpl.java:100)
+	at org.hibernate.sql.exec.spi.JdbcSelectExecutor.executeQuery(JdbcSelectExecutor.java:63)
+	at org.hibernate.sql.exec.spi.JdbcSelectExecutor.list(JdbcSelectExecutor.java:137)
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.lambda$new$1(ConcreteSqmSelectQueryPlan.java:136)
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.withCacheableSqmInterpretation(ConcreteSqmSelectQueryPlan.java:484)
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.performList(ConcreteSqmSelectQueryPlan.java:411)
+	at org.hibernate.query.sqm.internal.SqmQueryImpl.doList(SqmQueryImpl.java:379)
+	at org.hibernate.query.spi.AbstractSelectionQuery.list(AbstractSelectionQuery.java:153)
+	at org.hibernate.query.Query.getResultList(Query.java:121)
+	at org.springframework.data.jpa.repository.support.SimpleJpaRepository.findAll(SimpleJpaRepository.java:412)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker$RepositoryFragmentMethodInvoker.lambda$new$0(RepositoryMethodInvoker.java:278)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.doInvoke(RepositoryMethodInvoker.java:169)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.invoke(RepositoryMethodInvoker.java:158)
+	at org.springframework.data.repository.core.support.RepositoryComposition$RepositoryFragments.invoke(RepositoryComposition.java:545)
+	at org.springframework.data.repository.core.support.RepositoryComposition.invoke(RepositoryComposition.java:290)
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport$ImplementationMethodExecutionInterceptor.invoke(RepositoryFactorySupport.java:690)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:171)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:146)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:69)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:133)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:371)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:135)
+	... 145 common frames omitted
+Caused by: java.lang.IllegalArgumentException: Can not set boolean field com.madhurgram.productservice.product.entity.Product.showSalesCount to null value
+	at java.base/jdk.internal.reflect.FieldAccessorImpl.throwSetIllegalArgumentException(FieldAccessorImpl.java:228)
+	at java.base/jdk.internal.reflect.FieldAccessorImpl.throwSetIllegalArgumentException(FieldAccessorImpl.java:232)
+	at java.base/jdk.internal.reflect.MethodHandleBooleanFieldAccessorImpl.set(MethodHandleBooleanFieldAccessorImpl.java:111)
+	at java.base/java.lang.reflect.Field.set(Field.java:836)
+	at org.hibernate.property.access.spi.SetterFieldImpl.set(SetterFieldImpl.java:56)
+	... 187 common frames omitted
+2026-07-14 10:09:23 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 10:09:31 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 10:09:43 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 10:09:51 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 10:10:03 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 10:10:11 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 10:10:23 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 10:10:31 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-14 10:10:43 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'

@@ -1,0 +1,843 @@
+2026-07-13 22:03:54 [main] INFO  c.m.p.ProductServiceApplication - Starting ProductServiceApplication using Java 21.0.2 with PID 8920 (D:\MadhurGram\product-service\target\classes started by victus in D:\MadhurGram\product-service)
+2026-07-13 22:03:54 [main] INFO  c.m.p.ProductServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-07-13 22:03:55 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.1.0.Final
+2026-07-13 22:03:56 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-13 22:03:56 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-13 22:03:56 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 254 ms. Found 14 JPA repository interfaces.
+2026-07-13 22:03:57 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-13 22:03:57 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-07-13 22:03:57 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-13 22:03:57 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-13 22:03:57 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 2540 ms
+2026-07-13 22:03:57 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-13 22:03:58 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-07-13 22:03:58 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-13 22:03:58 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-07-13 22:03:58 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1ae23815
+2026-07-13 22:03:58 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-07-13 22:03:59 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/madhurgram_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.36
+	Default catalog/schema: madhurgram_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-13 22:04:00 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-13 22:04:00 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-13 22:04:00 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-13 22:04:03 [main] INFO  c.m.p.config.CacheConfig - Initializing RedisCacheManager with JSON Serialization...
+2026-07-13 22:04:03 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
+2026-07-13 22:04:04 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoints beneath base path '/actuator'
+2026-07-13 22:04:04 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-07-13 22:04:04 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-07-13 22:04:04 [main] INFO  c.m.p.ProductServiceApplication - Started ProductServiceApplication in 10.097 seconds (process running for 10.618)
+2026-07-13 22:04:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-13 22:04:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-13 22:04:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-13 22:04:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-13 22:04:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-11T22:04:04.551416100)
+2026-07-13 22:04:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully purged 4 expired cart(s) from database
+2026-07-13 22:04:05 [scheduling-1] INFO  c.m.p.m.s.ReviewAutomationScheduler - Google Review Automation: Found 3 pending review invitations to send.
+2026-07-13 22:04:05 [scheduling-1] INFO  c.m.p.m.s.ReviewAutomationScheduler - Sending scheduled review invitation to Customer: Ravi, Phone: 9889847208
+2026-07-13 22:04:05 [scheduling-1] INFO  c.m.p.m.s.i.TwilioSmsSenderService - [MOCK TWILIO BROADCAST DISPATCH] Successfully triggered mock broadcast for 1 recipients in DEV mode.
+2026-07-13 22:04:05 [scheduling-1] INFO  c.m.p.m.s.i.TwilioSmsSenderService - Mock message: 'नमस्ते Ravi, आपकी रसोई का 'MadhurGram' Ghee कैसा लगा? कृपया यहाँ अपना अनुभव साझा करें: https://g.page/r/MadhurGramGhee/review'
+2026-07-13 22:04:05 [scheduling-1] INFO  c.m.p.m.s.ReviewAutomationScheduler - Successfully sent Google Review invite to Customer ID: 1
+2026-07-13 22:04:05 [scheduling-1] INFO  c.m.p.m.s.ReviewAutomationScheduler - Sending scheduled review invitation to Customer: NEERAJ CHAUBEY, Phone: 7899999902
+2026-07-13 22:04:05 [scheduling-1] INFO  c.m.p.m.s.i.TwilioSmsSenderService - [MOCK TWILIO BROADCAST DISPATCH] Successfully triggered mock broadcast for 1 recipients in DEV mode.
+2026-07-13 22:04:05 [scheduling-1] INFO  c.m.p.m.s.i.TwilioSmsSenderService - Mock message: 'नमस्ते NEERAJ CHAUBEY, आपकी रसोई का 'MadhurGram' Ghee कैसा लगा? कृपया यहाँ अपना अनुभव साझा करें: https://g.page/r/MadhurGramGhee/review'
+2026-07-13 22:04:05 [scheduling-1] INFO  c.m.p.m.s.ReviewAutomationScheduler - Successfully sent Google Review invite to Customer ID: 2
+2026-07-13 22:04:05 [scheduling-1] INFO  c.m.p.m.s.ReviewAutomationScheduler - Sending scheduled review invitation to Customer: TTE, Phone: 8770242812
+2026-07-13 22:04:05 [scheduling-1] INFO  c.m.p.m.s.i.TwilioSmsSenderService - [MOCK TWILIO BROADCAST DISPATCH] Successfully triggered mock broadcast for 1 recipients in DEV mode.
+2026-07-13 22:04:05 [scheduling-1] INFO  c.m.p.m.s.i.TwilioSmsSenderService - Mock message: 'नमस्ते TTE, आपकी रसोई का 'MadhurGram' Ghee कैसा लगा? कृपया यहाँ अपना अनुभव साझा करें: https://g.page/r/MadhurGramGhee/review'
+2026-07-13 22:04:05 [scheduling-1] INFO  c.m.p.m.s.ReviewAutomationScheduler - Successfully sent Google Review invite to Customer ID: 3
+2026-07-13 22:04:29 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-13 22:04:29 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-13 22:04:29 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-07-13 22:04:32 [http-nio-8080-exec-9] INFO  o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 1711 ms
+2026-07-13 22:04:49 [http-nio-8080-exec-10] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:04:49 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:04:49 [http-nio-8080-exec-10] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:04:49 [http-nio-8080-exec-10] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:04:49 [http-nio-8080-exec-5] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:04:49 [http-nio-8080-exec-3] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:04:49 [http-nio-8080-exec-5] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:04:49 [http-nio-8080-exec-5] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:04:49 [http-nio-8080-exec-4] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:04:49 [http-nio-8080-exec-4] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:04:49 [http-nio-8080-exec-4] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:04:50 [http-nio-8080-exec-3] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:04:50 [http-nio-8080-exec-3] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:04:50 [http-nio-8080-exec-3] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:04:50 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:04:50 [http-nio-8080-exec-8] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:04:50 [http-nio-8080-exec-8] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:04:50 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:05:09 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:05:29 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:05:49 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:06:10 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:06:30 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:06:50 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:07:31 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:07:31 [http-nio-8080-exec-8] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:07:31 [http-nio-8080-exec-8] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:07:31 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:07:41 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:07:49 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:08:04 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:08:10 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:08:18 [http-nio-8080-exec-9] INFO  c.m.p.auth.controller.AuthController - Request: administrator login attempt for username: 'admin'
+2026-07-13 22:08:18 [http-nio-8080-exec-9] INFO  c.m.productservice.security.JwtUtil - Generating secure JWT token for username: 'admin' with role: 'ROLE_SUPER_ADMIN'
+2026-07-13 22:08:18 [http-nio-8080-exec-9] INFO  c.m.p.auth.controller.AuthController - Login successful for Super Admin: 'admin'
+2026-07-13 22:08:19 [http-nio-8080-exec-2] INFO  c.m.p.a.c.AdminProductController - Admin request: list all products
+2026-07-13 22:08:19 [http-nio-8080-exec-2] INFO  c.m.p.a.s.i.AdminProductServiceImpl - Admin request: fetch all products including inactive ones
+2026-07-13 22:08:19 [http-nio-8080-exec-2] INFO  c.m.p.a.c.AdminProductController - Returning 14 product(s) to admin
+2026-07-13 22:08:19 [http-nio-8080-exec-6] INFO  c.m.p.a.c.AdminProductController - Admin request: list all products
+2026-07-13 22:08:19 [http-nio-8080-exec-6] INFO  c.m.p.a.s.i.AdminProductServiceImpl - Admin request: fetch all products including inactive ones
+2026-07-13 22:08:19 [http-nio-8080-exec-6] INFO  c.m.p.a.c.AdminProductController - Returning 14 product(s) to admin
+2026-07-13 22:08:24 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:08:30 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:08:45 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:08:50 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:09:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-13 22:09:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-13 22:09:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-13 22:09:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-13 22:09:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-11T22:09:04.441051900)
+2026-07-13 22:09:05 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:09:25 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:09:45 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:09:53 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:10:05 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:10:53 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:10:53 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:11:53 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:11:53 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:12:53 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:12:53 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:13:53 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:13:53 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:14:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-13 22:14:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-13 22:14:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-13 22:14:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-13 22:14:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-11T22:14:04.436573800)
+2026-07-13 22:14:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully purged 1 expired cart(s) from database
+2026-07-13 22:14:12 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:14:12 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:14:53 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:14:53 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:15:53 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:15:53 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:16:53 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:16:53 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:17:53 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:17:53 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:18:53 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:18:53 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:19:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-13 22:19:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-13 22:19:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-13 22:19:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-13 22:19:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-11T22:19:04.449920200)
+2026-07-13 22:19:53 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:19:53 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:20:53 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:20:53 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:21:53 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:21:53 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:22:53 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:22:53 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:23:53 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:23:53 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:24:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-13 22:24:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-13 22:24:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-13 22:24:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-13 22:24:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-11T22:24:04.425265100)
+2026-07-13 22:24:53 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:24:53 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:25:53 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:25:53 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:26:17 [http-nio-8080-exec-2] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:26:18 [http-nio-8080-exec-2] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:26:18 [http-nio-8080-exec-2] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:26:18 [http-nio-8080-exec-2] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:26:19 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:26:19 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:26:41 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:26:41 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:26:53 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:26:53 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:27:53 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:28:53 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:29:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-13 22:29:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-13 22:29:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-13 22:29:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-13 22:29:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-11T22:29:04.475920)
+2026-07-13 22:29:18 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:29:25 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:29:53 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:30:34 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:30:37 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:30:37 [http-nio-8080-exec-4] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:30:37 [http-nio-8080-exec-4] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:30:37 [http-nio-8080-exec-4] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:30:37 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:30:37 [http-nio-8080-exec-1] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:30:37 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:30:37 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:30:37 [http-nio-8080-exec-9] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:30:37 [http-nio-8080-exec-9] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:30:37 [http-nio-8080-exec-9] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:30:37 [http-nio-8080-exec-8] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:30:37 [http-nio-8080-exec-8] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:30:37 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:30:37 [http-nio-8080-exec-2] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:30:37 [http-nio-8080-exec-2] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:30:37 [http-nio-8080-exec-2] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:30:37 [http-nio-8080-exec-2] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:30:45 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:30:57 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:31:05 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:31:17 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:31:25 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:31:37 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:31:53 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:31:57 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:32:17 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:32:32 [http-nio-8080-exec-7] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:32:32 [http-nio-8080-exec-7] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:32:32 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:32:32 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:32:32 [http-nio-8080-exec-7] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:32:32 [http-nio-8080-exec-8] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:32:32 [http-nio-8080-exec-8] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:32:32 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:32:32 [http-nio-8080-exec-8] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:32:32 [http-nio-8080-exec-2] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:32:32 [http-nio-8080-exec-2] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:32:32 [http-nio-8080-exec-5] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:32:32 [http-nio-8080-exec-2] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:32:32 [http-nio-8080-exec-5] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:32:32 [http-nio-8080-exec-9] INFO  c.m.p.a.c.AdminProductController - Admin request: list all products
+2026-07-13 22:32:32 [http-nio-8080-exec-9] INFO  c.m.p.a.s.i.AdminProductServiceImpl - Admin request: fetch all products including inactive ones
+2026-07-13 22:32:32 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:32:32 [http-nio-8080-exec-10] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:32:32 [http-nio-8080-exec-10] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:32:32 [http-nio-8080-exec-10] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:32:32 [http-nio-8080-exec-9] INFO  c.m.p.a.c.AdminProductController - Returning 14 product(s) to admin
+2026-07-13 22:32:32 [http-nio-8080-exec-10] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:32:52 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:32:53 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:33:13 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:33:13 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:33:33 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:33:33 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:33:53 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:33:53 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:34:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-13 22:34:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-13 22:34:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-13 22:34:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-13 22:34:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-11T22:34:04.465474800)
+2026-07-13 22:34:13 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:34:13 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:34:33 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:34:33 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:34:53 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:34:53 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:35:13 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:35:33 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:35:53 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:35:53 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:36:13 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:36:33 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:36:53 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:36:53 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:37:13 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:37:33 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:37:53 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:37:53 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:38:38 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:38:39 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:38:53 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:38:53 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:39:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-13 22:39:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-13 22:39:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-13 22:39:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-13 22:39:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-11T22:39:04.508568100)
+2026-07-13 22:39:53 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:39:53 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:39:57 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:39:57 [http-nio-8080-exec-10] INFO  c.m.p.a.c.AdminProductController - Admin request: list all products
+2026-07-13 22:39:57 [http-nio-8080-exec-10] INFO  c.m.p.a.s.i.AdminProductServiceImpl - Admin request: fetch all products including inactive ones
+2026-07-13 22:39:57 [http-nio-8080-exec-10] INFO  c.m.p.a.c.AdminProductController - Returning 14 product(s) to admin
+2026-07-13 22:39:59 [http-nio-8080-exec-9] INFO  c.m.p.a.c.AnalyticsController - Admin request: fetch daily business report for range: 7 day(s)
+2026-07-13 22:39:59 [http-nio-8080-exec-9] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Starting dashboard computation for last 7 days...
+2026-07-13 22:39:59 [http-nio-8080-exec-9] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1: Querying abandoned cart repository counts...
+2026-07-13 22:40:00 [http-nio-8080-exec-9] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1 complete. Conversion rate: 90.32258064516128
+2026-07-13 22:40:00 [http-nio-8080-exec-9] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Querying orders since: 2026-06-30T00:00
+2026-07-13 22:40:00 [http-nio-8080-exec-9] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Orders queried: 45. Processing growth in memory...
+2026-07-13 22:40:00 [http-nio-8080-exec-9] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2 complete. Sales Growth: 38.63060314480169
+2026-07-13 22:40:00 [http-nio-8080-exec-9] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Today's orders: 0, Today's revenue: 0
+2026-07-13 22:40:00 [http-nio-8080-exec-9] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3: Fetching low stock products from database...
+2026-07-13 22:40:00 [http-nio-8080-exec-9] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3 complete. Low stock count: 1
+2026-07-13 22:40:00 [http-nio-8080-exec-9] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4: Querying active user count from Redis Sorted Set...
+2026-07-13 22:40:01 [http-nio-8080-exec-9] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4 complete. Active users: 0
+2026-07-13 22:40:01 [http-nio-8080-exec-9] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Completing dashboard stats builder...
+2026-07-13 22:40:01 [http-nio-8080-exec-9] INFO  c.m.p.a.c.AnalyticsController - Successfully calculated and retrieved dashboard metrics
+2026-07-13 22:40:01 [http-nio-8080-exec-6] INFO  c.m.p.a.c.AnalyticsController - Admin request: fetch daily business report for range: 7 day(s)
+2026-07-13 22:40:01 [http-nio-8080-exec-6] INFO  c.m.p.a.c.AnalyticsController - Successfully calculated and retrieved dashboard metrics
+2026-07-13 22:40:13 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:40:17 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:40:18 [http-nio-8080-exec-3] INFO  c.m.p.o.controller.OrderController - Request: list all orders
+2026-07-13 22:40:18 [http-nio-8080-exec-3] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single optimized query.
+2026-07-13 22:40:18 [http-nio-8080-exec-3] INFO  c.m.p.o.controller.OrderController - Returning 45 order(s) [superAdmin=false]
+2026-07-13 22:40:18 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Request: list all orders
+2026-07-13 22:40:18 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching all orders with their items in a single optimized query.
+2026-07-13 22:40:18 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Returning 45 order(s) [superAdmin=false]
+2026-07-13 22:40:21 [http-nio-8080-exec-7] INFO  c.m.p.a.c.AdminProductController - Admin request: list all products
+2026-07-13 22:40:21 [http-nio-8080-exec-7] INFO  c.m.p.a.s.i.AdminProductServiceImpl - Admin request: fetch all products including inactive ones
+2026-07-13 22:40:21 [http-nio-8080-exec-7] INFO  c.m.p.a.c.AdminProductController - Returning 14 product(s) to admin
+2026-07-13 22:40:21 [http-nio-8080-exec-9] INFO  c.m.p.a.c.AdminProductController - Admin request: list all products
+2026-07-13 22:40:21 [http-nio-8080-exec-9] INFO  c.m.p.a.s.i.AdminProductServiceImpl - Admin request: fetch all products including inactive ones
+2026-07-13 22:40:21 [http-nio-8080-exec-9] INFO  c.m.p.a.c.AdminProductController - Returning 14 product(s) to admin
+2026-07-13 22:40:23 [http-nio-8080-exec-1] INFO  c.m.p.a.c.AdminTaxController - Admin request: list all tax slabs
+2026-07-13 22:40:23 [http-nio-8080-exec-1] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'all' in cache 'taxSlabs'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:40:23 [http-nio-8080-exec-1] INFO  c.m.p.a.service.impl.TaxServiceImpl - [CACHE MISS] Fetching all HSN tax slabs from database...
+2026-07-13 22:40:23 [http-nio-8080-exec-1] INFO  c.m.p.a.c.AdminTaxController - Returning 4 tax slab(s)
+2026-07-13 22:40:23 [http-nio-8080-exec-8] INFO  c.m.p.a.c.AdminTaxController - Admin request: list all tax slabs
+2026-07-13 22:40:23 [http-nio-8080-exec-8] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'all' in cache 'taxSlabs'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:40:23 [http-nio-8080-exec-8] INFO  c.m.p.a.service.impl.TaxServiceImpl - [CACHE MISS] Fetching all HSN tax slabs from database...
+2026-07-13 22:40:23 [http-nio-8080-exec-8] INFO  c.m.p.a.c.AdminTaxController - Returning 4 tax slab(s)
+2026-07-13 22:40:25 [http-nio-8080-exec-10] INFO  c.m.p.c.controller.CouponController - Admin request: list all coupons
+2026-07-13 22:40:25 [http-nio-8080-exec-10] INFO  c.m.p.c.s.impl.CouponServiceImpl - Admin request: fetch all coupon configurations
+2026-07-13 22:40:25 [http-nio-8080-exec-10] INFO  c.m.p.c.controller.CouponController - Returning 1 coupon(s) to admin
+2026-07-13 22:40:25 [http-nio-8080-exec-2] INFO  c.m.p.c.controller.CouponController - Admin request: list all coupons
+2026-07-13 22:40:25 [http-nio-8080-exec-2] INFO  c.m.p.c.s.impl.CouponServiceImpl - Admin request: fetch all coupon configurations
+2026-07-13 22:40:25 [http-nio-8080-exec-2] INFO  c.m.p.c.controller.CouponController - Returning 1 coupon(s) to admin
+2026-07-13 22:40:27 [http-nio-8080-exec-4] INFO  c.m.p.a.c.AdminCustomerController - Admin request: list customers, search='null'
+2026-07-13 22:40:27 [http-nio-8080-exec-4] INFO  c.m.p.a.s.i.AdminCustomerServiceImpl - Computing dashboard statistics for all customers from database orders
+2026-07-13 22:40:27 [http-nio-8080-exec-4] INFO  c.m.p.a.s.i.AdminCustomerServiceImpl - Loaded 45 total order(s) from database for customer analysis
+2026-07-13 22:40:27 [http-nio-8080-exec-4] INFO  c.m.p.a.s.i.AdminCustomerServiceImpl - Successfully aggregated statistics for 25 unique customer(s)
+2026-07-13 22:40:27 [http-nio-8080-exec-4] INFO  c.m.p.a.c.AdminCustomerController - Returning 25 customer(s) [superAdmin=true]
+2026-07-13 22:40:27 [http-nio-8080-exec-6] INFO  c.m.p.a.c.AdminCustomerController - Admin request: list customers, search='null'
+2026-07-13 22:40:27 [http-nio-8080-exec-6] INFO  c.m.p.a.s.i.AdminCustomerServiceImpl - Computing dashboard statistics for all customers from database orders
+2026-07-13 22:40:27 [http-nio-8080-exec-6] INFO  c.m.p.a.s.i.AdminCustomerServiceImpl - Loaded 45 total order(s) from database for customer analysis
+2026-07-13 22:40:27 [http-nio-8080-exec-6] INFO  c.m.p.a.s.i.AdminCustomerServiceImpl - Successfully aggregated statistics for 25 unique customer(s)
+2026-07-13 22:40:27 [http-nio-8080-exec-6] INFO  c.m.p.a.c.AdminCustomerController - Returning 25 customer(s) [superAdmin=true]
+2026-07-13 22:40:30 [http-nio-8080-exec-5] INFO  c.m.p.f.c.CustomerFeedbackController - Admin request: list all feedbacks
+2026-07-13 22:40:30 [http-nio-8080-exec-5] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Admin request: fetch all customer feedback records
+2026-07-13 22:40:30 [http-nio-8080-exec-5] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 feedbacks to admin
+2026-07-13 22:40:30 [http-nio-8080-exec-3] INFO  c.m.p.f.c.CustomerFeedbackController - Admin request: list all feedbacks
+2026-07-13 22:40:30 [http-nio-8080-exec-3] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Admin request: fetch all customer feedback records
+2026-07-13 22:40:30 [http-nio-8080-exec-3] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 feedbacks to admin
+2026-07-13 22:40:33 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:40:34 [http-nio-8080-exec-6] INFO  c.m.p.p.c.ProcurementController - Admin request: list all purchase orders
+2026-07-13 22:40:34 [http-nio-8080-exec-6] INFO  c.m.p.p.s.i.ProcurementServiceImpl - Admin request: fetch all purchase orders
+2026-07-13 22:40:34 [http-nio-8080-exec-6] INFO  c.m.p.p.c.ProcurementController - Returning 2 purchase order(s)
+2026-07-13 22:40:34 [http-nio-8080-exec-8] INFO  c.m.p.p.c.ProcurementController - Admin request: list all purchase orders
+2026-07-13 22:40:34 [http-nio-8080-exec-8] INFO  c.m.p.p.s.i.ProcurementServiceImpl - Admin request: fetch all purchase orders
+2026-07-13 22:40:34 [http-nio-8080-exec-8] INFO  c.m.p.p.c.ProcurementController - Returning 2 purchase order(s)
+2026-07-13 22:40:37 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:40:39 [http-nio-8080-exec-10] INFO  c.m.p.r.controller.ReturnController - Admin request: list all return requests
+2026-07-13 22:40:39 [http-nio-8080-exec-10] INFO  c.m.p.r.s.impl.ReturnServiceImpl - Admin request: list all return requests
+2026-07-13 22:40:39 [http-nio-8080-exec-10] INFO  c.m.p.r.controller.ReturnController - Returning 0 return request(s) to admin
+2026-07-13 22:40:39 [http-nio-8080-exec-2] INFO  c.m.p.r.controller.ReturnController - Admin request: list all return requests
+2026-07-13 22:40:39 [http-nio-8080-exec-2] INFO  c.m.p.r.s.impl.ReturnServiceImpl - Admin request: list all return requests
+2026-07-13 22:40:39 [http-nio-8080-exec-2] INFO  c.m.p.r.controller.ReturnController - Returning 0 return request(s) to admin
+2026-07-13 22:40:53 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:40:57 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:41:13 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:41:17 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:41:33 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:41:37 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:41:53 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:41:57 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:42:13 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:42:33 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:42:53 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:42:53 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:43:13 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:43:33 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:43:53 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:43:53 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:43:59 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:44:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-13 22:44:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-13 22:44:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-13 22:44:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-13 22:44:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-11T22:44:04.456665700)
+2026-07-13 22:44:12 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:44:17 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:44:33 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:44:37 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:44:53 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:44:57 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:46:06 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:46:06 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:46:06 [http-nio-8080-exec-1] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:46:06 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:46:06 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:46:06 [http-nio-8080-exec-9] INFO  c.m.p.r.controller.ReturnController - Admin request: list all return requests
+2026-07-13 22:46:06 [http-nio-8080-exec-9] INFO  c.m.p.r.s.impl.ReturnServiceImpl - Admin request: list all return requests
+2026-07-13 22:46:06 [http-nio-8080-exec-9] INFO  c.m.p.r.controller.ReturnController - Returning 0 return request(s) to admin
+2026-07-13 22:46:06 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:46:06 [http-nio-8080-exec-6] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:46:06 [http-nio-8080-exec-4] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:46:06 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:46:06 [http-nio-8080-exec-8] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:46:06 [http-nio-8080-exec-8] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:46:06 [http-nio-8080-exec-8] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:46:06 [http-nio-8080-exec-4] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:46:06 [http-nio-8080-exec-4] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:46:06 [http-nio-8080-exec-4] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:46:06 [http-nio-8080-exec-10] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:46:06 [http-nio-8080-exec-10] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:46:06 [http-nio-8080-exec-10] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:46:06 [http-nio-8080-exec-10] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:46:26 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:46:26 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:46:46 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:46:46 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:47:06 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:47:06 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:47:26 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:47:26 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:47:45 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:47:46 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:47:48 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:47:48 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:47:48 [http-nio-8080-exec-1] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:47:48 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:47:48 [http-nio-8080-exec-9] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:47:48 [http-nio-8080-exec-9] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:47:48 [http-nio-8080-exec-7] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:47:48 [http-nio-8080-exec-9] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:47:48 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:47:48 [http-nio-8080-exec-6] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:47:48 [http-nio-8080-exec-7] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:47:48 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:47:48 [http-nio-8080-exec-7] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:47:48 [http-nio-8080-exec-7] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:47:48 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:47:48 [http-nio-8080-exec-8] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:47:48 [http-nio-8080-exec-8] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:47:48 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:48:06 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:48:08 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:48:28 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:48:48 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:48:53 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:49:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-13 22:49:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-13 22:49:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-13 22:49:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-13 22:49:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-11T22:49:04.456415700)
+2026-07-13 22:49:08 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:49:16 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:49:28 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:49:48 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:49:49 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:49:49 [http-nio-8080-exec-4] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:49:49 [http-nio-8080-exec-4] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:49:49 [http-nio-8080-exec-4] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:49:49 [http-nio-8080-exec-2] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:49:49 [http-nio-8080-exec-2] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:49:49 [http-nio-8080-exec-10] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:49:49 [http-nio-8080-exec-2] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:49:49 [http-nio-8080-exec-3] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:49:49 [http-nio-8080-exec-3] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:49:49 [http-nio-8080-exec-3] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:49:49 [http-nio-8080-exec-10] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:49:49 [http-nio-8080-exec-10] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:49:50 [http-nio-8080-exec-10] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:49:50 [http-nio-8080-exec-9] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:49:50 [http-nio-8080-exec-9] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:49:50 [http-nio-8080-exec-9] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:49:50 [http-nio-8080-exec-9] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:49:53 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:50:09 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:50:20 [http-nio-8080-exec-2] INFO  c.m.p.cart.controller.CartController - Request: sync cart state for phone: '8770242812'
+2026-07-13 22:50:20 [http-nio-8080-exec-2] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8770242812
+2026-07-13 22:50:20 [http-nio-8080-exec-2] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Creating a new abandoned cart session for phone: '8770242812'
+2026-07-13 22:50:22 [http-nio-8080-exec-4] INFO  c.m.p.c.c.CustomerController - Request: get customer profile for phone='8770242812'
+2026-07-13 22:50:22 [http-nio-8080-exec-4] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Request: fetch customer profile for phone: '8770242812'
+2026-07-13 22:50:22 [http-nio-8080-exec-4] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Customer profile successfully resolved for phone: '8770242812'
+2026-07-13 22:50:22 [http-nio-8080-exec-4] INFO  c.m.p.c.c.CustomerController - Returning profile for phone='8770242812' (name='null')
+2026-07-13 22:50:22 [http-nio-8080-exec-2] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully updated cart session ID: 39
+2026-07-13 22:50:22 [http-nio-8080-exec-2] INFO  c.m.p.cart.controller.CartController - Cart state successfully updated for phone: '8770242812'
+2026-07-13 22:50:29 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:50:40 [http-nio-8080-exec-6] INFO  c.m.p.cart.controller.CartController - Request: sync cart state for phone: '8770242812'
+2026-07-13 22:50:40 [http-nio-8080-exec-6] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8770242812
+2026-07-13 22:50:40 [http-nio-8080-exec-6] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Existing active cart found (ID: 39). Merging newer items and amount.
+2026-07-13 22:50:40 [http-nio-8080-exec-6] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully updated cart session ID: 39
+2026-07-13 22:50:40 [http-nio-8080-exec-6] INFO  c.m.p.cart.controller.CartController - Cart state successfully updated for phone: '8770242812'
+2026-07-13 22:50:42 [http-nio-8080-exec-5] INFO  c.m.p.cart.controller.CartController - Request: sync cart state for phone: '8770242812'
+2026-07-13 22:50:42 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8770242812
+2026-07-13 22:50:42 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Existing active cart found (ID: 39). Merging newer items and amount.
+2026-07-13 22:50:42 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully updated cart session ID: 39
+2026-07-13 22:50:42 [http-nio-8080-exec-5] INFO  c.m.p.cart.controller.CartController - Cart state successfully updated for phone: '8770242812'
+2026-07-13 22:50:49 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:50:53 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:51:09 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:51:29 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Request: place order for customer 'Neeraj'
+2026-07-13 22:51:29 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Processing order placement for customer: Neeraj
+2026-07-13 22:51:29 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Validating delivery address coordinates: Lat: 25.3776274, Lng: 83.0275999
+2026-07-13 22:51:29 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Place of Supply resolved. Is Intra-State (UP): true
+2026-07-13 22:51:29 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Deducting stock for Product ID: 2, Quantity: 1
+2026-07-13 22:51:29 [http-nio-8080-exec-5] INFO  c.m.p.p.s.impl.ProductServiceImpl - Attempting to deduct stock for product ID: 2 (Quantity: 1)
+2026-07-13 22:51:29 [http-nio-8080-exec-5] INFO  c.m.p.p.s.impl.ProductServiceImpl - Successfully deducted stock for product ID: 2 (Quantity: 1). Invalidating caches.
+2026-07-13 22:51:29 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Order saved in database with ID: 46
+2026-07-13 22:51:29 [http-nio-8080-exec-5] INFO  c.m.p.a.s.impl.AuditLogServiceImpl - Audit log written successfully: [PLACE_ORDER_COD] by user: 'anonymousUser' on entity: '46'
+2026-07-13 22:51:29 [http-nio-8080-exec-5] INFO  c.m.p.o.s.OrderNotificationService - Dispatching WhatsApp status notification (CONFIRMED) to phone: 8770242812
+2026-07-13 22:51:29 [http-nio-8080-exec-5] INFO  c.m.p.cart.service.TwilioService - [MOCK TWILIO WHATSAPP DISPATCH] Successfully triggered in DEV mode.
+2026-07-13 22:51:29 [http-nio-8080-exec-5] INFO  c.m.p.cart.service.TwilioService - From: whatsapp:+1234567890
+2026-07-13 22:51:29 [http-nio-8080-exec-5] INFO  c.m.p.cart.service.TwilioService - To: whatsapp:+918770242812
+2026-07-13 22:51:29 [http-nio-8080-exec-5] INFO  c.m.p.cart.service.TwilioService - Message Body:
+Óñ¿Óñ«Óñ©ÓÑìÓññÓÑç Neeraj! ÓñåÓñ¬ÓñòÓñ¥ MadhurGram ÓñæÓñ░ÓÑìÓñíÓñ░ (ID: MG-00046) ÓñòÓñ¿ÓÑìÓñ½Óñ░ÓÑìÓñ« Óñ╣ÓÑï ÓñùÓñ»Óñ¥ Óñ╣ÓÑêÓÑñ Óñ╣Óñ« ÓñçÓñ©ÓÑç Óñ£Óñ▓ÓÑìÓñª Óñ╣ÓÑÇ Óñ¬ÓÑêÓñò ÓñòÓñ░ÓñòÓÑç ÓñÂÓñ┐Óñ¬ ÓñòÓñ░ÓÑçÓñéÓñùÓÑçÓÑñ ÓñºÓñ¿ÓÑìÓñ»ÓñÁÓñ¥Óñª, ÓñƒÓÑÇÓñ« MadhurGram ­ƒÆø
+2026-07-13 22:51:29 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Publishing OrderConfirmedEvent for COD Order ID: 46
+2026-07-13 22:51:29 [http-nio-8080-exec-5] INFO  c.m.p.o.s.impl.OrderServiceImpl - Triggering cart recovery finalization for phone: 8770242812
+2026-07-13 22:51:29 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Marking cart as recovered for phone number: '8770242812'
+2026-07-13 22:51:29 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully marked cart ID: 39 as recovered for phone: '8770242812'
+2026-07-13 22:51:29 [http-nio-8080-exec-5] INFO  c.m.p.o.controller.OrderController - Order successfully placed with ID: 46
+2026-07-13 22:51:29 [task-1] INFO  c.m.p.o.l.OrderConfirmedListener - OrderConfirmedEvent received for Order ID: 46 - Auto-logistics booking disabled to wait for manual dispatch by Admin.
+2026-07-13 22:51:29 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:51:31 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:51:31 [http-nio-8080-exec-3] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:51:31 [http-nio-8080-exec-3] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:51:31 [http-nio-8080-exec-3] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:51:31 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:51:31 [http-nio-8080-exec-2] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:51:31 [http-nio-8080-exec-1] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:51:31 [http-nio-8080-exec-2] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:51:31 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:51:31 [http-nio-8080-exec-10] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:51:31 [http-nio-8080-exec-10] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:51:31 [http-nio-8080-exec-2] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:51:31 [http-nio-8080-exec-10] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:51:31 [http-nio-8080-exec-9] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:51:31 [http-nio-8080-exec-9] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:51:31 [http-nio-8080-exec-9] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:51:31 [http-nio-8080-exec-9] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:51:51 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:51:53 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:52:11 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:52:31 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:52:51 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:52:53 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:53:11 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:53:31 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:53:45 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:53:53 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:54:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-13 22:54:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-13 22:54:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-13 22:54:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-13 22:54:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-11T22:54:04.652982900)
+2026-07-13 22:54:53 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:54:59 [http-nio-8080-exec-4] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:54:59 [http-nio-8080-exec-4] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:54:59 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:54:59 [http-nio-8080-exec-4] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:54:59 [http-nio-8080-exec-2] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:54:59 [http-nio-8080-exec-2] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:54:59 [http-nio-8080-exec-10] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:54:59 [http-nio-8080-exec-2] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:54:59 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:54:59 [http-nio-8080-exec-6] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:54:59 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:54:59 [http-nio-8080-exec-10] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:54:59 [http-nio-8080-exec-10] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:54:59 [http-nio-8080-exec-10] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:54:59 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:54:59 [http-nio-8080-exec-5] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:54:59 [http-nio-8080-exec-5] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:54:59 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:55:16 [http-nio-8080-exec-7] INFO  c.m.p.c.c.CustomerController - Request: get customer profile for phone='8770242812'
+2026-07-13 22:55:16 [http-nio-8080-exec-7] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Request: fetch customer profile for phone: '8770242812'
+2026-07-13 22:55:16 [http-nio-8080-exec-7] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Customer profile successfully resolved for phone: '8770242812'
+2026-07-13 22:55:16 [http-nio-8080-exec-7] INFO  c.m.p.c.c.CustomerController - Returning profile for phone='8770242812' (name='null')
+2026-07-13 22:55:16 [http-nio-8080-exec-3] INFO  c.m.p.cart.controller.CartController - Request: sync cart state for phone: '8770242812'
+2026-07-13 22:55:16 [http-nio-8080-exec-3] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8770242812
+2026-07-13 22:55:16 [http-nio-8080-exec-3] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Creating a new abandoned cart session for phone: '8770242812'
+2026-07-13 22:55:16 [http-nio-8080-exec-3] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully updated cart session ID: 40
+2026-07-13 22:55:16 [http-nio-8080-exec-3] INFO  c.m.p.cart.controller.CartController - Cart state successfully updated for phone: '8770242812'
+2026-07-13 22:55:19 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:55:22 [http-nio-8080-exec-6] INFO  c.m.p.c.c.CustomerController - Request: delete address ID 19 for profile phone='8770242812'
+2026-07-13 22:55:22 [http-nio-8080-exec-6] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Request: delete address with ID: 19 for customer phone: '8770242812'
+2026-07-13 22:55:23 [http-nio-8080-exec-6] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Address ID: 19 successfully deleted from customer ID: 7
+2026-07-13 22:55:23 [http-nio-8080-exec-6] INFO  c.m.p.c.c.CustomerController - Address ID 19 successfully deleted from profile phone='8770242812'
+2026-07-13 22:55:39 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:55:49 [http-nio-8080-exec-5] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:55:49 [http-nio-8080-exec-5] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:55:49 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:55:49 [http-nio-8080-exec-5] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:55:49 [http-nio-8080-exec-3] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:55:49 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:55:49 [http-nio-8080-exec-1] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:55:49 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:55:49 [http-nio-8080-exec-3] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:55:49 [http-nio-8080-exec-3] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:55:49 [http-nio-8080-exec-4] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:55:49 [http-nio-8080-exec-4] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:55:49 [http-nio-8080-exec-3] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:55:49 [http-nio-8080-exec-4] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:55:49 [http-nio-8080-exec-6] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:55:49 [http-nio-8080-exec-6] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:55:49 [http-nio-8080-exec-6] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:55:49 [http-nio-8080-exec-6] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:55:58 [http-nio-8080-exec-10] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:55:58 [http-nio-8080-exec-10] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:55:58 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:55:58 [http-nio-8080-exec-10] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:55:58 [http-nio-8080-exec-8] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:55:58 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:55:58 [http-nio-8080-exec-8] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:55:58 [http-nio-8080-exec-5] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:55:58 [http-nio-8080-exec-5] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:55:58 [http-nio-8080-exec-8] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:55:59 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:55:59 [http-nio-8080-exec-1] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:55:59 [http-nio-8080-exec-1] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:55:59 [http-nio-8080-exec-5] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:55:59 [http-nio-8080-exec-4] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:55:59 [http-nio-8080-exec-4] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:55:59 [http-nio-8080-exec-4] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:55:59 [http-nio-8080-exec-4] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:56:09 [http-nio-8080-exec-6] INFO  c.m.p.c.c.CustomerController - Request: get customer profile for phone='8770242812'
+2026-07-13 22:56:09 [http-nio-8080-exec-6] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Request: fetch customer profile for phone: '8770242812'
+2026-07-13 22:56:09 [http-nio-8080-exec-6] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Customer profile successfully resolved for phone: '8770242812'
+2026-07-13 22:56:09 [http-nio-8080-exec-6] INFO  c.m.p.c.c.CustomerController - Returning profile for phone='8770242812' (name='null')
+2026-07-13 22:56:09 [http-nio-8080-exec-9] INFO  c.m.p.cart.controller.CartController - Request: sync cart state for phone: '8770242812'
+2026-07-13 22:56:09 [http-nio-8080-exec-9] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8770242812
+2026-07-13 22:56:09 [http-nio-8080-exec-9] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Existing active cart found (ID: 40). Merging newer items and amount.
+2026-07-13 22:56:09 [http-nio-8080-exec-9] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully updated cart session ID: 40
+2026-07-13 22:56:09 [http-nio-8080-exec-9] INFO  c.m.p.cart.controller.CartController - Cart state successfully updated for phone: '8770242812'
+2026-07-13 22:56:14 [http-nio-8080-exec-7] INFO  c.m.p.c.c.CustomerController - Request: delete address ID 8 for profile phone='8770242812'
+2026-07-13 22:56:14 [http-nio-8080-exec-7] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Request: delete address with ID: 8 for customer phone: '8770242812'
+2026-07-13 22:56:14 [http-nio-8080-exec-7] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Address ID: 8 successfully deleted from customer ID: 7
+2026-07-13 22:56:14 [http-nio-8080-exec-7] INFO  c.m.p.c.c.CustomerController - Address ID 8 successfully deleted from profile phone='8770242812'
+2026-07-13 22:56:18 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:56:39 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:56:59 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:57:15 [http-nio-8080-exec-8] INFO  c.m.p.c.c.CustomerController - Request: delete address ID 20 for profile phone='8770242812'
+2026-07-13 22:57:15 [http-nio-8080-exec-8] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Request: delete address with ID: 20 for customer phone: '8770242812'
+2026-07-13 22:57:15 [http-nio-8080-exec-8] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Address ID: 20 successfully deleted from customer ID: 7
+2026-07-13 22:57:15 [http-nio-8080-exec-8] INFO  c.m.p.c.c.CustomerController - Address ID 20 successfully deleted from profile phone='8770242812'
+2026-07-13 22:57:18 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:57:39 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:57:59 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:58:19 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:58:25 [http-nio-8080-exec-7] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:58:25 [http-nio-8080-exec-7] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:58:25 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:58:25 [http-nio-8080-exec-7] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:58:25 [http-nio-8080-exec-3] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:58:25 [http-nio-8080-exec-3] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:58:25 [http-nio-8080-exec-1] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:58:25 [http-nio-8080-exec-3] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:58:25 [http-nio-8080-exec-5] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 22:58:25 [http-nio-8080-exec-5] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 22:58:25 [http-nio-8080-exec-5] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 22:58:25 [http-nio-8080-exec-1] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:58:25 [http-nio-8080-exec-1] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:58:25 [http-nio-8080-exec-1] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:58:25 [http-nio-8080-exec-6] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 22:58:25 [http-nio-8080-exec-6] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 22:58:25 [http-nio-8080-exec-6] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 22:58:25 [http-nio-8080-exec-6] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 22:58:38 [http-nio-8080-exec-2] INFO  c.m.p.c.c.CustomerController - Request: get customer profile for phone='8542047373'
+2026-07-13 22:58:38 [http-nio-8080-exec-2] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Request: fetch customer profile for phone: '8542047373'
+2026-07-13 22:58:38 [http-nio-8080-exec-2] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Customer profile successfully resolved for phone: '8542047373'
+2026-07-13 22:58:38 [http-nio-8080-exec-2] INFO  c.m.p.c.c.CustomerController - Returning profile for phone='8542047373' (name='null')
+2026-07-13 22:58:38 [http-nio-8080-exec-9] INFO  c.m.p.cart.controller.CartController - Request: sync cart state for phone: '8542047373'
+2026-07-13 22:58:38 [http-nio-8080-exec-9] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8542047373
+2026-07-13 22:58:38 [http-nio-8080-exec-9] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Creating a new abandoned cart session for phone: '8542047373'
+2026-07-13 22:58:38 [http-nio-8080-exec-9] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully updated cart session ID: 41
+2026-07-13 22:58:38 [http-nio-8080-exec-9] INFO  c.m.p.cart.controller.CartController - Cart state successfully updated for phone: '8542047373'
+2026-07-13 22:58:41 [http-nio-8080-exec-7] INFO  c.m.p.c.c.CustomerController - Request: delete address ID 6 for profile phone='8542047373'
+2026-07-13 22:58:41 [http-nio-8080-exec-7] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Request: delete address with ID: 6 for customer phone: '8542047373'
+2026-07-13 22:58:41 [http-nio-8080-exec-7] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Address ID: 6 successfully deleted from customer ID: 5
+2026-07-13 22:58:41 [http-nio-8080-exec-7] INFO  c.m.p.c.c.CustomerController - Address ID 6 successfully deleted from profile phone='8542047373'
+2026-07-13 22:58:45 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:59:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-13 22:59:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-13 22:59:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-13 22:59:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-13 22:59:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-11T22:59:04.452109500)
+2026-07-13 22:59:05 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:59:25 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 22:59:45 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:00:05 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:00:25 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:00:53 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:01:53 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:02:02 [http-nio-8080-exec-7] INFO  c.m.p.c.c.CustomerController - Request: get customer profile for phone='8542047373'
+2026-07-13 23:02:02 [http-nio-8080-exec-7] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Request: fetch customer profile for phone: '8542047373'
+2026-07-13 23:02:02 [http-nio-8080-exec-7] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Customer profile successfully resolved for phone: '8542047373'
+2026-07-13 23:02:02 [http-nio-8080-exec-7] INFO  c.m.p.c.c.CustomerController - Returning profile for phone='8542047373' (name='null')
+2026-07-13 23:02:03 [http-nio-8080-exec-5] INFO  c.m.p.cart.controller.CartController - Request: sync cart state for phone: '8542047373'
+2026-07-13 23:02:03 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8542047373
+2026-07-13 23:02:03 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Existing active cart found (ID: 41). Merging newer items and amount.
+2026-07-13 23:02:03 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully updated cart session ID: 41
+2026-07-13 23:02:03 [http-nio-8080-exec-5] INFO  c.m.p.cart.controller.CartController - Cart state successfully updated for phone: '8542047373'
+2026-07-13 23:02:05 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:02:25 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:02:45 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:02:45 [http-nio-8080-exec-7] INFO  c.m.p.cart.controller.CartController - Request: sync cart state for phone: '8542047373'
+2026-07-13 23:02:45 [http-nio-8080-exec-7] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8542047373
+2026-07-13 23:02:45 [http-nio-8080-exec-7] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Existing active cart found (ID: 41). Merging newer items and amount.
+2026-07-13 23:02:45 [http-nio-8080-exec-7] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully updated cart session ID: 41
+2026-07-13 23:02:45 [http-nio-8080-exec-7] INFO  c.m.p.cart.controller.CartController - Cart state successfully updated for phone: '8542047373'
+2026-07-13 23:02:59 [http-nio-8080-exec-5] INFO  c.m.p.c.c.CustomerController - Request: add address type HOME to profile phone='8542047373'
+2026-07-13 23:02:59 [http-nio-8080-exec-5] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Adding new delivery address to customer profile with phone: '8542047373'
+2026-07-13 23:02:59 [http-nio-8080-exec-5] INFO  c.m.p.c.s.impl.CustomerServiceImpl - New address is set as default. Clearing default flag from other addresses for customer ID: 5
+2026-07-13 23:02:59 [http-nio-8080-exec-5] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Address successfully added to customer ID: 5
+2026-07-13 23:02:59 [http-nio-8080-exec-5] INFO  c.m.p.c.c.CustomerController - Address successfully added to profile phone='8542047373'
+2026-07-13 23:03:05 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:03:25 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:03:45 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:04:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-13 23:04:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-13 23:04:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-13 23:04:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-13 23:04:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-11T23:04:04.429686700)
+2026-07-13 23:04:05 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:04:25 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:04:30 [http-nio-8080-exec-4] INFO  c.m.p.c.c.CustomerController - Request: get customer profile for phone='9889847205'
+2026-07-13 23:04:30 [http-nio-8080-exec-4] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Request: fetch customer profile for phone: '9889847205'
+2026-07-13 23:04:30 [http-nio-8080-exec-4] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Customer record not found. Auto-registering profile for phone: '9889847205'
+2026-07-13 23:04:30 [http-nio-8080-exec-4] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Customer profile successfully resolved for phone: '9889847205'
+2026-07-13 23:04:30 [http-nio-8080-exec-4] INFO  c.m.p.c.c.CustomerController - Returning profile for phone='9889847205' (name='null')
+2026-07-13 23:04:30 [http-nio-8080-exec-6] INFO  c.m.p.cart.controller.CartController - Request: sync cart state for phone: '9889847205'
+2026-07-13 23:04:30 [http-nio-8080-exec-6] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 9889847205
+2026-07-13 23:04:30 [http-nio-8080-exec-6] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Creating a new abandoned cart session for phone: '9889847205'
+2026-07-13 23:04:30 [http-nio-8080-exec-6] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully updated cart session ID: 42
+2026-07-13 23:04:30 [http-nio-8080-exec-6] INFO  c.m.p.cart.controller.CartController - Cart state successfully updated for phone: '9889847205'
+2026-07-13 23:04:36 [http-nio-8080-exec-8] INFO  c.m.p.cart.controller.CartController - Request: sync cart state for phone: '9889847205'
+2026-07-13 23:04:36 [http-nio-8080-exec-8] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 9889847205
+2026-07-13 23:04:36 [http-nio-8080-exec-8] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Existing active cart found (ID: 42). Merging newer items and amount.
+2026-07-13 23:04:36 [http-nio-8080-exec-8] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully updated cart session ID: 42
+2026-07-13 23:04:36 [http-nio-8080-exec-8] INFO  c.m.p.cart.controller.CartController - Cart state successfully updated for phone: '9889847205'
+2026-07-13 23:04:45 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:05:05 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:05:16 [http-nio-8080-exec-4] INFO  c.m.p.c.c.CustomerController - Request: add address type HOME to profile phone='9889847205'
+2026-07-13 23:05:16 [http-nio-8080-exec-4] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Adding new delivery address to customer profile with phone: '9889847205'
+2026-07-13 23:05:16 [http-nio-8080-exec-4] INFO  c.m.p.c.s.impl.CustomerServiceImpl - New address is set as default. Clearing default flag from other addresses for customer ID: 32
+2026-07-13 23:05:16 [http-nio-8080-exec-4] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Address successfully added to customer ID: 32
+2026-07-13 23:05:16 [http-nio-8080-exec-4] INFO  c.m.p.c.c.CustomerController - Address successfully added to profile phone='9889847205'
+2026-07-13 23:05:25 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:05:45 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:06:05 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:06:25 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:06:53 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:07:53 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:08:26 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:08:50 [http-nio-8080-exec-9] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 23:08:50 [http-nio-8080-exec-9] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 23:08:50 [http-nio-8080-exec-9] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 23:08:50 [http-nio-8080-exec-9] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 23:08:53 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:09:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-13 23:09:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-13 23:09:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-13 23:09:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-13 23:09:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-11T23:09:04.435884700)
+2026-07-13 23:09:15 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:09:18 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:09:18 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 23:09:18 [http-nio-8080-exec-6] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 23:09:18 [http-nio-8080-exec-6] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 23:09:18 [http-nio-8080-exec-8] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 23:09:18 [http-nio-8080-exec-8] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 23:09:18 [http-nio-8080-exec-2] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 23:09:18 [http-nio-8080-exec-8] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 23:09:18 [http-nio-8080-exec-9] INFO  c.m.p.f.c.CustomerFeedbackController - Request: fetch public testimonials
+2026-07-13 23:09:18 [http-nio-8080-exec-9] INFO  c.m.p.f.s.impl.FeedbackServiceImpl - Retrieving top 8 positive testimonials with 4+ star ratings
+2026-07-13 23:09:18 [http-nio-8080-exec-2] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 23:09:18 [http-nio-8080-exec-9] INFO  c.m.p.f.c.CustomerFeedbackController - Returning 2 testimonials
+2026-07-13 23:09:18 [http-nio-8080-exec-2] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 23:09:18 [http-nio-8080-exec-2] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 23:09:18 [http-nio-8080-exec-7] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all
+2026-07-13 23:09:18 [http-nio-8080-exec-7] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-13 23:09:18 [http-nio-8080-exec-7] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-13 23:09:18 [http-nio-8080-exec-7] INFO  c.m.p.p.controller.ProductController - Returning 14 product(s) for category: shop-all
+2026-07-13 23:09:29 [http-nio-8080-exec-5] INFO  c.m.p.cart.controller.CartController - Request: sync cart state for phone: '5525222222'
+2026-07-13 23:09:29 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 5525222222
+2026-07-13 23:09:29 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Creating a new abandoned cart session for phone: '5525222222'
+2026-07-13 23:09:29 [http-nio-8080-exec-5] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully updated cart session ID: 43
+2026-07-13 23:09:29 [http-nio-8080-exec-5] INFO  c.m.p.cart.controller.CartController - Cart state successfully updated for phone: '5525222222'
+2026-07-13 23:09:38 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:09:39 [http-nio-8080-exec-6] INFO  c.m.p.c.c.CustomerController - Request: get customer profile for phone='8770242812'
+2026-07-13 23:09:39 [http-nio-8080-exec-6] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Request: fetch customer profile for phone: '8770242812'
+2026-07-13 23:09:39 [http-nio-8080-exec-6] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Customer profile successfully resolved for phone: '8770242812'
+2026-07-13 23:09:39 [http-nio-8080-exec-6] INFO  c.m.p.c.c.CustomerController - Returning profile for phone='8770242812' (name='null')
+2026-07-13 23:09:39 [http-nio-8080-exec-9] INFO  c.m.p.cart.controller.CartController - Request: sync cart state for phone: '8770242812'
+2026-07-13 23:09:39 [http-nio-8080-exec-9] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8770242812
+2026-07-13 23:09:39 [http-nio-8080-exec-9] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Existing active cart found (ID: 40). Merging newer items and amount.
+2026-07-13 23:09:39 [http-nio-8080-exec-9] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully updated cart session ID: 40
+2026-07-13 23:09:39 [http-nio-8080-exec-9] INFO  c.m.p.cart.controller.CartController - Cart state successfully updated for phone: '8770242812'
+2026-07-13 23:09:45 [http-nio-8080-exec-7] INFO  c.m.p.cart.controller.CartController - Request: sync cart state for phone: '8770242812'
+2026-07-13 23:09:45 [http-nio-8080-exec-7] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Updating cart state for phone number: 8770242812
+2026-07-13 23:09:45 [http-nio-8080-exec-7] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Existing active cart found (ID: 40). Merging newer items and amount.
+2026-07-13 23:09:45 [http-nio-8080-exec-7] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Successfully updated cart session ID: 40
+2026-07-13 23:09:45 [http-nio-8080-exec-7] INFO  c.m.p.cart.controller.CartController - Cart state successfully updated for phone: '8770242812'
+2026-07-13 23:09:58 [http-nio-8080-exec-3] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:10:14 [http-nio-8080-exec-4] INFO  c.m.p.c.c.CustomerController - Request: add address type HOME to profile phone='8770242812'
+2026-07-13 23:10:14 [http-nio-8080-exec-4] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Adding new delivery address to customer profile with phone: '8770242812'
+2026-07-13 23:10:14 [http-nio-8080-exec-4] INFO  c.m.p.c.s.impl.CustomerServiceImpl - New address is set as default. Clearing default flag from other addresses for customer ID: 7
+2026-07-13 23:10:14 [http-nio-8080-exec-4] INFO  c.m.p.c.s.impl.CustomerServiceImpl - Address successfully added to customer ID: 7
+2026-07-13 23:10:14 [http-nio-8080-exec-4] INFO  c.m.p.c.c.CustomerController - Address successfully added to profile phone='8770242812'
+2026-07-13 23:10:18 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:10:38 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:10:58 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:11:18 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:11:38 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:11:58 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:12:53 [http-nio-8080-exec-10] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:13:53 [http-nio-8080-exec-4] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:14:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-13 23:14:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-13 23:14:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-13 23:14:04 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-13 23:14:04 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-11T23:14:04.437872200)
+2026-07-13 23:14:53 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:15:03 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-13 23:15:18 [http-nio-8080-exec-7] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'

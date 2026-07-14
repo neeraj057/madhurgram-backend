@@ -109,6 +109,8 @@ public class AdminProductServiceImpl implements AdminProductService {
                 .isActive(dto.getIsActive() != null ? dto.getIsActive() : true)
                 .tag(dto.getTag())
                 .rating(dto.getRating() != null ? dto.getRating() : java.math.BigDecimal.valueOf(4.8))
+                .showSalesCount(dto.getShowSalesCount() != null ? dto.getShowSalesCount() : false)
+                .salesCount(dto.getSalesCount() != null ? dto.getSalesCount() : 0)
                 .hsnTaxMaster(hsn)
                 .build();
         
@@ -158,6 +160,12 @@ public class AdminProductServiceImpl implements AdminProductService {
         product.setTag(dto.getTag());
         if (dto.getRating() != null) {
             product.setRating(dto.getRating());
+        }
+        if (dto.getShowSalesCount() != null) {
+            product.setShowSalesCount(dto.getShowSalesCount());
+        }
+        if (dto.getSalesCount() != null) {
+            product.setSalesCount(dto.getSalesCount());
         }
         
         if (dto.getIsActive() != null) {

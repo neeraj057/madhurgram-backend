@@ -49,6 +49,17 @@ public class Product {
     @Column(name = "rating", precision = 3, scale = 2)
     private java.math.BigDecimal rating = java.math.BigDecimal.valueOf(4.8);
 
+    @Builder.Default
+    @Column(name = "show_sales_count")
+    private Boolean showSalesCount = false;
+
+    @Builder.Default
+    @Column(name = "sales_count")
+    private Integer salesCount = 0;
+
+    @org.hibernate.annotations.Formula("(SELECT COALESCE(SUM(oi.quantity), 0) FROM order_items oi JOIN orders o ON oi.order_id = o.id WHERE oi.product_id = id AND o.order_status != 'CANCELLED')")
+    private Integer realSalesCount;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "hsn_code", referencedColumnName = "hsn_code", nullable = true)
     private HsnTaxMaster hsnTaxMaster;
