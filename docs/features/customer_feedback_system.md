@@ -1,147 +1,77 @@
-# 💬 Smart Customer Feedback System with Photo Uploads & Testimonials
+# 💬 MadhurGram Customer Review & Anti-Spam Security System
 
-This feature implements a customer feedback pipeline featuring a visual emoji selector, contextual suggestion chips matching to client orders, photo uploads of product packaging/bottles, storefront home testimonials showcases, and an administrative console showing sentiment distributions.
-
----
-
-## 🏗️ Technical Architecture & Directory Structure
-
-```mermaid
-graph TD
-    Client(Customer Browser /feedback) -->|POST /api/public/feedback| Controller[CustomerFeedbackController]
-    Client -->|POST /api/public/feedback/upload| Controller
-    Client -->|GET /api/public/feedback/suggestions| Controller
-    Controller -->|Save Records| DB[(MySQL Database)]
-    Controller -->|Save Image Files| Storage[uploads/feedback/ Folder]
-    Admin(Admin Review Console) -->|GET /api/admin/feedback| Controller
-    Storefront(Storefront Home Page) -->|GET /api/public/feedback/testimonials| Controller
-```
-
-### Files Created/Modified
-
-#### Backend (Spring Boot - Port 8080)
-* **JPA Entity**: [CustomerFeedback.java](file:///d:/MadhurGram/product-service/src/main/java/com/madhurgram/productservice/feedback/entity/CustomerFeedback.java)
-* **Repository**: [CustomerFeedbackRepository.java](file:///d:/MadhurGram/product-service/src/main/java/com/madhurgram/productservice/feedback/repository/CustomerFeedbackRepository.java)
-* **Controller**: [CustomerFeedbackController.java](file:///d:/MadhurGram/product-service/src/main/java/com/madhurgram/productservice/feedback/controller/CustomerFeedbackController.java)
-* **MVC Configuration**: [WebMvcConfig.java](file:///d:/MadhurGram/product-service/src/main/java/com/madhurgram/productservice/config/WebMvcConfig.java) (Modified to map static uploads)
-* **Security Rules**: [SecurityConfig.java](file:///d:/MadhurGram/product-service/src/main/java/com/madhurgram/productservice/security/SecurityConfig.java) (Modified to permit public submission paths)
-* **Notification Templates**: [OrderNotificationService.java](file:///d:/MadhurGram/product-service/src/main/java/com/madhurgram/productservice/order/service/OrderNotificationService.java) (Modified to append dynamic orderIds to feedback messages)
-
-#### Frontend (Next.js - Port 3000)
-* **Custom React Hook**: [useAdminFeedback.ts](file:///c:/Users/victus/madhurgram-frontend/src/hooks/useAdminFeedback.ts)
-* **Customer Review Form Page**: [page.tsx](file:///c:/Users/victus/madhurgram-frontend/src/app/feedback/page.tsx)
-* **Admin Review Console Dashboard**: [page.tsx](file:///c:/Users/victus/madhurgram-frontend/src/app/admin/feedback/page.tsx)
-* **Storefront Testimonials Section**: [TestimonialsSection.tsx](file:///c:/Users/victus/madhurgram-frontend/src/components/features/feedback/TestimonialsSection.tsx)
-* **Admin Navigation menu**: [AdminSidebar.tsx](file:///c:/Users/victus/madhurgram-frontend/src/components/common/AdminSidebar.tsx) (Modified to link reviews page)
-* **Storefront Homepage Layout**: [page.tsx](file:///c:/Users/victus/madhurgram-frontend/src/app/page.tsx) (Modified to mount reviews)
+इस दस्तावेज़ में **कस्टमर फीडबैक सिस्टम**, **एडमिन मॉडरेशन कतार (Moderation Queue)**, और **एंटी-बोट सुरक्षा (Anti-Spam Shield)** के काम करने के तरीके को बेहद आसान भाषा में समझाया गया है।
 
 ---
 
-## 🗄️ Database Schema Mapping
+## 1. रिव्यूज कैसे काम करते हैं? (Review Collection Loop)
 
-### Table: `customer_feedbacks`
-| Column Name | Data Type | Constraints | Description |
-| :--- | :--- | :--- | :--- |
-| `id` | `BIGINT` | PRIMARY KEY, AUTO_INCREMENT | Auto-generated review identifier. |
-| `order_id` | `BIGINT` | NULLABLE | Maps feedback to a specific order ID for context. |
-| `customer_name` | `VARCHAR(150)` | NOT NULL | Customer name who wrote the review. |
-| `sentiment` | `VARCHAR(50)` | NOT NULL | Sentiment categorizations: `LOVED_IT`, `HAPPY`, `NEUTRAL`, `SAD`, `ANGRY`. |
-| `rating` | `INT` | NOT NULL | Stars given (scale of 1 to 5). |
-| `feedback_text` | `VARCHAR(1000)` | NULLABLE | Detailed written comment review. |
-| `selected_chips` | `VARCHAR(1000)` | NULLABLE | Comma-separated quick selection suggestion chips. |
-| `product_image_url` | `VARCHAR(1000)` | NULLABLE | HTTP URL pointing to user's uploaded bottle/packaging image. |
-| `created_at` | `TIMESTAMP` | NOT NULL | Record creation date and time. |
+हमारे सिस्टम में रिव्यूज दो तरीकों से सबमिट किए जा सकते हैं:
+
+### A. एसएमएस डिलीवरी लिंक (Verified Buyer Flow - सोने का बैज 💛)
+1. जब एडमिन आर्डर का स्टेटस बदलकर **`DELIVERED`** करता है, तो ग्राहक को ऑटोमैटिक एक SMS लिंक जाता है: `feedback?orderId=123`।
+2. इस लिंक से दिया गया रिव्यू **सत्यापित (Verified)** माना जाता है।
+3. **परिणाम:** यह रिव्यू सीधे होमपेज पर ऑटो-अप्रूव हो जाता है और इस पर सोने का **`Verified Buyer`** बैज दिखता है।
+
+### B. होमपेज डायरेक्ट बटन (Community Reviewer Flow - हरा बैज 🌱)
+1. ग्राहक होमपेज पर **"Write A Review"** बटन पर क्लिक करके सीधे अपना नाम, रेटिंग और फोटो भरकर रिव्यू दे सकता है।
+2. **परिणाम:** यह रिव्यू सीधे लाइव नहीं होता। यह एडमिन के पास **Pending** स्थिति में जाता है और अप्रूव होने के बाद ही होमपेज पर दिखता है। इस पर **`Community Reviewer`** बैज दिखता है।
 
 ---
 
-## 🔌 REST APIs & Endpoints
+## 2. एडमिन मॉडरेशन कंट्रोल (Admin Moderation Queue)
 
-### 1. Submit Customer Feedback
-* **URL**: `POST /api/public/feedback`
-* **Access**: Public
-* **Payload**:
-```json
-{
-  "orderId": 28,
-  "customerName": "Neeraj Patel",
-  "sentiment": "LOVED_IT",
-  "rating": 5,
-  "feedbackText": "Desi ghee ki khushboo aur daanedar texture sach mein asardaar hai!",
-  "selectedChips": "Desi Ghee ka swad sach mein lajawab aur shuddh hai! 💛,Packaging bohot surakshit aur clean thi.",
-  "productImageUrl": "http://localhost:8080/uploads/feedback/abcd-1234-uuid.jpg"
-}
-```
-
-### 2. Upload Customer Product/Bottle Photo
-* **URL**: `POST /api/public/feedback/upload`
-* **Access**: Public
-* **Request Type**: `multipart/form-data`
-* **Response**:
-```json
-{
-  "url": "http://localhost:8080/uploads/feedback/uuid-filename.png"
-}
-```
-
-### 3. Fetch Contextual Review Suggestion Chips
-* **URL**: `GET /api/public/feedback/suggestions?orderId={id}`
-* **Access**: Public
-* **Mechanism**: Inspects ordered items matching the ID. Returns products-specific suggestion text chips (such as Desi Ghee reviews or Mithai reviews) alongside generic delivery suggestions.
-
-### 4. Fetch Positive Testimonials for Storefront
-* **URL**: `GET /api/public/feedback/testimonials`
-* **Access**: Public
-* **Response**: Returns up to 8 of the latest positive customer feedbacks (rating >= 4) with their comments, ratings, emojis, names, and uploaded packaging images.
-
-### 5. Admin Review Console Data Fetch
-* **URL**: `GET /api/admin/feedback`
-* **Access**: Authenticated (Admin role)
-* **Response**: List of all feedbacks ordered by creation timestamp descending.
+एडमिन पैनल के **`Customer Feedbacks`** सेक्शन में आपको पूर्ण नियंत्रण मिलता है:
+* **Pending Approval टैब:** यहाँ उन ग्राहकों के रिव्यूज दिखेंगे जिन्होंने सीधे होमपेज से रिव्यू सबमिट किया है।
+* **✓ Approve Button:** इसे दबाते ही पेंडिंग रिव्यू तुरंत लाइव हो जाएगा और होमपेज के स्क्रॉलिंग स्लाइडर में दिखने लगेगा।
+* **🗑 Reject / Delete Button:** अगर कोई फालतू या स्पैम रिव्यू है, तो उसे यहाँ से हमेशा के लिए डिलीट किया जा सकता है।
 
 ---
 
-## ⚙️ Static Image Upload Resource Mapping
+## 3. बोट और स्पैम सुरक्षा (Anti-Spam Security Guards)
 
-To serve user-uploaded images dynamically without losing files on server builds, Spring MVC mappings are overridden inside `WebMvcConfig.java`:
+सार्वजनिक रिव्यूज (Public Reviews) को स्पैमर्स और कंप्यूटर बोट्स से सुरक्षित रखने के लिए हमने बैकएंड में 2 मजबूत गार्ड लगाए हैं:
 
-```java
-@Override
-public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    registry.addResourceHandler("/uploads/**")
-            .addResourceLocations("file:uploads/");
-}
-```
-* **Storage Location**: Uploads are saved into an external `uploads/feedback` folder inside the workspace root.
-* **Access URL**: Accessible via `http://localhost:8080/uploads/feedback/{filename}`.
+### 🛡️ A. हनीपॉट सुरक्षा (The Honeypot Guard)
+* **क्या है:** फॉर्म के अंदर एक अदृश्य सीक्रेट इनपुट बॉक्स (`emailConfirm`) छुपाया गया है।
+* **काम करने का तरीका:** यह असली इंसानों को नहीं दिखेगा, इसलिए असली ग्राहक इसे खाली छोड़ देंगे। लेकिन स्पैम बोट्स (जो कोड पढ़कर फॉर्म भरते हैं) इसे असली इनपुट समझकर भर देंगे।
+* **कार्रवाई:** जैसे ही जावा बैकएंड देखेगा कि यह सीक्रेट बॉक्स भरा हुआ है, वह उसे बिना डेटाबेस में सेव किए तुरंत रिजेक्ट कर देगा।
 
----
-
-## 🎨 Frontend UI Highlights
-
-### 1. Tap-and-Go Emoji Page (`/feedback?orderId={id}`)
-* Interactive emoji select row (`😡`, `😢`, `😐`, `🙂`, `😍`).
-* Selecting high sentiment values (`Happy`, `Loved it`) submits with 1-click speed.
-* Selecting neutral or poor sentiment dynamically reveals comments textarea.
-* Context-aware suggestions fetch chips depending on order contents.
-* Integrates a visual camera-dropzone to let customers snap and upload product files.
-* Confetti overlay triggers on submission.
-
-### 2. Admin Reviews Console (`/admin/feedback`)
-* Metric scoreboard mapping: average score gauges, total counts, and sentiment percentage charts.
-* Interactive lists showing review text, suggestions list tags, verified links to corresponding order pipelines, and image previews (opens in new tab on click).
-* Custom sentiment tabs and search filter inputs.
-
-### 3. Storefront Reviews Section (Home Page)
-* Blended dark theme mapping styled to match the storefront brand.
-* Interactive 3D hover-effect cards showing gold rating stars, sentiment emojis, customer text comments, verified badges, and client product photos.
+### 🛡️ B. आईपी रेट लिमिटर (IP Rate Limiter Guard)
+* **क्या है:** प्रति कंप्यूटर/आईपी एड्रेस पर अनुरोधों की सीमा।
+* **काम करने का तरीका:** एक आईपी एड्रेस से **1 मिनट में अधिकतम 5 रिव्यूज** ही सबमिट किए जा सकते हैं।
+* **कार्रवाई:** अगर कोई बोट स्क्रिप्ट चलाकर तेजी से रिव्यूज सबमिट करने की कोशिश करेगा, तो सर्वर उसे `429 Too Many Requests` एरर देकर तुरंत ब्लॉक कर देगा।
 
 ---
 
-## 🔎 How to Verify (E2E Testing Workflow)
+## 4. प्रीमियम होमपेज स्क्रॉलिंग स्लाइडर (Twin-Row Scrolling Slider)
 
-1. Place or find an order ID (e.g. `28`).
-2. Navigate to `http://localhost:3000/feedback?orderId=28`.
-3. Select an emoji rating, select suggestions, upload a mock bottle/packaging picture, add a comment, and submit.
-4. Verify that the confetti success modal displays.
-5. Log into the admin portal and navigate to `/admin/feedback`. Verify that reviews, graphs, and the photo preview thumbnail display.
-6. Open `http://localhost:3000/` and verify that the photo testimonial card is displayed on the main page.
+होमपेज पर रिव्यूज को व्यवस्थित और प्रीमियम दिखाने के लिए हमने ग्रिड लेआउट को हटाकर **डबल ट्रैक स्लाइडर** बनाया है:
+* **Locked Height:** चाहे वेबसाइट पर 5 रिव्यूज हों या 500, यह स्लाइडर होमपेज पर हमेशा एक समान जगह ही लेगा। इससे आपका होमपेज नीचे की तरफ अंतहीन नहीं खिंचेगा।
+* **Twin Track:** पहली लाइन बाईं ओर (Left) और दूसरी लाइन दाईं ओर (Right) विपरीत दिशा में घूमती हैं।
+* **Hover Effect:** माउस या टच को किसी भी रिव्यू पर ले जाने पर पूरा ट्रैक रुक जाता है ताकि आप आराम से रिव्यू पढ़ सकें।
+
+---
+
+## 5. हाइब्रिड सेल्स काउंटर (Real + Boost Counter)
+
+हर प्रोडक्ट के ऊपर दिखने वाला **Bestseller Counter** अब हाइब्रिड है:
+$$\text{कुल बिक्री संख्या} = \text{वास्तविक आर्डर} + \text{एडमिन बूस्ट संख्या}$$
+* **असली ऑर्डर्स:** सिस्टम बिना किसी लैग के डेटाबेस से बिकी हुई रियल क्वांटिटी ट्रैक करता है।
+* **बूस्ट संख्या:** एडमिन पैनल में इन्वेंटरी में जाकर आप कस्टमाइज़ कर सकते हैं। (उदाहरण: `1000` बूस्ट + `5` असली = `1005+ bought` दिखेगा)।
+
+---
+
+## 🔎 हाउ टू टेस्ट? (E2E Verification Steps)
+
+### स्टेप 1: रेट लिमिटर की जांच (Test Rate Limiting)
+1. होमपेज पर जाएं, "Write A Review" पर क्लिक करें और 5 रिव्यूज तेजी से लगातार सबमिट करें।
+2. छठे प्रयास पर आपको स्क्रीन पर बोट सुरक्षा चेतावनी का एरर दिखेगा और रिव्यू सबमिट नहीं होगा।
+
+### स्टेप 2: मॉडरेशन की जांच (Test Admin Moderation)
+1. होमपेज से एक रिव्यू सबमिट करें।
+2. होमपेज रिफ्रेश करके चेक करें—वह रिव्यू स्लाइडर में **नहीं** दिखेगा (चूंकि वह पेंडिंग है)।
+3. एडमिन पैनल में `/admin/feedback` पर जाएं।
+4. आपको वह रिव्यू **Pending Approval** टैब में दिखेगा।
+5. **Approve** बटन पर क्लिक करें।
+6. होमपेज पर लौटें—रिव्यू अब लाइव स्लाइडर में हरे रंग के `Community Reviewer` बैज के साथ घूमता हुआ दिखाई देगा!

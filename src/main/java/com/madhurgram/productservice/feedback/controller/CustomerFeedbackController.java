@@ -2,6 +2,7 @@ package com.madhurgram.productservice.feedback.controller;
 
 import com.madhurgram.productservice.feedback.dto.CustomerFeedbackDTO;
 import com.madhurgram.productservice.feedback.service.FeedbackService;
+import com.madhurgram.productservice.security.IpRateLimiter;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -36,6 +37,7 @@ public class CustomerFeedbackController {
     private static final String UPLOAD_SUBPATH = "/uploads/feedback/";
 
     private final FeedbackService feedbackService;
+    private final IpRateLimiter ipRateLimiter;
 
     @Value("${madhurgram.app.backend-url:http://localhost:8080}")
     private String backendUrl;
@@ -44,9 +46,11 @@ public class CustomerFeedbackController {
      * Constructor injection for CustomerFeedbackController.
      *
      * @param feedbackService feedback management service
+     * @param ipRateLimiter   rate limiting component
      */
-    public CustomerFeedbackController(FeedbackService feedbackService) {
+    public CustomerFeedbackController(FeedbackService feedbackService, IpRateLimiter ipRateLimiter) {
         this.feedbackService = feedbackService;
+        this.ipRateLimiter = ipRateLimiter;
     }
 
     /**
@@ -57,8 +61,30 @@ public class CustomerFeedbackController {
      */
     @PostMapping("/public/feedback")
     @Operation(summary = "Submit new feedback", description = "Allows a customer to submit their rating, comments, and order references.")
-    public ResponseEntity<CustomerFeedbackDTO> submitFeedback(@RequestBody CustomerFeedbackDTO dto) {
-        log.info("Feedback submission request: Rating={}, Order ID={}", dto.getRating(), dto.getOrderId());
+    public ResponseEntity<?> submitFeedback(
+            @RequestBody CustomerFeedbackDTO dto,
+            jakarta.servlet.http.HttpServletRequest request) {
+
+        String ipAddress = request.getHeader("X-Forwarded-For");
+        if (ipAddress == null || ipAddress.isEmpty() || "unknown".equalsIgnoreCase(ipAddress)) {
+            ipAddress = request.getRemoteAddr();
+        }
+
+        // 1. IP Rate Limiting Verification
+        if (!ipRateLimiter.isAllowed(ipAddress)) {
+            log.warn("Rate limit exceeded for client IP: {}", ipAddress);
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
+                    .body(Map.of(ERROR_KEY, "बोट सुरक्षा: बहुत सारे अनुरोध। कृपया 1 मिनट बाद पुनः प्रयास करें।"));
+        }
+
+        // 2. Honeypot Spam Verification
+        if (dto.getEmailConfirm() != null && !dto.getEmailConfirm().trim().isEmpty()) {
+            log.warn("Spam bot detected via Honeypot field filled: '{}'", dto.getEmailConfirm());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of(ERROR_KEY, "सुरक्षा चेतावनी: अमान्य डेटा प्रविष्टि।"));
+        }
+
+        log.info("Feedback submission request: Rating={}, Order ID={}, IP={}", dto.getRating(), dto.getOrderId(), ipAddress);
         CustomerFeedbackDTO saved = feedbackService.submitFeedback(dto);
         log.info("Feedback successfully saved with ID: {}", saved.getId());
         return ResponseEntity.ok(saved);

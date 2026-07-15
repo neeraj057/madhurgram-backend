@@ -18,4 +18,5 @@ public class CustomerFeedbackDTO {
     private String productImageUrl;
     private LocalDateTime createdAt;
     private Boolean isApproved;
+    private String emailConfirm;
 }
