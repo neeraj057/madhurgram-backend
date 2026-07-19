@@ -2,13 +2,17 @@ package com.madhurgram.productservice.admin.service;
 
 import com.madhurgram.productservice.product.dto.ProductDTO;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface AdminProductService {
     // list of all products including inactive ones
     List<ProductDTO> getAllProductsForAdmin();
+    Page<ProductDTO> getAllProductsForAdmin(Pageable pageable);
 
     // list of all active products for public
     List<ProductDTO> getAllActiveProductsForPublic();
+    Page<ProductDTO> getAllActiveProductsForPublic(Pageable pageable);
 
     // add new product
     ProductDTO addProduct(ProductDTO productDTO);

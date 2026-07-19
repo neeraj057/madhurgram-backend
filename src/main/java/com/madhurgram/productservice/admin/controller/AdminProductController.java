@@ -10,6 +10,10 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,17 +46,29 @@ public class AdminProductController {
     }
 
     /**
-     * Retrieves all products in the catalog including inactive ones.
+     * Retrieves all products in the catalog including inactive ones, optionally paginated.
      *
-     * @return a list of all products
+     * @param page optional page index (0-based)
+     * @param size optional page size limit
+     * @return a list or page of all products
      */
     @GetMapping
-    @Operation(summary = "List all products", description = "Retrieves a list of all products including inactive ones for the admin catalog view.")
-    public ResponseEntity<List<ProductDTO>> getAllProducts() {
-        log.info("Admin request: list all products");
-        List<ProductDTO> products = adminProductService.getAllProductsForAdmin();
-        log.info("Returning {} product(s) to admin", products.size());
-        return ResponseEntity.ok(products);
+    @Operation(summary = "List all products", description = "Retrieves a list of all products including inactive ones for the admin catalog view. Supports optional pagination parameters page and size.")
+    public ResponseEntity<?> getAllProducts(
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size) {
+        log.info("Admin request: list products (page={}, size={})", page, size);
+        
+        if (page != null && size != null) {
+            Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
+            Page<ProductDTO> paginated = adminProductService.getAllProductsForAdmin(pageable);
+            log.info("Returning paginated page {} with {} product(s) to admin", page, paginated.getNumberOfElements());
+            return ResponseEntity.ok(paginated);
+        } else {
+            List<ProductDTO> products = adminProductService.getAllProductsForAdmin();
+            log.info("Returning {} unpaginated product(s) to admin", products.size());
+            return ResponseEntity.ok(products);
+        }
     }
 
     /**

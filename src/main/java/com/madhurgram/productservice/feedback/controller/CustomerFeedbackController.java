@@ -3,6 +3,10 @@ package com.madhurgram.productservice.feedback.controller;
 import com.madhurgram.productservice.feedback.dto.CustomerFeedbackDTO;
 import com.madhurgram.productservice.feedback.service.FeedbackService;
 import com.madhurgram.productservice.security.IpRateLimiter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -162,17 +166,29 @@ public class CustomerFeedbackController {
     }
 
     /**
-     * Retrieves all customer feedback submissions for the admin dashboard.
+     * Retrieves all customer feedback submissions for the admin dashboard, optionally paginated.
      *
-     * @return list of feedbacks
+     * @param page optional page index (0-based)
+     * @param size optional page size limit
+     * @return list or page of feedbacks
      */
     @GetMapping("/admin/feedback")
-    @Operation(summary = "List all feedbacks (Admin)", description = "Retrieves all feedback submissions sorted by creation date descending.")
-    public ResponseEntity<List<CustomerFeedbackDTO>> getFeedbacks() {
-        log.info("Admin request: list all feedbacks");
-        List<CustomerFeedbackDTO> dtos = feedbackService.getFeedbacks();
-        log.info("Returning {} feedbacks to admin", dtos.size());
-        return ResponseEntity.ok(dtos);
+    @Operation(summary = "List all feedbacks (Admin)", description = "Retrieves all feedback submissions sorted by creation date descending. Supports optional pagination parameters page and size.")
+    public ResponseEntity<?> getFeedbacks(
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size) {
+        log.info("Admin request: list feedbacks (page={}, size={})", page, size);
+        
+        if (page != null && size != null) {
+            Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+            Page<CustomerFeedbackDTO> paginated = feedbackService.getFeedbacks(pageable);
+            log.info("Returning paginated feedbacks page {} with {} record(s)", page, paginated.getNumberOfElements());
+            return ResponseEntity.ok(paginated);
+        } else {
+            List<CustomerFeedbackDTO> dtos = feedbackService.getFeedbacks();
+            log.info("Returning {} unpaginated feedbacks to admin", dtos.size());
+            return ResponseEntity.ok(dtos);
+        }
     }
 
     /**

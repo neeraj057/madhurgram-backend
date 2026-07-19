@@ -9,6 +9,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,17 +88,29 @@ public class ReturnController {
     }
 
     /**
-     * Retrieves all return requests.
+     * Retrieves all return requests, optionally paginated.
      *
-     * @return list of return requests
+     * @param page optional page index (0-based)
+     * @param size optional page size limit
+     * @return list or page of return requests
      */
     @GetMapping("/admin/all")
-    @Operation(summary = "List all return requests (Admin)", description = "Retrieves all customer return requests for the admin review panel.")
-    public ResponseEntity<List<ReturnRequestDTO>> getAllReturnRequests() {
-        log.info("Admin request: list all return requests");
-        List<ReturnRequestDTO> list = returnService.getAllReturnRequests();
-        log.info("Returning {} return request(s) to admin", list.size());
-        return ResponseEntity.ok(list);
+    @Operation(summary = "List all return requests (Admin)", description = "Retrieves all customer return requests for the admin review panel. Supports optional pagination parameters page and size.")
+    public ResponseEntity<?> getAllReturnRequests(
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size) {
+        log.info("Admin request: list return requests (page={}, size={})", page, size);
+        
+        if (page != null && size != null) {
+            Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+            Page<ReturnRequestDTO> paginated = returnService.getAllReturnRequests(pageable);
+            log.info("Returning paginated return requests page {} with {} record(s)", page, paginated.getNumberOfElements());
+            return ResponseEntity.ok(paginated);
+        } else {
+            List<ReturnRequestDTO> list = returnService.getAllReturnRequests();
+            log.info("Returning {} unpaginated return request(s) to admin", list.size());
+            return ResponseEntity.ok(list);
+        }
     }
 
     /**

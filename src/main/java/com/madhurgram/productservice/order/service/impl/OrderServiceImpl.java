@@ -12,6 +12,8 @@ import com.madhurgram.productservice.product.service.ProductService;
 import org.springframework.context.ApplicationEventPublisher;
 import com.madhurgram.productservice.order.event.OrderConfirmedEvent;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.time.LocalDateTime;
@@ -280,6 +282,14 @@ public class OrderServiceImpl implements OrderService {
         return orders.stream()
                 .map(orderMapper::toResponseDTO)
                 .toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<OrderResponseDTO> getAllOrders(Pageable pageable) {
+        log.info("Fetching paginated orders with their items: page={}, size={}", pageable.getPageNumber(), pageable.getPageSize());
+        Page<Order> orders = orderRepository.findAllWithItems(pageable);
+        return orders.map(orderMapper::toResponseDTO);
     }
 
     /**

@@ -10,6 +10,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
@@ -49,23 +53,54 @@ public class AdminCustomerController {
     // -------------------------------------------------------------------------
 
     @GetMapping
-    @Operation(summary = "List all customers", description = "Returns customer stats sorted by total spend. Phone numbers are masked for non-super-admins.")
-    public ResponseEntity<List<CustomerStatsDTO>> getAllCustomers(
-            @RequestParam(required = false) String search) {
+    @Operation(summary = "List all customers", description = "Returns customer stats sorted by total spend. Phone numbers are masked for non-super-admins. Supports optional pagination parameters page and size.")
+    public ResponseEntity<?> getAllCustomers(
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size) {
 
-        log.info("Admin request: list customers, search='{}'", search);
+        log.info("Admin request: list customers, search='{}', page={}, size={}", search, page, size);
 
-        List<CustomerStatsDTO> customers = adminCustomerService.getAllCustomerStats();
         boolean isSuperAdmin = isSuperAdmin();
 
-        List<CustomerStatsDTO> processed = isSuperAdmin
-                ? customers
-                : maskPhoneNumbers(customers);
+        if (page != null && size != null) {
+            Pageable pageable = PageRequest.of(page, size);
+            
+            if (search != null && !search.isBlank()) {
+                List<CustomerStatsDTO> allCustomers = adminCustomerService.getAllCustomerStats();
+                List<CustomerStatsDTO> processed = isSuperAdmin ? allCustomers : maskPhoneNumbers(allCustomers);
+                List<CustomerStatsDTO> filtered = filterAndSort(processed, search);
+                
+                int start = (int) pageable.getOffset();
+                int end = Math.min((start + pageable.getPageSize()), filtered.size());
+                
+                List<CustomerStatsDTO> content = (start < filtered.size()) 
+                        ? filtered.subList(start, end) 
+                        : List.of();
+                
+                Page<CustomerStatsDTO> pageResult = new PageImpl<>(content, pageable, filtered.size());
+                log.info("Returning paginated filtered page {} with {} customer(s)", page, content.size());
+                return ResponseEntity.ok(pageResult);
+            } else {
+                Page<CustomerStatsDTO> paginated = adminCustomerService.getAllCustomerStats(pageable);
+                if (!isSuperAdmin) {
+                    List<CustomerStatsDTO> maskedContent = maskPhoneNumbers(paginated.getContent());
+                    paginated = new PageImpl<>(maskedContent, pageable, paginated.getTotalElements());
+                }
+                log.info("Returning paginated page {} with {} customer(s)", page, paginated.getNumberOfElements());
+                return ResponseEntity.ok(paginated);
+            }
+        } else {
+            List<CustomerStatsDTO> customers = adminCustomerService.getAllCustomerStats();
+            List<CustomerStatsDTO> processed = isSuperAdmin
+                    ? customers
+                    : maskPhoneNumbers(customers);
 
-        List<CustomerStatsDTO> result = filterAndSort(processed, search);
+            List<CustomerStatsDTO> result = filterAndSort(processed, search);
 
-        log.info("Returning {} customer(s) [superAdmin={}]", result.size(), isSuperAdmin);
-        return ResponseEntity.ok(result);
+            log.info("Returning {} unpaginated customer(s) [superAdmin={}]", result.size(), isSuperAdmin);
+            return ResponseEntity.ok(result);
+        }
     }
 
     // -------------------------------------------------------------------------

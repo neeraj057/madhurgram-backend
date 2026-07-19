@@ -8,6 +8,8 @@ import com.madhurgram.productservice.product.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -57,6 +59,15 @@ public class ProductServiceImpl implements ProductService {
                 .toList();
     }
 
+    @Override
+    @Cacheable(value = "products", key = "'active_' + #pageable.pageNumber + '_' + #pageable.pageSize")
+    @Transactional(readOnly = true)
+    public Page<ProductDTO> getAllActiveProducts(Pageable pageable) {
+        log.info("[CACHE MISS] Fetching paginated active products: page={}, size={}", pageable.getPageNumber(), pageable.getPageSize());
+        Page<Product> page = productRepository.findByIsActiveTrue(pageable);
+        return page.map(productMapper::toProductDTO);
+    }
+
     /**
      * Resolves active products filtered by their category name.
      * Caches search results to speed up queries.
@@ -79,6 +90,21 @@ public class ProductServiceImpl implements ProductService {
         return products.stream()
                 .map(productMapper::toProductDTO)
                 .toList();
+    }
+
+    @Override
+    @Cacheable(value = "products", key = "#category.toLowerCase().trim() + '_' + #pageable.pageNumber + '_' + #pageable.pageSize")
+    @Transactional(readOnly = true)
+    public Page<ProductDTO> getProductsByCategory(String category, Pageable pageable) {
+        log.info("[CACHE MISS] Fetching paginated products by category '{}': page={}, size={}", category, pageable.getPageNumber(), pageable.getPageSize());
+        
+        if (category == null || category.trim().isEmpty()) {
+            log.warn("Category query skipped: category parameter is empty");
+            throw new IllegalArgumentException("Product category cannot be empty.");
+        }
+
+        Page<Product> page = productRepository.findByCategoryAndIsActiveTrue(category.toLowerCase().trim(), pageable);
+        return page.map(productMapper::toProductDTO);
     }
 
     /**

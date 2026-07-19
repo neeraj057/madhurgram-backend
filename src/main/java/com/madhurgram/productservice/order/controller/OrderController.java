@@ -1,6 +1,10 @@
 package com.madhurgram.productservice.order.controller;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import com.madhurgram.productservice.order.dto.OrderResponseDTO;
 import com.madhurgram.productservice.order.entity.Order;
 import com.madhurgram.productservice.order.entity.OrderStatus;
@@ -73,25 +77,38 @@ public class OrderController {
     }
 
     /**
-     * Fetches all orders. Mask phone numbers if current user is not SUPER_ADMIN.
+     * Fetches all orders, optionally paginated. Mask phone numbers if current user is not SUPER_ADMIN.
      *
-     * @return list of orders
+     * @param page optional page index (0-based)
+     * @param size optional page size limit
+     * @return list or page of orders
      */
     @GetMapping
-    @Operation(summary = "List all orders", description = "Retrieves all orders. Phone numbers are masked for non-super-admins.")
-    public ResponseEntity<List<OrderResponseDTO>> getAllOrders() {
-        log.info("Request: list all orders");
-        List<OrderResponseDTO> dtos = orderService.getAllOrders();
-
+    @Operation(summary = "List all orders", description = "Retrieves all orders. Phone numbers are masked for non-super-admins. Supports optional pagination parameters page and size.")
+    public ResponseEntity<?> getAllOrders(
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size) {
+        log.info("Request: list all orders (page={}, size={})", page, size);
+        
         boolean isSuperAdmin = isSuperAdmin();
-        if (!isSuperAdmin) {
-            for (OrderResponseDTO dto : dtos) {
-                dto.setPhoneNumber(DataMaskingUtil.maskPhoneNumber(dto.getPhoneNumber()));
+        if (page != null && size != null) {
+            Pageable pageable = PageRequest.of(page, size, Sort.by("orderDate").descending());
+            Page<OrderResponseDTO> paginated = orderService.getAllOrders(pageable);
+            if (!isSuperAdmin) {
+                paginated.forEach(dto -> dto.setPhoneNumber(DataMaskingUtil.maskPhoneNumber(dto.getPhoneNumber())));
             }
+            log.info("Returning paginated page {} with {} order(s) [superAdmin={}]", page, paginated.getNumberOfElements(), isSuperAdmin);
+            return ResponseEntity.ok(paginated);
+        } else {
+            List<OrderResponseDTO> dtos = orderService.getAllOrders();
+            if (!isSuperAdmin) {
+                for (OrderResponseDTO dto : dtos) {
+                    dto.setPhoneNumber(DataMaskingUtil.maskPhoneNumber(dto.getPhoneNumber()));
+                }
+            }
+            log.info("Returning {} unpaginated order(s) [superAdmin={}]", dtos.size(), isSuperAdmin);
+            return ResponseEntity.ok(dtos);
         }
-
-        log.info("Returning {} order(s) [superAdmin={}]", dtos.size(), isSuperAdmin);
-        return ResponseEntity.ok(dtos);
     }
 
     /**

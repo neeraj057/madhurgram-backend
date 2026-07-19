@@ -8,8 +8,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -35,17 +40,29 @@ public class PublicProductController {
     }
 
     /**
-     * Retrieves all active products in a public format.
+     * Retrieves all active products in a public format, optionally paginated.
      * Accessible by unauthenticated shoppers.
      *
-     * @return list of active products as DTOs
+     * @param page optional page index (0-based)
+     * @param size optional page size limit
+     * @return list or page of active products as DTOs
      */
     @GetMapping("/products")
-    @Operation(summary = "Get all public products", description = "Fetches a simplified list of all active products for the public storefront.")
-    public ResponseEntity<List<ProductDTO>> getAllPublicProducts() {
-        log.info("Public request: fetch all active products");
-        List<ProductDTO> products = productService.getAllActiveProductsForPublic();
-        log.info("Returning {} public product(s)", products.size());
-        return ResponseEntity.ok(products);
+    @Operation(summary = "Get all public products", description = "Fetches a simplified list of all active products for the public storefront. Supports optional pagination parameters page and size.")
+    public ResponseEntity<?> getAllPublicProducts(
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size) {
+        log.info("Public request: fetch active products (page={}, size={})", page, size);
+        
+        if (page != null && size != null) {
+            Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
+            Page<ProductDTO> paginated = productService.getAllActiveProductsForPublic(pageable);
+            log.info("Returning paginated page {} with {} public product(s)", page, paginated.getNumberOfElements());
+            return ResponseEntity.ok(paginated);
+        } else {
+            List<ProductDTO> products = productService.getAllActiveProductsForPublic();
+            log.info("Returning {} unpaginated public product(s)", products.size());
+            return ResponseEntity.ok(products);
+        }
     }
 }

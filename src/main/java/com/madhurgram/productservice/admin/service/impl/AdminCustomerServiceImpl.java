@@ -5,6 +5,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageImpl;
 
 import com.madhurgram.productservice.customer.dto.CustomerHistoryDTO;
 import com.madhurgram.productservice.customer.dto.CustomerStatsDTO;
@@ -91,5 +94,39 @@ public class AdminCustomerServiceImpl implements AdminCustomerService {
 
         log.info("Successfully aggregated statistics for {} unique customer(s)", stats.size());
         return stats;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<CustomerStatsDTO> getAllCustomerStats(Pageable pageable) {
+        log.info("Computing paginated dashboard statistics: page={}, size={}", pageable.getPageNumber(), pageable.getPageSize());
+        
+        Page<String> phonePage = orderRepository.findDistinctPhoneNumbers(pageable);
+        List<String> phoneNumbers = phonePage.getContent();
+        
+        if (phoneNumbers.isEmpty()) {
+            log.info("No customers found for page {}", pageable.getPageNumber());
+            return new PageImpl<>(List.of(), pageable, phonePage.getTotalElements());
+        }
+        
+        List<Order> orders = orderRepository.findOrdersWithItemsByPhoneNumbers(phoneNumbers);
+        
+        List<CustomerStatsDTO> stats = orders.stream()
+                .filter(order -> order.getPhoneNumber() != null && !order.getPhoneNumber().trim().isEmpty())
+                .collect(Collectors.groupingBy(Order::getPhoneNumber))
+                .entrySet().stream()
+                .map(entry -> customerMapper.toStatsDTO(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
+                
+        List<CustomerStatsDTO> sortedStats = phoneNumbers.stream()
+                .map(phone -> stats.stream()
+                        .filter(s -> s.phoneNumber().equals(phone))
+                        .findFirst()
+                        .orElse(null))
+                .filter(java.util.Objects::nonNull)
+                .toList();
+
+        log.info("Successfully aggregated paginated statistics for {} customer(s)", sortedStats.size());
+        return new PageImpl<>(sortedStats, pageable, phonePage.getTotalElements());
     }
 }

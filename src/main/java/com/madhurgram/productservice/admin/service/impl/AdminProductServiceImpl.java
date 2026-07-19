@@ -10,6 +10,8 @@ import com.madhurgram.productservice.admin.service.AdminProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,6 +59,14 @@ public class AdminProductServiceImpl implements AdminProductService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Page<ProductDTO> getAllProductsForAdmin(Pageable pageable) {
+        log.info("Admin request: fetch paginated products: page={}, size={}", pageable.getPageNumber(), pageable.getPageSize());
+        Page<Product> page = productRepository.findAll(pageable);
+        return page.map(productMapper::toProductDTO);
+    }
+
     /**
      * Lists active products for storefront caching.
      *
@@ -70,6 +80,15 @@ public class AdminProductServiceImpl implements AdminProductService {
         return productRepository.findByIsActiveTrue().stream()
                 .map(productMapper::toProductDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Cacheable(value = "products", key = "'public_active_' + #pageable.pageNumber + '_' + #pageable.pageSize")
+    @Transactional(readOnly = true)
+    public Page<ProductDTO> getAllActiveProductsForPublic(Pageable pageable) {
+        log.info("[CACHE MISS] Fetching paginated active products for public catalog: page={}, size={}", pageable.getPageNumber(), pageable.getPageSize());
+        Page<Product> page = productRepository.findByIsActiveTrue(pageable);
+        return page.map(productMapper::toProductDTO);
     }
 
     /**

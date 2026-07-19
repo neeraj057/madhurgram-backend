@@ -3,6 +3,8 @@ package com.madhurgram.productservice.product.repository;
 import com.madhurgram.productservice.product.entity.Product;
 
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,8 +18,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // Category wise dynamic product filter query
     List<Product> findByCategoryAndIsActiveTrue(String category);
 
+    Page<Product> findByCategoryAndIsActiveTrue(String category, Pageable pageable);
+
     // Default fetch all active products
     List<Product> findByIsActiveTrue();
+
+    Page<Product> findByIsActiveTrue(Pageable pageable);
 
     @Modifying
     @Query("UPDATE Product p SET p.stock = p.stock - :quantity WHERE p.id = :productId AND p.stock >= :quantity")
