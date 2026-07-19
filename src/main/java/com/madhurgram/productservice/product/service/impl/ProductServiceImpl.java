@@ -79,13 +79,16 @@ public class ProductServiceImpl implements ProductService {
     @Cacheable(value = "products", key = "#category.toLowerCase().trim()")
     @Transactional(readOnly = true)
     public List<ProductDTO> getProductsByCategory(String category) {
-        log.info("[CACHE MISS] Fetching products by category '{}' from database...", category);
-        
         if (category == null || category.trim().isEmpty()) {
             log.warn("Category query skipped: category parameter is empty");
             throw new IllegalArgumentException("Product category cannot be empty.");
         }
+        
+        if ("shop-all".equalsIgnoreCase(category.trim())) {
+            return getAllActiveProducts();
+        }
 
+        log.info("[CACHE MISS] Fetching products by category '{}' from database...", category);
         List<Product> products = productRepository.findByCategoryAndIsActiveTrue(category.toLowerCase().trim());
         return products.stream()
                 .map(productMapper::toProductDTO)
@@ -96,13 +99,16 @@ public class ProductServiceImpl implements ProductService {
     @Cacheable(value = "products", key = "#category.toLowerCase().trim() + '_' + #pageable.pageNumber + '_' + #pageable.pageSize")
     @Transactional(readOnly = true)
     public Page<ProductDTO> getProductsByCategory(String category, Pageable pageable) {
-        log.info("[CACHE MISS] Fetching paginated products by category '{}': page={}, size={}", category, pageable.getPageNumber(), pageable.getPageSize());
-        
         if (category == null || category.trim().isEmpty()) {
             log.warn("Category query skipped: category parameter is empty");
             throw new IllegalArgumentException("Product category cannot be empty.");
         }
+        
+        if ("shop-all".equalsIgnoreCase(category.trim())) {
+            return getAllActiveProducts(pageable);
+        }
 
+        log.info("[CACHE MISS] Fetching paginated products by category '{}': page={}, size={}", category, pageable.getPageNumber(), pageable.getPageSize());
         Page<Product> page = productRepository.findByCategoryAndIsActiveTrue(category.toLowerCase().trim(), pageable);
         return page.map(productMapper::toProductDTO);
     }

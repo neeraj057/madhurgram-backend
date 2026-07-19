@@ -192,7 +192,7 @@ public class AdminProductServiceImpl implements AdminProductService {
         }
         
         if (dto.getIsActive() != null) {
-            product.setActive(dto.getIsActive());
+            product.setIsActive(dto.getIsActive());
         }
 
         Product updatedProduct = productRepository.save(product);

@@ -30,7 +30,7 @@ public class ProductMapper {
                 .volume(product.getVolume())
                 .imageUrl(product.getImageUrl())
                 .stock(product.getStock())
-                .isActive(product.isActive())
+                .isActive(product.getIsActive() != null && product.getIsActive())
                 .category(product.getCategory())
                 .tag(product.getTag())
                 .rating(product.getRating() != null ? product.getRating() : java.math.BigDecimal.valueOf(4.8))

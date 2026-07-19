@@ -24,32 +24,18 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/v1/products")
 @Tag(name = "Products", description = "Public catalog retrieval endpoints for shoppers")
 public class ProductController {
 
-    /** Default category query parameter fallback. */
     public static final String DEFAULT_CATEGORY = "shop-all";
 
     private final ProductService productService;
 
-    /**
-     * Constructor injection for ProductController.
-     *
-     * @param productService service for querying products
-     */
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
-    /**
-     * Fetches active products filtered optionally by category, optionally paginated.
-     *
-     * @param category the name of the product category (defaults to 'shop-all')
-     * @param page     optional page index (0-based)
-     * @param size     optional page size limit
-     * @return a list or page of matching active products
-     */
     @GetMapping
     @Operation(summary = "Get products by category", description = "Fetches list of active products. Returns all active products if category is empty or 'shop-all'. Supports optional pagination parameters page and size.")
     public ResponseEntity<?> getProducts(
@@ -60,21 +46,11 @@ public class ProductController {
 
         if (page != null && size != null) {
             Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
-            Page<ProductDTO> paginated;
-            if (DEFAULT_CATEGORY.equalsIgnoreCase(category)) {
-                paginated = productService.getAllActiveProducts(pageable);
-            } else {
-                paginated = productService.getProductsByCategory(category, pageable);
-            }
+            Page<ProductDTO> paginated = productService.getProductsByCategory(category, pageable);
             log.info("Returning paginated page {} with {} product(s) for category: {}", page, paginated.getNumberOfElements(), category);
             return ResponseEntity.ok(paginated);
         } else {
-            List<ProductDTO> products;
-            if (DEFAULT_CATEGORY.equalsIgnoreCase(category)) {
-                products = productService.getAllActiveProducts();
-            } else {
-                products = productService.getProductsByCategory(category);
-            }
+            List<ProductDTO> products = productService.getProductsByCategory(category);
             log.info("Returning {} unpaginated product(s) for category: {}", products.size(), category);
             return ResponseEntity.ok(products);
         }

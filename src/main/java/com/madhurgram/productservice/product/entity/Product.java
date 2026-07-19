@@ -5,7 +5,10 @@ import lombok.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "products")
+@Table(name = "products", indexes = {
+    @Index(name = "idx_product_category", columnList = "category"),
+    @Index(name = "idx_product_is_active", columnList = "is_active")
+})
 @Getter
 @Setter
 @NoArgsConstructor
@@ -43,7 +46,7 @@ public class Product {
 
     @Builder.Default
     @Column(name = "is_active")
-    private boolean isActive = true;
+    private Boolean isActive = true;
 
     @Builder.Default
     @Column(name = "rating", precision = 3, scale = 2)
@@ -64,7 +67,7 @@ public class Product {
     @Column(name = "clearance_active")
     private Boolean clearanceActive = false;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hsn_code", referencedColumnName = "hsn_code", nullable = true)
     private HsnTaxMaster hsnTaxMaster;
 }
