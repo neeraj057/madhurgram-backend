@@ -14,6 +14,9 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
+import java.time.Duration;
+import java.util.Map;
+
 /**
  * Configuration class for setting up Spring Cache with Redis backend, 
  * utilizing clean Jackson JSON serialization and safe error handling.
@@ -48,13 +51,20 @@ public class CacheConfig implements CachingConfigurer {
         RedisSerializer<Object> jsonSerializer = RedisSerializer.json();
         RedisSerializer<String> stringSerializer = RedisSerializer.string();
 
-        // 2. Build Cache Config mapping keys -> String, values -> JSON
-        RedisCacheConfiguration cacheConfig = RedisCacheConfiguration.defaultCacheConfig()
+        // 2. Build default Cache Config mapping keys -> String, values -> JSON
+        RedisCacheConfiguration defaultConfig = RedisCacheConfiguration.defaultCacheConfig()
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(stringSerializer))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(jsonSerializer));
 
+        // 3. Per-cache TTL overrides
+        //    pincodeServiceability: 6 hours — Shiprocket serviceability results change infrequently
+        RedisCacheConfiguration pincodeConfig = defaultConfig.entryTtl(Duration.ofHours(6));
+
         return RedisCacheManager.builder(redisConnectionFactory)
-                .cacheDefaults(cacheConfig)
+                .cacheDefaults(defaultConfig)
+                .withInitialCacheConfigurations(Map.of(
+                        "pincodeServiceability", pincodeConfig
+                ))
                 .build();
     }
 

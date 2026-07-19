@@ -17,4 +17,9 @@ public final class SystemSettingKeys {
     public static final String PINCODE_SLA_LOCAL = "PINCODE_SLA_LOCAL";
     public static final String PINCODE_SLA_REGIONAL = "PINCODE_SLA_REGIONAL";
     public static final String PINCODE_SLA_NATIONAL = "PINCODE_SLA_NATIONAL";
+
+    public static final String SHIPROCKET_SERVICEABILITY_ENABLED = "SHIPROCKET_SERVICEABILITY_ENABLED";
+    public static final String SHIPROCKET_EMAIL = "SHIPROCKET_EMAIL";
+    public static final String SHIPROCKET_PASSWORD = "SHIPROCKET_PASSWORD";
+    public static final String SHIPROCKET_PICKUP_PINCODE = "SHIPROCKET_PICKUP_PINCODE";
 }
