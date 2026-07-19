@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder, Long> {
     List<PurchaseOrder> findByStatus(String status);
     Optional<PurchaseOrder> findByProductIdAndStatus(Long productId, String status);
+    List<PurchaseOrder> findByExpiryDateBetween(java.time.LocalDate startDate, java.time.LocalDate endDate);
 }

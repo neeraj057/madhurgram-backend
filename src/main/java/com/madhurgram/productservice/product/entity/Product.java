@@ -60,6 +60,10 @@ public class Product {
     @org.hibernate.annotations.Formula("(SELECT COALESCE(SUM(oi.quantity), 0) FROM order_items oi JOIN orders o ON oi.order_id = o.id WHERE oi.product_id = id AND o.order_status != 'CANCELLED')")
     private Integer realSalesCount;
 
+    @Builder.Default
+    @Column(name = "clearance_active")
+    private Boolean clearanceActive = false;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "hsn_code", referencedColumnName = "hsn_code", nullable = true)
     private HsnTaxMaster hsnTaxMaster;

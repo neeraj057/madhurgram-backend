@@ -14,5 +14,6 @@ public interface CustomerFeedbackRepository extends JpaRepository<CustomerFeedba
 
     Page<CustomerFeedback> findAllByOrderByCreatedAtDesc(Pageable pageable);
 
-    List<CustomerFeedback> findTop8ByRatingGreaterThanEqualAndIsApprovedTrueOrderByCreatedAtDesc(int rating);
+    @org.springframework.data.jpa.repository.Query("SELECT c FROM CustomerFeedback c WHERE c.rating >= :minRating AND c.isApproved = true AND (c.sentiment IS NULL OR c.sentiment NOT IN :excludedSentiments) ORDER BY c.createdAt DESC")
+    List<CustomerFeedback> findValidPublicTestimonials(@org.springframework.data.repository.query.Param("minRating") int minRating, @org.springframework.data.repository.query.Param("excludedSentiments") List<String> excludedSentiments, Pageable pageable);
 }

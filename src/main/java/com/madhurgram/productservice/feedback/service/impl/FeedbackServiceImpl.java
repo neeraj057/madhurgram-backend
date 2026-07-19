@@ -119,9 +119,10 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     @Transactional(readOnly = true)
     public List<CustomerFeedbackDTO> getTestimonials() {
-        log.info("Retrieving top 8 positive testimonials with 4+ star ratings");
+        log.info("Retrieving top 8 positive testimonials with 4+ star ratings and non-negative sentiment");
+        List<String> negativeSentiments = List.of("ANGRY", "SAD");
         List<CustomerFeedback> testimonials = feedbackRepository
-                .findTop8ByRatingGreaterThanEqualAndIsApprovedTrueOrderByCreatedAtDesc(4);
+                .findValidPublicTestimonials(4, negativeSentiments, org.springframework.data.domain.PageRequest.of(0, 8));
         return testimonials.stream()
                 .map(feedbackMapper::toDTO)
                 .toList();

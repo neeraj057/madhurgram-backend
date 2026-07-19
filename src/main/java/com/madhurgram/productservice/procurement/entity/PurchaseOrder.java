@@ -40,6 +40,12 @@ public class PurchaseOrder {
     @Column(name = "approved_at")
     private LocalDateTime approvedAt;
 
+    @Column(name = "batch_number", length = 50)
+    private String batchNumber;
+
+    @Column(name = "expiry_date")
+    private java.time.LocalDate expiryDate;
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
