@@ -19,31 +19,31 @@ public class PincodeSlaController {
         this.pincodeSlaService = pincodeSlaService;
     }
 
-    @GetMapping("/api/public/pincode/check")
+    @GetMapping("/api/v1/public/pincode/check")
     @Operation(summary = "Check Pincode Delivery Availability & SLA")
     public ResponseEntity<PincodeSlaResponseDto> checkPincode(@RequestParam String pincode) {
         return ResponseEntity.ok(pincodeSlaService.checkPincode(pincode));
     }
 
-    @GetMapping("/api/admin/settings/pincode")
+    @GetMapping("/api/v1/admin/settings/pincode")
     @Operation(summary = "Get Pincode SLA Configs")
     public ResponseEntity<AdminPincodeSettingsDto> getAdminPincodeSettings() {
         return ResponseEntity.ok(pincodeSlaService.getAdminPincodeSettings());
     }
 
-    @PutMapping("/api/admin/settings/pincode")
+    @PutMapping("/api/v1/admin/settings/pincode")
     @Operation(summary = "Update Pincode SLA Configs")
     public ResponseEntity<AdminPincodeSettingsDto> updateAdminPincodeSettings(@RequestBody AdminPincodeSettingsDto payload) {
         return ResponseEntity.ok(pincodeSlaService.updateAdminPincodeSettings(payload));
     }
 
-    @GetMapping("/api/admin/settings/shiprocket")
+    @GetMapping("/api/v1/admin/settings/shiprocket")
     @Operation(summary = "Get Shiprocket Config")
     public ResponseEntity<ShiprocketSettingsDto> getShiprocketSettings() {
         return ResponseEntity.ok(pincodeSlaService.getShiprocketSettings());
     }
 
-    @PutMapping("/api/admin/settings/shiprocket")
+    @PutMapping("/api/v1/admin/settings/shiprocket")
     @Operation(summary = "Update Shiprocket Config")
     public ResponseEntity<ShiprocketSettingsDto> updateShiprocketSettings(@RequestBody ShiprocketSettingsDto payload) {
         return ResponseEntity.ok(pincodeSlaService.updateShiprocketSettings(payload));

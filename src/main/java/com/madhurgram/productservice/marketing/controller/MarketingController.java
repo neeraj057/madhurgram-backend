@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/admin/marketing")
+@RequestMapping("/api/v1/admin/marketing")
 @Tag(name = "Admin — Marketing Campaigns", description = "Endpoints for scheduling and broadcasting manual marketing campaigns")
 public class MarketingController {
 

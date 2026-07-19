@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/admin/procurement")
+@RequestMapping("/api/v1/admin/procurement")
 @Tag(name = "Admin — Procurement", description = "Endpoints for managing inventory purchase orders and supplier updates")
 public class ProcurementController {
 

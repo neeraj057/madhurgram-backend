@@ -29,7 +29,7 @@ public class WhatsAppSettingsController {
         this.auditLogService = auditLogService;
     }
 
-    @GetMapping("/api/public/settings/whatsapp")
+    @GetMapping("/api/v1/public/settings/whatsapp")
     @Operation(summary = "Get Public WhatsApp Config", description = "Retrieves configurations for WhatsApp Quick Buy button.")
     public ResponseEntity<Map<String, String>> getPublicWhatsAppSettings() {
         Map<String, String> settings = new HashMap<>();
@@ -42,13 +42,13 @@ public class WhatsAppSettingsController {
         return ResponseEntity.ok(settings);
     }
 
-    @GetMapping("/api/admin/settings/whatsapp")
+    @GetMapping("/api/v1/admin/settings/whatsapp")
     @Operation(summary = "Get Admin WhatsApp Config", description = "Admin endpoint to fetch configurations.")
     public ResponseEntity<Map<String, String>> getAdminWhatsAppSettings() {
         return getPublicWhatsAppSettings();
     }
 
-    @PutMapping("/api/admin/settings/whatsapp")
+    @PutMapping("/api/v1/admin/settings/whatsapp")
     @Operation(summary = "Update WhatsApp Config", description = "Updates configurations for WhatsApp Quick Buy and logs audit entry.")
     public ResponseEntity<Map<String, String>> updateWhatsAppSettings(@RequestBody Map<String, String> payload) {
         String enabled = payload.getOrDefault("whatsappEnabled", "true");

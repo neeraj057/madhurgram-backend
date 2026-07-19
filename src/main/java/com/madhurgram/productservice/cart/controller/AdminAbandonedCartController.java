@@ -20,7 +20,7 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/admin/abandoned-carts")
+@RequestMapping("/api/v1/admin/abandoned-carts")
 @Tag(name = "Admin — Abandoned Carts", description = "Endpoints for monitoring and purging abandoned buyer shopping carts")
 public class AdminAbandonedCartController {
 

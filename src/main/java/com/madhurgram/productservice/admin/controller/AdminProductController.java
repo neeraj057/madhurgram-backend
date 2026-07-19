@@ -27,7 +27,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/admin/products")
+@RequestMapping("/api/v1/admin/products")
 @Tag(name = "Admin — Products", description = "Product catalog management endpoints for administrators")
 public class AdminProductController {
 
@@ -84,11 +84,6 @@ public class AdminProductController {
     @Operation(summary = "Add a new product", description = "Creates a new product in the system and logs an admin audit event.")
     public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDTO) {
         log.info("Admin request: add new product '{}'", productDTO.getName());
-
-        if (productDTO.getName() == null || productDTO.getPrice() == null) {
-            log.warn("Create product failed: Name and Price are mandatory fields");
-            throw new IllegalArgumentException("Product Name and Price are mandatory.");
-        }
 
         ProductDTO newProduct = adminProductService.addProduct(productDTO);
 

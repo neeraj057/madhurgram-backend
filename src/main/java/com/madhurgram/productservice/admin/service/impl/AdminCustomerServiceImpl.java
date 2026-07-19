@@ -1,14 +1,19 @@
 package com.madhurgram.productservice.admin.service.impl;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
+import com.madhurgram.productservice.common.util.DataMaskingUtil;
 import com.madhurgram.productservice.customer.dto.CustomerHistoryDTO;
 import com.madhurgram.productservice.customer.dto.CustomerStatsDTO;
 import com.madhurgram.productservice.customer.mapper.CustomerMapper;
@@ -26,26 +31,42 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class AdminCustomerServiceImpl implements AdminCustomerService {
 
+    private static final String ROLE_SUPER_ADMIN = "ROLE_SUPER_ADMIN";
+    private static final String SUPER_ADMIN = "SUPER_ADMIN";
+
     private final OrderRepository orderRepository;
     private final CustomerMapper customerMapper;
 
-    /**
-     * Constructor injection for AdminCustomerServiceImpl.
-     *
-     * @param orderRepository order database access
-     * @param customerMapper  customer mapper instance
-     */
     public AdminCustomerServiceImpl(OrderRepository orderRepository, CustomerMapper customerMapper) {
         this.orderRepository = orderRepository;
         this.customerMapper = customerMapper;
     }
 
-    /**
-     * Retrieves the history of all orders associated with a customer phone.
-     *
-     * @param phone the customer's phone number
-     * @return the customer history DTO
-     */
+    @Override
+    @Transactional(readOnly = true)
+    public Page<CustomerStatsDTO> getCustomers(String search, Integer page, Integer size) {
+        log.info("Computing paginated dashboard statistics: search='{}', page={}, size={}", search, page, size);
+        
+        List<CustomerStatsDTO> allProcessed = processAllCustomers(search);
+        
+        Pageable pageable = PageRequest.of(page, size);
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), allProcessed.size());
+        
+        List<CustomerStatsDTO> content = (start < allProcessed.size()) 
+                ? allProcessed.subList(start, end) 
+                : List.of();
+        
+        return new PageImpl<>(content, pageable, allProcessed.size());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CustomerStatsDTO> getCustomers(String search) {
+        log.info("Computing unpaginated dashboard statistics: search='{}'", search);
+        return processAllCustomers(search);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public CustomerHistoryDTO getCustomerHistory(String phone) {
@@ -58,75 +79,79 @@ public class AdminCustomerServiceImpl implements AdminCustomerService {
 
         List<Order> orders = orderRepository.findByPhoneNumber(phone.trim());
         if (orders.isEmpty()) {
-            log.warn("Customer history lookup failed: No orders found for phone: '{}'", phone);
-            throw new IllegalArgumentException("No order records found for the customer phone number: " + phone);
+            return null; // Controller will handle 404
         }
 
         CustomerHistoryDTO history = customerMapper.toHistoryDTO(phone.trim(), orders);
-        log.info("Successfully retrieved {} order(s) for customer phone: '{}'", orders.size(), phone);
+        
+        if (!isSuperAdmin()) {
+            return new CustomerHistoryDTO(
+                    history.name(),
+                    DataMaskingUtil.maskPhoneNumber(history.phoneNumber()),
+                    history.orderHistory(),
+                    history.totalSpent(),
+                    history.totalOrders());
+        }
+
         return history;
     }
 
-    /**
-     * Aggregates purchase statistics (spend, frequency, segment, favorite product) 
-     * for all customers.
-     * 
-     * <p><b>Scalability Note:</b> In high-scale deployments, fetching all orders 
-     * in-memory for grouping can cause substantial memory consumption. Consider 
-     * native pagination or caching customer metrics if the order count grows extremely large.
-     *
-     * @return a list of customer statistics DTOs
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<CustomerStatsDTO> getAllCustomerStats() {
-        log.info("Computing dashboard statistics for all customers from database orders");
-        
-        List<Order> allOrders = orderRepository.findAllWithItems();
-        log.info("Loaded {} total order(s) from database for customer analysis", allOrders.size());
+    // -------------------------------------------------------------------------
+    // Private Helpers
+    // -------------------------------------------------------------------------
 
+    private List<CustomerStatsDTO> processAllCustomers(String search) {
+        List<Order> allOrders = orderRepository.findAllWithItems();
+        
         List<CustomerStatsDTO> stats = allOrders.stream()
                 .filter(order -> order.getPhoneNumber() != null && !order.getPhoneNumber().trim().isEmpty())
                 .collect(Collectors.groupingBy(Order::getPhoneNumber))
                 .entrySet().stream()
                 .map(entry -> customerMapper.toStatsDTO(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
+                
+        boolean isSuperAdmin = isSuperAdmin();
+        if (!isSuperAdmin) {
+            stats = maskPhoneNumbers(stats);
+        }
 
-        log.info("Successfully aggregated statistics for {} unique customer(s)", stats.size());
-        return stats;
+        return filterAndSort(stats, search);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Page<CustomerStatsDTO> getAllCustomerStats(Pageable pageable) {
-        log.info("Computing paginated dashboard statistics: page={}, size={}", pageable.getPageNumber(), pageable.getPageSize());
-        
-        Page<String> phonePage = orderRepository.findDistinctPhoneNumbers(pageable);
-        List<String> phoneNumbers = phonePage.getContent();
-        
-        if (phoneNumbers.isEmpty()) {
-            log.info("No customers found for page {}", pageable.getPageNumber());
-            return new PageImpl<>(List.of(), pageable, phonePage.getTotalElements());
-        }
-        
-        List<Order> orders = orderRepository.findOrdersWithItemsByPhoneNumbers(phoneNumbers);
-        
-        List<CustomerStatsDTO> stats = orders.stream()
-                .filter(order -> order.getPhoneNumber() != null && !order.getPhoneNumber().trim().isEmpty())
-                .collect(Collectors.groupingBy(Order::getPhoneNumber))
-                .entrySet().stream()
-                .map(entry -> customerMapper.toStatsDTO(entry.getKey(), entry.getValue()))
-                .collect(Collectors.toList());
-                
-        List<CustomerStatsDTO> sortedStats = phoneNumbers.stream()
-                .map(phone -> stats.stream()
-                        .filter(s -> s.phoneNumber().equals(phone))
-                        .findFirst()
-                        .orElse(null))
-                .filter(java.util.Objects::nonNull)
-                .toList();
+    private boolean isSuperAdmin() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth != null && auth.getAuthorities().stream()
+                .anyMatch(a -> ROLE_SUPER_ADMIN.equals(a.getAuthority())
+                        || SUPER_ADMIN.equals(a.getAuthority()));
+    }
 
-        log.info("Successfully aggregated paginated statistics for {} customer(s)", sortedStats.size());
-        return new PageImpl<>(sortedStats, pageable, phonePage.getTotalElements());
+    private List<CustomerStatsDTO> maskPhoneNumbers(List<CustomerStatsDTO> customers) {
+        return customers.stream()
+                .map(c -> new CustomerStatsDTO(
+                        c.name(),
+                        DataMaskingUtil.maskPhoneNumber(c.phoneNumber()),
+                        c.totalOrders(),
+                        c.totalSpent(),
+                        c.lastOrderDate(),
+                        c.vip(),
+                        c.segment(),
+                        c.favoriteProduct(),
+                        c.favoriteProductQuantity()))
+                .toList();
+    }
+
+    private List<CustomerStatsDTO> filterAndSort(List<CustomerStatsDTO> customers, String search) {
+        if (search == null || search.isBlank()) {
+            return customers.stream()
+                    .sorted(Comparator.comparing(CustomerStatsDTO::totalSpent).reversed())
+                    .toList();
+        }
+
+        String normalized = search.trim().toLowerCase();
+        return customers.stream()
+                .filter(c -> c.name().toLowerCase().contains(normalized)
+                        || c.phoneNumber().contains(search.trim()))
+                .sorted(Comparator.comparing(CustomerStatsDTO::totalSpent).reversed())
+                .toList();
     }
 }

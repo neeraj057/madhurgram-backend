@@ -108,6 +108,10 @@ public class AdminProductServiceImpl implements AdminProductService {
             throw new IllegalArgumentException("Product name cannot be null or empty.");
         }
         
+        if (dto.getPrice() == null) {
+            throw new IllegalArgumentException("Product price cannot be null.");
+        }
+        
         if (dto.getCategory() == null || dto.getCategory().trim().isEmpty()) {
             throw new IllegalArgumentException("Product category cannot be null or empty.");
         }

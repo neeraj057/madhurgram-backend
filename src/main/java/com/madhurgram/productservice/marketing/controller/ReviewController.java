@@ -23,7 +23,7 @@ import java.util.Map;
 @Slf4j
 @Validated
 @RestController
-@RequestMapping("/api/admin/marketing/reviews")
+@RequestMapping("/api/v1/admin/marketing/reviews")
 @Tag(name = "Admin — Reviews Automation", description = "Endpoints for managing auto-scheduler review requests and outbound links")
 public class ReviewController {
 

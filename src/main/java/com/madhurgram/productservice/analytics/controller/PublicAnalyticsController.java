@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/public/analytics")
+@RequestMapping("/api/v1/public/analytics")
 @Tag(name = "Public Analytics", description = "Public activity tracking endpoints for storefront sessions")
 public class PublicAnalyticsController {
 

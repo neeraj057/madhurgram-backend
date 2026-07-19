@@ -22,7 +22,7 @@ public class PublicBundleController {
 
     private final BundleService bundleService;
 
-    @GetMapping("/api/public/footer")
+    @GetMapping("/api/v1/public/footer")
     @Operation(summary = "Get Footer Section Config", description = "Returns footer mode (COMBOS/BRAND_STORY) and active bundles if applicable")
     public ResponseEntity<PublicFooterSectionDTO> getFooterSection() {
         return ResponseEntity.ok(bundleService.getPublicFooterSection());

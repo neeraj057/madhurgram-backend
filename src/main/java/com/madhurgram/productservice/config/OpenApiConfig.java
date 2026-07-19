@@ -16,7 +16,7 @@ public class OpenApiConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("🌾 MadhurGram REST API Engine")
-                        .description("MadhurGram Gopiganj Traditional Products Core Platform REST APIs. Click the **Authorize** lock button on the top-right to supply JWT credentials for secured /api/admin/** endpoints.")
+                        .description("MadhurGram Gopiganj Traditional Products Core Platform REST APIs. Click the **Authorize** lock button on the top-right to supply JWT credentials for secured /api/v1/admin/** endpoints.")
                         .version("1.0.0"))
                 .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
                 .components(new Components().addSecuritySchemes("Bearer Authentication", createAPIKeyScheme()));

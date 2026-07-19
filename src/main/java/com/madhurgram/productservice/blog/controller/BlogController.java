@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/public/blogs")
+@RequestMapping("/api/v1/public/blogs")
 @RequiredArgsConstructor
 @Tag(name = "Blogs", description = "Public endpoints for Village Stories & Blogs")
 public class BlogController {

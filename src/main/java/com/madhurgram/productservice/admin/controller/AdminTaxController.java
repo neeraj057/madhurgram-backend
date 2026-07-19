@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/admin/tax-slabs")
+@RequestMapping("/api/v1/admin/tax-slabs")
 @Tag(name = "Admin — Tax Settings", description = "Tax slab mappings and HSN code GST percentage settings")
 public class AdminTaxController {
 

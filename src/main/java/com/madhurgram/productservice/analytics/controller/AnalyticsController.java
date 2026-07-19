@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/admin/analytics")
+@RequestMapping("/api/v1/admin/analytics")
 @Tag(name = "Admin — Analytics", description = "Endpoints for administrator business reports and charts analytics")
 public class AnalyticsController {
 

@@ -69,7 +69,7 @@ public class CouponController {
      *
      * @return list of coupons
      */
-    @GetMapping("/api/admin/coupons")
+    @GetMapping("/api/v1/admin/coupons")
     @Operation(summary = "List all coupons (Admin)", description = "Retrieves all coupon configurations for administration catalog views.")
     public ResponseEntity<List<CouponDTO>> getAllCoupons() {
         log.info("Admin request: list all coupons");
@@ -84,7 +84,7 @@ public class CouponController {
      * @param dto the coupon payload to create
      * @return the created coupon
      */
-    @PostMapping("/api/admin/coupons")
+    @PostMapping("/api/v1/admin/coupons")
     @Operation(summary = "Create coupon (Admin)", description = "Creates a new discount coupon configuration ruleset.")
     public ResponseEntity<?> createCoupon(@RequestBody CouponDTO dto) {
         log.info("Admin request: create coupon code='{}'", dto.getCode());
@@ -105,7 +105,7 @@ public class CouponController {
      * @param dto coupon details payload to apply
      * @return the updated coupon details
      */
-    @PutMapping("/api/admin/coupons/{id}")
+    @PutMapping("/api/v1/admin/coupons/{id}")
     @Operation(summary = "Update coupon (Admin)", description = "Updates details/rulesets of an existing discount coupon by ID.")
     public ResponseEntity<?> updateCoupon(@PathVariable("id") Long id, @RequestBody CouponDTO dto) {
         log.info("Admin request: update coupon ID: {}", id);
@@ -125,7 +125,7 @@ public class CouponController {
      * @param id ID of the coupon to purge
      * @return status message
      */
-    @DeleteMapping("/api/admin/coupons/{id}")
+    @DeleteMapping("/api/v1/admin/coupons/{id}")
     @Operation(summary = "Delete coupon (Admin)", description = "Deletes an active coupon configurations ruleset by ID.")
     public ResponseEntity<?> deleteCoupon(@PathVariable("id") Long id) {
         log.info("Admin request: delete coupon ID: {}", id);

@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/public")
+@RequestMapping("/api/v1/public")
 @Tag(name = "Public Catalog", description = "Endpoints for fetching public product listings")
 public class PublicProductController {
 

@@ -17,7 +17,7 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/admin/settings/auto-recovery")
+@RequestMapping("/api/v1/admin/settings/auto-recovery")
 @Tag(name = "Admin — Cart Settings", description = "Settings to manage automated abandoned cart recovery")
 public class AdminSettingsController {
 

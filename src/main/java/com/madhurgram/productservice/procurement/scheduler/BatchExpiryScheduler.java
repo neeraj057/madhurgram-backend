@@ -43,7 +43,7 @@ public class BatchExpiryScheduler {
 
         for (PurchaseOrder batch : expiringBatches) {
             Product product = batch.getProduct();
-            if (product != null && !product.isClearanceActive()) {
+            if (product != null && !(product.getClearanceActive() != null && product.getClearanceActive())) {
                 applyClearanceDiscount(product);
             }
         }

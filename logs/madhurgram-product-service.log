@@ -7520,3 +7520,119 @@ Caused by: java.lang.IllegalArgumentException: Can not set boolean field com.mad
 2026-07-19 20:50:14 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
 2026-07-19 20:50:14 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
 2026-07-19 20:50:14 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-17T20:50:14.769704)
+2026-07-19 21:30:32 [main] INFO  c.m.p.ProductServiceApplication - Starting ProductServiceApplication using Java 21.0.2 with PID 19152 (D:\MadhurGram\product-service\target\classes started by victus in D:\MadhurGram\product-service)
+2026-07-19 21:30:32 [main] INFO  c.m.p.ProductServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-07-19 21:30:33 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.1.0.Final
+2026-07-19 21:30:34 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-19 21:30:34 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-19 21:30:34 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 300 ms. Found 16 JPA repository interfaces.
+2026-07-19 21:30:35 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-19 21:30:35 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-07-19 21:30:35 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-19 21:30:35 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-19 21:30:35 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 2928 ms
+2026-07-19 21:30:35 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-19 21:30:36 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-07-19 21:30:36 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-19 21:30:36 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-07-19 21:30:36 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@8d52313
+2026-07-19 21:30:36 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-07-19 21:30:36 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/madhurgram_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.36
+	Default catalog/schema: madhurgram_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-19 21:30:38 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-19 21:30:38 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-19 21:30:38 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-19 21:30:41 [main] INFO  c.m.p.config.CacheConfig - Initializing RedisCacheManager with JSON Serialization...
+2026-07-19 21:30:41 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
+2026-07-19 21:30:42 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoints beneath base path '/actuator'
+2026-07-19 21:30:42 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-07-19 21:30:42 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-07-19 21:30:42 [main] INFO  c.m.p.ProductServiceApplication - Started ProductServiceApplication in 10.45 seconds (process running for 10.915)
+2026-07-19 21:30:42 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Scheduled task triggered: runAbandonedCartRecovery
+2026-07-19 21:30:42 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: send automated recovery reminders
+2026-07-19 21:30:42 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Automated Cart Recovery reminder engine is currently disabled. Skipping cron run.
+2026-07-19 21:30:42 [scheduling-1] INFO  c.m.p.c.s.AbandonedCartScheduler - Running scheduled cycle: purge expired unrecovered carts
+2026-07-19 21:30:42 [scheduling-1] INFO  c.m.p.c.s.i.AbandonedCartServiceImpl - Executing cleanup purge for carts older than: 48 hours (Cutoff: 2026-07-17T21:30:42.579752800)
+2026-07-19 21:30:50 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-19 21:30:50 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-19 21:30:50 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2026-07-19 21:30:58 [http-nio-8080-exec-8] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-19 21:31:10 [http-nio-8080-exec-1] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-19 21:31:16 [http-nio-8080-exec-6] INFO  c.m.p.a.c.AnalyticsController - Admin request: fetch daily business report for range: 7 day(s)
+2026-07-19 21:31:16 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Starting dashboard computation for last 7 days...
+2026-07-19 21:31:16 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1: Querying abandoned cart repository counts...
+2026-07-19 21:31:16 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 1 complete. Conversion rate: 100.0
+2026-07-19 21:31:16 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Querying orders since: 2026-07-06T00:00
+2026-07-19 21:31:16 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2: Orders queried: 35. Processing growth in memory...
+2026-07-19 21:31:16 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 2 complete. Sales Growth: -41.205000804123884
+2026-07-19 21:31:16 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Today's orders: 0, Today's revenue: 0
+2026-07-19 21:31:16 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3: Fetching low stock products from database...
+2026-07-19 21:31:16 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 3 complete. Low stock count: 1
+2026-07-19 21:31:16 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4: Querying active user count from Redis Sorted Set...
+2026-07-19 21:31:16 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Step 4 complete. Active users: 0
+2026-07-19 21:31:16 [http-nio-8080-exec-6] INFO  c.m.p.a.s.impl.AnalyticsServiceImpl - [ANALYTICS] Completing dashboard stats builder...
+2026-07-19 21:31:16 [http-nio-8080-exec-6] INFO  c.m.p.a.c.AnalyticsController - Successfully calculated and retrieved dashboard metrics
+2026-07-19 21:31:16 [http-nio-8080-exec-7] INFO  c.m.p.a.c.AnalyticsController - Admin request: fetch daily business report for range: 7 day(s)
+2026-07-19 21:31:16 [http-nio-8080-exec-7] INFO  c.m.p.a.c.AnalyticsController - Successfully calculated and retrieved dashboard metrics
+2026-07-19 21:31:18 [http-nio-8080-exec-8] INFO  c.m.p.o.controller.OrderController - Request: list all orders (page=0, size=10)
+2026-07-19 21:31:18 [http-nio-8080-exec-8] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching paginated orders with their items: page=0, size=10
+2026-07-19 21:31:18 [http-nio-8080-exec-8] INFO  c.m.p.o.controller.OrderController - Returning paginated page 0 with 10 order(s) [superAdmin=false]
+2026-07-19 21:31:18 [http-nio-8080-exec-8] WARN  o.s.d.w.c.SpringDataJackson3Configuration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2026-07-19 21:31:18 [http-nio-8080-exec-9] INFO  c.m.p.o.controller.OrderController - Request: list all orders (page=0, size=10)
+2026-07-19 21:31:18 [http-nio-8080-exec-9] INFO  c.m.p.o.s.impl.OrderServiceImpl - Fetching paginated orders with their items: page=0, size=10
+2026-07-19 21:31:18 [http-nio-8080-exec-9] INFO  c.m.p.o.controller.OrderController - Returning paginated page 0 with 10 order(s) [superAdmin=false]
+2026-07-19 21:31:21 [http-nio-8080-exec-1] INFO  c.m.p.a.c.AdminProductController - Admin request: list products (page=null, size=null)
+2026-07-19 21:31:21 [http-nio-8080-exec-1] INFO  c.m.p.a.s.i.AdminProductServiceImpl - Admin request: fetch all products including inactive ones
+2026-07-19 21:31:21 [http-nio-8080-exec-1] INFO  c.m.p.a.c.AdminProductController - Returning 14 unpaginated product(s) to admin
+2026-07-19 21:31:21 [http-nio-8080-exec-4] INFO  c.m.p.a.c.AdminProductController - Admin request: list products (page=null, size=null)
+2026-07-19 21:31:21 [http-nio-8080-exec-4] INFO  c.m.p.a.s.i.AdminProductServiceImpl - Admin request: fetch all products including inactive ones
+2026-07-19 21:31:21 [http-nio-8080-exec-4] INFO  c.m.p.a.c.AdminProductController - Returning 14 unpaginated product(s) to admin
+2026-07-19 21:31:24 [http-nio-8080-exec-6] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all (page=null, size=null)
+2026-07-19 21:31:24 [http-nio-8080-exec-6] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-19 21:31:24 [http-nio-8080-exec-6] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-19 21:31:24 [http-nio-8080-exec-6] INFO  c.m.p.p.controller.ProductController - Returning 14 unpaginated product(s) for category: shop-all
+2026-07-19 21:31:24 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Request received to fetch products for category: shop-all (page=null, size=null)
+2026-07-19 21:31:24 [http-nio-8080-exec-8] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'active' in cache 'products'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-19 21:31:24 [http-nio-8080-exec-8] INFO  c.m.p.p.s.impl.ProductServiceImpl - [CACHE MISS] Fetching all active products from database...
+2026-07-19 21:31:24 [http-nio-8080-exec-8] INFO  c.m.p.p.controller.ProductController - Returning 14 unpaginated product(s) for category: shop-all
+2026-07-19 21:31:27 [http-nio-8080-exec-3] INFO  c.m.p.a.c.AdminTaxController - Admin request: list all tax slabs
+2026-07-19 21:31:27 [http-nio-8080-exec-3] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'all' in cache 'taxSlabs'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-19 21:31:27 [http-nio-8080-exec-3] INFO  c.m.p.a.service.impl.TaxServiceImpl - [CACHE MISS] Fetching all HSN tax slabs from database...
+2026-07-19 21:31:27 [http-nio-8080-exec-3] INFO  c.m.p.a.c.AdminTaxController - Returning 4 tax slab(s)
+2026-07-19 21:31:27 [http-nio-8080-exec-6] INFO  c.m.p.a.c.AdminTaxController - Admin request: list all tax slabs
+2026-07-19 21:31:27 [http-nio-8080-exec-6] WARN  c.m.p.config.CacheConfig - Redis Cache GET failure for key 'all' in cache 'taxSlabs'. Bypassing to Database. Error: Could not read JSON:Unexpected token (`JsonToken.START_OBJECT`), expected `JsonToken.VALUE_STRING`: need String, Number of Boolean value that contains type id (for subtype of java.lang.Object)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #1] 
+2026-07-19 21:31:27 [http-nio-8080-exec-6] INFO  c.m.p.a.service.impl.TaxServiceImpl - [CACHE MISS] Fetching all HSN tax slabs from database...
+2026-07-19 21:31:27 [http-nio-8080-exec-6] INFO  c.m.p.a.c.AdminTaxController - Returning 4 tax slab(s)
+2026-07-19 21:31:30 [http-nio-8080-exec-8] INFO  c.m.p.c.controller.CouponController - Admin request: list all coupons
+2026-07-19 21:31:30 [http-nio-8080-exec-8] INFO  c.m.p.c.s.impl.CouponServiceImpl - Admin request: fetch all coupon configurations
+2026-07-19 21:31:30 [http-nio-8080-exec-9] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-19 21:31:30 [http-nio-8080-exec-8] INFO  c.m.p.c.controller.CouponController - Returning 2 coupon(s) to admin
+2026-07-19 21:31:30 [http-nio-8080-exec-1] INFO  c.m.p.c.controller.CouponController - Admin request: list all coupons
+2026-07-19 21:31:30 [http-nio-8080-exec-1] INFO  c.m.p.c.s.impl.CouponServiceImpl - Admin request: fetch all coupon configurations
+2026-07-19 21:31:30 [http-nio-8080-exec-1] INFO  c.m.p.c.controller.CouponController - Returning 2 coupon(s) to admin
+2026-07-19 21:31:32 [http-nio-8080-exec-3] INFO  c.m.p.a.c.AdminCustomerController - Admin request: list customers, search='null', page=0, size=10
+2026-07-19 21:31:32 [http-nio-8080-exec-3] INFO  c.m.p.a.s.i.AdminCustomerServiceImpl - Computing paginated dashboard statistics: search='null', page=0, size=10
+2026-07-19 21:31:32 [http-nio-8080-exec-6] INFO  c.m.p.a.c.AdminCustomerController - Admin request: list customers, search='null', page=0, size=10
+2026-07-19 21:31:32 [http-nio-8080-exec-6] INFO  c.m.p.a.s.i.AdminCustomerServiceImpl - Computing paginated dashboard statistics: search='null', page=0, size=10
+2026-07-19 21:31:51 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-19 21:32:11 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-19 21:32:31 [http-nio-8080-exec-2] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-19 21:32:51 [http-nio-8080-exec-5] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
+2026-07-19 21:33:11 [http-nio-8080-exec-6] INFO  c.m.p.a.c.PublicAnalyticsController - Public request: heartbeat from client ID: 'client_z34tyb3pvg'
