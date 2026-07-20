@@ -9,7 +9,10 @@ import com.madhurgram.productservice.cart.service.AbandonedCartService;
 import com.madhurgram.productservice.cart.service.TwilioService;
 import com.madhurgram.productservice.common.entity.SystemSetting;
 import com.madhurgram.productservice.common.repository.SystemSettingRepository;
+import com.madhurgram.productservice.common.util.DataMaskingUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.cache.annotation.CacheEvict;
@@ -42,6 +45,12 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
 
     @org.springframework.beans.factory.annotation.Value("${madhurgram.app.domain-url:http://localhost:3000}")
     private String domainUrl;
+
+    @org.springframework.beans.factory.annotation.Value("${madhurgram.cart.reminder-cutoff-minutes:30}")
+    private int reminderCutoffMinutes;
+
+    private static final String ROLE_SUPER_ADMIN = "ROLE_SUPER_ADMIN";
+    private static final String SUPER_ADMIN = "SUPER_ADMIN";
 
     /**
      * Constructor injection for AbandonedCartServiceImpl.
@@ -139,9 +148,18 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
     public List<AbandonedCartResponse> getAbandonedCarts(int minutesAgo) {
         LocalDateTime cutoff = LocalDateTime.now().minusMinutes(minutesAgo);
         log.info("Retrieving unrecovered carts inactive since before: {}", cutoff);
+        // Capture role eagerly on the request thread before any lambda evaluation
+        final boolean superAdmin = isSuperAdmin();
+        log.info("Fetching abandoned carts for user. isSuperAdmin={}", superAdmin);
         List<AbandonedCart> carts = repository.findByIsRecoveredFalseAndLastUpdatedBeforeOrderByLastUpdatedDesc(cutoff);
         return carts.stream()
-                .map(cartMapper::toResponse)
+                .map(cart -> {
+                    AbandonedCartResponse dto = cartMapper.toResponse(cart);
+                    if (!superAdmin) {
+                        dto.setPhoneNumber(DataMaskingUtil.maskPhoneNumber(dto.getPhoneNumber()));
+                    }
+                    return dto;
+                })
                 .toList();
     }
 
@@ -216,7 +234,7 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
         }
 
         log.info("Running automated cart recovery worker cycle...");
-        LocalDateTime cutoff = LocalDateTime.now().minusMinutes(30);
+        LocalDateTime cutoff = LocalDateTime.now().minusMinutes(reminderCutoffMinutes);
         List<AbandonedCart> pendingReminders = repository
                 .findByIsRecoveredFalseAndReminderSentFalseAndLastUpdatedBeforeOrderByLastUpdatedDesc(cutoff);
 
@@ -296,5 +314,18 @@ public class AbandonedCartServiceImpl implements AbandonedCartService {
         return systemSettingRepository.findById("WHATSAPP_RECOVERY_TEMPLATE")
                 .map(com.madhurgram.productservice.common.entity.SystemSetting::getSettingValue)
                 .orElse(DEFAULT_RECOVERY_TEMPLATE);
+    }
+
+    /**
+     * Checks if the currently authenticated user has SUPER_ADMIN role.
+     * Evaluated eagerly on the request thread to avoid SecurityContext propagation issues.
+     *
+     * @return true if the current principal is a SUPER_ADMIN
+     */
+    private boolean isSuperAdmin() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth != null && auth.getAuthorities().stream()
+                .anyMatch(a -> ROLE_SUPER_ADMIN.equals(a.getAuthority())
+                        || SUPER_ADMIN.equals(a.getAuthority()));
     }
 }

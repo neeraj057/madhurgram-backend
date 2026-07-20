@@ -22,7 +22,7 @@ import jakarta.validation.constraints.Pattern;
 @Slf4j
 @Validated
 @RestController
-@RequestMapping("/api/cart")
+@RequestMapping("/api/v1/cart")
 @Tag(name = "Cart", description = "Shopping cart sync and recovery endpoints")
 public class CartController {
 
