@@ -119,6 +119,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 
         // ✅ Actual TODAY's metrics (midnight → now), separate from growth window
         LocalDateTime todayStart = LocalDate.now().atStartOfDay();
+        LocalDateTime todayEnd = LocalDateTime.of(LocalDate.now(), java.time.LocalTime.MAX);
         List<Order> todayOrders = currentPeriodOrders.stream()
                 .filter(o -> !o.getOrderDate().isBefore(todayStart))
                 .toList();
@@ -127,7 +128,8 @@ public class AnalyticsServiceImpl implements AnalyticsService {
                 .map(Order::getTotalAmount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        long todayOrderCount = todayOrders.size();
+        // Total orders today using the database query for efficiency
+        long todayOrderCount = orderRepository.getOrderCountByDateRange(todayStart, todayEnd);
         log.info("[ANALYTICS] Today's orders: {}, Today's revenue: {}", todayOrderCount, todayRevenue);
 
         // Group by LocalDate in memory and sum amounts

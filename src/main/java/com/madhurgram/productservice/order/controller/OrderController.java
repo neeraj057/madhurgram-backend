@@ -5,20 +5,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import com.madhurgram.productservice.common.dto.PageResponse;
 import com.madhurgram.productservice.order.dto.OrderResponseDTO;
 import com.madhurgram.productservice.order.entity.Order;
 import com.madhurgram.productservice.order.entity.OrderStatus;
 import com.madhurgram.productservice.order.service.OrderService;
-import com.madhurgram.productservice.common.util.DataMaskingUtil;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,18 +24,16 @@ import jakarta.validation.constraints.Pattern;
 /**
  * Controller for placing, tracking, and updating orders.
  * 
- * <p>Handles data masking of customer phone numbers for roles
+ * <p>
+ * Handles data masking of customer phone numbers for roles
  * other than SUPER_ADMIN.
  */
 @Slf4j
 @Validated
 @RestController
-@RequestMapping("/api/orders")
+@RequestMapping("/api/v1/orders")
 @Tag(name = "Orders", description = "Order processing, tracking, and status update endpoints")
 public class OrderController {
-
-    private static final String ROLE_SUPER_ADMIN = "ROLE_SUPER_ADMIN";
-    private static final String SUPER_ADMIN = "SUPER_ADMIN";
 
     private final OrderService orderService;
 
@@ -76,39 +71,32 @@ public class OrderController {
         }
     }
 
+    @GetMapping("/stats")
+    @Operation(summary = "Get order statistics", description = "Retrieves global order statistics for the admin dashboard.")
+    public ResponseEntity<com.madhurgram.productservice.order.dto.OrderStatsDTO> getOrderStats() {
+        log.info("Request: get global order stats");
+        com.madhurgram.productservice.order.dto.OrderStatsDTO stats = orderService.getOrderStats();
+        return ResponseEntity.ok(stats);
+    }
+
     /**
-     * Fetches all orders, optionally paginated. Mask phone numbers if current user is not SUPER_ADMIN.
+     * Fetches all orders, optionally paginated. Mask phone numbers if current user
+     * is not SUPER_ADMIN.
      *
      * @param page optional page index (0-based)
      * @param size optional page size limit
      * @return list or page of orders
      */
     @GetMapping
-    @Operation(summary = "List all orders", description = "Retrieves all orders. Phone numbers are masked for non-super-admins. Supports optional pagination parameters page and size.")
-    public ResponseEntity<?> getAllOrders(
-            @RequestParam(required = false) Integer page,
-            @RequestParam(required = false) Integer size) {
+    @Operation(summary = "List all orders", description = "Retrieves paginated orders. Phone numbers are masked for non-super-admins. Defaults to page=0, size=20 if not specified.")
+    public ResponseEntity<PageResponse<OrderResponseDTO>> getAllOrders(
+            @RequestParam(required = false, defaultValue = "0") Integer page,
+            @RequestParam(required = false, defaultValue = "20") Integer size) {
         log.info("Request: list all orders (page={}, size={})", page, size);
-        
-        boolean isSuperAdmin = isSuperAdmin();
-        if (page != null && size != null) {
-            Pageable pageable = PageRequest.of(page, size, Sort.by("orderDate").descending());
-            Page<OrderResponseDTO> paginated = orderService.getAllOrders(pageable);
-            if (!isSuperAdmin) {
-                paginated.forEach(dto -> dto.setPhoneNumber(DataMaskingUtil.maskPhoneNumber(dto.getPhoneNumber())));
-            }
-            log.info("Returning paginated page {} with {} order(s) [superAdmin={}]", page, paginated.getNumberOfElements(), isSuperAdmin);
-            return ResponseEntity.ok(paginated);
-        } else {
-            List<OrderResponseDTO> dtos = orderService.getAllOrders();
-            if (!isSuperAdmin) {
-                for (OrderResponseDTO dto : dtos) {
-                    dto.setPhoneNumber(DataMaskingUtil.maskPhoneNumber(dto.getPhoneNumber()));
-                }
-            }
-            log.info("Returning {} unpaginated order(s) [superAdmin={}]", dtos.size(), isSuperAdmin);
-            return ResponseEntity.ok(dtos);
-        }
+        Pageable pageable = PageRequest.of(page, size, Sort.by("orderDate").descending());
+        Page<OrderResponseDTO> paginated = orderService.getAllOrders(pageable);
+        log.info("Returning paginated page {} with {} order(s)", page, paginated.getNumberOfElements());
+        return ResponseEntity.ok(PageResponse.from(paginated));
     }
 
     /**
@@ -145,26 +133,16 @@ public class OrderController {
     @GetMapping("/customer/{phone}")
     @Operation(summary = "Get orders by customer phone", description = "Retrieves orders for a customer using their phone number.")
     public ResponseEntity<List<OrderResponseDTO>> getCustomerOrders(
-            @PathVariable
-            @Pattern(regexp = "^(?:\\+91|91)?[6-9]\\d{9}$", message = "Invalid phone number format. Must be a valid 10-digit Indian mobile number optionally prefixed with +91 or 91.")
-            String phone) {
+            @PathVariable @Pattern(regexp = "^(?:\\+91|91)?[6-9]\\d{9}$", message = "Invalid phone number format. Must be a valid 10-digit Indian mobile number optionally prefixed with +91 or 91.") String phone) {
         log.info("Request: fetch customer orders for phone='{}'", phone);
-        
-        List<OrderResponseDTO> customerOrders = orderService.getOrdersByCustomerPhone(phone.trim());
-        boolean isSuperAdmin = isSuperAdmin();
 
-        if (!isSuperAdmin) {
-            for (OrderResponseDTO dto : customerOrders) {
-                dto.setPhoneNumber(DataMaskingUtil.maskPhoneNumber(dto.getPhoneNumber()));
-            }
-        }
-        
-        log.info("Returning {} order(s) for customer [superAdmin={}]", customerOrders.size(), isSuperAdmin);
-        
+        List<OrderResponseDTO> customerOrders = orderService.getOrdersByCustomerPhone(phone.trim());
+        log.info("Returning {} order(s) for customer", customerOrders.size());
+
         if (customerOrders.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        
+
         return ResponseEntity.ok(customerOrders);
     }
 
@@ -181,23 +159,10 @@ public class OrderController {
         log.info("Request: fetch order details for ID: {}", id);
         try {
             OrderResponseDTO dto = orderService.getOrderDetails(id);
-            
-            boolean isSuperAdmin = isSuperAdmin();
-            if (!isSuperAdmin) {
-                dto.setPhoneNumber(DataMaskingUtil.maskPhoneNumber(dto.getPhoneNumber()));
-            }
-            
             return ResponseEntity.ok(dto);
         } catch (RuntimeException e) {
             log.warn("Order details request failed for ID: {}: {}", id, e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-    }
-
-    private boolean isSuperAdmin() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return auth != null && auth.getAuthorities().stream()
-                .anyMatch(a -> ROLE_SUPER_ADMIN.equals(a.getAuthority())
-                        || SUPER_ADMIN.equals(a.getAuthority()));
     }
 }

@@ -20,6 +20,9 @@ import java.time.LocalDateTime;
 import java.math.BigDecimal;
 import java.util.regex.Pattern;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import com.madhurgram.productservice.common.util.DataMaskingUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +31,7 @@ import com.madhurgram.productservice.product.entity.Product;
 import com.madhurgram.productservice.logistics.service.LogisticsService;
 
 /**
- * Service implementation for managing customer shopping orders, calculations, 
+ * Service implementation for managing customer shopping orders, calculations,
  * stock deductions, logistics integrations, and status update flows.
  */
 @Slf4j
@@ -37,15 +40,31 @@ public class OrderServiceImpl implements OrderService {
 
     private static final String STATUS_PENDING = "PENDING";
     private static final String PAYMENT_COD = "COD";
-    
+
     private static final String DEFAULT_HSN_CODE = "0000";
     private static final BigDecimal DEFAULT_GST_RATE = BigDecimal.valueOf(5.00);
 
     private static final String AUDIT_ACTION_PLACE_COD = "PLACE_ORDER_COD";
     private static final String AUDIT_ACTION_UPDATE_STATUS = "UPDATE_ORDER_STATUS";
+    
+    private static final double INDIA_LAT_MIN = 6.0;
+    private static final double INDIA_LAT_MAX = 38.0;
+    private static final double INDIA_LNG_MIN = 68.0;
+    private static final double INDIA_LNG_MAX = 98.0;
 
-    // Validates if delivery state is Uttar Pradesh (UP) using word boundaries to avoid false positives (e.g. Tirupati containing 'up')
-    private static final Pattern UP_STATE_PATTERN = Pattern.compile("\\b(uttar\\s+pradesh|u\\.p\\.|up)\\b", Pattern.CASE_INSENSITIVE);
+    private static final BigDecimal PERCENTAGE_DIVISOR = BigDecimal.valueOf(100.0);
+    private static final BigDecimal HALF_DIVISOR = BigDecimal.valueOf(2.0);
+
+    private static final String PAYMENT_STATUS_COMPLETED = "COMPLETED";
+    private static final String PAYMENT_STATUS_FAILED = "FAILED";
+
+    private static final String ROLE_SUPER_ADMIN = "ROLE_SUPER_ADMIN";
+    private static final String SUPER_ADMIN = "SUPER_ADMIN";
+
+    // Validates if delivery state is Uttar Pradesh (UP) using word boundaries to
+    // avoid false positives (e.g. Tirupati containing 'up')
+    private static final Pattern UP_STATE_PATTERN = Pattern.compile("\\b(uttar\\s+pradesh|u\\.p\\.|up)\\b",
+            Pattern.CASE_INSENSITIVE);
 
     private final OrderRepository orderRepository;
     private final ProductService productService;
@@ -62,21 +81,21 @@ public class OrderServiceImpl implements OrderService {
     /**
      * Constructor injection for OrderServiceImpl.
      *
-     * @param orderRepository         order database repository
-     * @param productService          product catalog service
-     * @param productRepository       product repository
-     * @param logisticsService        logistics operations service
-     * @param abandonedCartService    abandoned cart tracking service
+     * @param orderRepository          order database repository
+     * @param productService           product catalog service
+     * @param productRepository        product repository
+     * @param logisticsService         logistics operations service
+     * @param abandonedCartService     abandoned cart tracking service
      * @param orderNotificationService order notifications dispatch service
-     * @param eventPublisher          application event dispatcher
-     * @param auditLogService         security audit logger service
-     * @param reviewRequestRepository review requests scheduling repository
-     * @param couponService           discount coupons service
-     * @param orderMapper             order mapper utility
+     * @param eventPublisher           application event dispatcher
+     * @param auditLogService          security audit logger service
+     * @param reviewRequestRepository  review requests scheduling repository
+     * @param couponService            discount coupons service
+     * @param orderMapper              order mapper utility
      */
     public OrderServiceImpl(
-            OrderRepository orderRepository, 
-            ProductService productService, 
+            OrderRepository orderRepository,
+            ProductService productService,
             ProductRepository productRepository,
             LogisticsService logisticsService,
             com.madhurgram.productservice.cart.service.AbandonedCartService abandonedCartService,
@@ -101,7 +120,8 @@ public class OrderServiceImpl implements OrderService {
 
     /**
      * Submits and validates a new customer checkout order.
-     * Deducts stock and triggers automatic low inventory purchase orders if limits crossed.
+     * Deducts stock and triggers automatic low inventory purchase orders if limits
+     * crossed.
      *
      * @param order raw checkout order details
      * @return order details response DTO
@@ -110,11 +130,11 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public OrderResponseDTO placeOrder(Order order) {
         log.info("Processing order placement for customer: {}", order.getCustomerName());
-        
+
         if (order.getPaymentStatus() == null) {
             order.setPaymentStatus(STATUS_PENDING);
         }
-        
+
         if (PAYMENT_COD.equalsIgnoreCase(order.getPaymentStatus())) {
             order.setOrderStatus(OrderStatus.CONFIRMED);
         } else if (order.getOrderStatus() == null) {
@@ -130,13 +150,15 @@ public class OrderServiceImpl implements OrderService {
             double lat = order.getLatitude();
             double lng = order.getLongitude();
             log.info("Validating delivery address coordinates: Lat: {}, Lng: {}", lat, lng);
-            if (lat < 6.0 || lat > 38.0 || lng < 68.0 || lng > 98.0) {
+            if (lat < INDIA_LAT_MIN || lat > INDIA_LAT_MAX || lng < INDIA_LNG_MIN || lng > INDIA_LNG_MAX) {
                 log.warn("Order placement rejected: Coordinates ({}, {}) are outside India's boundaries.", lat, lng);
-                throw new IllegalArgumentException("Delivery address coordinates are outside India's serviceable region.");
+                throw new IllegalArgumentException(
+                        "Delivery address coordinates are outside India's serviceable region.");
             }
         }
 
-        // Secure state regex match check to prevent false positives (e.g., 'Tirupati, AP' matching 'up')
+        // Secure state regex match check to prevent false positives (e.g., 'Tirupati,
+        // AP' matching 'up')
         boolean isIntraState = false;
         if (order.getCityState() != null) {
             if (UP_STATE_PATTERN.matcher(order.getCityState()).find()) {
@@ -155,7 +177,8 @@ public class OrderServiceImpl implements OrderService {
             com.madhurgram.productservice.coupon.dto.CouponDTO coupon = couponService.validateCoupon(
                     order.getCouponCode(), order.getPhoneNumber(), totalItemsAmount);
             BigDecimal discountPercent = coupon.getDiscountPercentage();
-            discountVal = totalItemsAmount.multiply(discountPercent).divide(BigDecimal.valueOf(100.0), 2, java.math.RoundingMode.HALF_UP);
+            discountVal = totalItemsAmount.multiply(discountPercent).divide(PERCENTAGE_DIVISOR, 2,
+                    java.math.RoundingMode.HALF_UP);
             order.setCouponCode(coupon.getCode());
             order.setDiscountAmount(discountVal);
         } else {
@@ -198,7 +221,8 @@ public class OrderServiceImpl implements OrderService {
 
             BigDecimal totalItemPrice = item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity()));
 
-            BigDecimal divisor = BigDecimal.ONE.add(gstRate.divide(BigDecimal.valueOf(100.0), 4, java.math.RoundingMode.HALF_UP));
+            BigDecimal divisor = BigDecimal.ONE
+                    .add(gstRate.divide(PERCENTAGE_DIVISOR, 4, java.math.RoundingMode.HALF_UP));
             BigDecimal taxableValue = totalItemPrice.divide(divisor, 2, java.math.RoundingMode.HALF_UP);
             BigDecimal totalTax = totalItemPrice.subtract(taxableValue);
 
@@ -206,7 +230,7 @@ public class OrderServiceImpl implements OrderService {
             taxableTotal = taxableTotal.add(taxableValue);
 
             if (isIntraState) {
-                BigDecimal halfTax = totalTax.divide(BigDecimal.valueOf(2.0), 2, java.math.RoundingMode.HALF_UP);
+                BigDecimal halfTax = totalTax.divide(HALF_DIVISOR, 2, java.math.RoundingMode.HALF_UP);
                 item.setCgstAmount(halfTax);
                 item.setSgstAmount(halfTax);
                 item.setIgstAmount(BigDecimal.ZERO);
@@ -247,12 +271,14 @@ public class OrderServiceImpl implements OrderService {
         }
 
         if (OrderStatus.CONFIRMED.equals(saved.getOrderStatus())) {
-            auditLogService.log(AUDIT_ACTION_PLACE_COD, String.valueOf(saved.getId()), "Order placed via Cash on Delivery");
+            auditLogService.log(AUDIT_ACTION_PLACE_COD, String.valueOf(saved.getId()),
+                    "Order placed via Cash on Delivery");
 
             try {
                 orderNotificationService.sendOrderStatusNotification(saved, OrderStatus.CONFIRMED);
             } catch (Exception e) {
-                log.error("Failed to send COD order confirmation notification for order ID: {}. Error: {}", saved.getId(), e.getMessage());
+                log.error("Failed to send COD order confirmation notification for order ID: {}. Error: {}",
+                        saved.getId(), e.getMessage());
             }
 
             log.info("Publishing OrderConfirmedEvent for COD Order ID: {}", saved.getId());
@@ -279,17 +305,30 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderResponseDTO> getAllOrders() {
         log.info("Fetching all orders with their items in a single optimized query.");
         List<Order> orders = orderRepository.findAllWithItems();
-        return orders.stream()
+        List<OrderResponseDTO> dtos = orders.stream()
                 .map(orderMapper::toResponseDTO)
                 .toList();
+        return applyMaskingIfNeeded(dtos);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<OrderResponseDTO> getAllOrders(Pageable pageable) {
-        log.info("Fetching paginated orders with their items: page={}, size={}", pageable.getPageNumber(), pageable.getPageSize());
+        log.info("Fetching paginated orders with their items: page={}, size={}", pageable.getPageNumber(),
+                pageable.getPageSize());
+        // Capture super-admin status eagerly on the request thread BEFORE any lazy
+        // Page.map() or forEach() lambda — SecurityContextHolder is thread-local and
+        // may not be propagated into the lambda's execution context.
+        final boolean superAdmin = isSuperAdmin();
+        log.info("Fetching orders for user. isSuperAdmin={}", superAdmin);
         Page<Order> orders = orderRepository.findAllWithItems(pageable);
-        return orders.map(orderMapper::toResponseDTO);
+        return orders.map(order -> {
+            OrderResponseDTO dto = orderMapper.toResponseDTO(order);
+            if (!superAdmin) {
+                dto.setPhoneNumber(DataMaskingUtil.maskPhoneNumber(dto.getPhoneNumber()));
+            }
+            return dto;
+        });
     }
 
     /**
@@ -305,7 +344,7 @@ public class OrderServiceImpl implements OrderService {
     @CacheEvict(value = "analytics", allEntries = true)
     public OrderResponseDTO updateOrderStatus(Long orderId, OrderStatus nextStatus) {
         log.info("Updating status for order ID: {} to {}", orderId, nextStatus);
-        
+
         if (orderId == null || nextStatus == null) {
             log.warn("Update status aborted: Order ID or target status parameter is null");
             throw new IllegalArgumentException("Order ID and target status must not be null.");
@@ -324,10 +363,10 @@ public class OrderServiceImpl implements OrderService {
         }
 
         if (nextStatus == OrderStatus.CANCELLED
-                && (currentStatus == OrderStatus.PENDING 
-                    || currentStatus == OrderStatus.CONFIRMED 
-                    || currentStatus == OrderStatus.SHIPPED 
-                    || currentStatus == OrderStatus.OUT_FOR_DELIVERY)) {
+                && (currentStatus == OrderStatus.PENDING
+                        || currentStatus == OrderStatus.CONFIRMED
+                        || currentStatus == OrderStatus.SHIPPED
+                        || currentStatus == OrderStatus.OUT_FOR_DELIVERY)) {
             log.info("Order ID: {} is being cancelled. Restoring stock for all items...", orderId);
             for (OrderItem item : order.getOrderItems()) {
                 log.info("Restoring stock for product ID: {} (Quantity: {})", item.getProductId(), item.getQuantity());
@@ -340,17 +379,18 @@ public class OrderServiceImpl implements OrderService {
             try {
                 logisticsService.scheduleOrderPickup(order);
             } catch (Exception e) {
-                log.error("Failed to execute logistics booking for Order ID: {}. Error: {}", orderId, e.getMessage(), e);
+                log.error("Failed to execute logistics booking for Order ID: {}. Error: {}", orderId, e.getMessage(),
+                        e);
             }
         }
 
         order.setOrderStatus(nextStatus);
         Order saved = orderRepository.save(order);
         log.info("Order ID: {} status updated successfully from {} to {}", orderId, currentStatus, nextStatus);
-        
-        auditLogService.log(AUDIT_ACTION_UPDATE_STATUS, String.valueOf(orderId), 
+
+        auditLogService.log(AUDIT_ACTION_UPDATE_STATUS, String.valueOf(orderId),
                 "Status transitioned from " + currentStatus + " to " + nextStatus);
-        
+
         try {
             orderNotificationService.sendOrderStatusNotification(saved, nextStatus);
         } catch (Exception e) {
@@ -361,7 +401,8 @@ public class OrderServiceImpl implements OrderService {
             log.info("Order ID: {} has been DELIVERED. Scheduling Google Review request...", orderId);
             try {
                 if (reviewRequestRepository.findByOrderId(orderId).isEmpty()) {
-                    com.madhurgram.productservice.marketing.entity.ReviewRequest reviewRequest = com.madhurgram.productservice.marketing.entity.ReviewRequest.builder()
+                    com.madhurgram.productservice.marketing.entity.ReviewRequest reviewRequest = com.madhurgram.productservice.marketing.entity.ReviewRequest
+                            .builder()
                             .orderId(orderId)
                             .customerName(saved.getCustomerName())
                             .customerPhone(saved.getPhoneNumber())
@@ -380,11 +421,11 @@ public class OrderServiceImpl implements OrderService {
             log.info("Publishing OrderConfirmedEvent for Order ID: {}", orderId);
             eventPublisher.publishEvent(new OrderConfirmedEvent(this, saved));
         }
-        
+
         if (saved.getOrderItems() != null) {
             saved.getOrderItems().size();
         }
-        
+
         return orderMapper.toResponseDTO(saved);
     }
 
@@ -405,9 +446,36 @@ public class OrderServiceImpl implements OrderService {
         }
 
         List<Order> orders = orderRepository.findByPhoneNumberOrderByOrderDateDesc(phoneNumber.trim());
-        return orders.stream()
+        List<OrderResponseDTO> dtos = orders.stream()
                 .map(orderMapper::toResponseDTO)
                 .toList();
+        return applyMaskingIfNeeded(dtos);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public com.madhurgram.productservice.order.dto.OrderStatsDTO getOrderStats() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime startOfToday = now.toLocalDate().atStartOfDay();
+        LocalDateTime endOfToday = LocalDateTime.of(now.toLocalDate(), java.time.LocalTime.MAX);
+        LocalDateTime startOfYesterday = startOfToday.minusDays(1);
+        LocalDateTime endOfYesterday = startOfToday.minusNanos(1);
+
+        long totalOrders = orderRepository.count();
+        long todayOrders = orderRepository.getOrderCountByDateRange(startOfToday, endOfToday);
+        long yesterdayOrders = orderRepository.getOrderCountByDateRange(startOfYesterday, endOfYesterday);
+        long pendingOrders = orderRepository.getPendingOrderCount();
+        long processingOrders = orderRepository.getProcessingOrderCount();
+        long completedOrders = orderRepository.getCompletedOrderCount();
+
+        return com.madhurgram.productservice.order.dto.OrderStatsDTO.builder()
+                .totalOrders(totalOrders)
+                .todayOrders(todayOrders)
+                .yesterdayOrders(yesterdayOrders)
+                .pendingOrders(pendingOrders)
+                .processingOrders(processingOrders)
+                .completedOrders(completedOrders)
+                .build();
     }
 
     /**
@@ -420,7 +488,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(readOnly = true)
     public OrderResponseDTO getOrderDetails(Long orderId) {
         log.info("Fetching order details for ID: {}", orderId);
-        
+
         if (orderId == null) {
             log.warn("Details lookup aborted: orderId parameter is null");
             throw new IllegalArgumentException("Order ID cannot be null.");
@@ -428,11 +496,16 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("Order not found with ID: " + orderId));
-        return orderMapper.toResponseDTO(order);
+        OrderResponseDTO dto = orderMapper.toResponseDTO(order);
+        if (!isSuperAdmin()) {
+            dto.setPhoneNumber(DataMaskingUtil.maskPhoneNumber(dto.getPhoneNumber()));
+        }
+        return dto;
     }
 
     /**
-     * Updates order payment details and resolves order status updates based on payment result.
+     * Updates order payment details and resolves order status updates based on
+     * payment result.
      *
      * @param orderId       target order identifier
      * @param paymentStatus new payment status to record
@@ -443,7 +516,8 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @CacheEvict(value = "analytics", allEntries = true)
     public OrderResponseDTO updateOrderPaymentStatus(Long orderId, String paymentStatus, String transactionId) {
-        log.info("Updating payment status for order ID: {} to {} (Transaction: {})", orderId, paymentStatus, transactionId);
+        log.info("Updating payment status for order ID: {} to {} (Transaction: {})", orderId, paymentStatus,
+                transactionId);
 
         if (orderId == null || paymentStatus == null) {
             log.warn("Payment status update aborted: Order ID or payment status parameter is null");
@@ -459,16 +533,32 @@ public class OrderServiceImpl implements OrderService {
         }
         orderRepository.save(order);
 
-        if ("COMPLETED".equalsIgnoreCase(paymentStatus)) {
+        if (PAYMENT_STATUS_COMPLETED.equalsIgnoreCase(paymentStatus)) {
             // Enforce lifecycle update: Transition PENDING to CONFIRMED
             updateOrderStatus(orderId, OrderStatus.CONFIRMED);
             log.info("Order ID: {} successfully CONFIRMED via successful payment webhook processing", orderId);
-        } else if ("FAILED".equalsIgnoreCase(paymentStatus)) {
+        } else if (PAYMENT_STATUS_FAILED.equalsIgnoreCase(paymentStatus)) {
             // Transition order to CANCELLED (which automatically releases stock)
             updateOrderStatus(orderId, OrderStatus.CANCELLED);
             log.info("Order ID: {} successfully CANCELLED due to failed payment webhook processing", orderId);
         }
 
         return orderMapper.toResponseDTO(order);
+    }
+
+    private boolean isSuperAdmin() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth != null && auth.getAuthorities().stream()
+                .anyMatch(a -> ROLE_SUPER_ADMIN.equals(a.getAuthority())
+                        || SUPER_ADMIN.equals(a.getAuthority()));
+    }
+
+    private List<OrderResponseDTO> applyMaskingIfNeeded(List<OrderResponseDTO> dtos) {
+        if (!isSuperAdmin()) {
+            for (OrderResponseDTO dto : dtos) {
+                dto.setPhoneNumber(DataMaskingUtil.maskPhoneNumber(dto.getPhoneNumber()));
+            }
+        }
+        return dtos;
     }
 }

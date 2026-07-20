@@ -17,17 +17,21 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findByPhoneNumberOrderByOrderDateDesc(String phoneNumber);
 
-    // 📊 आज का कुल रेवेन्यू (सिर्फ उन ऑर्डर्स का जो CANCELLED नहीं हैं)
+    // 📊 today revenue
     @Query("SELECT COALESCE(SUM(o.totalAmount), 0) FROM Order o WHERE o.orderDate >= :start AND o.orderDate <= :end AND o.orderStatus != com.madhurgram.productservice.order.entity.OrderStatus.CANCELLED")
     java.math.BigDecimal getTodayRevenue(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
-    // 📈 आज आए कुल ऑर्डर्स की संख्या
     @Query("SELECT COUNT(o) FROM Order o WHERE o.orderDate >= :start AND o.orderDate <= :end")
-    Long getTodayOrderCount(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+    Long getOrderCountByDateRange(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
-    // ⏳ कितने ऑर्डर्स अभी PENDING स्टेट में बैठे हैं
     @Query("SELECT COUNT(o) FROM Order o WHERE o.orderStatus = com.madhurgram.productservice.order.entity.OrderStatus.PENDING")
     Long getPendingOrderCount();
+
+    @Query("SELECT COUNT(o) FROM Order o WHERE o.orderStatus IN (com.madhurgram.productservice.order.entity.OrderStatus.CONFIRMED, com.madhurgram.productservice.order.entity.OrderStatus.SHIPPED, com.madhurgram.productservice.order.entity.OrderStatus.OUT_FOR_DELIVERY)")
+    Long getProcessingOrderCount();
+
+    @Query("SELECT COUNT(o) FROM Order o WHERE o.orderStatus = com.madhurgram.productservice.order.entity.OrderStatus.DELIVERED")
+    Long getCompletedOrderCount();
 
     @Query("SELECT DISTINCT o FROM Order o LEFT JOIN FETCH o.orderItems")
     List<Order> findAllWithItems();
@@ -39,12 +43,10 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("SELECT DISTINCT o.phoneNumber FROM Order o")
     List<String> findDistinctPhoneNumbers();
 
-    @Query("SELECT DISTINCT o FROM Order o LEFT JOIN FETCH o.orderItems")
+    @Query("SELECT DISTINCT o FROM Order o LEFT JOIN o.orderItems")
     Page<Order> findAllWithItems(Pageable pageable);
 
-    @Query(value = "SELECT DISTINCT o.phone_number FROM orders o", 
-           countQuery = "SELECT COUNT(DISTINCT o.phone_number) FROM orders o", 
-           nativeQuery = true)
+    @Query(value = "SELECT DISTINCT o.phone_number FROM orders o", countQuery = "SELECT COUNT(DISTINCT o.phone_number) FROM orders o", nativeQuery = true)
     Page<String> findDistinctPhoneNumbers(Pageable pageable);
 
     @Query("SELECT DISTINCT o FROM Order o LEFT JOIN FETCH o.orderItems WHERE o.phoneNumber IN :phoneNumbers")
@@ -57,5 +59,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<String> findInactiveCustomerPhoneNumbersBefore(@Param("since") LocalDateTime since);
 
     @Query("SELECT DISTINCT o.phoneNumber FROM Order o JOIN o.orderItems i WHERE o.orderDate >= :since AND LOWER(i.productName) LIKE LOWER(CONCAT('%', :keyword, '%'))")
-    List<String> findCustomerPhoneNumbersByProductKeywordSince(@Param("keyword") String keyword, @Param("since") LocalDateTime since);
+    List<String> findCustomerPhoneNumbersByProductKeywordSince(@Param("keyword") String keyword,
+            @Param("since") LocalDateTime since);
 }

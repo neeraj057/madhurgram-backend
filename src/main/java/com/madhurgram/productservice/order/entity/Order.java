@@ -10,8 +10,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders", indexes = {
-    @Index(name = "idx_orders_phone_number", columnList = "phone_number"),
-    @Index(name = "idx_orders_order_date", columnList = "order_date")
+        @Index(name = "idx_orders_phone_number", columnList = "phone_number"),
+        @Index(name = "idx_orders_order_date", columnList = "order_date")
 })
 @Getter
 @Setter
@@ -45,13 +45,12 @@ public class Order {
     @Column(nullable = false, name = "total_amount")
     private BigDecimal totalAmount;
 
-    // 🛡️ क्लीन कोड: स्ट्रिंग की जगह Enum मैपिंग और डिफॉल्ट वैल्यू सेट की भाई
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "order_status")
     @Builder.Default
     private OrderStatus orderStatus = OrderStatus.PENDING;
 
-    @Column(name = "order_date")
+    @Column(name = "order_date", updatable = false)
     private LocalDateTime orderDate;
 
     @Column(name = "tracking_number", length = 50)
@@ -93,7 +92,8 @@ public class Order {
 
     // 🔗 @OneToMany Relationship mapping with OrderItem
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference // Parent-Child JSON handling के लिए भाई
+    @JsonManagedReference
+    @org.hibernate.annotations.BatchSize(size = 100)
     @Builder.Default
     private List<OrderItem> orderItems = new ArrayList<>();
 
@@ -102,7 +102,6 @@ public class Order {
         this.orderDate = LocalDateTime.now();
     }
 
-    // Helper method: रिलेशनशिप को दोनों तरफ सिंक रखने के लिए
     public void addOrderItem(OrderItem item) {
         orderItems.add(item);
         item.setOrder(this);
