@@ -36,6 +36,11 @@ public class CouponController {
         this.couponService = couponService;
     }
 
+    private String maskPhone(String phone) {
+        if (phone == null || phone.length() < 4) return phone;
+        return "******" + phone.substring(phone.length() - 4);
+    }
+
     /**
      * Validates if a coupon code can be applied to a shopping cart.
      * Accessible by unauthenticated public checkout clients.
@@ -45,7 +50,7 @@ public class CouponController {
      * @param amount target cart order total amount to qualify limits
      * @return coupon details if valid
      */
-    @GetMapping("/api/coupons/validate")
+    @GetMapping("/api/v1/coupons/validate")
     @Operation(summary = "Validate checkout coupon", description = "Validates coupon eligibility based on purchase amount and optional buyer phone verification.")
     public ResponseEntity<?> validateCoupon(
             @RequestParam("code") String code,
@@ -53,14 +58,15 @@ public class CouponController {
             @Pattern(regexp = "^(?:\\+91|91)?[6-9]\\d{9}$", message = "Invalid phone number format. Must be a valid 10-digit Indian mobile number optionally prefixed with +91 or 91.")
             String phone,
             @RequestParam("amount") BigDecimal amount) {
-        log.info("Validate coupon: code='{}', phone='{}', amount={}", code, phone, amount);
+        String cleanPhone = (phone != null) ? phone.trim() : null;
+        log.info("Validate coupon: code='{}', phone='{}', amount={}", code, maskPhone(cleanPhone), amount);
         try {
-            CouponDTO coupon = couponService.validateCoupon(code, phone, amount);
+            CouponDTO coupon = couponService.validateCoupon(code, cleanPhone, amount);
             log.info("Coupon '{}' is valid for checkout", code);
             return ResponseEntity.ok(coupon);
         } catch (IllegalArgumentException e) {
             log.warn("Coupon validation failed: {}", e.getMessage());
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
     }
 
