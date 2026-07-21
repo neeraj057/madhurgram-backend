@@ -17,6 +17,8 @@ import jakarta.validation.constraints.Pattern;
 import java.util.List;
 import java.util.Map;
 
+import com.madhurgram.productservice.common.util.DataMaskingUtil;
+
 /**
  * Controller for tracking scheduler review queues and manual marketing outreach.
  */
@@ -125,16 +127,16 @@ public class ReviewController {
             @Pattern(regexp = "^(?:\\+91|91)?[6-9]\\d{9}$", message = "Invalid phone number format. Must be a valid 10-digit Indian mobile number optionally prefixed with +91 or 91.")
             String phone
     ) {
-        log.info("Admin request: send test review invite to name='{}', phone='{}'", name, phone);
+        log.info("Admin request: send test review invite to name='{}', phone='{}'", DataMaskingUtil.maskName(name), DataMaskingUtil.maskPhoneNumber(phone));
         try {
             ReviewRequestDTO saved = reviewService.sendTest(name, phone);
-            log.info("Test review invite successfully dispatched to '{}'", phone);
+            log.info("Test review invite successfully dispatched to '{}'", DataMaskingUtil.maskPhoneNumber(phone));
             return ResponseEntity.ok(saved);
         } catch (IllegalArgumentException e) {
             log.warn("Test invite aborted: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
-            log.error("Failed to send test review invite to '{}'", phone, e);
+            log.error("Failed to send test review invite to '{}'", DataMaskingUtil.maskPhoneNumber(phone), e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
