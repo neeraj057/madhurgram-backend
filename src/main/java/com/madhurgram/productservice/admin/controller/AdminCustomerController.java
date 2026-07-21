@@ -50,6 +50,11 @@ public class AdminCustomerController {
         }
     }
 
+    private String maskPhone(String phone) {
+        if (phone == null || phone.length() < 4) return phone;
+        return "******" + phone.substring(phone.length() - 4);
+    }
+
     @GetMapping("/{phone}/history")
     @Operation(summary = "Get customer order history", description = "Returns full order history for a customer. Phone is masked for non-super-admins.")
     public ResponseEntity<CustomerHistoryDTO> getHistory(
@@ -57,12 +62,12 @@ public class AdminCustomerController {
             @Pattern(regexp = "^(?:\\+91|91)?[6-9]\\d{9}$", message = "Invalid phone number format.")
             String phone) {
 
-        log.info("Admin request: customer history for phone='{}'", phone);
+        log.info("Admin request: customer history for phone='{}'", maskPhone(phone));
 
         CustomerHistoryDTO history = adminCustomerService.getCustomerHistory(phone);
 
         if (history == null) {
-            log.warn("No history found for phone='{}'", phone);
+            log.warn("No history found for phone='{}'", maskPhone(phone));
             return ResponseEntity.notFound().build();
         }
 
