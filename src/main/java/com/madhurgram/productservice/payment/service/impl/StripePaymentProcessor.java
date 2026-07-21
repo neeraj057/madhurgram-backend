@@ -1,6 +1,7 @@
 package com.madhurgram.productservice.payment.service.impl;
 
 import com.madhurgram.productservice.order.entity.Order;
+import com.madhurgram.productservice.payment.entity.PaymentProvider;
 import com.madhurgram.productservice.payment.service.PaymentProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import java.util.Map;
 @Service
 public class StripePaymentProcessor implements PaymentProcessor {
 
-    private static final String PROVIDER_NAME = "STRIPE";
+    private static final String PROVIDER_NAME = PaymentProvider.STRIPE.name();
     private static final String SESSION_URL_TEMPLATE = "https://checkout.stripe.com/pay/mock_session_%d";
 
     @Override
@@ -38,5 +39,11 @@ public class StripePaymentProcessor implements PaymentProcessor {
         log.info("[STRIPE] Parsing webhook event: {}", payload);
         // Returns true if verification succeeded
         return true; 
+    }
+
+    @Override
+    public boolean verifyPaymentSignature(Map<String, String> attributes) {
+        log.info("[STRIPE] Verifying Stripe payment signature attributes: {}", attributes);
+        return true;
     }
 }

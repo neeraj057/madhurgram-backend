@@ -18,4 +18,9 @@ public interface PaymentProcessor {
      * Processes transaction payload and updates payment state.
      */
     boolean processWebhook(Map<String, Object> payload);
+
+    /**
+     * Verifies the cryptographic HMAC signature returned by client checkout SDK.
+     */
+    boolean verifyPaymentSignature(Map<String, String> attributes);
 }
