@@ -6,8 +6,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Customer
+ */
 @Entity
-@Table(name = "customers")
+@Table(name = "customers", indexes = {
+        @Index(name = "idx_customer_phone", columnList = "phoneNumber", unique = true)
+})
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +23,7 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 📞 फोन नंबर ही हमारा प्राइमरी आइडेंटिटी (Unique Key) होगा
+    // 📞 phone number is the primary key
     @Column(nullable = false, unique = true, length = 15)
     private String phoneNumber;
 
@@ -28,7 +33,7 @@ public class Customer {
     @Column(length = 100)
     private String email;
 
-    // 🔗 One-to-Many Mapping: एक कस्टमर के पास कई एड्रेस हो सकते हैं
+    // 🔗 One-to-Many Mapping: a customer can have multiple addresses
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<Address> addresses = new ArrayList<>();

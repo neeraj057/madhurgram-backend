@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "addresses")
+@Table(name = "addresses", indexes = {
+        @Index(name = "idx_address_customer_id", columnList = "customer_id")
+})
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,7 +36,7 @@ public class Address {
 
     @Builder.Default
     @Column(nullable = false)
-    private Boolean isDefault = false; // बाय डिफ़ॉल्ट कौन सा एड्रेस सिलेक्टेड रहेगा
+    private Boolean isDefault = false;
 
     @Column(name = "latitude")
     private Double latitude;
@@ -42,10 +44,10 @@ public class Address {
     @Column(name = "longitude")
     private Double longitude;
 
-    // 🔗 Many-to-One Mapping: यह एड्रेस किस कस्टमर का है?
+    // this mapping is for the customer table
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", nullable = false)
-    @JsonIgnore // ताकि API रिस्पॉन्स में इनफाइनाइट लूप न बने
+    @JsonIgnore
     @ToString.Exclude
     private Customer customer;
 }
