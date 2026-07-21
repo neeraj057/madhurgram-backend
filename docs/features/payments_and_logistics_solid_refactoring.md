@@ -18,7 +18,7 @@ This documentation describes the modular, loosely coupled architecture implement
 - **Dynamic Adapters**: The payment and logistics components are defined behind abstract interfaces (`PaymentProcessor` and `LogisticsProvider`).
 - **Dynamic Selection**: Strategy Factories (`PaymentStrategyFactory` and `LogisticsStrategyFactory`) load all available Spring beans implementing these interfaces at startup and resolve them at runtime via configuration properties or request payloads.
 - **Provider Registry**:
-  - Payments: `STRIPE` (`StripePaymentProcessor`), `RAZORPAY` (`RazorpayPaymentProcessor`).
+  - Payments: `RAZORPAY` (Primary Default - `RazorpayPaymentProcessor` via `RazorpayClient`), `STRIPE` (`StripePaymentProcessor`).
   - Logistics: `DELHIVERY` (`DelhiveryLogisticsProvider`), `SHIPROCKET` (`ShiprocketLogisticsProvider`).
 
 ---
@@ -34,8 +34,9 @@ This documentation describes the modular, loosely coupled architecture implement
   - `String getProviderName()`
   - `String createPaymentSession(Order order)`
   - `boolean processWebhook(Map<String, Object> payload)`
+  - `boolean verifyPaymentSignature(Map<String, String> attributes)`
 - **`PaymentStrategyFactory`**: Autowires the list of processor strategies into a map matching strategy keys.
-- **`PaymentController`**: Uses the factory to resolve the active provider strategy and processes events.
+- **`PaymentController`**: Uses the factory to resolve the active provider strategy and handles `/api/v1/payments/*` endpoints (`create-session`, `verify-signature`, `webhook`).
 
 ### C. Logistics Abstractions
 - **`LogisticsProvider` (Interface)**:
@@ -53,8 +54,8 @@ This documentation describes the modular, loosely coupled architecture implement
 ### A. Switch active providers via properties
 You can switch gateways and shipping providers instantly by modifying configuration parameters in `application.properties`:
 ```properties
-# Select active gateway: STRIPE or RAZORPAY
-madhurgram.payment.provider=STRIPE
+# Select active gateway: RAZORPAY (Primary) or STRIPE
+madhurgram.payment.provider=RAZORPAY
 
 # Select active shipping carrier: DELHIVERY or SHIPROCKET
 madhurgram.logistics.provider=DELHIVERY
@@ -80,8 +81,8 @@ Bhai, is section me simple Hinglish/WhatsApp language me likha hai ki ye naya re
 
 ### A. Under the Hood Flow (Kaam Kaise Karta Hai?)
 1. **Webhook Callback:**
-   * Jab customer checkout process complete karta hai ya hum manual webhook trigger karte hain (`POST /api/payments/webhook`), tab control `PaymentController` ke paas aata hai.
-   * `PaymentController` hamare config se active provider (Stripe ya Razorpay) check karta hai aur `PaymentStrategyFactory` se uska specific strategy processor fetch karke verification delegate kar deta hai.
+   * Jab customer checkout process complete karta hai ya hum manual webhook trigger karte hain (`POST /api/v1/payments/webhook`), tab control `PaymentController` ke paas aata hai.
+   * `PaymentController` hamare config se active provider (Razorpay ya Stripe) check karta hai aur `PaymentStrategyFactory` se uska specific strategy processor fetch karke verification delegate kar deta hai.
 2. **Order Confirmation & DB Commit:**
    * Agar payment verification pass ho jata hai, to controller order status ko `CONFIRMED` me update karta hai.
    * `OrderServiceImpl` order ko database me save karta hai. Jaise hi data database me save ho jata hai, ye Spring Event System ka use karke `OrderConfirmedEvent` publish karta hai.
@@ -103,8 +104,8 @@ Is modular system ko local machine pe test karne ke liye ye steps follow karein:
 #### 1. Dynamic Settings Setup
 `application.properties` me active providers config set karein:
 ```properties
-# Toggle between STRIPE or RAZORPAY
-madhurgram.payment.provider=STRIPE
+# Toggle between RAZORPAY (Primary) or STRIPE
+madhurgram.payment.provider=RAZORPAY
 
 # Toggle between DELHIVERY or SHIPROCKET
 madhurgram.logistics.provider=DELHIVERY
@@ -113,14 +114,14 @@ madhurgram.logistics.provider=DELHIVERY
 #### 2. Triggering Webhook Success Simulation
 Terminal me cURL command chala kar check karein ki webhook correctly process hota hai ya nahi (replace `<ID>` with actual order ID, e.g. `12`):
 ```bash
-curl -X POST http://localhost:8080/api/payments/webhook \
+curl -X POST http://localhost:8080/api/v1/payments/webhook \
   -H "Content-Type: application/json" \
-  -d "{\"type\": \"payment_intent.succeeded\", \"data\": {\"orderId\": <ID>, \"transactionId\": \"ch_mock_stripe_99\", \"amount\": 1490.00}}"
+  -d "{\"type\": \"payment_intent.succeeded\", \"data\": {\"orderId\": <ID>, \"transactionId\": \"pay_rzp_mock_99\", \"amount\": 1490.00}}"
 ```
 
 #### 3. Log Verification Check
 Apne Console logs check karein. Agar everything is perfect, aapko ye sequential flow dikhega:
-1. `Received payment gateway webhook event: {...} via active provider: STRIPE` (Normal Execution thread)
+1. `Request: payment webhook received. Provider='RAZORPAY'` (Normal Execution thread)
 2. `Publishing OrderConfirmedEvent for Order ID: <ID>`
 3. `OrderConfirmedEvent received for Order ID: <ID> - dispatching asynchronous logistics pickup request` (Async Thread trigger!)
 4. `Resolving logistics provider for: DELHIVERY`
@@ -195,7 +196,7 @@ Bhai, agar tum soch rahe ho ki is backend refactoring ke liye Frontend (Next.js)
 * **Testing Steps:**
   1. Frontend storefront dashboard pe jao, ek sample order place karo.
   2. Us order ke live tracking URL pe jao (e.g., `http://localhost:3000/orders/track/12`).
-  3. Peeli color wali **"Retry Stripe/Razorpay Payment"** button pe click karo.
-  4. Frontend automatically `/api/payments/webhook` pe trigger bhejega, aur backend background threads me pickup processing complete karke bina latency ke dynamic waybill allocate kar dega!
+  3. Peeli color wali **"Retry Razorpay Payment"** button pe click karo.
+  4. Frontend automatically `/api/v1/payments/webhook` pe trigger bhejega, aur backend background threads me pickup processing complete karke bina latency ke dynamic waybill allocate kar dega!
 
 

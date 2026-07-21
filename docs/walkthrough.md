@@ -30,7 +30,7 @@ The following critical endpoints have been reinforced with limits:
    - Limit: **5 requests per minute** per client.
 2. **Cart recovery updates (`POST /api/cart/update` and `GET /api/cart/recover`)**:
    - Limit: **10 requests per minute** per client.
-3. **Payment webhooks (`POST /api/payments/webhook`)**:
+3. **Payment webhooks (`POST /api/v1/payments/webhook`)**:
    - Limit: **20 requests per minute** per IP.
 4. **Admin Panel logins (`POST /api/auth/admin/login`)**:
    - Limit: **5 attempts per minute** (protects against brute-forcing passwords).

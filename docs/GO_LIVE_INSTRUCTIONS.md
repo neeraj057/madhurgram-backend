@@ -41,30 +41,25 @@ Abhi messages Console logs (Terminal) me print hote hain. Live karne ke liye:
    twilio.from-number=+14155238886  # Aapka actual approved business number
    ```
 
-### 2. Live Payment Gateway Switch (Prepaid Orders)
-Abhi checkouts me card/UPI ka simulator popup dikhta hai. Live karne ke liye:
-1. **Backend Configuration:** [application.properties](file:///d:/MadhurGram/product-service/src/main/resources/application.properties) me live Stripe API Keys daal dein:
+### 2. Live Payment Gateway Switch (Razorpay UPI & Prepaid Orders)
+Backend aur Frontend me Razorpay Java SDK aur Checkout Popup 100% production-ready connect ho chuke hain (**Zero Code Modifications Needed**). Live karne ke liye:
+1. **Razorpay Live Key Generation**:
+   - Razorpay Dashboard (https://dashboard.razorpay.com) -> Account & Settings -> API Keys -> **Generate Live Key**.
+2. **Backend Configuration (`application.properties` ya Server Environment)**:
    ```properties
-   madhurgram.payment.provider=STRIPE # (Ya RAZORPAY)
-   stripe.api.key=sk_live_YOUR_LIVE_KEY
-   stripe.webhook.secret=whsec_YOUR_LIVE_WEBHOOK_SECRET
+   madhurgram.payment.provider=RAZORPAY
+   razorpay.key-id=rzp_live_YOUR_LIVE_KEY_ID
+   razorpay.key-secret=YOUR_LIVE_KEY_SECRET
+   razorpay.webhook-secret=YOUR_LIVE_WEBHOOK_SECRET
    ```
-2. **Frontend Razorpay/Stripe SDK Link:**
-   Frontend ke [CheckoutModal.tsx](file:///c:/Users/victus/madhurgram-frontend/src/components/features/checkout/CheckoutModal.tsx) me, hamare simulated popups (`showPaymentSimulator`) ko replace karke, standard SDK popup ko initiate karna hoga:
-   ```javascript
-   // Live SDK example (Razorpay)
-   const options = {
-     key: "rzp_live_your_live_key",
-     amount: order.total * 100, // paise me conversion
-     currency: "INR",
-     name: "MadhurGram",
-     description: "Pure handcrafted essentials",
-     handler: function (response) {
-       // Payment successful payment ID client send karega backend ko!
-     }
-   };
-   const rzp = new window.Razorpay(options);
-   rzp.open();
+3. **Razorpay Webhook Registration**:
+   - Razorpay Dashboard -> Webhooks -> Add New Webhook.
+   - **URL**: `https://api.madhurgram.com/api/v1/payments/webhook`
+   - **Events**: `payment.captured`, `payment.failed`, `order.paid`.
+4. **Frontend Configuration (`.env.production`)**:
+   ```env
+   NEXT_PUBLIC_API_BASE_URL=https://api.madhurgram.com
+   NEXT_PUBLIC_RAZORPAY_KEY_ID=rzp_live_YOUR_LIVE_KEY_ID
    ```
 
 ### 3. Courier & Logistics Switch (Delhivery / Shiprocket)
