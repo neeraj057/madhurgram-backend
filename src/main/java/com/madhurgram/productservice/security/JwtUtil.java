@@ -139,4 +139,26 @@ public class JwtUtil {
                 .getBody();
         return claimsResolver.apply(claims);
     }
+
+    /**
+     * Parses an expired JWT token while still validating its signature.
+     * Used by the token refresh flow where the token may have already expired
+     * but we need to extract the username and role claims to issue a new token.
+     *
+     * @param token signed (possibly expired) JWT token
+     * @return parsed Claims, or null if signature is invalid or token is malformed
+     */
+    public Claims extractClaimsIgnoringExpiry(String token) {
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(getSignKey())
+                    .setAllowedClockSkewSeconds(Long.MAX_VALUE / 1000)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (JwtException e) {
+            log.warn("Failed to parse token (ignoring expiry): {}", e.getMessage());
+            return null;
+        }
+    }
 }
