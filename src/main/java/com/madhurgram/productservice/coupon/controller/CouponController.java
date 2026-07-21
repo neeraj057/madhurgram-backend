@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import com.madhurgram.productservice.common.util.DataMaskingUtil;
+
 import jakarta.validation.constraints.Pattern;
 import java.math.BigDecimal;
 import java.util.List;
@@ -36,11 +38,6 @@ public class CouponController {
         this.couponService = couponService;
     }
 
-    private String maskPhone(String phone) {
-        if (phone == null || phone.length() < 4) return phone;
-        return "******" + phone.substring(phone.length() - 4);
-    }
-
     /**
      * Validates if a coupon code can be applied to a shopping cart.
      * Accessible by unauthenticated public checkout clients.
@@ -59,7 +56,7 @@ public class CouponController {
             String phone,
             @RequestParam("amount") BigDecimal amount) {
         String cleanPhone = (phone != null) ? phone.trim() : null;
-        log.info("Validate coupon: code='{}', phone='{}', amount={}", code, maskPhone(cleanPhone), amount);
+        log.info("Validate coupon: code='{}', phone='{}', amount={}", code, DataMaskingUtil.maskPhoneNumber(cleanPhone), amount);
         try {
             CouponDTO coupon = couponService.validateCoupon(code, cleanPhone, amount);
             log.info("Coupon '{}' is valid for checkout", code);

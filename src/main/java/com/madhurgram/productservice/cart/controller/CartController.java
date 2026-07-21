@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import com.madhurgram.productservice.common.util.DataMaskingUtil;
+
 import jakarta.validation.constraints.Pattern;
 
 /**
@@ -37,11 +39,6 @@ public class CartController {
         this.service = service;
     }
 
-    private String maskPhone(String phone) {
-        if (phone == null || phone.length() < 4) return phone;
-        return "******" + phone.substring(phone.length() - 4);
-    }
-
     /**
      * Syncs or updates the current state of a shopping cart.
      * Rate limited to prevent session spam.
@@ -53,16 +50,16 @@ public class CartController {
     @com.madhurgram.productservice.common.annotation.RateLimit(limit = 10, windowSeconds = 60)
     @Operation(summary = "Update cart state", description = "Updates items and amounts in the active cart state. Subject to rate limits.")
     public ResponseEntity<?> updateCart(@RequestBody CartUpdateRequest request) {
-        log.info("Request: sync cart state for phone: '{}'", maskPhone(request.getPhoneNumber()));
+        log.info("Request: sync cart state for phone: '{}'", DataMaskingUtil.maskPhoneNumber(request.getPhoneNumber()));
         try {
             AbandonedCartResponse updated = service.updateCart(request);
-            log.info("Cart state successfully updated for phone: '{}'", maskPhone(request.getPhoneNumber()));
+            log.info("Cart state successfully updated for phone: '{}'", DataMaskingUtil.maskPhoneNumber(request.getPhoneNumber()));
             return ResponseEntity.ok(updated);
         } catch (IllegalArgumentException e) {
             log.warn("Invalid cart update format: {}", e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
-            log.error("Failed to update cart for phone: '{}': {}", maskPhone(request.getPhoneNumber()), e.getMessage(), e);
+            log.error("Failed to update cart for phone: '{}': {}", DataMaskingUtil.maskPhoneNumber(request.getPhoneNumber()), e.getMessage(), e);
             return ResponseEntity.internalServerError().body("Failed to sync cart state.");
         }
     }
@@ -81,15 +78,15 @@ public class CartController {
             @RequestParam
             @Pattern(regexp = "^(?:\\+91|91)?[6-9]\\d{9}$", message = "Invalid phone number format. Must be a valid 10-digit Indian mobile number optionally prefixed with +91 or 91.")
             String phone) {
-        log.info("Request: recover cart for phone: '{}'", maskPhone(phone));
+        log.info("Request: recover cart for phone: '{}'", DataMaskingUtil.maskPhoneNumber(phone));
 
         return service.getCartToRecover(phone)
                 .map(cart -> {
-                    log.info("Cart successfully recovered for phone: '{}'", maskPhone(phone));
+                    log.info("Cart successfully recovered for phone: '{}'", DataMaskingUtil.maskPhoneNumber(phone));
                     return ResponseEntity.ok(cart);
                 })
                 .orElseGet(() -> {
-                    log.warn("No active cart found to recover for phone: '{}'", maskPhone(phone));
+                    log.warn("No active cart found to recover for phone: '{}'", DataMaskingUtil.maskPhoneNumber(phone));
                     return ResponseEntity.notFound().build();
                 });
     }

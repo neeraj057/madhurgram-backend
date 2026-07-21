@@ -19,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import com.madhurgram.productservice.common.util.DataMaskingUtil;
+
 import jakarta.validation.constraints.Pattern;
 
 /**
@@ -46,16 +48,6 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    private String maskPhone(String phone) {
-        if (phone == null || phone.length() < 4) return phone;
-        return "******" + phone.substring(phone.length() - 4);
-    }
-
-    private String maskName(String name) {
-        if (name == null || name.length() < 3) return name;
-        return name.charAt(0) + "***" + name.charAt(name.length() - 1);
-    }
-
     /**
      * Places a new customer order.
      * Rate limited to prevent spam.
@@ -67,7 +59,7 @@ public class OrderController {
     @com.madhurgram.productservice.common.annotation.RateLimit(limit = 5, windowSeconds = 60)
     @Operation(summary = "Place a new order", description = "Submits a shopping order. Subject to rate limits.")
     public ResponseEntity<?> placeOrder(@jakarta.validation.Valid @RequestBody Order order) {
-        log.info("Request: place order for customer '{}', phone: '{}'", maskName(order.getCustomerName()), maskPhone(order.getPhoneNumber()));
+        log.info("Request: place order for customer '{}', phone: '{}'", DataMaskingUtil.maskName(order.getCustomerName()), DataMaskingUtil.maskPhoneNumber(order.getPhoneNumber()));
         try {
             OrderResponseDTO savedOrder = orderService.placeOrder(order);
             log.info("Order successfully placed with ID: {}", savedOrder.getId());
@@ -144,7 +136,7 @@ public class OrderController {
     @Operation(summary = "Get orders by customer phone", description = "Retrieves orders for a customer using their phone number.")
     public ResponseEntity<List<OrderResponseDTO>> getCustomerOrders(
             @PathVariable @Pattern(regexp = "^(?:\\+91|91)?[6-9]\\d{9}$", message = "Invalid phone number format. Must be a valid 10-digit Indian mobile number optionally prefixed with +91 or 91.") String phone) {
-        log.info("Request: fetch customer orders for phone='{}'", maskPhone(phone));
+        log.info("Request: fetch customer orders for phone='{}'", DataMaskingUtil.maskPhoneNumber(phone));
 
         List<OrderResponseDTO> customerOrders = orderService.getOrdersByCustomerPhone(phone.trim());
         log.info("Returning {} order(s) for customer", customerOrders.size());

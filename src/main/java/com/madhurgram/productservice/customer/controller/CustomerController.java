@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import com.madhurgram.productservice.common.util.DataMaskingUtil;
+
 import jakarta.validation.constraints.Pattern;
 
 /**
@@ -33,11 +35,6 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    private String maskPhone(String phone) {
-        if (phone == null || phone.length() < 4) return phone;
-        return "******" + phone.substring(phone.length() - 4);
-    }
-
     @GetMapping("/{phone}")
     @Operation(summary = "Get or register customer profile", description = "Fetches details of a customer profile. Auto-registers the customer if not found.")
     public ResponseEntity<CustomerDTO> getCustomerProfile(
@@ -45,10 +42,10 @@ public class CustomerController {
             @Pattern(regexp = "^(?:\\+91|91)?[6-9]\\d{9}$", message = "Invalid phone number format. Must be a valid 10-digit Indian mobile number optionally prefixed with +91 or 91.")
             String phone) {
         String cleanPhone = phone.trim();
-        log.info("Request: get customer profile for phone='{}'", maskPhone(cleanPhone));
+        log.info("Request: get customer profile for phone='{}'", DataMaskingUtil.maskPhoneNumber(cleanPhone));
         
         CustomerDTO profile = customerService.getCustomerProfile(cleanPhone);
-        log.info("Returning profile for phone='{}' (name='{}')", maskPhone(cleanPhone), profile.getFullName());
+        log.info("Returning profile for phone='{}' (name='{}')", DataMaskingUtil.maskPhoneNumber(cleanPhone), profile.getFullName());
         return ResponseEntity.ok(profile);
     }
 
@@ -60,19 +57,19 @@ public class CustomerController {
             String phone,
             @RequestBody AddressDTO addressDTO) {
         String cleanPhone = phone.trim();
-        log.info("Request: add address type {} to profile phone='{}'", addressDTO.getAddressType(), maskPhone(cleanPhone));
+        log.info("Request: add address type {} to profile phone='{}'", addressDTO.getAddressType(), DataMaskingUtil.maskPhoneNumber(cleanPhone));
 
         if (addressDTO.getFullAddress() == null || addressDTO.getPincode() == null) {
-            log.warn("Add address failed: missing fullAddress or pincode for phone='{}'", maskPhone(cleanPhone));
+            log.warn("Add address failed: missing fullAddress or pincode for phone='{}'", DataMaskingUtil.maskPhoneNumber(cleanPhone));
             throw new IllegalArgumentException("Full address and Pincode are mandatory for delivery.");
         }
         if (addressDTO.getAddressType() == null) {
-            log.warn("Add address failed: missing addressType for phone='{}'", maskPhone(cleanPhone));
+            log.warn("Add address failed: missing addressType for phone='{}'", DataMaskingUtil.maskPhoneNumber(cleanPhone));
             throw new IllegalArgumentException("Address Type (HOME, OFFICE, OTHER) must be specified.");
         }
 
         CustomerDTO updatedProfile = customerService.addAddressToProfile(cleanPhone, addressDTO);
-        log.info("Address successfully added to profile phone='{}'", maskPhone(cleanPhone));
+        log.info("Address successfully added to profile phone='{}'", DataMaskingUtil.maskPhoneNumber(cleanPhone));
         return ResponseEntity.status(HttpStatus.CREATED).body(updatedProfile);
     }
 
@@ -84,10 +81,10 @@ public class CustomerController {
             String phone,
             @PathVariable Long addressId) {
         String cleanPhone = phone.trim();
-        log.info("Request: delete address ID {} for profile phone='{}'", addressId, maskPhone(cleanPhone));
+        log.info("Request: delete address ID {} for profile phone='{}'", addressId, DataMaskingUtil.maskPhoneNumber(cleanPhone));
 
         CustomerDTO updatedProfile = customerService.deleteAddressFromProfile(cleanPhone, addressId);
-        log.info("Address ID {} successfully deleted from profile phone='{}'", addressId, maskPhone(cleanPhone));
+        log.info("Address ID {} successfully deleted from profile phone='{}'", addressId, DataMaskingUtil.maskPhoneNumber(cleanPhone));
         return ResponseEntity.ok(updatedProfile);
     }
 }

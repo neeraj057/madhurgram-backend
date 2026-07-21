@@ -62,4 +62,30 @@ public final class DataMaskingUtil {
         
         return name.charAt(0) + EMAIL_MASK_MIDDLE + name.charAt(name.length() - 1) + domain;
     }
+    
+    /**
+     * Obfuscates names to J***e format.
+     *
+     * @param name the raw name to mask
+     * @return the masked name string
+     */
+    public static String maskName(String name) {
+        if (name == null || name.trim().length() < 3) {
+            return name;
+        }
+        String cleanName = name.trim();
+        return cleanName.charAt(0) + "***" + cleanName.charAt(cleanName.length() - 1);
+    }
+
+    /**
+     * Obfuscates IPv4 addresses.
+     *
+     * @param ip the raw IP address to mask
+     * @return the masked IP address string
+     */
+    public static String maskIpAddress(String ip) {
+        if (ip == null || ip.isEmpty()) return ip;
+        // Basic masking for IPv4
+        return ip.replaceAll("\\.\\d+\\.\\d+$", ".***.***");
+    }
 }

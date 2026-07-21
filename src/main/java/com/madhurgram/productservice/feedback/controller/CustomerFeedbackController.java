@@ -13,10 +13,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.madhurgram.productservice.common.util.DataMaskingUtil;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -57,12 +60,6 @@ public class CustomerFeedbackController {
         this.ipRateLimiter = ipRateLimiter;
     }
 
-    private String maskIpAddress(String ip) {
-        if (ip == null || ip.isEmpty()) return ip;
-        // Basic masking for IPv4
-        return ip.replaceAll("\\.\\d+\\.\\d+$", ".***.***");
-    }
-
     /**
      * Submits customer feedback.
      *
@@ -82,7 +79,7 @@ public class CustomerFeedbackController {
 
         // 1. IP Rate Limiting Verification
         if (!ipRateLimiter.isAllowed(ipAddress)) {
-            log.warn("Rate limit exceeded for client IP: {}", maskIpAddress(ipAddress));
+            log.warn("Rate limit exceeded for client IP: {}", DataMaskingUtil.maskIpAddress(ipAddress));
             return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
                     .body(Map.of(ERROR_KEY, "बोट सुरक्षा: बहुत सारे अनुरोध। कृपया 1 मिनट बाद पुनः प्रयास करें।"));
         }
@@ -94,7 +91,7 @@ public class CustomerFeedbackController {
                     .body(Map.of(ERROR_KEY, "सुरक्षा चेतावनी: अमान्य डेटा प्रविष्टि।"));
         }
 
-        log.info("Feedback submission request: Rating={}, Order ID={}, IP={}", dto.getRating(), dto.getOrderId(), maskIpAddress(ipAddress));
+        log.info("Feedback submission request: Rating={}, Order ID={}, IP={}", dto.getRating(), dto.getOrderId(), DataMaskingUtil.maskIpAddress(ipAddress));
         CustomerFeedbackDTO saved = feedbackService.submitFeedback(dto);
         log.info("Feedback successfully saved with ID: {}", saved.getId());
         return ResponseEntity.ok(saved);

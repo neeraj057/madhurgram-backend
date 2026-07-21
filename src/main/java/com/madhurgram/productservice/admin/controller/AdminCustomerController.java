@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import com.madhurgram.productservice.common.util.DataMaskingUtil;
+
 import jakarta.validation.constraints.Pattern;
 import java.util.List;
 
@@ -50,11 +52,6 @@ public class AdminCustomerController {
         }
     }
 
-    private String maskPhone(String phone) {
-        if (phone == null || phone.length() < 4) return phone;
-        return "******" + phone.substring(phone.length() - 4);
-    }
-
     @GetMapping("/{phone}/history")
     @Operation(summary = "Get customer order history", description = "Returns full order history for a customer. Phone is masked for non-super-admins.")
     public ResponseEntity<CustomerHistoryDTO> getHistory(
@@ -62,12 +59,12 @@ public class AdminCustomerController {
             @Pattern(regexp = "^(?:\\+91|91)?[6-9]\\d{9}$", message = "Invalid phone number format.")
             String phone) {
 
-        log.info("Admin request: customer history for phone='{}'", maskPhone(phone));
+        log.info("Admin request: customer history for phone='{}'", DataMaskingUtil.maskPhoneNumber(phone));
 
         CustomerHistoryDTO history = adminCustomerService.getCustomerHistory(phone);
 
         if (history == null) {
-            log.warn("No history found for phone='{}'", maskPhone(phone));
+            log.warn("No history found for phone='{}'", DataMaskingUtil.maskPhoneNumber(phone));
             return ResponseEntity.notFound().build();
         }
 
