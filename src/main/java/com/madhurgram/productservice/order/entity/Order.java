@@ -3,6 +3,10 @@ package com.madhurgram.productservice.order.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,24 +28,32 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Customer name is mandatory")
     @Column(nullable = false, name = "customer_name")
     private String customerName;
 
+    @NotBlank(message = "Phone number is mandatory")
+    @Pattern(regexp = "^(?:\\+91|91)?[6-9]\\d{9}$", message = "Invalid phone number format")
     @Column(nullable = false, name = "phone_number", length = 15)
     private String phoneNumber;
 
+    @NotBlank(message = "Address is mandatory")
     @Column(nullable = false, length = 500)
     private String address;
 
+    @NotBlank(message = "Pincode is mandatory")
     @Column(nullable = false, length = 10)
     private String pincode;
 
+    @NotBlank(message = "City and State are mandatory")
     @Column(nullable = false)
     private String cityState;
 
     @Column(name = "campaign_id")
     private Long campaignId;
 
+    @NotNull(message = "Total amount is mandatory")
+    @PositiveOrZero(message = "Total amount cannot be negative")
     @Column(nullable = false, name = "total_amount")
     private BigDecimal totalAmount;
 
