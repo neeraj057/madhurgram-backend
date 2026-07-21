@@ -57,6 +57,12 @@ public class CustomerFeedbackController {
         this.ipRateLimiter = ipRateLimiter;
     }
 
+    private String maskIpAddress(String ip) {
+        if (ip == null || ip.isEmpty()) return ip;
+        // Basic masking for IPv4
+        return ip.replaceAll("\\.\\d+\\.\\d+$", ".***.***");
+    }
+
     /**
      * Submits customer feedback.
      *
@@ -66,7 +72,7 @@ public class CustomerFeedbackController {
     @PostMapping("/public/feedback")
     @Operation(summary = "Submit new feedback", description = "Allows a customer to submit their rating, comments, and order references.")
     public ResponseEntity<?> submitFeedback(
-            @RequestBody CustomerFeedbackDTO dto,
+            @jakarta.validation.Valid @RequestBody CustomerFeedbackDTO dto,
             jakarta.servlet.http.HttpServletRequest request) {
 
         String ipAddress = request.getHeader("X-Forwarded-For");
@@ -76,7 +82,7 @@ public class CustomerFeedbackController {
 
         // 1. IP Rate Limiting Verification
         if (!ipRateLimiter.isAllowed(ipAddress)) {
-            log.warn("Rate limit exceeded for client IP: {}", ipAddress);
+            log.warn("Rate limit exceeded for client IP: {}", maskIpAddress(ipAddress));
             return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
                     .body(Map.of(ERROR_KEY, "बोट सुरक्षा: बहुत सारे अनुरोध। कृपया 1 मिनट बाद पुनः प्रयास करें।"));
         }
@@ -88,7 +94,7 @@ public class CustomerFeedbackController {
                     .body(Map.of(ERROR_KEY, "सुरक्षा चेतावनी: अमान्य डेटा प्रविष्टि।"));
         }
 
-        log.info("Feedback submission request: Rating={}, Order ID={}, IP={}", dto.getRating(), dto.getOrderId(), ipAddress);
+        log.info("Feedback submission request: Rating={}, Order ID={}, IP={}", dto.getRating(), dto.getOrderId(), maskIpAddress(ipAddress));
         CustomerFeedbackDTO saved = feedbackService.submitFeedback(dto);
         log.info("Feedback successfully saved with ID: {}", saved.getId());
         return ResponseEntity.ok(saved);
