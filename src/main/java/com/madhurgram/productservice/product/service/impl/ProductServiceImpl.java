@@ -113,6 +113,19 @@ public class ProductServiceImpl implements ProductService {
         return page.map(productMapper::toProductDTO);
     }
 
+    @Override
+    @Cacheable(value = "categories", key = "'all_active_categories'")
+    public List<String> getAllActiveCategories() {
+        log.info("[CACHE MISS] Fetching all distinct active categories from database...");
+        List<String> rawCategories = productRepository.findDistinctActiveCategories();
+        return rawCategories.stream()
+                .filter(c -> c != null && !c.trim().isEmpty())
+                .map(String::trim)
+                .map(String::toLowerCase)
+                .distinct()
+                .toList();
+    }
+
     /**
      * Deducts inventory stock quantity upon checkout.
      * Triggers auto restock purchase order draft if remaining stock drops below threshold.

@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.cache.annotation.CacheEvict;
+
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,11 +46,21 @@ public class AdminHeroSettingsServiceImpl implements AdminHeroSettingsService {
         settings.put("offerLink", getSettingOrDefault("HERO_OFFER_LINK", "/#products"));
         settings.put("offerCoupon", getSettingOrDefault("HERO_OFFER_COUPON", "GOPIGANJ10"));
         settings.put("customImageUrl", getSettingOrDefault("HERO_CUSTOM_IMAGE", ""));
+        
+        // Flash Sale Settings
+        settings.put("flashSaleEnabled", getSettingOrDefault("FLASH_SALE_ENABLED", "false"));
+        settings.put("flashSaleText", getSettingOrDefault("FLASH_SALE_TEXT", "Monsoon Wellness Sale: Get Flat 15% OFF on Premium Bilona Ghee"));
+        settings.put("flashSaleEndTime", getSettingOrDefault("FLASH_SALE_END_TIME", ""));
+        settings.put("flashSaleLink", getSettingOrDefault("FLASH_SALE_LINK", "/#products"));
+        settings.put("flashSalePercentage", getSettingOrDefault("FLASH_SALE_PERCENTAGE", "15"));
+        settings.put("flashSaleCategory", getSettingOrDefault("FLASH_SALE_CATEGORY", "shop-all"));
+        
         return settings;
     }
 
     @Override
     @Transactional
+    @CacheEvict(value = "promotions", allEntries = true)
     public Map<String, String> updateHeroSettings(Map<String, String> payload) {
         String type = payload.getOrDefault("heroContentType", "video");
         String title = payload.getOrDefault("offerTitle", "");
@@ -64,13 +76,28 @@ public class AdminHeroSettingsServiceImpl implements AdminHeroSettingsService {
         saveSetting("HERO_OFFER_COUPON", coupon, "Hero section voucher coupon code");
         saveSetting("HERO_CUSTOM_IMAGE", customImageUrl, "Hero section custom banner image URL");
 
+        // Flash Sale Settings
+        String fsEnabled = payload.getOrDefault("flashSaleEnabled", "false");
+        String fsText = payload.getOrDefault("flashSaleText", "Monsoon Wellness Sale: Get Flat 15% OFF on Premium Bilona Ghee");
+        String fsEndTime = payload.getOrDefault("flashSaleEndTime", "");
+        String fsLink = payload.getOrDefault("flashSaleLink", "/#products");
+        String fsPercentage = payload.getOrDefault("flashSalePercentage", "15");
+        String fsCategory = payload.getOrDefault("flashSaleCategory", "shop-all");
+        
+        saveSetting("FLASH_SALE_ENABLED", fsEnabled, "Is the top flash sale strip enabled?");
+        saveSetting("FLASH_SALE_TEXT", fsText, "Text to display in the flash sale strip");
+        saveSetting("FLASH_SALE_END_TIME", fsEndTime, "ISO 8601 end time for the flash sale timer");
+        saveSetting("FLASH_SALE_LINK", fsLink, "URL to redirect on clicking claim now");
+        saveSetting("FLASH_SALE_PERCENTAGE", fsPercentage, "Percentage discount to apply to target products");
+        saveSetting("FLASH_SALE_CATEGORY", fsCategory, "Target category code for the flash sale discount");
+
         // Dynamically validate and register/enable Coupon Code in the system
         if (coupon != null && !coupon.trim().isEmpty()) {
             handleCouponRegistration(coupon, subtitle);
         }
 
-        auditLogService.log("UPDATE_HERO_SETTINGS", null, "Hero config updated. Type: " + type + ", Coupon: " + coupon);
-        log.info("Hero configurations updated by admin to type: {}", type);
+        auditLogService.log("UPDATE_STOREFRONT_SETTINGS", null, "Storefront config updated. Type: " + type + ", FS Enabled: " + fsEnabled);
+        log.info("Storefront configurations updated by admin to type: {}", type);
 
         return getHeroSettings();
     }

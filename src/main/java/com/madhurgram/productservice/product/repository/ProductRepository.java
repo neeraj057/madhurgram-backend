@@ -20,6 +20,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Page<Product> findByCategoryAndIsActiveTrue(String category, Pageable pageable);
 
+    @Query("SELECT DISTINCT p.category FROM Product p WHERE p.isActive = true AND p.category IS NOT NULL")
+    List<String> findDistinctActiveCategories();
+
     // Default fetch all active products
     List<Product> findByIsActiveTrue();
 

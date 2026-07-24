@@ -12,6 +12,8 @@ public interface ProductService {
     List<ProductDTO> getProductsByCategory(String category);
     Page<ProductDTO> getProductsByCategory(String category, Pageable pageable);
 
+    List<String> getAllActiveCategories();
+
     void deductProductStock(Long productId, Integer quantity);
     void restoreProductStock(Long productId, Integer quantity);
 }
