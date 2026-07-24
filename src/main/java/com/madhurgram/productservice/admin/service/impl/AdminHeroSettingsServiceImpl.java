@@ -43,6 +43,7 @@ public class AdminHeroSettingsServiceImpl implements AdminHeroSettingsService {
         settings.put("offerSubtitle", getSettingOrDefault("HERO_OFFER_SUBTITLE", "Use coupon code GOPIGANJ10 for 10% off on all organic cow ghee!"));
         settings.put("offerLink", getSettingOrDefault("HERO_OFFER_LINK", "/#products"));
         settings.put("offerCoupon", getSettingOrDefault("HERO_OFFER_COUPON", "GOPIGANJ10"));
+        settings.put("customImageUrl", getSettingOrDefault("HERO_CUSTOM_IMAGE", ""));
         return settings;
     }
 
@@ -54,12 +55,14 @@ public class AdminHeroSettingsServiceImpl implements AdminHeroSettingsService {
         String subtitle = payload.getOrDefault("offerSubtitle", "");
         String link = payload.getOrDefault("offerLink", "/#products");
         String coupon = payload.getOrDefault("offerCoupon", "");
+        String customImageUrl = payload.getOrDefault("customImageUrl", "");
 
-        saveSetting("HERO_CONTENT_TYPE", type, "Hero Section media source type (video, image, offer)");
+        saveSetting("HERO_CONTENT_TYPE", type, "Hero Section media source type (video, image, offer, custom)");
         saveSetting("HERO_OFFER_TITLE", title, "Hero section promo offer headline text");
         saveSetting("HERO_OFFER_SUBTITLE", subtitle, "Hero section promo details text");
         saveSetting("HERO_OFFER_LINK", link, "Hero section action redirection route link");
         saveSetting("HERO_OFFER_COUPON", coupon, "Hero section voucher coupon code");
+        saveSetting("HERO_CUSTOM_IMAGE", customImageUrl, "Hero section custom banner image URL");
 
         // Dynamically validate and register/enable Coupon Code in the system
         if (coupon != null && !coupon.trim().isEmpty()) {
